@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.hana.SapMtcPgonhdMapper">
+
+	<resultMap id="SapMtcPgonhdResult"  type="SapMtcPgonhdModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="sortNbr" column="SORT_NBR" jdbcType="INTEGER" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="originFlag" column="ORIGIN_FLAG" jdbcType="CHAR" />
+		<result property="originApp" column="ORIGIN_APP" jdbcType="VARCHAR" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="companyId" column="COMPANY_ID" jdbcType="INTEGER" />
+		<result property="farmId" column="FARM_ID" jdbcType="INTEGER" />
+		<result property="houseId" column="HOUSE_ID" jdbcType="INTEGER" />
+		<result property="hanaLogId" column="HANA_LOG_ID" jdbcType="INTEGER" />
+		<result property="itfcId" column="ITFC_ID" jdbcType="INTEGER" />
+		<result property="createTime" column="CREATE_TIME" jdbcType="TIMESTAMP" />
+		<result property="mtcbranchId" column="MTC_BranchID" jdbcType="VARCHAR" />
+		<result property="mtcdeptId" column="MTC_DeptID" jdbcType="VARCHAR" />
+		<result property="mtcunit" column="MTC_Unit" jdbcType="VARCHAR" />
+		<result property="mtcpigType" column="MTC_PigType" jdbcType="CHAR" />
+		<result property="mtcperiod" column="MTC_Period" jdbcType="VARCHAR" />
+		<result property="mtcdocDate" column="MTC_DocDate" jdbcType="DATE" />
+		<result property="mtcbegQty" column="MTC_BegQty" jdbcType="VARCHAR" />
+		<result property="mtcinQty" column="MTC_InQty" jdbcType="VARCHAR" />
+		<result property="mtcpurQty" column="MTC_PurQty" jdbcType="VARCHAR" />
+		<result property="mtcinQtyInner" column="MTC_InQty_Inner" jdbcType="VARCHAR" />
+		<result property="mtcinQtyNormal" column="MTC_InQty_Normal" jdbcType="VARCHAR" />
+		<result property="mtcoutQtyInner" column="MTC_OutQty_Inner" jdbcType="VARCHAR" />
+		<result property="mtcoutQtyNormal" column="MTC_OutQty_Normal" jdbcType="VARCHAR" />
+		<result property="mtctransToCf" column="MTC_TransToCF" jdbcType="VARCHAR" />
+		<result property="mtctransToBy" column="MTC_TransToBY" jdbcType="VARCHAR" />
+		<result property="mtctransToPy" column="MTC_TransToPY" jdbcType="VARCHAR" />
+		<result property="mtctransToHb" column="MTC_TransToHB" jdbcType="VARCHAR" />
+		<result property="mtctransToYf" column="MTC_TransToYF" jdbcType="VARCHAR" />
+		<result property="mtcdieQty" column="MTC_DieQty" jdbcType="VARCHAR" />
+		<result property="mtckillQty" column="MTC_KillQty" jdbcType="VARCHAR" />
+		<result property="mtctransToSc" column="MTC_TransToSC" jdbcType="VARCHAR" />
+		<result property="mtcsalesQtyInner" column="MTC_SalesQty_Inner" jdbcType="VARCHAR" />
+		<result property="mtcsalesQtyNormar" column="MTC_SalesQty_Normar" jdbcType="VARCHAR" />
+		<result property="mtcadjQty" column="MTC_AdjQty" jdbcType="VARCHAR" />
+		<result property="mtcendQty" column="MTC_EndQty" jdbcType="VARCHAR" />
+		<result property="mtcdaySum" column="MTC_DaySum" jdbcType="VARCHAR" />
+		<result property="mtcweight" column="MTC_Weight" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="SapMtcPgonhdModel_Column_List">
+		ROW_ID,SORT_NBR,NOTES,HOUSE_ID,HANA_LOG_ID,ITFC_ID,CREATE_TIME,MTC_BranchID,MTC_DeptID,MTC_Unit,MTC_PigType,MTC_Period,MTC_DocDate,MTC_BegQty,MTC_InQty,MTC_PurQty,MTC_InQty_Inner,MTC_InQty_Normal,MTC_OutQty_Inner,MTC_OutQty_Normal,MTC_TransToCF,MTC_TransToBY,MTC_TransToPY,MTC_TransToHB,MTC_TransToYF,MTC_DieQty,MTC_KillQty,MTC_TransToSC,MTC_SalesQty_Inner,MTC_SalesQty_Normar,MTC_AdjQty,MTC_EndQty,MTC_DaySum,MTC_Weight
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true"   keyProperty="rowId" parameterType="SapMtcPgonhdModel">
+		INSERT INTO SAP_MTC_PGONHD
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR,
+			STATUS,
+			DELETED_FLAG,
+			ORIGIN_FLAG,
+			ORIGIN_APP,
+			NOTES,
+			COMPANY_ID,
+			FARM_ID,
+			HOUSE_ID,
+			HANA_LOG_ID,
+			ITFC_ID,
+			CREATE_TIME,
+			MTC_BranchID,
+			MTC_DeptID,
+			MTC_Unit,
+			MTC_PigType,
+			MTC_Period,
+			MTC_DocDate,
+			MTC_BegQty,
+			MTC_InQty,
+			MTC_PurQty,
+			MTC_InQty_Inner,
+			MTC_InQty_Normal,
+			MTC_OutQty_Inner,
+			MTC_OutQty_Normal,
+			MTC_TransToCF,
+			MTC_TransToBY,
+			MTC_TransToPY,
+			MTC_TransToHB,
+			MTC_TransToYF,
+			MTC_DieQty,
+			MTC_KillQty,
+			MTC_TransToSC,
+			MTC_SalesQty_Inner,
+			MTC_SalesQty_Normar,
+			MTC_AdjQty,
+			MTC_EndQty,
+			MTC_DaySum,
+			MTC_Weight
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ sortNbr,jdbcType=INTEGER},
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ originFlag,jdbcType=CHAR},
+			#{ originApp,jdbcType=VARCHAR},
+			#{ notes,jdbcType=VARCHAR},
+			#{ companyId,jdbcType=INTEGER},
+			#{ farmId,jdbcType=INTEGER},
+			#{ houseId,jdbcType=INTEGER},
+			#{ hanaLogId,jdbcType=INTEGER},
+			#{ itfcId,jdbcType=INTEGER},
+			#{ createTime,jdbcType=TIMESTAMP},
+			#{ mtcbranchId,jdbcType=VARCHAR},
+			#{ mtcdeptId,jdbcType=VARCHAR},
+			#{ mtcunit,jdbcType=VARCHAR},
+			#{ mtcpigType,jdbcType=CHAR},
+			#{ mtcperiod,jdbcType=VARCHAR},
+			#{ mtcdocDate,jdbcType=DATE},
+			#{ mtcbegQty,jdbcType=VARCHAR},
+			#{ mtcinQty,jdbcType=VARCHAR},
+			#{ mtcpurQty,jdbcType=VARCHAR},
+			#{ mtcinQtyInner,jdbcType=VARCHAR},
+			#{ mtcinQtyNormal,jdbcType=VARCHAR},
+			#{ mtcoutQtyInner,jdbcType=VARCHAR},
+			#{ mtcoutQtyNormal,jdbcType=VARCHAR},
+			#{ mtctransToCf,jdbcType=VARCHAR},
+			#{ mtctransToBy,jdbcType=VARCHAR},
+			#{ mtctransToPy,jdbcType=VARCHAR},
+			#{ mtctransToHb,jdbcType=VARCHAR},
+			#{ mtctransToYf,jdbcType=VARCHAR},
+			#{ mtcdieQty,jdbcType=VARCHAR},
+			#{ mtckillQty,jdbcType=VARCHAR},
+			#{ mtctransToSc,jdbcType=VARCHAR},
+			#{ mtcsalesQtyInner,jdbcType=VARCHAR},
+			#{ mtcsalesQtyNormar,jdbcType=VARCHAR},
+			#{ mtcadjQty,jdbcType=VARCHAR},
+			#{ mtcendQty,jdbcType=VARCHAR},
+			#{ mtcdaySum,jdbcType=VARCHAR},
+			#{ mtcweight,jdbcType=VARCHAR}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO SAP_MTC_PGONHD
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR ,
+			STATUS ,
+			DELETED_FLAG ,
+			ORIGIN_FLAG ,
+			ORIGIN_APP ,
+			NOTES ,
+			COMPANY_ID ,
+			FARM_ID ,
+			HOUSE_ID ,
+			HANA_LOG_ID ,
+			ITFC_ID ,
+			CREATE_TIME ,
+			MTC_BranchID ,
+			MTC_DeptID ,
+			MTC_Unit ,
+			MTC_PigType ,
+			MTC_Period ,
+			MTC_DocDate ,
+			MTC_BegQty ,
+			MTC_InQty ,
+			MTC_PurQty ,
+			MTC_InQty_Inner ,
+			MTC_InQty_Normal ,
+			MTC_OutQty_Inner ,
+			MTC_OutQty_Normal ,
+			MTC_TransToCF ,
+			MTC_TransToBY ,
+			MTC_TransToPY ,
+			MTC_TransToHB ,
+			MTC_TransToYF ,
+			MTC_DieQty ,
+			MTC_KillQty ,
+			MTC_TransToSC ,
+			MTC_SalesQty_Inner ,
+			MTC_SalesQty_Normar ,
+			MTC_AdjQty ,
+			MTC_EndQty ,
+			MTC_DaySum ,
+			MTC_Weight 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.sortNbr,jdbcType=INTEGER},
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.originFlag,jdbcType=CHAR},
+				#{item.originApp,jdbcType=VARCHAR},
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.companyId,jdbcType=INTEGER},
+				#{item.farmId,jdbcType=INTEGER},
+				#{item.houseId,jdbcType=INTEGER},
+				#{item.hanaLogId,jdbcType=INTEGER},
+				#{item.itfcId,jdbcType=INTEGER},
+				#{item.createTime,jdbcType=TIMESTAMP},
+				#{item.mtcbranchId,jdbcType=VARCHAR},
+				#{item.mtcdeptId,jdbcType=VARCHAR},
+				#{item.mtcunit,jdbcType=VARCHAR},
+				#{item.mtcpigType,jdbcType=CHAR},
+				#{item.mtcperiod,jdbcType=VARCHAR},
+				#{item.mtcdocDate,jdbcType=DATE},
+				#{item.mtcbegQty,jdbcType=VARCHAR},
+				#{item.mtcinQty,jdbcType=VARCHAR},
+				#{item.mtcpurQty,jdbcType=VARCHAR},
+				#{item.mtcinQtyInner,jdbcType=VARCHAR},
+				#{item.mtcinQtyNormal,jdbcType=VARCHAR},
+				#{item.mtcoutQtyInner,jdbcType=VARCHAR},
+				#{item.mtcoutQtyNormal,jdbcType=VARCHAR},
+				#{item.mtctransToCf,jdbcType=VARCHAR},
+				#{item.mtctransToBy,jdbcType=VARCHAR},
+				#{item.mtctransToPy,jdbcType=VARCHAR},
+				#{item.mtctransToHb,jdbcType=VARCHAR},
+				#{item.mtctransToYf,jdbcType=VARCHAR},
+				#{item.mtcdieQty,jdbcType=VARCHAR},
+				#{item.mtckillQty,jdbcType=VARCHAR},
+				#{item.mtctransToSc,jdbcType=VARCHAR},
+				#{item.mtcsalesQtyInner,jdbcType=VARCHAR},
+				#{item.mtcsalesQtyNormar,jdbcType=VARCHAR},
+				#{item.mtcadjQty,jdbcType=VARCHAR},
+				#{item.mtcendQty,jdbcType=VARCHAR},
+				#{item.mtcdaySum,jdbcType=VARCHAR},
+				#{item.mtcweight,jdbcType=VARCHAR}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="SapMtcPgonhdModel" >
+		UPDATE SAP_MTC_PGONHD 
+		<set>
+		<if test="sortNbr != null">SORT_NBR = #{ sortNbr,jdbcType=INTEGER},</if>
+		<if test="status != null">STATUS = #{ status,jdbcType=CHAR},</if>
+		<if test="originFlag != null">ORIGIN_FLAG = #{ originFlag,jdbcType=CHAR},</if>
+		<if test="originApp != null">ORIGIN_APP = #{ originApp,jdbcType=VARCHAR},</if>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="houseId != null">HOUSE_ID = #{ houseId,jdbcType=INTEGER},</if>
+		<if test="hanaLogId != null">HANA_LOG_ID = #{ hanaLogId,jdbcType=INTEGER},</if>
+		<if test="itfcId != null">ITFC_ID = #{ itfcId,jdbcType=INTEGER},</if>
+		<if test="createTime != null">CREATE_TIME = #{ createTime,jdbcType=TIMESTAMP},</if>
+		<if test="mtcbranchId != null">MTC_BranchID = #{ mtcbranchId,jdbcType=VARCHAR},</if>
+		<if test="mtcdeptId != null">MTC_DeptID = #{ mtcdeptId,jdbcType=VARCHAR},</if>
+		<if test="mtcunit != null">MTC_Unit = #{ mtcunit,jdbcType=VARCHAR},</if>
+		<if test="mtcpigType != null">MTC_PigType = #{ mtcpigType,jdbcType=CHAR},</if>
+		<if test="mtcperiod != null">MTC_Period = #{ mtcperiod,jdbcType=VARCHAR},</if>
+		<if test="mtcdocDate != null">MTC_DocDate = #{ mtcdocDate,jdbcType=DATE},</if>
+		<if test="mtcbegQty != null">MTC_BegQty = #{ mtcbegQty,jdbcType=VARCHAR},</if>
+		<if test="mtcinQty != null">MTC_InQty = #{ mtcinQty,jdbcType=VARCHAR},</if>
+		<if test="mtcpurQty != null">MTC_PurQty = #{ mtcpurQty,jdbcType=VARCHAR},</if>
+		<if test="mtcinQtyInner != null">MTC_InQty_Inner = #{ mtcinQtyInner,jdbcType=VARCHAR},</if>
+		<if test="mtcinQtyNormal != null">MTC_InQty_Normal = #{ mtcinQtyNormal,jdbcType=VARCHAR},</if>
+		<if test="mtcoutQtyInner != null">MTC_OutQty_Inner = #{ mtcoutQtyInner,jdbcType=VARCHAR},</if>
+		<if test="mtcoutQtyNormal != null">MTC_OutQty_Normal = #{ mtcoutQtyNormal,jdbcType=VARCHAR},</if>
+		<if test="mtctransToCf != null">MTC_TransToCF = #{ mtctransToCf,jdbcType=VARCHAR},</if>
+		<if test="mtctransToBy != null">MTC_TransToBY = #{ mtctransToBy,jdbcType=VARCHAR},</if>
+		<if test="mtctransToPy != null">MTC_TransToPY = #{ mtctransToPy,jdbcType=VARCHAR},</if>
+		<if test="mtctransToHb != null">MTC_TransToHB = #{ mtctransToHb,jdbcType=VARCHAR},</if>
+		<if test="mtctransToYf != null">MTC_TransToYF = #{ mtctransToYf,jdbcType=VARCHAR},</if>
+		<if test="mtcdieQty != null">MTC_DieQty = #{ mtcdieQty,jdbcType=VARCHAR},</if>
+		<if test="mtckillQty != null">MTC_KillQty = #{ mtckillQty,jdbcType=VARCHAR},</if>
+		<if test="mtctransToSc != null">MTC_TransToSC = #{ mtctransToSc,jdbcType=VARCHAR},</if>
+		<if test="mtcsalesQtyInner != null">MTC_SalesQty_Inner = #{ mtcsalesQtyInner,jdbcType=VARCHAR},</if>
+		<if test="mtcsalesQtyNormar != null">MTC_SalesQty_Normar = #{ mtcsalesQtyNormar,jdbcType=VARCHAR},</if>
+		<if test="mtcadjQty != null">MTC_AdjQty = #{ mtcadjQty,jdbcType=VARCHAR},</if>
+		<if test="mtcendQty != null">MTC_EndQty = #{ mtcendQty,jdbcType=VARCHAR},</if>
+		<if test="mtcdaySum != null">MTC_DaySum = #{ mtcdaySum,jdbcType=VARCHAR},</if>
+		<if test="mtcweight != null">MTC_Weight = #{ mtcweight,jdbcType=VARCHAR}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE SAP_MTC_PGONHD 
+			<set>
+			<if test="item.sortNbr != null">SORT_NBR = #{item.sortNbr,jdbcType=INTEGER},</if>
+			<if test="item.status != null">STATUS = #{item.status,jdbcType=CHAR},</if>
+			<if test="item.originFlag != null">ORIGIN_FLAG = #{item.originFlag,jdbcType=CHAR},</if>
+			<if test="item.originApp != null">ORIGIN_APP = #{item.originApp,jdbcType=VARCHAR},</if>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.houseId != null">HOUSE_ID = #{item.houseId,jdbcType=INTEGER},</if>
+			<if test="item.hanaLogId != null">HANA_LOG_ID = #{item.hanaLogId,jdbcType=INTEGER},</if>
+			<if test="item.itfcId != null">ITFC_ID = #{item.itfcId,jdbcType=INTEGER},</if>
+			<if test="item.createTime != null">CREATE_TIME = #{item.createTime,jdbcType=TIMESTAMP},</if>
+			<if test="item.mtcbranchId != null">MTC_BranchID = #{item.mtcbranchId,jdbcType=VARCHAR},</if>
+			<if test="item.mtcdeptId != null">MTC_DeptID = #{item.mtcdeptId,jdbcType=VARCHAR},</if>
+			<if test="item.mtcunit != null">MTC_Unit = #{item.mtcunit,jdbcType=VARCHAR},</if>
+			<if test="item.mtcpigType != null">MTC_PigType = #{item.mtcpigType,jdbcType=CHAR},</if>
+			<if test="item.mtcperiod != null">MTC_Period = #{item.mtcperiod,jdbcType=VARCHAR},</if>
+			<if test="item.mtcdocDate != null">MTC_DocDate = #{item.mtcdocDate,jdbcType=DATE},</if>
+			<if test="item.mtcbegQty != null">MTC_BegQty = #{item.mtcbegQty,jdbcType=VARCHAR},</if>
+			<if test="item.mtcinQty != null">MTC_InQty = #{item.mtcinQty,jdbcType=VARCHAR},</if>
+			<if test="item.mtcpurQty != null">MTC_PurQty = #{item.mtcpurQty,jdbcType=VARCHAR},</if>
+			<if test="item.mtcinQtyInner != null">MTC_InQty_Inner = #{item.mtcinQtyInner,jdbcType=VARCHAR},</if>
+			<if test="item.mtcinQtyNormal != null">MTC_InQty_Normal = #{item.mtcinQtyNormal,jdbcType=VARCHAR},</if>
+			<if test="item.mtcoutQtyInner != null">MTC_OutQty_Inner = #{item.mtcoutQtyInner,jdbcType=VARCHAR},</if>
+			<if test="item.mtcoutQtyNormal != null">MTC_OutQty_Normal = #{item.mtcoutQtyNormal,jdbcType=VARCHAR},</if>
+			<if test="item.mtctransToCf != null">MTC_TransToCF = #{item.mtctransToCf,jdbcType=VARCHAR},</if>
+			<if test="item.mtctransToBy != null">MTC_TransToBY = #{item.mtctransToBy,jdbcType=VARCHAR},</if>
+			<if test="item.mtctransToPy != null">MTC_TransToPY = #{item.mtctransToPy,jdbcType=VARCHAR},</if>
+			<if test="item.mtctransToHb != null">MTC_TransToHB = #{item.mtctransToHb,jdbcType=VARCHAR},</if>
+			<if test="item.mtctransToYf != null">MTC_TransToYF = #{item.mtctransToYf,jdbcType=VARCHAR},</if>
+			<if test="item.mtcdieQty != null">MTC_DieQty = #{item.mtcdieQty,jdbcType=VARCHAR},</if>
+			<if test="item.mtckillQty != null">MTC_KillQty = #{item.mtckillQty,jdbcType=VARCHAR},</if>
+			<if test="item.mtctransToSc != null">MTC_TransToSC = #{item.mtctransToSc,jdbcType=VARCHAR},</if>
+			<if test="item.mtcsalesQtyInner != null">MTC_SalesQty_Inner = #{item.mtcsalesQtyInner,jdbcType=VARCHAR},</if>
+			<if test="item.mtcsalesQtyNormar != null">MTC_SalesQty_Normar = #{item.mtcsalesQtyNormar,jdbcType=VARCHAR},</if>
+			<if test="item.mtcadjQty != null">MTC_AdjQty = #{item.mtcadjQty,jdbcType=VARCHAR},</if>
+			<if test="item.mtcendQty != null">MTC_EndQty = #{item.mtcendQty,jdbcType=VARCHAR},</if>
+			<if test="item.mtcdaySum != null">MTC_DaySum = #{item.mtcdaySum,jdbcType=VARCHAR},</if>
+			<if test="item.mtcweight != null">MTC_Weight = #{item.mtcweight,jdbcType=VARCHAR}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  SAP_MTC_PGONHD
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  SAP_MTC_PGONHD
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE 
+		 ROW_ID =#{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  SAP_MTC_PGONHD
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' 
+		 AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+		 AND ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCons" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  SAP_MTC_PGONHD
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' ${item}
+		</foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="SapMtcPgonhdResult">
+		SELECT 
+		<include refid="SapMtcPgonhdModel_Column_List" />
+		FROM SAP_MTC_PGONHD WHERE DELETED_FLAG='0' 
+		AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="SapMtcPgonhdResult" >
+		SELECT 
+		<include refid="SapMtcPgonhdModel_Column_List" />
+		FROM SAP_MTC_PGONHD WHERE DELETED_FLAG='0'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="SapMtcPgonhdResult" >
+		SELECT 
+		<include refid="SapMtcPgonhdModel_Column_List" />
+		FROM SAP_MTC_PGONHD
+		WHERE DELETED_FLAG='0'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="SapMtcPgonhdResult" >
+		SELECT 
+		<include refid="SapMtcPgonhdModel_Column_List" />
+		FROM SAP_MTC_PGONHD
+		WHERE ${condition}
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAll" resultMap="SapMtcPgonhdResult" >
+		SELECT *
+		FROM SAP_MTC_PGONHD
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="SapMtcPgonhdResult"> ${sql} </select>
+
+</mapper>
+

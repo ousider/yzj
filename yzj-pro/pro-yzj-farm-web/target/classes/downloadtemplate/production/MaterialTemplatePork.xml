@@ -1,0 +1,172 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<excel excelName="肉猪主数据初始化">
+    <thead name="肉猪主数据初始化">
+        <col index="A" width='12' type="1" key="materialName" value="物料名称"></col>
+        <col index="B" width='12' type="2" key="materialTypeName" value="物料类型" class="name"></col>
+        <col index="C" width='12' type="2" key="materialType" value="物料类型D" class="id"></col> 
+        <col index="D" width='12' type="2" key="groupName" value="物料组名称" class="name"></col>
+        <col index="E" width='12' type="2" key="groupId" value="物料组名称ID" class="id"></col>
+        <col index="F" width='12' type="2" key="isWarehouseName" value="仓库物料" class="name"></col>
+        <col index="G" width='12' type="2" key="isWarehouse" value="仓库物料ID" class="id"></col>
+        <col index="H" width='12' type="2" key="isPurchaseName" value="采购物料" class="name"></col>
+        <col index="I" width='12' type="2" key="isPurchase" value="采购物料ID" class="id"></col>
+        <col index="J" width='12' type="2" key="isSellName" value="销售物料" class="name"></col>
+        <col index="K" width='12' type="2" key="isSell" value="销售物料ID" class="id"></col>
+        <col index="L" width='12' type="2" key="unitName" value="计量单位" class="name"></col>
+        <col index="M" width='12' type="2" key="unit" value="计量单位ID" class="id"></col>
+        <col index="N" width='12' type="1" key="manufacturer" value="生产厂家"></col>
+        <col index="O" width='12' type="2" key="supplierName" value="供应商" class="name"></col>
+        <col index="P" width='12' type="2" key="supplierId" value="供应商ID" class="id"></col>
+        <col index="Q" width='12' type="0" key="specNum" value="规格-数量" format="#"></col>
+        <col index="R" width='12' type="1" key="spec" value="规格-单位"></col>
+        <col index="S" width='12' type="0" key="price" value="单价" format="#.##"></col>
+        <col index="T" width='12' type="1" key="freePercent" value="赠送比率"></col>
+        <col index="U" width='12' type="0" key="outputMinQty" value="领用最小规格(头)" format="#.##"></col>
+        <col index="V" width='12' type="2" key="breedName" value="品种" class="name"></col>
+        <col index="W" width='12' type="2" key="breedId" value="品种ID" class="id"></col>
+        <col index="X" width='12' type="2" key="strainName" value="品系" class="name"></col>
+        <col index="Y" width='12' type="2" key="strain" value="品系ID" class="id"></col>
+        <col index="Z" width='12' type="2" key="bodyConditionName" value="体况" class="name"></col>
+        <col index="AA" width='12' type="2" key="bodyCondition" value="体况ID" class="id"></col>
+        <col index="AB" width='12' type="2" key="colorName" value="毛色" class="name"></col>
+        <col index="AC" width='12' type="2" key="color" value="毛色ID" class="id"></col>
+        <col index="AD" width='12' type="0" key="rightTeatNum" value="右乳头数" format="#"></col>
+        <col index="AE" width='12' type="0" key="leftTeatNum" value="左乳头数" format="#"></col>
+        <col index="AF" width='12' type="0" key="birthWeight" value="出生体重(kg)" format="#.##"></col>
+        <col index="AG" width='12' type="0" key="enterDayAge" value="入场日龄" format="#" formatMax="230"></col>
+        <col index="AH" width='12' type="0" key="enterWeight" value="入场体重(kg)" format="#.##"></col>
+        <col index="AI" width='12' type="0" key="mewDayAge" value="断奶日龄" format="#"></col>
+        <col index="AJ" width='12' type="0" key="mewWeight" value="断奶体重(kg)" format="#.##"></col>
+        <col index="AK" width='12' type="0" key="childCareDayAge" value="转保育日龄" format="#" formatMax="35"></col>
+        <col index="AL" width='12' type="0" key="childCareWeight" value="转保育体重(kg)" format="#.##"></col>
+        <col index="AM" width='12' type="0" key="fattenDayAge" value="转育肥日龄" format="#" formatMax="90"></col>
+        <col index="AN" width='12' type="0" key="fattenWeight" value="转育肥体重(kg)" format="#.##"></col>
+        <col index="AO" width='12' type="0" key="sellDayAge" value="出售日龄" format="#" formatMax="230"></col>
+        <col index="AP" width='12' type="0" key="sellWeight" value="出售体重(kg)" format="#.##"></col>
+        <col index="AQ" width='12' type="0" key="frc" value="料肉比" format="#"></col>
+        <col index="AR" width='12' type="2" key="boarName" value="父本" class="name"></col>
+        <col index="AS" width='12' type="2" key="boarId" value="父本ID" class="id"></col>
+        <col index="AT" width='12' type="2" key="sowName" value="母本" class="name"></col>
+        <col index="AU" width='12' type="2" key="sowId" value="母本ID" class="id"></col>
+        <col index="AV" width='12' type="2" key="stockBoarName" value="种公猪主数据" class="name"></col>
+        <col index="AW" width='12' type="2" key="stockBoarId" value="种公猪主数据ID" class="id"></col>
+        <col index="AX" width='12' type="2" key="broodSowName" value="种母猪主数据" class="name"></col>
+        <col index="AY" width='12' type="2" key="broodSowId" value="种母猪主数据ID" class="id"></col>
+        <col index="AZ" width='12' type="2" key="isSelectName" value="是否选种" class="name"></col><!-- 0是 1否  -->
+        <col index="BA" width='12' type="2" key="isSelect" value="是否选种ID" class="id"></col>
+        <col index="BB" width='12' type="2" key="isDifSexName" value="分娩区分性别" class="name"></col>
+        <col index="BC" width='12' type="2" key="isDifSex" value="分娩区分性别ID" class="id"></col>
+        <col index="BD" width='12' type="1" key="notes" value="备注"></col>
+        
+        <!-- 
+        <col index="B" width='12' type="2" key="groupName" value="物料组名称" class="name"></col>
+        <col index="C" width='12' type="2" key="groupId" value="物料组名称ID" class="id"></col>
+        <col index="D" width='12' type="2" key="isWarehouseName" value="仓库物料" class="name"></col>
+        <col index="E" width='12' type="2" key="isWarehouse" value="仓库物料ID" class="id"></col>
+        <col index="F" width='12' type="2" key="isPurchaseName" value="采购物料" class="name"></col>
+        <col index="G" width='12' type="2" key="isPurchase" value="采购物料ID" class="id"></col>
+        <col index="H" width='12' type="2" key="isSellName" value="销售物料" class="name"></col>
+        <col index="I" width='12' type="2" key="isSell" value="销售物料ID" class="id"></col>
+        <col index="J" width='12' type="2" key="unitName" value="计量单位" class="name"></col>
+        <col index="K" width='12' type="2" key="unit" value="计量单位ID" class="id"></col>
+        <col index="L" width='12' type="1" key="manufacturer" value="生产厂家"></col>
+        <col index="M" width='12' type="2" key="supplierName" value="供应商" class="name"></col>
+        <col index="N" width='12' type="2" key="supplierId" value="供应商ID" class="id"></col>
+        <col index="O" width='12' type="0" key="specNum" value="规格-数量" format="#"></col>
+        <col index="P" width='12' type="1" key="spec" value="规格-单位"></col>
+        <col index="Q" width='12' type="0" key="price" value="单价" format="#.##"></col>
+        <col index="R" width='12' type="1" key="rmvaluerate" value="赠送比率"></col>
+        <col index="S" width='12' type="0" key="outputMinQty" value="领用最小规格(头)" format="#.##"></col>
+        <col index="T" width='12' type="2" key="breedName" value="品种" class="name"></col>
+        <col index="U" width='12' type="2" key="breedId" value="品种ID" class="id"></col>
+        <col index="V" width='12' type="2" key="strainName" value="品系" class="name"></col>
+        <col index="W" width='12' type="2" key="strain" value="品系ID" class="id"></col>
+        <col index="X" width='12' type="2" key="bodyConditionName" value="体况" class="name"></col>
+        <col index="Y" width='12' type="2" key="bodyCondition" value="体况ID" class="id"></col>
+        <col index="Z" width='12' type="2" key="colorName" value="毛色" class="name"></col>
+        <col index="AA" width='12' type="2" key="color" value="毛色ID" class="id"></col>
+        <col index="AB" width='12' type="0" key="rightTeatNum" value="右乳头数" format="#"></col>
+        <col index="AC" width='12' type="0" key="leftTeatNum" value="左乳头数" format="#"></col>
+        <col index="AD" width='12' type="0" key="birthWeight" value="出生体重(kg)" format="#.##"></col>
+        <col index="AE" width='12' type="0" key="enterDayAge" value="入场日龄" format="#"></col>
+        <col index="AF" width='12' type="0" key="enterWeight" value="入场体重(kg)" format="#.##"></col>
+        <col index="AG" width='12' type="0" key="mewDayAge" value="断奶日龄" format="#"></col>
+        <col index="AH" width='12' type="0" key="mewWeight" value="断奶体重(kg)" format="#.##"></col>
+        <col index="AI" width='12' type="0" key="childCareDayAge" value="转保育日龄" format="#"></col>
+        <col index="AJ" width='12' type="0" key="childCareWeight" value="转保育体重(kg)" format="#.##"></col>
+        <col index="AK" width='12' type="0" key="fattenDayAge" value="转育肥日龄" format="#"></col>
+        <col index="AL" width='12' type="0" key="fattenWeight" value="转育肥体重(kg)" format="#.##"></col>
+        <col index="AM" width='12' type="0" key="sellDayAge" value="出售日龄" format="#"></col>
+        <col index="AN" width='12' type="0" key="sellWeight" value="出售体重(kg)" format="#.##"></col>
+        <col index="AO" width='12' type="0" key="frc" value="料肉比" format="#"></col>
+        <col index="AP" width='12' type="2" key="boarName" value="父本" class="name"></col>
+        <col index="AQ" width='12' type="2" key="boarId" value="父本ID" class="id"></col>
+        <col index="AR" width='12' type="2" key="sowName" value="母本" class="name"></col>
+        <col index="AS" width='12' type="2" key="sowId" value="母本ID" class="id"></col>
+        <col index="AT" width='12' type="2" key="stockBoarName" value="种公猪主数据" class="name"></col>
+        <col index="AU" width='12' type="2" key="stockBoarId" value="种公猪主数据ID" class="id"></col>
+        <col index="AV" width='12' type="2" key="broodSowName" value="种母猪主数据" class="name"></col>
+        <col index="AW" width='12' type="2" key="broodSowId" value="种母猪主数据ID" class="id"></col>
+        <col index="AX" width='12' type="2" key="isSelectName" value="是否选种" class="name"></col>0是 1否 
+        <col index="AY" width='12' type="2" key="isSelect" value="是否选种ID" class="id"></col>
+        <col index="AZ" width='12' type="2" key="isDifSexName" value="分娩区分性别" class="name"></col>
+        <col index="BA" width='12' type="2" key="isDifSex" value="分娩区分性别ID" class="id"></col>
+        <col index="BB" width='12' type="1" key="notes" value="备注"></col> -->
+<!--         <col index="B" width='12' type="2" key="houseTypeName" value="物料类型" class="name"></col>
+        <col index="C" width='12' type="2" key="houseType" value="物料类型D" class="id"></col> 
+         <col index="D" width='12' type="2" key="houseName" value="物料组名称"></col>
+        <col index="E" width='12' type="2" key="houseName" value="物料组名称ID"></col>
+        <col index="F" width='12' type="2" key="houseName" value="仓库物料"></col>
+        <col index="G" width='12' type="2" key="houseName" value="仓库物料ID"></col>
+        <col index="H" width='12' type="1" key="houseName" value="采购物料"></col>
+        <col index="I" width='12' type="1" key="houseName" value="采购物料ID"></col>
+        <col index="J" width='12' type="1" key="houseName" value="销售物料"></col>
+        <col index="K" width='12' type="1" key="houseName" value="销售物料ID"></col>
+        <col index="L" width='12' type="1" key="houseName" value="计量单位"></col>
+        <col index="M" width='12' type="1" key="houseName" value="计量单位ID"></col>
+        <col index="N" width='12' type="1" key="houseName" value="生产厂家"></col>
+        <col index="O" width='12' type="1" key="houseName" value="供应商"></col>
+        <col index="P" width='12' type="1" key="houseName" value="供应商ID"></col>
+        <col index="Q" width='12' type="1" key="houseName" value="规格-数量"></col>
+        <col index="R" width='12' type="1" key="houseName" value="规格-单位"></col>
+        <col index="S" width='12' type="1" key="houseName" value="单价"></col>
+        <col index="T" width='12' type="1" key="houseName" value="赠送比率"></col>
+        <col index="U" width='12' type="1" key="houseName" value="领用最小规格(头)"></col>
+        <col index="V" width='12' type="1" key="houseName" value="品种"></col>
+        <col index="W" width='12' type="1" key="houseName" value="品种ID"></col>
+        <col index="X" width='12' type="1" key="houseName" value="品系"></col>
+        <col index="Y" width='12' type="1" key="houseName" value="品系ID"></col>
+        <col index="Z" width='12' type="1" key="houseName" value="体况"></col>
+        <col index="AA" width='12' type="1" key="houseName" value="体况ID"></col>
+        <col index="AB" width='12' type="1" key="houseName" value="毛色"></col>
+        <col index="AC" width='12' type="1" key="houseName" value="毛色ID"></col>
+        <col index="AD" width='12' type="1" key="houseName" value="右乳头数"></col>
+        <col index="AE" width='12' type="1" key="houseName" value="左乳头数"></col>
+        <col index="AF" width='12' type="1" key="houseName" value="出生体重(kg)"></col>
+        <col index="AG" width='12' type="1" key="houseName" value="入场日龄"></col>
+        <col index="AH" width='12' type="1" key="houseName" value="入场体重(kg)"></col>
+        <col index="AI" width='12' type="1" key="houseName" value="断奶日龄"></col>
+        <col index="AJ" width='12' type="1" key="houseName" value="断奶体重(kg)"></col>
+        <col index="AK" width='12' type="1" key="houseName" value="转保育日龄"></col>
+        <col index="AL" width='12' type="1" key="houseName" value="转保育体重(kg)"></col>
+        <col index="AM" width='12' type="1" key="houseName" value="转育肥日龄"></col>
+        <col index="AN" width='12' type="1" key="houseName" value="转育肥体重(kg)"></col>
+        <col index="AO" width='12' type="1" key="houseName" value="出售日龄"></col>
+        <col index="AP" width='12' type="1" key="houseName" value="出售体重(kg)"></col>
+        <col index="AQ" width='12' type="1" key="houseName" value="料肉比"></col>
+        <col index="AR" width='12' type="1" key="houseName" value="父本"></col>
+        <col index="AS" width='12' type="1" key="houseName" value="父本ID"></col>
+        <col index="AT" width='12' type="1" key="houseName" value="母本"></col>
+        <col index="AU" width='12' type="1" key="houseName" value="母本ID"></col>
+        <col index="AV" width='12' type="1" key="houseName" value="种公猪主数据"></col>
+        <col index="AW" width='12' type="1" key="houseName" value="种公猪主数据ID"></col>
+        <col index="AX" width='12' type="1" key="houseName" value=种母猪主数据></col>
+        <col index="AY" width='12' type="1" key="houseName" value="种母猪主数据ID"></col>
+        <col index="AZ" width='12' type="1" key="houseName" value="是否选种"></col>
+        <col index="BA" width='12' type="1" key="houseName" value="是否选种ID"></col>
+        <col index="BB" width='12' type="1" key="houseName" value="分娩区分性别"></col>
+        <col index="BC" width='12' type="1" key="houseName" value="分娩区分性别ID"></col>
+        <col index="BD" width='12' type="1" key="houseName" value="备注"></col> -->
+    </thead>
+</excel>

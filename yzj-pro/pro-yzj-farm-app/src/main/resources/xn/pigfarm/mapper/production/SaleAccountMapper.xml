@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.production.SaleAccountMapper">
+
+	<resultMap id="SaleAccountResult"  type="SaleAccountModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="sortNbr" column="SORT_NBR" jdbcType="INTEGER" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="originFlag" column="ORIGIN_FLAG" jdbcType="CHAR" />
+		<result property="originApp" column="ORIGIN_APP" jdbcType="VARCHAR" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="companyId" column="COMPANY_ID" jdbcType="INTEGER" />
+		<result property="farmId" column="FARM_ID" jdbcType="INTEGER" />
+		<result property="billCode" column="BILL_CODE" jdbcType="VARCHAR" />
+		<result property="customerId" column="CUSTOMER_ID" jdbcType="INTEGER" />
+		<result property="saleBillId" column="SALE_BILL_ID" jdbcType="INTEGER" />
+		<result property="saleBillTotalPrice" column="SALE_BILL_TOTAL_PRICE" jdbcType="DECIMAL" />
+		<result property="saleAccountDate" column="SALE_ACCOUNT_DATE" jdbcType="DATE" />
+		<result property="createDate" column="CREATE_DATE" jdbcType="DATE" />
+		<result property="businessCode" column="BUSINESS_CODE" jdbcType="VARCHAR" />
+		<result property="pigNum" column="PIG_NUM" jdbcType="INTEGER" />
+		<result property="pigWeight" column="PIG_WEIGHT" jdbcType="DECIMAL" />
+		<result property="nominalPrice" column="NOMINAL_PRICE" jdbcType="DECIMAL" />
+		<result property="carcassTotalWeight" column="CARCASS_TOTAL_WEIGHT" jdbcType="DECIMAL" />
+		<result property="fatRate" column="FAT_RATE" jdbcType="DECIMAL" />
+		<result property="totalItemPrice" column="TOTAL_ITEM_PRICE" jdbcType="DECIMAL" />
+		<result property="totalAccount" column="TOTAL_ACCOUNT" jdbcType="DECIMAL" />
+		<result property="totalAccountPrice" column="TOTAL_ACCOUNT_PRICE" jdbcType="DECIMAL" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="SaleAccountModel_Column_List">
+		ROW_ID,SORT_NBR,NOTES,BILL_CODE,CUSTOMER_ID,SALE_BILL_ID,SALE_BILL_TOTAL_PRICE,SALE_ACCOUNT_DATE,CREATE_DATE,BUSINESS_CODE,PIG_NUM,PIG_WEIGHT,NOMINAL_PRICE,CARCASS_TOTAL_WEIGHT,FAT_RATE,TOTAL_ITEM_PRICE,TOTAL_ACCOUNT,TOTAL_ACCOUNT_PRICE
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="rowId"  parameterType="SaleAccountModel">
+		INSERT INTO PP_L_BILL_SALE_ACCOUNT
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ROW_ID,
+			SORT_NBR,
+			STATUS,
+			DELETED_FLAG,
+			ORIGIN_FLAG,
+			ORIGIN_APP,
+			NOTES,
+			COMPANY_ID,
+			FARM_ID,
+			BILL_CODE,
+			CUSTOMER_ID,
+			SALE_BILL_ID,
+			SALE_BILL_TOTAL_PRICE,
+			SALE_ACCOUNT_DATE,
+			CREATE_DATE,
+			BUSINESS_CODE,
+			PIG_NUM,
+			PIG_WEIGHT,
+			NOMINAL_PRICE,
+			CARCASS_TOTAL_WEIGHT,
+			FAT_RATE,
+			TOTAL_ITEM_PRICE,
+			TOTAL_ACCOUNT,
+			TOTAL_ACCOUNT_PRICE
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ rowId,jdbcType=INTEGER},
+			#{ sortNbr,jdbcType=INTEGER},
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ originFlag,jdbcType=CHAR},
+			#{ originApp,jdbcType=VARCHAR},
+			#{ notes,jdbcType=VARCHAR},
+			#{ companyId,jdbcType=INTEGER},
+			#{ farmId,jdbcType=INTEGER},
+			#{ billCode,jdbcType=VARCHAR},
+			#{ customerId,jdbcType=INTEGER},
+			#{ saleBillId,jdbcType=INTEGER},
+			#{ saleBillTotalPrice,jdbcType=DECIMAL},
+			#{ saleAccountDate,jdbcType=DATE},
+			#{ createDate,jdbcType=DATE},
+			#{ businessCode,jdbcType=VARCHAR},
+			#{ pigNum,jdbcType=INTEGER},
+			#{ pigWeight,jdbcType=DECIMAL},
+			#{ nominalPrice,jdbcType=DECIMAL},
+			#{ carcassTotalWeight,jdbcType=DECIMAL},
+			#{ fatRate,jdbcType=DECIMAL},
+			#{ totalItemPrice,jdbcType=DECIMAL},
+			#{ totalAccount,jdbcType=DECIMAL},
+			#{ totalAccountPrice,jdbcType=DECIMAL}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO PP_L_BILL_SALE_ACCOUNT
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ROW_ID ,
+			SORT_NBR ,
+			STATUS ,
+			DELETED_FLAG ,
+			ORIGIN_FLAG ,
+			ORIGIN_APP ,
+			NOTES ,
+			COMPANY_ID ,
+			FARM_ID ,
+			BILL_CODE ,
+			CUSTOMER_ID ,
+			SALE_BILL_ID ,
+			SALE_BILL_TOTAL_PRICE ,
+			SALE_ACCOUNT_DATE ,
+			CREATE_DATE ,
+			BUSINESS_CODE ,
+			PIG_NUM ,
+			PIG_WEIGHT ,
+			NOMINAL_PRICE ,
+			CARCASS_TOTAL_WEIGHT ,
+			FAT_RATE ,
+			TOTAL_ITEM_PRICE ,
+			TOTAL_ACCOUNT ,
+			TOTAL_ACCOUNT_PRICE 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.rowId,jdbcType=INTEGER},
+				#{item.sortNbr,jdbcType=INTEGER},
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.originFlag,jdbcType=CHAR},
+				#{item.originApp,jdbcType=VARCHAR},
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.companyId,jdbcType=INTEGER},
+				#{item.farmId,jdbcType=INTEGER},
+				#{item.billCode,jdbcType=VARCHAR},
+				#{item.customerId,jdbcType=INTEGER},
+				#{item.saleBillId,jdbcType=INTEGER},
+				#{item.saleBillTotalPrice,jdbcType=DECIMAL},
+				#{item.saleAccountDate,jdbcType=DATE},
+				#{item.createDate,jdbcType=DATE},
+				#{item.businessCode,jdbcType=VARCHAR},
+				#{item.pigNum,jdbcType=INTEGER},
+				#{item.pigWeight,jdbcType=DECIMAL},
+				#{item.nominalPrice,jdbcType=DECIMAL},
+				#{item.carcassTotalWeight,jdbcType=DECIMAL},
+				#{item.fatRate,jdbcType=DECIMAL},
+				#{item.totalItemPrice,jdbcType=DECIMAL},
+				#{item.totalAccount,jdbcType=DECIMAL},
+				#{item.totalAccountPrice,jdbcType=DECIMAL}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="SaleAccountModel" >
+		UPDATE PP_L_BILL_SALE_ACCOUNT 
+		<set>
+		<if test="sortNbr != null">SORT_NBR = #{ sortNbr,jdbcType=INTEGER},</if>
+		<if test="status != null">STATUS = #{ status,jdbcType=CHAR},</if>
+		<if test="originFlag != null">ORIGIN_FLAG = #{ originFlag,jdbcType=CHAR},</if>
+		<if test="originApp != null">ORIGIN_APP = #{ originApp,jdbcType=VARCHAR},</if>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="billCode != null">BILL_CODE = #{ billCode,jdbcType=VARCHAR},</if>
+		<if test="customerId != null">CUSTOMER_ID = #{ customerId,jdbcType=INTEGER},</if>
+		<if test="saleBillId != null">SALE_BILL_ID = #{ saleBillId,jdbcType=INTEGER},</if>
+		<if test="saleBillTotalPrice != null">SALE_BILL_TOTAL_PRICE = #{ saleBillTotalPrice,jdbcType=DECIMAL},</if>
+		<if test="saleAccountDate != null">SALE_ACCOUNT_DATE = #{ saleAccountDate,jdbcType=DATE},</if>
+		<if test="createDate != null">CREATE_DATE = #{ createDate,jdbcType=DATE},</if>
+		<if test="businessCode != null">BUSINESS_CODE = #{ businessCode,jdbcType=VARCHAR},</if>
+		<if test="pigNum != null">PIG_NUM = #{ pigNum,jdbcType=INTEGER},</if>
+		<if test="pigWeight != null">PIG_WEIGHT = #{ pigWeight,jdbcType=DECIMAL},</if>
+		<if test="nominalPrice != null">NOMINAL_PRICE = #{ nominalPrice,jdbcType=DECIMAL},</if>
+		<if test="carcassTotalWeight != null">CARCASS_TOTAL_WEIGHT = #{ carcassTotalWeight,jdbcType=DECIMAL},</if>
+		<if test="fatRate != null">FAT_RATE = #{ fatRate,jdbcType=DECIMAL},</if>
+		<if test="totalItemPrice != null">TOTAL_ITEM_PRICE = #{ totalItemPrice,jdbcType=DECIMAL},</if>
+		<if test="totalAccount != null">TOTAL_ACCOUNT = #{ totalAccount,jdbcType=DECIMAL},</if>
+		<if test="totalAccountPrice != null">TOTAL_ACCOUNT_PRICE = #{ totalAccountPrice,jdbcType=DECIMAL}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE PP_L_BILL_SALE_ACCOUNT 
+			<set>
+			<if test="item.sortNbr != null">SORT_NBR = #{item.sortNbr,jdbcType=INTEGER},</if>
+			<if test="item.status != null">STATUS = #{item.status,jdbcType=CHAR},</if>
+			<if test="item.originFlag != null">ORIGIN_FLAG = #{item.originFlag,jdbcType=CHAR},</if>
+			<if test="item.originApp != null">ORIGIN_APP = #{item.originApp,jdbcType=VARCHAR},</if>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.billCode != null">BILL_CODE = #{item.billCode,jdbcType=VARCHAR},</if>
+			<if test="item.customerId != null">CUSTOMER_ID = #{item.customerId,jdbcType=INTEGER},</if>
+			<if test="item.saleBillId != null">SALE_BILL_ID = #{item.saleBillId,jdbcType=INTEGER},</if>
+			<if test="item.saleBillTotalPrice != null">SALE_BILL_TOTAL_PRICE = #{item.saleBillTotalPrice,jdbcType=DECIMAL},</if>
+			<if test="item.saleAccountDate != null">SALE_ACCOUNT_DATE = #{item.saleAccountDate,jdbcType=DATE},</if>
+			<if test="item.createDate != null">CREATE_DATE = #{item.createDate,jdbcType=DATE},</if>
+			<if test="item.businessCode != null">BUSINESS_CODE = #{item.businessCode,jdbcType=VARCHAR},</if>
+			<if test="item.pigNum != null">PIG_NUM = #{item.pigNum,jdbcType=INTEGER},</if>
+			<if test="item.pigWeight != null">PIG_WEIGHT = #{item.pigWeight,jdbcType=DECIMAL},</if>
+			<if test="item.nominalPrice != null">NOMINAL_PRICE = #{item.nominalPrice,jdbcType=DECIMAL},</if>
+			<if test="item.carcassTotalWeight != null">CARCASS_TOTAL_WEIGHT = #{item.carcassTotalWeight,jdbcType=DECIMAL},</if>
+			<if test="item.fatRate != null">FAT_RATE = #{item.fatRate,jdbcType=DECIMAL},</if>
+			<if test="item.totalItemPrice != null">TOTAL_ITEM_PRICE = #{item.totalItemPrice,jdbcType=DECIMAL},</if>
+			<if test="item.totalAccount != null">TOTAL_ACCOUNT = #{item.totalAccount,jdbcType=DECIMAL},</if>
+			<if test="item.totalAccountPrice != null">TOTAL_ACCOUNT_PRICE = #{item.totalAccountPrice,jdbcType=DECIMAL}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  PP_L_BILL_SALE_ACCOUNT
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  PP_L_BILL_SALE_ACCOUNT
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE 
+		 ROW_ID =#{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  PP_L_BILL_SALE_ACCOUNT
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' 
+		 AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+		 AND ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCons" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  PP_L_BILL_SALE_ACCOUNT
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' ${item}
+		</foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="SaleAccountResult">
+		SELECT 
+		<include refid="SaleAccountModel_Column_List" />
+		FROM PP_L_BILL_SALE_ACCOUNT WHERE DELETED_FLAG='0' 
+		AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="SaleAccountResult" >
+		SELECT 
+		<include refid="SaleAccountModel_Column_List" />
+		FROM PP_L_BILL_SALE_ACCOUNT WHERE DELETED_FLAG='0'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="SaleAccountResult" >
+		SELECT 
+		<include refid="SaleAccountModel_Column_List" />
+		FROM PP_L_BILL_SALE_ACCOUNT
+		WHERE DELETED_FLAG='0'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="SaleAccountResult" >
+		SELECT 
+		<include refid="SaleAccountModel_Column_List" />
+		FROM PP_L_BILL_SALE_ACCOUNT
+		WHERE ${condition}
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAll" resultMap="SaleAccountResult" >
+		SELECT *
+		FROM PP_L_BILL_SALE_ACCOUNT
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="SaleAccountResult"> ${sql} </select>
+
+</mapper>
+

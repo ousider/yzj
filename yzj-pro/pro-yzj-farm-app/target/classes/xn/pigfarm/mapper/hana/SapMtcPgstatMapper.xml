@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.hana.SapMtcPgstatMapper">
+
+	<resultMap id="SapMtcPgstatResult"  type="SapMtcPgstatModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="sortNbr" column="SORT_NBR" jdbcType="INTEGER" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="originFlag" column="ORIGIN_FLAG" jdbcType="CHAR" />
+		<result property="originApp" column="ORIGIN_APP" jdbcType="VARCHAR" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="companyId" column="COMPANY_ID" jdbcType="INTEGER" />
+		<result property="farmId" column="FARM_ID" jdbcType="INTEGER" />
+		<result property="houseId" column="HOUSE_ID" jdbcType="INTEGER" />
+		<result property="hanaLogId" column="HANA_LOG_ID" jdbcType="INTEGER" />
+		<result property="itfcId" column="ITFC_ID" jdbcType="INTEGER" />
+		<result property="createTime" column="CREATE_TIME" jdbcType="TIMESTAMP" />
+		<result property="mtcbranchId" column="MTC_BranchID" jdbcType="VARCHAR" />
+		<result property="mtcdeptId" column="MTC_DeptID" jdbcType="VARCHAR" />
+		<result property="mtcunit" column="MTC_Unit" jdbcType="VARCHAR" />
+		<result property="mtcperiod" column="MTC_Period" jdbcType="VARCHAR" />
+		<result property="mtcpregStep1" column="MTC_PregStep_1" jdbcType="VARCHAR" />
+		<result property="mtcpregStep2" column="MTC_PregStep_2" jdbcType="VARCHAR" />
+		<result property="mtcpregStep3" column="MTC_PregStep_3" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="SapMtcPgstatModel_Column_List">
+		ROW_ID,SORT_NBR,NOTES,HOUSE_ID,HANA_LOG_ID,ITFC_ID,CREATE_TIME,MTC_BranchID,MTC_DeptID,MTC_Unit,MTC_Period,MTC_PregStep_1,MTC_PregStep_2,MTC_PregStep_3
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true"   keyProperty="rowId" parameterType="SapMtcPgstatModel">
+		INSERT INTO SAP_MTC_PGSTAT
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR,
+			STATUS,
+			DELETED_FLAG,
+			ORIGIN_FLAG,
+			ORIGIN_APP,
+			NOTES,
+			COMPANY_ID,
+			FARM_ID,
+			HOUSE_ID,
+			HANA_LOG_ID,
+			ITFC_ID,
+			CREATE_TIME,
+			MTC_BranchID,
+			MTC_DeptID,
+			MTC_Unit,
+			MTC_Period,
+			MTC_PregStep_1,
+			MTC_PregStep_2,
+			MTC_PregStep_3
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ sortNbr,jdbcType=INTEGER},
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ originFlag,jdbcType=CHAR},
+			#{ originApp,jdbcType=VARCHAR},
+			#{ notes,jdbcType=VARCHAR},
+			#{ companyId,jdbcType=INTEGER},
+			#{ farmId,jdbcType=INTEGER},
+			#{ houseId,jdbcType=INTEGER},
+			#{ hanaLogId,jdbcType=INTEGER},
+			#{ itfcId,jdbcType=INTEGER},
+			#{ createTime,jdbcType=TIMESTAMP},
+			#{ mtcbranchId,jdbcType=VARCHAR},
+			#{ mtcdeptId,jdbcType=VARCHAR},
+			#{ mtcunit,jdbcType=VARCHAR},
+			#{ mtcperiod,jdbcType=VARCHAR},
+			#{ mtcpregStep1,jdbcType=VARCHAR},
+			#{ mtcpregStep2,jdbcType=VARCHAR},
+			#{ mtcpregStep3,jdbcType=VARCHAR}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO SAP_MTC_PGSTAT
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR ,
+			STATUS ,
+			DELETED_FLAG ,
+			ORIGIN_FLAG ,
+			ORIGIN_APP ,
+			NOTES ,
+			COMPANY_ID ,
+			FARM_ID ,
+			HOUSE_ID ,
+			HANA_LOG_ID ,
+			ITFC_ID ,
+			CREATE_TIME ,
+			MTC_BranchID ,
+			MTC_DeptID ,
+			MTC_Unit ,
+			MTC_Period ,
+			MTC_PregStep_1 ,
+			MTC_PregStep_2 ,
+			MTC_PregStep_3 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.sortNbr,jdbcType=INTEGER},
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.originFlag,jdbcType=CHAR},
+				#{item.originApp,jdbcType=VARCHAR},
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.companyId,jdbcType=INTEGER},
+				#{item.farmId,jdbcType=INTEGER},
+				#{item.houseId,jdbcType=INTEGER},
+				#{item.hanaLogId,jdbcType=INTEGER},
+				#{item.itfcId,jdbcType=INTEGER},
+				#{item.createTime,jdbcType=TIMESTAMP},
+				#{item.mtcbranchId,jdbcType=VARCHAR},
+				#{item.mtcdeptId,jdbcType=VARCHAR},
+				#{item.mtcunit,jdbcType=VARCHAR},
+				#{item.mtcperiod,jdbcType=VARCHAR},
+				#{item.mtcpregStep1,jdbcType=VARCHAR},
+				#{item.mtcpregStep2,jdbcType=VARCHAR},
+				#{item.mtcpregStep3,jdbcType=VARCHAR}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="SapMtcPgstatModel" >
+		UPDATE SAP_MTC_PGSTAT 
+		<set>
+		<if test="sortNbr != null">SORT_NBR = #{ sortNbr,jdbcType=INTEGER},</if>
+		<if test="status != null">STATUS = #{ status,jdbcType=CHAR},</if>
+		<if test="originFlag != null">ORIGIN_FLAG = #{ originFlag,jdbcType=CHAR},</if>
+		<if test="originApp != null">ORIGIN_APP = #{ originApp,jdbcType=VARCHAR},</if>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="houseId != null">HOUSE_ID = #{ houseId,jdbcType=INTEGER},</if>
+		<if test="hanaLogId != null">HANA_LOG_ID = #{ hanaLogId,jdbcType=INTEGER},</if>
+		<if test="itfcId != null">ITFC_ID = #{ itfcId,jdbcType=INTEGER},</if>
+		<if test="createTime != null">CREATE_TIME = #{ createTime,jdbcType=TIMESTAMP},</if>
+		<if test="mtcbranchId != null">MTC_BranchID = #{ mtcbranchId,jdbcType=VARCHAR},</if>
+		<if test="mtcdeptId != null">MTC_DeptID = #{ mtcdeptId,jdbcType=VARCHAR},</if>
+		<if test="mtcunit != null">MTC_Unit = #{ mtcunit,jdbcType=VARCHAR},</if>
+		<if test="mtcperiod != null">MTC_Period = #{ mtcperiod,jdbcType=VARCHAR},</if>
+		<if test="mtcpregStep1 != null">MTC_PregStep_1 = #{ mtcpregStep1,jdbcType=VARCHAR},</if>
+		<if test="mtcpregStep2 != null">MTC_PregStep_2 = #{ mtcpregStep2,jdbcType=VARCHAR},</if>
+		<if test="mtcpregStep3 != null">MTC_PregStep_3 = #{ mtcpregStep3,jdbcType=VARCHAR}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE SAP_MTC_PGSTAT 
+			<set>
+			<if test="item.sortNbr != null">SORT_NBR = #{item.sortNbr,jdbcType=INTEGER},</if>
+			<if test="item.status != null">STATUS = #{item.status,jdbcType=CHAR},</if>
+			<if test="item.originFlag != null">ORIGIN_FLAG = #{item.originFlag,jdbcType=CHAR},</if>
+			<if test="item.originApp != null">ORIGIN_APP = #{item.originApp,jdbcType=VARCHAR},</if>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.houseId != null">HOUSE_ID = #{item.houseId,jdbcType=INTEGER},</if>
+			<if test="item.hanaLogId != null">HANA_LOG_ID = #{item.hanaLogId,jdbcType=INTEGER},</if>
+			<if test="item.itfcId != null">ITFC_ID = #{item.itfcId,jdbcType=INTEGER},</if>
+			<if test="item.createTime != null">CREATE_TIME = #{item.createTime,jdbcType=TIMESTAMP},</if>
+			<if test="item.mtcbranchId != null">MTC_BranchID = #{item.mtcbranchId,jdbcType=VARCHAR},</if>
+			<if test="item.mtcdeptId != null">MTC_DeptID = #{item.mtcdeptId,jdbcType=VARCHAR},</if>
+			<if test="item.mtcunit != null">MTC_Unit = #{item.mtcunit,jdbcType=VARCHAR},</if>
+			<if test="item.mtcperiod != null">MTC_Period = #{item.mtcperiod,jdbcType=VARCHAR},</if>
+			<if test="item.mtcpregStep1 != null">MTC_PregStep_1 = #{item.mtcpregStep1,jdbcType=VARCHAR},</if>
+			<if test="item.mtcpregStep2 != null">MTC_PregStep_2 = #{item.mtcpregStep2,jdbcType=VARCHAR},</if>
+			<if test="item.mtcpregStep3 != null">MTC_PregStep_3 = #{item.mtcpregStep3,jdbcType=VARCHAR}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  SAP_MTC_PGSTAT
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  SAP_MTC_PGSTAT
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE 
+		 ROW_ID =#{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  SAP_MTC_PGSTAT
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' 
+		 AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+		 AND ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCons" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  SAP_MTC_PGSTAT
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' ${item}
+		</foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="SapMtcPgstatResult">
+		SELECT 
+		<include refid="SapMtcPgstatModel_Column_List" />
+		FROM SAP_MTC_PGSTAT WHERE DELETED_FLAG='0' 
+		AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="SapMtcPgstatResult" >
+		SELECT 
+		<include refid="SapMtcPgstatModel_Column_List" />
+		FROM SAP_MTC_PGSTAT WHERE DELETED_FLAG='0'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="SapMtcPgstatResult" >
+		SELECT 
+		<include refid="SapMtcPgstatModel_Column_List" />
+		FROM SAP_MTC_PGSTAT
+		WHERE DELETED_FLAG='0'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="SapMtcPgstatResult" >
+		SELECT 
+		<include refid="SapMtcPgstatModel_Column_List" />
+		FROM SAP_MTC_PGSTAT
+		WHERE ${condition}
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAll" resultMap="SapMtcPgstatResult" >
+		SELECT *
+		FROM SAP_MTC_PGSTAT
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="SapMtcPgstatResult"> ${sql} </select>
+
+</mapper>
+

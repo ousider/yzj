@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.production.OestrusMapper">
+
+	<resultMap id="OestrusResult"  type="OestrusModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="sortNbr" column="SORT_NBR" jdbcType="INTEGER" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="originFlag" column="ORIGIN_FLAG" jdbcType="CHAR" />
+		<result property="originApp" column="ORIGIN_APP" jdbcType="VARCHAR" />
+		<result property="lineNumber" column="LINE_NUMBER" jdbcType="INTEGER" />
+		<result property="companyId" column="COMPANY_ID" jdbcType="INTEGER" />
+		<result property="farmId" column="FARM_ID" jdbcType="INTEGER" />
+		<result property="swineryId" column="SWINERY_ID" jdbcType="INTEGER" />
+		<result property="pigId" column="PIG_ID" jdbcType="INTEGER" />
+		<result property="lineId" column="LINE_ID" jdbcType="INTEGER" />
+		<result property="houseId" column="HOUSE_ID" jdbcType="INTEGER" />
+		<result property="pigpenId" column="PIGPEN_ID" jdbcType="INTEGER" />
+		<result property="billId" column="BILL_ID" jdbcType="INTEGER" />
+		<result property="lastStatus" column="LAST_STATUS" jdbcType="VARCHAR" />
+		<result property="fqjcType" column="FQJC_TYPE" jdbcType="VARCHAR" />
+		<result property="fqjcResult" column="FQJC_RESULT" jdbcType="VARCHAR" />
+		<result property="drjlMin" column="DRJL_MIN" jdbcType="INTEGER" />
+		<result property="dgzjlMin" column="DGZJL_MIN" jdbcType="INTEGER" />
+		<result property="proNo" column="PRO_NO" jdbcType="INTEGER" />
+		<result property="fqjcDate" column="FQJC_DATE" jdbcType="TIMESTAMP" />
+		<result property="oestrusId" column="OESTRUS_ID" jdbcType="INTEGER" />
+		<result property="worker" column="WORKER" jdbcType="INTEGER" />
+		<result property="createId" column="CREATE_ID" jdbcType="INTEGER" />
+		<result property="createDate" column="CREATE_DATE" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="OestrusModel_Column_List">
+		ROW_ID,NOTES,SORT_NBR,STATUS,DELETED_FLAG,ORIGIN_FLAG,ORIGIN_APP,LINE_NUMBER,COMPANY_ID,FARM_ID,SWINERY_ID,PIG_ID,LINE_ID,HOUSE_ID,PIGPEN_ID,BILL_ID,LAST_STATUS,FQJC_TYPE,FQJC_RESULT,DRJL_MIN,DGZJL_MIN,PRO_NO,FQJC_DATE,OESTRUS_ID,WORKER,CREATE_ID,CREATE_DATE
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="rowId" parameterType="OestrusModel">
+		INSERT INTO PP_L_BILL_OESTRUS
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			NOTES,
+			SORT_NBR,
+			STATUS,
+			DELETED_FLAG,
+			ORIGIN_FLAG,
+			ORIGIN_APP,
+			LINE_NUMBER,
+			COMPANY_ID,
+			FARM_ID,
+			SWINERY_ID,
+			PIG_ID,
+			LINE_ID,
+			HOUSE_ID,
+			PIGPEN_ID,
+			BILL_ID,
+			LAST_STATUS,
+			FQJC_TYPE,
+			FQJC_RESULT,
+			DRJL_MIN,
+			DGZJL_MIN,
+			PRO_NO,
+			FQJC_DATE,
+			OESTRUS_ID,
+			WORKER,
+			CREATE_ID,
+			CREATE_DATE
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ notes,jdbcType=VARCHAR},
+			#{ sortNbr,jdbcType=INTEGER},
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ originFlag,jdbcType=CHAR},
+			#{ originApp,jdbcType=VARCHAR},
+			#{ lineNumber,jdbcType=INTEGER},
+			#{ companyId,jdbcType=INTEGER},
+			#{ farmId,jdbcType=INTEGER},
+			#{ swineryId,jdbcType=INTEGER},
+			#{ pigId,jdbcType=INTEGER},
+			#{ lineId,jdbcType=INTEGER},
+			#{ houseId,jdbcType=INTEGER},
+			#{ pigpenId,jdbcType=INTEGER},
+			#{ billId,jdbcType=INTEGER},
+			#{ lastStatus,jdbcType=VARCHAR},
+			#{ fqjcType,jdbcType=VARCHAR},
+			#{ fqjcResult,jdbcType=VARCHAR},
+			#{ drjlMin,jdbcType=INTEGER},
+			#{ dgzjlMin,jdbcType=INTEGER},
+			#{ proNo,jdbcType=INTEGER},
+			#{ fqjcDate,jdbcType=TIMESTAMP},
+			#{ oestrusId,jdbcType=INTEGER},
+			#{ worker,jdbcType=INTEGER},
+			#{ createId,jdbcType=INTEGER},
+			#{ createDate,jdbcType=TIMESTAMP}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO PP_L_BILL_OESTRUS
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			NOTES ,
+			SORT_NBR ,
+			STATUS ,
+			DELETED_FLAG ,
+			ORIGIN_FLAG ,
+			ORIGIN_APP ,
+			LINE_NUMBER ,
+			COMPANY_ID ,
+			FARM_ID ,
+			SWINERY_ID ,
+			PIG_ID ,
+			LINE_ID ,
+			HOUSE_ID ,
+			PIGPEN_ID ,
+			BILL_ID ,
+			LAST_STATUS ,
+			FQJC_TYPE ,
+			FQJC_RESULT ,
+			DRJL_MIN ,
+			DGZJL_MIN ,
+			PRO_NO ,
+			FQJC_DATE ,
+			OESTRUS_ID ,
+			WORKER ,
+			CREATE_ID ,
+			CREATE_DATE 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.sortNbr,jdbcType=INTEGER},
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.originFlag,jdbcType=CHAR},
+				#{item.originApp,jdbcType=VARCHAR},
+				#{item.lineNumber,jdbcType=INTEGER},
+				#{item.companyId,jdbcType=INTEGER},
+				#{item.farmId,jdbcType=INTEGER},
+				#{item.swineryId,jdbcType=INTEGER},
+				#{item.pigId,jdbcType=INTEGER},
+				#{item.lineId,jdbcType=INTEGER},
+				#{item.houseId,jdbcType=INTEGER},
+				#{item.pigpenId,jdbcType=INTEGER},
+				#{item.billId,jdbcType=INTEGER},
+				#{item.lastStatus,jdbcType=VARCHAR},
+				#{item.fqjcType,jdbcType=VARCHAR},
+				#{item.fqjcResult,jdbcType=VARCHAR},
+				#{item.drjlMin,jdbcType=INTEGER},
+				#{item.dgzjlMin,jdbcType=INTEGER},
+				#{item.proNo,jdbcType=INTEGER},
+				#{item.fqjcDate,jdbcType=TIMESTAMP},
+				#{item.oestrusId,jdbcType=INTEGER},
+				#{item.worker,jdbcType=INTEGER},
+				#{item.createId,jdbcType=INTEGER},
+				#{item.createDate,jdbcType=TIMESTAMP}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="OestrusModel" >
+		UPDATE PP_L_BILL_OESTRUS 
+		<set>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="sortNbr != null">SORT_NBR = #{ sortNbr,jdbcType=INTEGER},</if>
+		<if test="originFlag != null">ORIGIN_FLAG = #{ originFlag,jdbcType=CHAR},</if>
+		<if test="originApp != null">ORIGIN_APP = #{ originApp,jdbcType=VARCHAR},</if>
+		<if test="lineNumber != null">LINE_NUMBER = #{ lineNumber,jdbcType=INTEGER},</if>
+		<if test="swineryId != null">SWINERY_ID = #{ swineryId,jdbcType=INTEGER},</if>
+		<if test="pigId != null">PIG_ID = #{ pigId,jdbcType=INTEGER},</if>
+		<if test="lineId != null">LINE_ID = #{ lineId,jdbcType=INTEGER},</if>
+		<if test="houseId != null">HOUSE_ID = #{ houseId,jdbcType=INTEGER},</if>
+		<if test="pigpenId != null">PIGPEN_ID = #{ pigpenId,jdbcType=INTEGER},</if>
+		<if test="billId != null">BILL_ID = #{ billId,jdbcType=INTEGER},</if>
+		<if test="lastStatus != null">LAST_STATUS = #{ lastStatus,jdbcType=VARCHAR},</if>
+		<if test="fqjcType != null">FQJC_TYPE = #{ fqjcType,jdbcType=VARCHAR},</if>
+		<if test="fqjcResult != null">FQJC_RESULT = #{ fqjcResult,jdbcType=VARCHAR},</if>
+		<if test="drjlMin != null">DRJL_MIN = #{ drjlMin,jdbcType=INTEGER},</if>
+		<if test="dgzjlMin != null">DGZJL_MIN = #{ dgzjlMin,jdbcType=INTEGER},</if>
+		<if test="proNo != null">PRO_NO = #{ proNo,jdbcType=INTEGER},</if>
+		<if test="fqjcDate != null">FQJC_DATE = #{ fqjcDate,jdbcType=TIMESTAMP},</if>
+		<if test="oestrusId != null">OESTRUS_ID = #{ oestrusId,jdbcType=INTEGER},</if>
+		<if test="worker != null">WORKER = #{ worker,jdbcType=INTEGER},</if>
+		<if test="createId != null">CREATE_ID = #{ createId,jdbcType=INTEGER},</if>
+		<if test="createDate != null">CREATE_DATE = #{ createDate,jdbcType=TIMESTAMP}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE PP_L_BILL_OESTRUS 
+			<set>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.sortNbr != null">SORT_NBR = #{item.sortNbr,jdbcType=INTEGER},</if>
+			<if test="item.originFlag != null">ORIGIN_FLAG = #{item.originFlag,jdbcType=CHAR},</if>
+			<if test="item.originApp != null">ORIGIN_APP = #{item.originApp,jdbcType=VARCHAR},</if>
+			<if test="item.lineNumber != null">LINE_NUMBER = #{item.lineNumber,jdbcType=INTEGER},</if>
+			<if test="item.swineryId != null">SWINERY_ID = #{item.swineryId,jdbcType=INTEGER},</if>
+			<if test="item.pigId != null">PIG_ID = #{item.pigId,jdbcType=INTEGER},</if>
+			<if test="item.lineId != null">LINE_ID = #{item.lineId,jdbcType=INTEGER},</if>
+			<if test="item.houseId != null">HOUSE_ID = #{item.houseId,jdbcType=INTEGER},</if>
+			<if test="item.pigpenId != null">PIGPEN_ID = #{item.pigpenId,jdbcType=INTEGER},</if>
+			<if test="item.billId != null">BILL_ID = #{item.billId,jdbcType=INTEGER},</if>
+			<if test="item.lastStatus != null">LAST_STATUS = #{item.lastStatus,jdbcType=VARCHAR},</if>
+			<if test="item.fqjcType != null">FQJC_TYPE = #{item.fqjcType,jdbcType=VARCHAR},</if>
+			<if test="item.fqjcResult != null">FQJC_RESULT = #{item.fqjcResult,jdbcType=VARCHAR},</if>
+			<if test="item.drjlMin != null">DRJL_MIN = #{item.drjlMin,jdbcType=INTEGER},</if>
+			<if test="item.dgzjlMin != null">DGZJL_MIN = #{item.dgzjlMin,jdbcType=INTEGER},</if>
+			<if test="item.proNo != null">PRO_NO = #{item.proNo,jdbcType=INTEGER},</if>
+			<if test="item.fqjcDate != null">FQJC_DATE = #{item.fqjcDate,jdbcType=TIMESTAMP},</if>
+			<if test="item.oestrusId != null">OESTRUS_ID = #{item.oestrusId,jdbcType=INTEGER},</if>
+			<if test="item.worker != null">WORKER = #{item.worker,jdbcType=INTEGER},</if>
+			<if test="item.createId != null">CREATE_ID = #{item.createId,jdbcType=INTEGER},</if>
+			<if test="item.createDate != null">CREATE_DATE = #{item.createDate,jdbcType=TIMESTAMP}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  PP_L_BILL_OESTRUS
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  PP_L_BILL_OESTRUS
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE ROW_ID = #{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  PP_L_BILL_OESTRUS
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="OestrusResult">
+		SELECT *
+		FROM PP_L_BILL_OESTRUS WHERE DELETED_FLAG='0' AND STATUS = '1' 
+		AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="OestrusResult" >
+		SELECT *
+		FROM PP_L_BILL_OESTRUS WHERE DELETED_FLAG='0' AND STATUS = '1'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="OestrusResult" >
+		SELECT *
+		FROM PP_L_BILL_OESTRUS
+		WHERE DELETED_FLAG='0' AND STATUS = '1'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="OestrusResult" >
+		SELECT *
+		FROM PP_L_BILL_OESTRUS
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="OestrusResult"> ${sql} </select>
+
+</mapper>
+

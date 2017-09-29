@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.core.mapper.system.MenuMapper">
+
+	<resultMap id="MenuResult"  type="MenuView" >
+		<result property="parentId" column="PARENT_ID" jdbcType="INTEGER" />
+		<result property="menuType" column="MENU_TYPE" jdbcType="VARCHAR" />
+		<result property="moduleCode" column="MODULE_CODE" jdbcType="VARCHAR" />
+		<result property="moduleEnNa" column="MODULE_EN_NA" jdbcType="VARCHAR" />
+		<result property="sortEnNa" column="SORT_EN_NA" jdbcType="VARCHAR" />
+		<result property="moduleId" column="MODULE_ID" jdbcType="INTEGER" />
+		<result property="levelNum" column="LEVEL_NUM" jdbcType="INTEGER" />
+		<result property="moduleName" column="MODULE_NAME" jdbcType="VARCHAR" />
+		<result property="moduleUrl" column="MODULE_URL" jdbcType="VARCHAR" />
+		<result property="glyph" column="GLYPH" jdbcType="VARCHAR" />
+		<result property="iconCls" column="ICON_CLS" jdbcType="VARCHAR" />
+		<result property="clickEvent" column="CLICK_EVENT" jdbcType="VARCHAR" />
+		<result property="component" column="COMPONENT" jdbcType="VARCHAR" />
+		<result property="isQuickMenu" column="IS_QUICK_MENU" jdbcType="VARCHAR" />
+	</resultMap>
+
+	 <select id="searchMenuByUserId" resultMap="MenuResult" >
+	 <![CDATA[
+			SELECT  DISTINCT T3.MODULE_ID,T3.LEVEL_NUM,T3.PARENT_ID,T4.MODULE_NAME,T4.MODULE_URL,T4.GLYPH,T4.ICON_CLS,T4.CLICK_EVENT,T4.COMPONENT
+			,T4.IS_QUICK_MENU
+			FROM cd_r_employee_role T0 
+			INNER JOIN cd_o_role T1
+			ON T0.ROLE_ID = T1.ROW_ID AND T1.DELETED_FLAG = '0' AND T1.STATUS = '1'
+			INNER JOIN cd_r_limit T2
+			ON T1.ROW_ID = T2.ROLE_ID AND T2.DELETED_FLAG = '0' AND T2.STATUS = '1'
+			INNER JOIN cd_r_menus T3
+			ON T3.TEMPLATE_ID = T1.TEMPLATE_ID AND T3.DELETED_FLAG = '0' AND T3.STATUS = '1'  AND T2.OBJ_ID = T3.MODULE_ID AND T2.OBJ_TYPE = 'URL'
+			INNER JOIN cd_o_module T4
+			ON T3.MODULE_ID = T4.ROW_ID AND T4.DELETED_FLAG = '0' AND T4.STATUS = '1'
+			WHERE T0.EMPLOYEE_ID = #{employeeId} AND T0.DELETED_FLAG = '0' AND T0.STATUS = '1'
+			AND T1.FARM_ID = #{farmId} 
+			AND T4.MENU_TYPE = #{menuType}]]>
+	 </select>    
+	 
+	 <select id="searchMenuByTemplateId" resultMap="MenuResult" >
+	 <![CDATA[
+		SELECT DISTINCT T1.MODULE_ID,T1.LEVEL_NUM,T1.PARENT_ID,T2.MODULE_NAME,T2.MODULE_URL,T2.GLYPH,T2.ICON_CLS,T2.CLICK_EVENT,T2.COMPONENT 
+		,T2.IS_QUICK_MENU
+		FROM cd_r_menus T1
+		INNER JOIN cd_o_module T2 ON T1.MODULE_ID = T2.ROW_ID AND T2.DELETED_FLAG = '0' AND T2.STATUS = '1'
+		WHERE T1.DELETED_FLAG = '0' AND T1.STATUS = '1' AND T1.TEMPLATE_ID= #{templateId} AND T2.MENU_TYPE = #{menuType}
+		]]>
+	 </select>   
+
+</mapper>
+

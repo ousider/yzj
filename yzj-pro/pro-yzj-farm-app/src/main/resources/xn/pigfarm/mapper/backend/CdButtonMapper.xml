@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="xn.pigfarm.mapper.backend.CdButtonMapper">
+
+	<resultMap id="cdButtonResult" type="CdButtonModel"  extends = "BaseMapper.BaseModelMap">
+		<result property="moduleId" column="MODULE_ID" jdbcType="INTEGER" />
+		<result property="pageId" column="PAGE_ID" jdbcType="INTEGER" />
+		<result property="btnType" column="BTN_TYPE" jdbcType="VARCHAR" />
+		<result property="btnCode" column="BTN_CODE" jdbcType="VARCHAR" />
+		<result property="btnName" column="BTN_NAME" jdbcType="VARCHAR" />
+		<result property="iconCls" column="ICON_CLS" jdbcType="VARCHAR" />
+		<result property="funName" column="FUN_NAME" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="Base_Column_List">
+		cm.ROW_ID,cm.NOTES,cm.SORT_NBR,cm.STATUS,cm.DELETED_FLAG,cm.ORIGIN_FLAG,cm.ORIGIN_APP,cm.MODULE_CODE,cm.MODULE_NAME,cm.SORT_NAME,cm.MODULE_EN_NA,cm.SORT_EN_NA,cm.ICON_CLS,cm.GLYPH,cm.CLICK_EVENT,cm.MENU_TYPE,cm.MODULE_URL,cm.COMPONENT,cm.USING_FLAG
+	</sql>
+	<sql id="List_Column_List">
+		cb.ROW_ID,cb.NOTES,cb.SORT_NBR,cb.STATUS,cb.DELETED_FLAG,cb.ORIGIN_FLAG,cb.ORIGIN_APP,cb.MODULE_ID,cb.PAGE_ID,cb.BTN_TYPE,cb.BTN_CODE,cb.BTN_NAME,cb.ICON_CLS,cb.FUN_NAME
+	</sql>
+
+	<insert id="inserts" >
+		insert into cd_o_button
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			NOTES ,SORT_NBR ,STATUS ,DELETED_FLAG ,ORIGIN_FLAG ,ORIGIN_APP ,MODULE_ID,PAGE_ID,BTN_TYPE,BTN_CODE,BTN_NAME,ICON_CLS,FUN_NAME
+		</trim>
+		<foreach collection="records" item="item" index="index" separator="UNION ALL"> 
+			SELECT 
+			#{ item.notes,jdbcType=VARCHAR} ,
+			#{ item.sortNbr,jdbcType=INTEGER} ,
+			#{ item.status,jdbcType=CHAR} ,
+			#{ item.deletedFlag,jdbcType=CHAR} ,
+			#{ item.originFlag,jdbcType=CHAR} ,
+			#{ item.originApp,jdbcType=VARCHAR} ,
+			#{ item.moduleId,jdbcType=INTEGER} ,
+			#{ item.pageId,jdbcType=INTEGER} ,
+			#{ item.btnType,jdbcType=VARCHAR} ,
+			#{ item.btnCode,jdbcType=VARCHAR} ,
+			#{ item.btnName,jdbcType=VARCHAR},
+			#{ item.iconCls,jdbcType=VARCHAR},
+			#{ item.funName,jdbcType=VARCHAR}
+		</foreach>
+	</insert>
+	
+	<!--带验证更新 -->
+	<update id="update" parameterType="CdButtonModel">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">
+			update cd_o_button
+			<set>
+				<if test="item.notes != null">NOTES = #{ item.notes,jdbcType=VARCHAR} ,</if>
+				<if test="item.sortNbr != null">SORT_NBR = #{ item.sortNbr,jdbcType=INTEGER} ,</if>
+				<if test="item.status != null">STATUS = #{ item.status,jdbcType=CHAR} ,</if>
+				<if test="item.originFlag != null">ORIGIN_FLAG = #{ item.originFlag,jdbcType=CHAR} ,</if>
+				<if test="item.originApp != null">ORIGIN_APP = #{ item.originApp,jdbcType=VARCHAR} ,</if>
+				<if test="item.moduleId != null">MODULE_ID = #{ item.moduleId,jdbcType=INTEGER} ,</if>
+				<if test="item.pageId != null">PAGE_ID = #{ item.pageId,jdbcType=INTEGER} ,</if>
+				<if test="item.btnType != null">BTN_TYPE = #{ item.btnType,jdbcType=VARCHAR} ,</if>
+				<if test="item.btnCode != null">BTN_CODE = #{ item.btnCode,jdbcType=VARCHAR} ,</if>
+				<if test="item.btnName != null">BTN_NAME = #{ item.btnName,jdbcType=VARCHAR} ,</if>
+				<if test="item.iconCls != null">ICON_CLS = #{ item.iconCls,jdbcType=VARCHAR} ,</if>
+				<if test="item.funName != null">FUN_NAME = #{ item.funName,jdbcType=VARCHAR} </if>
+			</set>
+			where
+			ROW_ID = #{ item.rowId,jdbcType=INTEGER}
+		</foreach>
+	</update>
+	
+	<!-- 删除 -->
+	<update id="deletes">
+		UPDATE
+		cd_o_button	SET
+		DELETED_FLAG = '1'	WHERE MODULE_ID in
+		<foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</update>
+	
+	<!--查询 -->
+	<!--根据菜单Id查询按钮 -->
+	<select id="searchDetailToList" resultMap="cdButtonResult">
+		select
+		<include refid="List_Column_List" />
+		from cd_o_button cb
+		where
+		STATUS = 1 AND DELETED_FLAG = 0 AND cb.MODULE_ID = #{ moduleId,jdbcType=INTEGER}
+	</select>
+	
+</mapper>
+

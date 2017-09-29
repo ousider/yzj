@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.production.ReLsaleDetailMapper">
+
+	<resultMap id="ReLsaleDetailResult"  type="ReLsaleDetailModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="sortNbr" column="SORT_NBR" jdbcType="INTEGER" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="reportId" column="REPORT_ID" jdbcType="INTEGER" />
+		<result property="farmId" column="FARM_ID" jdbcType="INTEGER" />
+		<result property="totalNum" column="TOTAL_NUM" jdbcType="INTEGER" />
+		<result property="mzNum" column="MZ_NUM" jdbcType="INTEGER" />
+		<result property="mzAvgWeight" column="MZ_AVG_WEIGHT" jdbcType="DECIMAL" />
+		<result property="mzPrice" column="MZ_PRICE" jdbcType="DECIMAL" />
+		<result property="mzTotalPrice" column="MZ_TOTAL_PRICE" jdbcType="DECIMAL" />
+		<result property="rzNum" column="RZ_NUM" jdbcType="INTEGER" />
+		<result property="rzAvgWeight" column="RZ_AVG_WEIGHT" jdbcType="DECIMAL" />
+		<result property="rzPrice" column="RZ_PRICE" jdbcType="DECIMAL" />
+		<result property="rzTotalPrice" column="RZ_TOTAL_PRICE" jdbcType="DECIMAL" />
+		<result property="zzNum" column="ZZ_NUM" jdbcType="INTEGER" />
+		<result property="zzAvgWeight" column="ZZ_AVG_WEIGHT" jdbcType="DECIMAL" />
+		<result property="zzPrice" column="ZZ_PRICE" jdbcType="DECIMAL" />
+		<result property="zzTotalPrice" column="ZZ_TOTAL_PRICE" jdbcType="DECIMAL" />
+		<result property="unblanceNum" column="UNBLANCE_NUM" jdbcType="INTEGER" />
+		<result property="yearSaleTarget" column="YEAR_SALE_TARGET" jdbcType="INTEGER" />
+		<result property="completeRate" column="COMPLETE_RATE" jdbcType="DECIMAL" />
+		<result property="createId" column="CREATE_ID" jdbcType="INTEGER" />
+		<result property="createDate" column="CREATE_DATE" jdbcType="TIMESTAMP" />
+		<result property="isTotalfield" column="IS_TOTALFIELD" jdbcType="INTEGER" />
+		<result property="saleNote" column="SALE_NOTE" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="ReLsaleDetailModel_Column_List">
+		ROW_ID,SORT_NBR,NOTES,REPORT_ID,TOTAL_NUM,MZ_NUM,MZ_AVG_WEIGHT,MZ_PRICE,MZ_TOTAL_PRICE,RZ_NUM,RZ_AVG_WEIGHT,RZ_PRICE,RZ_TOTAL_PRICE,ZZ_NUM,ZZ_AVG_WEIGHT,ZZ_PRICE,ZZ_TOTAL_PRICE,UNBLANCE_NUM,YEAR_SALE_TARGET,COMPLETE_RATE,CREATE_ID,CREATE_DATE,IS_TOTALFIELD,SALE_NOTE
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true"   keyProperty="rowId" parameterType="ReLsaleDetailModel">
+		INSERT INTO RE_L_SALE_DETAIL
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR,
+			STATUS,
+			DELETED_FLAG,
+			NOTES,
+			REPORT_ID,
+			FARM_ID,
+			TOTAL_NUM,
+			MZ_NUM,
+			MZ_AVG_WEIGHT,
+			MZ_PRICE,
+			MZ_TOTAL_PRICE,
+			RZ_NUM,
+			RZ_AVG_WEIGHT,
+			RZ_PRICE,
+			RZ_TOTAL_PRICE,
+			ZZ_NUM,
+			ZZ_AVG_WEIGHT,
+			ZZ_PRICE,
+			ZZ_TOTAL_PRICE,
+			UNBLANCE_NUM,
+			YEAR_SALE_TARGET,
+			COMPLETE_RATE,
+			CREATE_ID,
+			CREATE_DATE,
+			IS_TOTALFIELD,
+			SALE_NOTE
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ sortNbr,jdbcType=INTEGER},
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ notes,jdbcType=VARCHAR},
+			#{ reportId,jdbcType=INTEGER},
+			#{ farmId,jdbcType=INTEGER},
+			#{ totalNum,jdbcType=INTEGER},
+			#{ mzNum,jdbcType=INTEGER},
+			#{ mzAvgWeight,jdbcType=DECIMAL},
+			#{ mzPrice,jdbcType=DECIMAL},
+			#{ mzTotalPrice,jdbcType=DECIMAL},
+			#{ rzNum,jdbcType=INTEGER},
+			#{ rzAvgWeight,jdbcType=DECIMAL},
+			#{ rzPrice,jdbcType=DECIMAL},
+			#{ rzTotalPrice,jdbcType=DECIMAL},
+			#{ zzNum,jdbcType=INTEGER},
+			#{ zzAvgWeight,jdbcType=DECIMAL},
+			#{ zzPrice,jdbcType=DECIMAL},
+			#{ zzTotalPrice,jdbcType=DECIMAL},
+			#{ unblanceNum,jdbcType=INTEGER},
+			#{ yearSaleTarget,jdbcType=INTEGER},
+			#{ completeRate,jdbcType=DECIMAL},
+			#{ createId,jdbcType=INTEGER},
+			#{ createDate,jdbcType=TIMESTAMP},
+			#{ isTotalfield,jdbcType=INTEGER},
+			#{ saleNote,jdbcType=VARCHAR}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO RE_L_SALE_DETAIL
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR ,
+			STATUS ,
+			DELETED_FLAG ,
+			NOTES ,
+			REPORT_ID ,
+			FARM_ID ,
+			TOTAL_NUM ,
+			MZ_NUM ,
+			MZ_AVG_WEIGHT ,
+			MZ_PRICE ,
+			MZ_TOTAL_PRICE ,
+			RZ_NUM ,
+			RZ_AVG_WEIGHT ,
+			RZ_PRICE ,
+			RZ_TOTAL_PRICE ,
+			ZZ_NUM ,
+			ZZ_AVG_WEIGHT ,
+			ZZ_PRICE ,
+			ZZ_TOTAL_PRICE ,
+			UNBLANCE_NUM ,
+			YEAR_SALE_TARGET ,
+			COMPLETE_RATE ,
+			CREATE_ID ,
+			CREATE_DATE ,
+			IS_TOTALFIELD ,
+			SALE_NOTE 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.sortNbr,jdbcType=INTEGER},
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.reportId,jdbcType=INTEGER},
+				#{item.farmId,jdbcType=INTEGER},
+				#{item.totalNum,jdbcType=INTEGER},
+				#{item.mzNum,jdbcType=INTEGER},
+				#{item.mzAvgWeight,jdbcType=DECIMAL},
+				#{item.mzPrice,jdbcType=DECIMAL},
+				#{item.mzTotalPrice,jdbcType=DECIMAL},
+				#{item.rzNum,jdbcType=INTEGER},
+				#{item.rzAvgWeight,jdbcType=DECIMAL},
+				#{item.rzPrice,jdbcType=DECIMAL},
+				#{item.rzTotalPrice,jdbcType=DECIMAL},
+				#{item.zzNum,jdbcType=INTEGER},
+				#{item.zzAvgWeight,jdbcType=DECIMAL},
+				#{item.zzPrice,jdbcType=DECIMAL},
+				#{item.zzTotalPrice,jdbcType=DECIMAL},
+				#{item.unblanceNum,jdbcType=INTEGER},
+				#{item.yearSaleTarget,jdbcType=INTEGER},
+				#{item.completeRate,jdbcType=DECIMAL},
+				#{item.createId,jdbcType=INTEGER},
+				#{item.createDate,jdbcType=TIMESTAMP},
+				#{item.isTotalfield,jdbcType=INTEGER},
+				#{item.saleNote,jdbcType=VARCHAR}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="ReLsaleDetailModel" >
+		UPDATE RE_L_SALE_DETAIL 
+		<set>
+		<if test="sortNbr != null">SORT_NBR = #{ sortNbr,jdbcType=INTEGER},</if>
+		<if test="status != null">STATUS = #{ status,jdbcType=CHAR},</if>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="reportId != null">REPORT_ID = #{ reportId,jdbcType=INTEGER},</if>
+		<if test="totalNum != null">TOTAL_NUM = #{ totalNum,jdbcType=INTEGER},</if>
+		<if test="mzNum != null">MZ_NUM = #{ mzNum,jdbcType=INTEGER},</if>
+		<if test="mzAvgWeight != null">MZ_AVG_WEIGHT = #{ mzAvgWeight,jdbcType=DECIMAL},</if>
+		<if test="mzPrice != null">MZ_PRICE = #{ mzPrice,jdbcType=DECIMAL},</if>
+		<if test="mzTotalPrice != null">MZ_TOTAL_PRICE = #{ mzTotalPrice,jdbcType=DECIMAL},</if>
+		<if test="rzNum != null">RZ_NUM = #{ rzNum,jdbcType=INTEGER},</if>
+		<if test="rzAvgWeight != null">RZ_AVG_WEIGHT = #{ rzAvgWeight,jdbcType=DECIMAL},</if>
+		<if test="rzPrice != null">RZ_PRICE = #{ rzPrice,jdbcType=DECIMAL},</if>
+		<if test="rzTotalPrice != null">RZ_TOTAL_PRICE = #{ rzTotalPrice,jdbcType=DECIMAL},</if>
+		<if test="zzNum != null">ZZ_NUM = #{ zzNum,jdbcType=INTEGER},</if>
+		<if test="zzAvgWeight != null">ZZ_AVG_WEIGHT = #{ zzAvgWeight,jdbcType=DECIMAL},</if>
+		<if test="zzPrice != null">ZZ_PRICE = #{ zzPrice,jdbcType=DECIMAL},</if>
+		<if test="zzTotalPrice != null">ZZ_TOTAL_PRICE = #{ zzTotalPrice,jdbcType=DECIMAL},</if>
+		<if test="unblanceNum != null">UNBLANCE_NUM = #{ unblanceNum,jdbcType=INTEGER},</if>
+		<if test="yearSaleTarget != null">YEAR_SALE_TARGET = #{ yearSaleTarget,jdbcType=INTEGER},</if>
+		<if test="completeRate != null">COMPLETE_RATE = #{ completeRate,jdbcType=DECIMAL},</if>
+		<if test="createId != null">CREATE_ID = #{ createId,jdbcType=INTEGER},</if>
+		<if test="createDate != null">CREATE_DATE = #{ createDate,jdbcType=TIMESTAMP},</if>
+		<if test="isTotalfield != null">IS_TOTALFIELD = #{ isTotalfield,jdbcType=INTEGER},</if>
+		<if test="saleNote != null">SALE_NOTE = #{ saleNote,jdbcType=VARCHAR}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE RE_L_SALE_DETAIL 
+			<set>
+			<if test="item.sortNbr != null">SORT_NBR = #{item.sortNbr,jdbcType=INTEGER},</if>
+			<if test="item.status != null">STATUS = #{item.status,jdbcType=CHAR},</if>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.reportId != null">REPORT_ID = #{item.reportId,jdbcType=INTEGER},</if>
+			<if test="item.totalNum != null">TOTAL_NUM = #{item.totalNum,jdbcType=INTEGER},</if>
+			<if test="item.mzNum != null">MZ_NUM = #{item.mzNum,jdbcType=INTEGER},</if>
+			<if test="item.mzAvgWeight != null">MZ_AVG_WEIGHT = #{item.mzAvgWeight,jdbcType=DECIMAL},</if>
+			<if test="item.mzPrice != null">MZ_PRICE = #{item.mzPrice,jdbcType=DECIMAL},</if>
+			<if test="item.mzTotalPrice != null">MZ_TOTAL_PRICE = #{item.mzTotalPrice,jdbcType=DECIMAL},</if>
+			<if test="item.rzNum != null">RZ_NUM = #{item.rzNum,jdbcType=INTEGER},</if>
+			<if test="item.rzAvgWeight != null">RZ_AVG_WEIGHT = #{item.rzAvgWeight,jdbcType=DECIMAL},</if>
+			<if test="item.rzPrice != null">RZ_PRICE = #{item.rzPrice,jdbcType=DECIMAL},</if>
+			<if test="item.rzTotalPrice != null">RZ_TOTAL_PRICE = #{item.rzTotalPrice,jdbcType=DECIMAL},</if>
+			<if test="item.zzNum != null">ZZ_NUM = #{item.zzNum,jdbcType=INTEGER},</if>
+			<if test="item.zzAvgWeight != null">ZZ_AVG_WEIGHT = #{item.zzAvgWeight,jdbcType=DECIMAL},</if>
+			<if test="item.zzPrice != null">ZZ_PRICE = #{item.zzPrice,jdbcType=DECIMAL},</if>
+			<if test="item.zzTotalPrice != null">ZZ_TOTAL_PRICE = #{item.zzTotalPrice,jdbcType=DECIMAL},</if>
+			<if test="item.unblanceNum != null">UNBLANCE_NUM = #{item.unblanceNum,jdbcType=INTEGER},</if>
+			<if test="item.yearSaleTarget != null">YEAR_SALE_TARGET = #{item.yearSaleTarget,jdbcType=INTEGER},</if>
+			<if test="item.completeRate != null">COMPLETE_RATE = #{item.completeRate,jdbcType=DECIMAL},</if>
+			<if test="item.createId != null">CREATE_ID = #{item.createId,jdbcType=INTEGER},</if>
+			<if test="item.createDate != null">CREATE_DATE = #{item.createDate,jdbcType=TIMESTAMP},</if>
+			<if test="item.isTotalfield != null">IS_TOTALFIELD = #{item.isTotalfield,jdbcType=INTEGER},</if>
+			<if test="item.saleNote != null">SALE_NOTE = #{item.saleNote,jdbcType=VARCHAR}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  RE_L_SALE_DETAIL
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  RE_L_SALE_DETAIL
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE 
+		 ROW_ID =#{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  RE_L_SALE_DETAIL
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' 
+		 AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+		 AND ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCons" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  RE_L_SALE_DETAIL
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' ${item}
+		</foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="ReLsaleDetailResult">
+		SELECT 
+		<include refid="ReLsaleDetailModel_Column_List" />
+		FROM RE_L_SALE_DETAIL WHERE DELETED_FLAG='0' 
+		AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="ReLsaleDetailResult" >
+		SELECT 
+		<include refid="ReLsaleDetailModel_Column_List" />
+		FROM RE_L_SALE_DETAIL WHERE DELETED_FLAG='0'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="ReLsaleDetailResult" >
+		SELECT 
+		<include refid="ReLsaleDetailModel_Column_List" />
+		FROM RE_L_SALE_DETAIL
+		WHERE DELETED_FLAG='0'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="ReLsaleDetailResult" >
+		SELECT 
+		<include refid="ReLsaleDetailModel_Column_List" />
+		FROM RE_L_SALE_DETAIL
+		WHERE ${condition}
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAll" resultMap="ReLsaleDetailResult" >
+		SELECT *
+		FROM RE_L_SALE_DETAIL
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="ReLsaleDetailResult"> ${sql} </select>
+
+	<!--商品猪销售 -->
+	<select id="searchProduceDataByGoodPigSell" parameterType="java.util.Map" resultMap="ReLsaleDetailResult" >
+		SELECT  T3.ROW_ID FARM_ID,
+		SUM(T0.TOTAL_NUM) TOTAL_NUM,
+		SUM(T0.MZ_NUM) MZ_NUM,
+		SUM(T0.RZ_NUM) RZ_NUM,
+		SUM(T0.ZZ_NUM) ZZ_NUM,
+		SUM(T0.MZ_TOTAL_PRICE)/10000 MZ_TOTAL_PRICE,
+		SUM(T0.RZ_TOTAL_PRICE)/10000 RZ_TOTAL_PRICE,
+		SUM(T0.ZZ_TOTAL_PRICE)/10000 ZZ_TOTAL_PRICE,
+		IF(SUM(T0.MZ_NUM>0),SUM(T0.MZ_TOTAL_PRICE)/SUM(T0.MZ_TOTAL_WEIGHT),0) MZ_PRICE,
+		IF(SUM(T0.RZ_NUM>0),SUM(T0.RZ_TOTAL_PRICE)/SUM(T0.RZ_TOTAL_WEIGHT),0) RZ_PRICE,
+		IF(SUM(T0.ZZ_NUM>0),SUM(T0.ZZ_TOTAL_PRICE)/SUM(T0.ZZ_TOTAL_WEIGHT),0) ZZ_PRICE,
+		IF(SUM(T0.MZ_NUM>0),SUM(T0.MZ_TOTAL_WEIGHT)/SUM(T0.MZ_NUM),0) MZ_AVG_WEIGHT,
+		IF(SUM(T0.RZ_NUM>0),SUM(T0.RZ_TOTAL_WEIGHT)/SUM(T0.RZ_NUM),0) RZ_AVG_WEIGHT,
+		IF(SUM(T0.ZZ_NUM>0),SUM(T0.ZZ_TOTAL_WEIGHT)/SUM(T0.ZZ_NUM),0) ZZ_AVG_WEIGHT,
+		SUM(T0.UNBLANCE_NUM) UNBLANCE_NUM, <!-- 未结算数量-->
+		IF(SUM(T0.RZ_NUM>0),SUM(T0.MZ_NUM)/SUM(T0.RZ_NUM),0) COMPLETE_RATE
+		FROM 
+		(
+			SELECT
+			T0.FARM_ID,T1.SORT_NAME,
+			SUM(IF(T3.SALE_DESCRIBE IN (3,4,8,9,10) AND T0.SALE_STATUS IN (2,3),T3.SALE_NUM,0)) TOTAL_NUM, <!-- 上市头数-->
+			SUM(IF(T3.SALE_DESCRIBE=4 AND T0.SALE_STATUS IN (2,3),T3.SALE_NUM,0)) MZ_NUM, <!-- 苗猪头数-->
+			SUM(IF(T3.SALE_DESCRIBE=3 AND T0.SALE_STATUS IN (2,3),T3.SALE_NUM,0)) RZ_NUM, <!-- 肉猪头数-->
+			SUM(IF(T3.SALE_DESCRIBE IN (8,9,10) AND T0.SALE_STATUS IN (2,3),T3.SALE_NUM,0)) ZZ_NUM, <!-- 种猪头数-->
+			SUM(IF(T3.SALE_DESCRIBE=4 AND T0.SALE_STATUS IN (2,3),T3.TOTAL_PRICE,0))MZ_TOTAL_PRICE,<!-- 苗猪销售总额-->
+			SUM(IF(T3.SALE_DESCRIBE=3 AND T0.SALE_STATUS IN (2,3),T3.TOTAL_PRICE,0)) RZ_TOTAL_PRICE, <!-- 肉猪销售总额-->
+			SUM(IF(T3.SALE_DESCRIBE IN (8,9,10) AND T0.SALE_STATUS IN (2,3),T3.TOTAL_PRICE,0)) ZZ_TOTAL_PRICE, <!-- 种猪销售总额-->
+			SUM(IF(T3.SALE_DESCRIBE=4 AND T0.SALE_STATUS IN (2,3),T3.TOTAL_WEIGHT,0)) MZ_TOTAL_WEIGHT, <!-- 苗猪总重-->
+			SUM(IF(T3.SALE_DESCRIBE=3 AND T0.SALE_STATUS IN (2,3),T3.TOTAL_WEIGHT,0)) RZ_TOTAL_WEIGHT, <!-- 肉猪总重-->
+			SUM(IF(T3.SALE_DESCRIBE IN (8,9,10) AND T0.SALE_STATUS IN (2,3),T3.TOTAL_WEIGHT,0)) ZZ_TOTAL_WEIGHT,<!-- 种猪总重-->
+			SUM(IF(T3.SALE_DESCRIBE IN (3,4,8,9,10) AND T0.SALE_STATUS =1,T3.SALE_NUM,0)) UNBLANCE_NUM
+			FROM pp_l_bill_pig_sale T0
+			LEFT JOIN hr_M_COMPANY T1
+			ON T0.FARM_ID=T1.ROW_ID AND T1.DELETED_FLAG='0' AND T1.STATUS='1'
+			LEFT JOIN pp_l_bill_pig_sale_detail T3
+			ON T0.FARM_ID = T3.FARM_ID AND T0.BILL_ID = T3.BILL_ID
+			LEFT JOIN pp_o_house T5
+			ON T0.FARM_ID = T5.FARM_ID AND T3.HOUSE_ID = T5.ROW_ID AND T5.DELETED_FLAG = '0'
+			LEFT JOIN PP_M_SWINERY T7
+			ON T0.FARM_ID=T7.FARM_ID AND T3.SWINERY_ID=T7.ROW_ID AND T7.DELETED_FLAG='0'
+			WHERE T0.DELETED_FLAG = '0' 
+			AND T3.SALE_DATE BETWEEN #{ startDate,jdbcType=DATE} AND #{ endDate,jdbcType=DATE}
+			AND T0.SALE_BILL_TYPE =2
+			AND (T1.COMPANY_MARK = #{companyMark} OR T1.COMPANY_MARK LIKE  #{companyMark}",%") 
+			GROUP BY T0.FARM_ID
+		) T0 
+		INNER JOIN hr_m_company T2 ON T0.FARM_ID=T2.ROW_ID AND T2.DELETED_FLAG='0'
+		INNER JOIN HR_M_COMPANY T3 ON (T3.DELETED_FLAG = '0' AND (T2.COMPANY_MARK = T3.COMPANY_MARK OR T2.COMPANY_MARK LIKE CONCAT(T3.COMPANY_MARK, ',%'))) 
+		WHERE T0.TOTAL_NUM>0
+		<if test="isLike == 1">
+	 	AND T3.COMPANY_MARK LIKE #{companyMark}",%"
+		</if>
+		<if test="isLike == 0">
+		AND T3.COMPANY_MARK = #{companyMark}
+		</if>
+		<if test="isIn == 1">
+		AND T3.ACCOUNT_COMPANY_CLASS IN (3,4)
+		</if>
+		GROUP BY T3.ROW_ID
+	</select>
+	
+	<!--商品猪销售 -->
+	<select id="searchProduceDataByGoodPigSellNote" parameterType="java.util.Map" resultType="java.util.Map" >
+		SELECT  T3.ROW_ID FARM_ID,IFNULL(T3.SORT_NAME,'') SORT_NAME,IFNULL(SUM(T0.CCZXS),0) CCZXS,IFNULL(SUM(T0.ZCZZ),0) ZCZZ
+		FROM (		
+			SELECT T0.FARM_ID,T1.SORT_NAME,SUM(IF(T0.SALE_TYPE=4,T3.SALE_NUM,0)) ZCZZ,SUM(IF(T3.SALE_DESCRIBE=5,T3.SALE_NUM,0))CCZXS
+			FROM pp_l_bill_pig_sale T0
+			LEFT JOIN hr_M_COMPANY T1
+			ON T0.FARM_ID=T1.ROW_ID AND T1.DELETED_FLAG='0' AND T1.STATUS='1'
+			LEFT JOIN pp_l_bill_pig_sale_detail T3
+			ON T0.FARM_ID = T3.FARM_ID AND T0.BILL_ID = T3.BILL_ID
+			LEFT JOIN pp_o_house T5
+			ON T0.FARM_ID = T5.FARM_ID AND T3.HOUSE_ID = T5.ROW_ID AND T5.DELETED_FLAG = '0'
+			WHERE T0.DELETED_FLAG = '0' 
+			AND T3.SALE_DATE BETWEEN #{ startDate,jdbcType=DATE} AND #{ endDate,jdbcType=DATE}
+			AND (T1.COMPANY_MARK = #{companyMark} OR T1.COMPANY_MARK LIKE  #{companyMark}",%") 
+			GROUP BY T0.FARM_ID
+			)T0
+		INNER JOIN hr_m_company T2 ON T0.FARM_ID=T2.ROW_ID AND T2.DELETED_FLAG='0'
+		INNER JOIN HR_M_COMPANY T3 ON (T3.DELETED_FLAG = '0' AND (T2.COMPANY_MARK = T3.COMPANY_MARK OR T2.COMPANY_MARK LIKE CONCAT(T3.COMPANY_MARK, ',%'))) 
+		WHERE 1=1
+		<if test="isLike == 1">
+	 	AND T3.COMPANY_MARK LIKE #{companyMark}",%"
+		</if>
+		<if test="isLike == 0">
+		AND T3.COMPANY_MARK = #{companyMark}
+		</if>
+		<if test="isIn == 1">
+		AND T3.ACCOUNT_COMPANY_CLASS IN (3,4)
+		</if>
+		GROUP BY T3.ROW_ID
+		ORDER BY ZCZZ DESC
+	</select>
+</mapper>
+

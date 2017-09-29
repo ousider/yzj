@@ -1,0 +1,698 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="xn.pigfarm.mapper.production.SweachValidPigMapper">
+
+	<resultMap id="validPigResult" type="ValidPigModel" extends = "BaseMapper.BaseModelMap">
+		<result property = "pigId" column = "PIG_ID" /> 
+		<result property = "pigType" column = "PIG_TYPE" /> 
+		<result property = "pigTypeName" column = "PIG_TYPE_NAME" /> 
+		<result property = "earBrand" column = "EAR_BRAND" />
+		
+		<result property = "earShort" column = "EAR_SHORT" /> 
+		<result property = "earThorn" column = "EAR_THORN" /> 
+		<result property = "electronicEarNo" column = "ELECTRONIC_EAR_NO" /> 
+		<result property = "earCodeId" column = "EAR_CODE_ID" /> 
+		
+		<result property = "lineId" column = "LINE_ID" /> 
+		<result property = "lineName" column = "LINE_NAME" /> 
+		<result property = "swineryName" column = "SWINERY_NAME" />
+		<result property = "swineryId" column = "SWINERY_ID" />  
+		<result property = "breedName" column = "BREED_NAME" /> 
+		<result property = "sex" column = "SEX" /> 
+		<result property = "sexName" column = "SEX_NAME" />  
+		<result property = "breedId" column = "BREED_ID" />  
+		<result property = "pigClassName" column = "PIG_CLASS_NAME" />  
+		<result property = "pigClass" column = "PIG_CLASS" />  
+		<result property = "houseName" column = "HOUSE_NAME" />  
+		<result property = "houseId" column = "HOUSE_ID" /> 
+		<result property = "pigpenName" column = "PIGPEN_NAME" />  
+		<result property = "pigpenId" column = "PIGPEN_ID" /> 
+		<result property = "dateAge" column = "DATE_AGE" />  
+		<result property = "pigQty" column = "PIG_QTY" />  
+		<result property = "parity" column = "PARITY" />
+		<result property = "fatherEarName" column = "FATHER_EAR_NAME" />
+		<result property = "motherEarName" column = "MOTHER_EAR_NAME" />
+		<result property = "lastEventDate" column = "LAST_EVENT_DATE" />  
+		<result property = "minValidDate" column = "MIN_VALID_DATE" /> 
+		<result property = "maxValidDate" column = "MAX_VALID_DATE" />
+		<result property = "preDeliveryDate" column = "PRE_DELIVERY_DATE" />
+		<result property = "breedDate" column = "BREED_DATE" />
+		<result property = "materialId" column = "MATERIAL_ID" />
+		<result property = "materialName" column = "MATERIAL_NAME" />
+		<result property = "location" column = "LOCATION" />
+		<result property = "pigInfo" column = "PIG_INFO" />
+		<result property = "birthDate" column = "BIRTH_DATE"/>
+		
+		
+		<result property = "memo" column = "MEMO" />  
+	                     
+	</resultMap>
+	
+
+	<select id="searchValidPigToList" parameterType="SearchValidPigModel" statementType="CALLABLE" resultMap="validPigResult"  >
+		CALL P_SearchValidPig(
+			#{queryType ,jdbcType=VARCHAR },
+			#{query,jdbcType=VARCHAR},
+			#{pigIds ,jdbcType=VARCHAR},
+			#{companyId,jdbcType=INTEGER},
+			#{farmId,jdbcType=INTEGER},
+			#{lineId,jdbcType=INTEGER },
+			#{houseIds ,jdbcType=VARCHAR},
+			#{swineryIds ,jdbcType=VARCHAR},
+			#{pigType,jdbcType=VARCHAR },
+			#{sex,jdbcType=VARCHAR},
+			#{breedIds,jdbcType=VARCHAR   },
+			#{pigClassIds  ,jdbcType=VARCHAR         },
+			#{earBrand      ,jdbcType=VARCHAR    },
+			#{minDateage     ,jdbcType=INTEGER     },
+			#{maxDateage    ,jdbcType=INTEGER      },
+			#{date1       ,jdbcType=DATE   },
+			#{date2  ,jdbcType=DATE },
+			#{materialIds   ,jdbcType=VARCHAR      },
+			#{minWeight    ,jdbcType=DECIMAL     },
+			#{maxWeight    ,jdbcType=DECIMAL    },
+			#{specifyPigs   ,jdbcType=VARCHAR     },
+			#{choice       ,jdbcType=VARCHAR    },
+			#{createId      ,jdbcType=INTEGER         },
+			#{offset       ,jdbcType=INTEGER    },
+			#{pagesize       ,jdbcType=INTEGER     },
+			#{eventName     ,jdbcType=VARCHAR     },
+			#{totalCount,mode=OUT,javaType=Long,jdbcType=INTEGER      },
+			
+			#{errorCode,mode=OUT,javaType=String,jdbcType=VARCHAR         },
+			#{errorMessage ,mode=OUT,javaType=String,jdbcType=VARCHAR     }
+		)
+	</select>
+		
+	<!--查询主表 -->
+	<select id="searchPorkToList" resultMap="validPigResult">
+		SELECT T0.ROW_ID PIG_ID,T0.HOUSE_ID,T0.BREED_ID,T0.SWINERY_ID ,T0.SWINERY_NAME,COUNT(*) PIG_QTY,
+		CONCAT('平均日龄：【',ROUND(IF(T1.HOUSE_TYPE = 6,_getSwineryAge(T1.ROW_ID,NOW(),1),_getSwineryAge(T1.ROW_ID,NOW(),0)),2),'】') PIG_INFO 
+		<!-- CONCAT('平均日龄：【',ROUND(DATEDIFF (NOW(), DATE(T1.LAST_OPERATE_DATE))+T1.SWINERY_DAYAGE),'】') PIG_INFO -->
+		,MAX(T0.LAST_EVENT_DATE) LAST_EVENT_DATE,MAX(T0.LAST_EVENT_DATE) MIN_VALID_DATE,NOW() MAX_VALID_DATE
+		FROM pp_v_pig T0
+		INNER JOIN pp_m_swinery T1 ON T1.ROW_ID=T0.SWINERY_ID AND T1.DELETED_FLAG=T0.DELETED_FLAG AND T1.FARM_ID=T0.FARM_ID AND T1.STATUS=T0.STATUS
+		WHERE T0.DELETED_FLAG = '0' AND T0.STATUS = '1' AND T0.PIG_TYPE = 3 
+		AND T0.FARM_ID = #{farmId} AND T0.HOUSE_ID = #{houseId} 
+		
+		<if test="pigpenId != null">AND T0.PIGPEN_ID = #{pigpenId,jdbcType=INTEGER}</if>
+		<if test="swineryId != null">AND T0.SWINERY_ID = #{ swineryId,jdbcType=INTEGER}</if>
+		<if test="breedId != null">AND T0.BREED_ID = #{ breedId,jdbcType=INTEGER}</if>
+		<if test="pigClass != null">
+		AND T0.PIG_CLASS IN
+		<foreach item="item" index="index" collection="pigClass" open="(" separator="," close=")">  
+		  	#{item}  
+		 </foreach>  
+		 </if>
+		 <if test="pigpenIds != null">
+		AND T0.PIGPEN_ID IN
+		<foreach item="item" index="index" collection="pigpenIds" open="(" separator="," close=")">  
+		  	#{item}  
+		 </foreach>  
+		 </if>
+		GROUP BY T0.HOUSE_ID,T0.SWINERY_ID
+		
+		<if test="pigpenIds != null or pigpenId != null">,T0.PIGPEN_ID </if>
+		
+		<if test="breedId != null">,T0.BREED_ID </if>
+	</select>
+	
+	<select id="searchChildCareToList" resultMap="validPigResult">
+		SELECT T0.ROW_ID PIG_ID,T0.HOUSE_ID,T0.BREED_ID,T0.SWINERY_ID ,T0.SWINERY_NAME,COUNT(*) PIG_QTY,
+		CONCAT('平均日龄：【',ROUND(IF(T1.HOUSE_TYPE=6,_getSwineryAge(T1.ROW_ID,NOW(),1),_getSwineryAge(T1.ROW_ID,NOW(),0)),2),'】') PIG_INFO 
+		<!-- CONCAT('平均日龄：【',ROUND(DATEDIFF (NOW(), DATE(T1.LAST_OPERATE_DATE))+T1.SWINERY_DAYAGE),'】') PIG_INFO -->
+		,MAX(T0.LAST_EVENT_DATE) LAST_EVENT_DATE,MAX(T0.LAST_EVENT_DATE) MIN_VALID_DATE,NOW() MAX_VALID_DATE
+		FROM pp_v_pig T0
+		INNER JOIN PP_M_SWINERY T1 ON T0.SWINERY_ID=T1.ROW_ID AND T1.DELETED_FLAG='0' AND T1.STATUS='1'
+		WHERE T0.DELETED_FLAG = '0' AND T0.STATUS = '1' AND T0.PIG_TYPE = 3 
+		AND T0.FARM_ID = #{farmId} 
+		<if test="houseId != ''">AND T0.HOUSE_ID IN (${houseId})</if>
+		<if test="swineryId != ''">AND T0.SWINERY_ID IN (${swineryId})</if>
+		<if test="breedId != null">AND T0.BREED_ID = #{ breedId,jdbcType=INTEGER}</if>
+		<if test="pigClass != null">
+		AND T0.PIG_CLASS IN
+		<foreach item="item" index="index" collection="pigClass" open="(" separator="," close=")">  
+		  	#{item}  
+		 </foreach>  
+		 </if>
+		GROUP BY T0.HOUSE_ID,T0.SWINERY_ID
+		
+		<if test="breedId != null">,T0.BREED_ID </if>
+	</select>
+	
+	<select id="searchSeedPigToList" resultMap="validPigResult">
+			SELECT T0.PIG_ID,T0.PIG_TYPE,T0.PIG_TYPE_NAME,T0.EAR_BRAND,T0.HOUSE_ID,T0.PIGPEN_ID,T0.BREED_ID,T0.LINE_ID,T0.SWINERY_ID,T0.SWINERY_NAME,
+                   T0.BREED_NAME,T0.PIG_CLASS,T0.PIG_CLASS_NAME,T0.LINE_NAME,T0.HOUSE_NAME,T0.PIGPEN_NAME,T0.DATEAGE,T0.PARITY,T0.LOCATION,T0.PIG_INFO, 
+                   MAX(T0.LAST_EVENT_DATE) LAST_EVENT_DATE,MAX(T0.LAST_EVENT_DATE) MIN_VALID_DATE,NOW() MAX_VALID_DATE,COUNT(T1.ROW_ID) PIG_QTY,
+                   IF(_getSettingValueByCode(#{farmId},'FMSFLZ')='ON',T2.ALIVE_LITTER_X,0) seedMale,
+  				   IF(_getSettingValueByCode(#{farmId},'FMSFLZ')='ON',T2.ALIVE_LITTER_Y,0) seedFemale
+			FROM pp_v_pig T0 
+			INNER JOIN pp_l_pig T1 ON T1.BOARD_SOW_ID =T0.ROW_ID AND T1.DELETED_FLAG = 0 AND T1.STATUS = 1 AND T1.PIG_TYPE =3 AND T1.PIG_CLASS IN (12, 13) AND T1.SEED_FLAG = 'Y' AND T1.IS_BATCH_SEED = 'Y'
+			INNER JOIN (SELECT IFNULL(ALIVE_LITTER_X,0) ALIVE_LITTER_X,IFNULL(ALIVE_LITTER_Y,0) ALIVE_LITTER_Y,PIG_ID,FARM_ID FROM pp_l_bill_delivery 
+				WHERE DELETED_FLAG=0
+				AND STATUS=1 
+				GROUP BY PIG_ID
+				ORDER BY BILL_ID DESC
+  			) T2 ON T0.PIG_ID=T2.PIG_ID 
+			WHERE T0.DELETED_FLAG = 0  AND T0.STATUS = 1 AND T0.PIG_TYPE = 2 AND T0.PIG_CLASS = 10 AND T0.FARM_ID = #{farmId}
+			<if test="pigIds != null"> AND T0.ROW_ID NOT IN (${pigIds})</if>
+			<if test="query != null"> AND T0.EAR_BRAND LIKE "%"#{query}"%"</if>
+			<if test="earBrand != null">AND T0.EAR_BRAND =#{earBrand}</if>
+			<if test="houseIds != null">AND T0.HOUSE_ID =#{houseIds}</if>
+			<if test="breedIds != null">AND T0.BREED_ID =#{breedIds}</if>
+			<if test="swineryIds != null">AND T0.SWINERY_ID =#{swineryIds}</if>
+			<if test="pigClassIds != null">AND T0.PIG_CLASS =#{pigClassIds}</if>
+			<if test="minDateage != null">AND T0.DATEAGE  BETWEEN #{minDateage}</if>
+			<if test="maxDateage != null">AND #{maxDateage}</if>
+			GROUP BY T0.ROW_ID
+	</select>
+	
+	<select id="searchBreedPigToList" resultMap="validPigResult">
+			SELECT T0.PIG_ID,T0.PIG_TYPE,T0.PIG_TYPE_NAME,T0.EAR_BRAND,T0.EAR_SHORT,T0.HOUSE_ID,T0.PIGPEN_ID,T0.BREED_ID,T0.LINE_ID,T0.SWINERY_ID,
+                   T0.SWINERY_NAME,T0.BREED_NAME,T0.PIG_CLASS,T0.PIG_CLASS_NAME, T0.LINE_NAME,T0.HOUSE_NAME,T0.PIGPEN_NAME,T0.DATEAGE,T0.PARITY,T0.EAR_CODE_ID,
+                   T0.LOCATION,T0.PIG_INFO,MAX(T0.LAST_EVENT_DATE) LAST_EVENT_DATE,MAX(T0.LAST_EVENT_DATE) MIN_VALID_DATE,NOW() MAX_VALID_DATE,T0.SEX,T0.MATERIAL_ID
+			FROM pp_v_pig T0 
+			INNER JOIN pp_l_pig T1 ON T0.ROW_ID= T1.ROW_ID AND T1.DELETED_FLAG = 0 AND T1.STATUS = 1 AND T1.SEED_FLAG = 'Y'
+			INNER JOIN pp_l_bill_seed_detail T2 ON T0.PIG_ID = T2.PIG_ID AND T0.FARM_ID = T2.FARM_ID AND T2.DELETED_FLAG = '0'
+			WHERE T0.FARM_ID = #{farmId} AND T0.DELETED_FLAG = 0 AND T0.STATUS = 1 AND T0.PIG_TYPE = 3 AND T0.PIG_CLASS IN (12, 13)
+			<if test="pigIds != null"> AND T0.ROW_ID NOT IN (${pigIds})</if>
+			<if test="query != null"> AND T0.EAR_SHORT LIKE "%"#{query}"%"</if>
+			<if test="earShort != null">AND T0.EAR_SHORT =#{earShort}</if>
+			<if test="houseIds != null">AND T0.HOUSE_ID =#{houseIds}</if>
+			<if test="pigpenIds != null">AND T0.PIGPEN_ID =#{pigpenIds}</if>
+			<if test="breedIds != null">AND T0.BREED_ID =#{breedIds}</if>
+			<if test="minDateage != null">AND T0.DATEAGE  BETWEEN #{minDateage}</if>
+			<if test="maxDateage != null">AND #{maxDateage}</if>
+			GROUP BY T0.ROW_ID
+	</select>
+	
+	<select id="searchBreedPigByGoodToList" resultMap="validPigResult">
+			SELECT T0.PIG_ID,T0.PIG_TYPE,T0.PIG_TYPE_NAME,T0.EAR_BRAND,T0.EAR_SHORT,T0.HOUSE_ID,T0.PIGPEN_ID,T0.BREED_ID,T0.LINE_ID,T0.SWINERY_ID,
+                   T0.SWINERY_NAME,T0.BREED_NAME,T0.PIG_CLASS,T0.PIG_CLASS_NAME, T0.LINE_NAME,T0.HOUSE_NAME,T0.PIGPEN_NAME,T0.DATEAGE,T0.PARITY,T0.EAR_CODE_ID,
+                   T0.LOCATION,T0.PIG_INFO,MAX(T0.LAST_EVENT_DATE) LAST_EVENT_DATE,MAX(T0.LAST_EVENT_DATE) MIN_VALID_DATE,NOW() MAX_VALID_DATE,T0.SEX,T0.MATERIAL_ID
+			FROM pp_v_pig T0 
+			INNER JOIN pp_l_pig T1 ON T0.ROW_ID= T1.ROW_ID AND T1.DELETED_FLAG = 0 AND T1.STATUS = 1 AND T1.IS_BATCH_SEED = 'N'
+			WHERE T0.FARM_ID = #{farmId} AND T0.DELETED_FLAG = 0 AND T0.STATUS = 1 AND T0.PIG_CLASS IN (15, 16)
+			<if test="pigIds != null"> AND T0.ROW_ID NOT IN (${pigIds})</if>
+			<if test="query != null"> AND T0.EAR_SHORT LIKE "%"#{query}"%"</if>
+			<if test="earShort != null">AND T0.EAR_SHORT =#{earShort}</if>
+			<if test="houseIds != null">AND T0.HOUSE_ID =#{houseIds}</if>
+			<if test="pigpenIds != null">AND T0.PIGPEN_ID =#{pigpenIds}</if>
+			<if test="breedIds != null">AND T0.BREED_ID =#{breedIds}</if>
+			<if test="minDateage != null">AND T0.DATEAGE  BETWEEN #{minDateage}</if>
+			<if test="maxDateage != null">AND #{maxDateage}</if>
+			GROUP BY T0.ROW_ID
+	</select>
+	
+	<select id="searchSeedPigDieToList" resultMap="validPigResult">
+			SELECT T0.PIG_ID,T0.PIG_TYPE,T0.PIG_TYPE_NAME,T0.EAR_BRAND,T0.EAR_SHORT,T0.HOUSE_ID,T0.PIGPEN_ID,T0.BREED_ID,T0.LINE_ID,T0.SWINERY_ID,T0.SWINERY_NAME,
+                   T0.BREED_NAME,T0.PIG_CLASS,T0.PIG_CLASS_NAME,T0.LINE_NAME,T0.HOUSE_NAME,T0.PIGPEN_NAME,T0.DATEAGE,T0.PARITY,T0.LOCATION,T0.PIG_INFO, 
+                   MAX(T0.LAST_EVENT_DATE) LAST_EVENT_DATE,MAX(T0.LAST_EVENT_DATE) MIN_VALID_DATE,NOW() MAX_VALID_DATE,COUNT(T1.ROW_ID) PIG_QTY
+			FROM pp_v_pig T0 
+			INNER JOIN pp_l_pig T1 ON T0.PIG_ID = T1.ROW_ID AND T1.FARM_ID= T0.FARM_ID AND T1.DELETED_FLAG= T0.DELETED_FLAG AND T1.SEED_FLAG='Y' AND T1.STATUS=T0.STATUS
+			WHERE T0.FARM_ID = #{farmId} AND T0.DELETED_FLAG=0  AND T0.PIG_CLASS IN (12,13) AND T0.PIG_TYPE=3 AND T0.STATUS=1 
+			<if test="pigIds != null"> AND T0.ROW_ID NOT IN (${pigIds})</if>
+			<if test="query != null"> AND T0.EAR_SHORT LIKE "%"#{query}"%"</if>
+			<if test="earBrand != null">AND T0.EAR_BRAND =#{earBrand}</if>
+			<if test="houseIds != null">AND T0.HOUSE_ID =#{houseIds}</if>
+			<if test="breedIds != null">AND T0.BREED_ID =#{breedIds}</if>
+			<if test="swineryIds != null">AND T0.SWINERY_ID =#{swineryIds}</if>
+			<if test="pigClassIds != null">AND T0.PIG_CLASS =#{pigClassIds}</if>
+			<if test="minDateage != null">AND T0.DATEAGE  BETWEEN #{minDateage}</if>
+			<if test="maxDateage != null">AND #{maxDateage}</if>
+			GROUP BY T0.ROW_ID
+	</select>
+	
+	<select id="searchGoodPigToList" resultMap="validPigResult">
+			SELECT T0.PIG_ID,T0.PIG_TYPE,T0.PIG_TYPE_NAME,T0.EAR_BRAND,T0.EAR_SHORT,T0.HOUSE_ID,T0.PIGPEN_ID,T0.BREED_ID,T0.LINE_ID,T0.SWINERY_ID,T0.SWINERY_NAME,
+                   T0.BREED_NAME,T0.PIG_CLASS,T0.PIG_CLASS_NAME,T0.LINE_NAME,T0.HOUSE_NAME,T0.PIGPEN_NAME,T0.DATEAGE,T0.PARITY,T0.LOCATION,T0.PIG_INFO, 
+                   MAX(T0.LAST_EVENT_DATE) LAST_EVENT_DATE,MAX(T0.LAST_EVENT_DATE) MIN_VALID_DATE,NOW() MAX_VALID_DATE,T0.BIRTH_DATE,T0.SEX,T0.SEX_NAME,T1.MATERIAL_ID, T1.SEED_FLAG
+			FROM pp_v_pig T0
+			INNER JOIN pp_l_pig T1 ON T0.PIG_ID = T1.ROW_ID AND T0.FARM_ID=T1.FARM_ID AND T1.DELETED_FLAG=0
+			WHERE T0.FARM_ID = #{farmId} AND T0.DELETED_FLAG=0 AND T0.STATUS=1 AND  T0.PIG_CLASS IN (1,2,3,4,6,7,8,9,11)
+			AND NOT EXISTS (SELECT 1 FROM pp_l_bill_boar_obsolete WHERE DELETED_FLAG = 0 AND STATUS = 1 AND PIG_ID = T0.ROW_ID)	 
+			<if test="pigIds != null"> AND T0.ROW_ID NOT IN (${pigIds})</if>
+			<if test="query != null"> AND T0.EAR_BRAND LIKE "%"#{query}"%"</if>
+			<if test="earBrand != null">AND T0.EAR_BRAND LIKE "%"#{earBrand}"%"</if>
+			<if test="pigClassIds != null">AND T0.PIG_CLASS =#{pigClassIds}</if>
+			<if test="parity != null">AND T0.PARITY =#{parity}</if>
+			<if test="houseIds != null">AND T0.HOUSE_ID =#{houseIds}</if>
+			<if test="breedIds != null">AND T0.BREED_ID =#{breedIds}</if>
+			<if test="sex != null">AND T0.SEX =#{sex}</if>
+			GROUP BY T0.ROW_ID
+	</select>
+	
+	<select id="searchGoodPigByBreedToList" resultMap="validPigResult">
+			SELECT T0.PIG_ID,T0.PIG_TYPE,T0.PIG_TYPE_NAME,T0.EAR_BRAND,T0.EAR_SHORT,T0.HOUSE_ID,T0.PIGPEN_ID,T0.BREED_ID,T0.LINE_ID,T0.SWINERY_ID,T0.SWINERY_NAME,
+                   T0.BREED_NAME,T0.PIG_CLASS,T0.PIG_CLASS_NAME,T0.LINE_NAME,T0.HOUSE_NAME,T0.PIGPEN_NAME,T0.DATEAGE,T0.PARITY,T0.LOCATION,T0.PIG_INFO, 
+                   MAX(T0.LAST_EVENT_DATE) LAST_EVENT_DATE,MAX(T0.LAST_EVENT_DATE) MIN_VALID_DATE,NOW() MAX_VALID_DATE,T0.BIRTH_DATE,T0.SEX,T0.SEX_NAME,T1.SEED_FLAG
+			FROM pp_v_pig T0
+			INNER JOIN pp_l_pig T1 ON T0.PIG_ID = T1.ROW_ID AND  T1.PIG_CLASS IN (12, 13, 14, 15, 16) 
+ 			AND T1.SEED_FLAG = 'Y' AND T0.FARM_ID=T1.FARM_ID AND T1.DELETED_FLAG=0
+			WHERE T0.FARM_ID = #{farmId} AND T0.DELETED_FLAG=0 AND T0.STATUS=1 
+			<if test="pigIds != null"> AND T0.ROW_ID NOT IN (${pigIds})</if>
+			<if test="query != null"> AND T0.EAR_BRAND LIKE "%"#{query}"%"</if>
+			<if test="earBrand != null">AND T0.EAR_BRAND LIKE "%"#{earBrand}"%"</if>
+			<if test="pigClassIds != null">AND T0.PIG_CLASS =#{pigClassIds}</if>
+			<if test="parity != null">AND T0.PARITY =#{parity}</if>
+			<if test="houseIds != null">AND T0.HOUSE_ID =#{houseIds}</if>
+			<if test="breedIds != null">AND T0.BREED_ID =#{breedIds}</if>
+			<if test="sex != null">AND T0.SEX =#{sex}</if>
+			<if test="swineryIds != null">AND T0.SWINERY_ID = #{swineryIds}</if>
+			GROUP BY T0.ROW_ID
+			
+	</select>
+	
+	<select id="searchPorkCheckToList" resultMap="validPigResult">
+			SELECT COUNT(T0.ROW_ID) pigQty,T0.NOTES notes, T0.HOUSE_ID houseId,T0.SWINERY_ID swineryId, T1.HOUSE_NAME houseName ,
+                   (SELECT T2.SWINERY_NAME FROM pp_m_swinery T2 WHERE T2.ROW_ID=T0.SWINERY_ID AND T2.DELETED_FLAG=0)  swineryName,
+                   IF(T2.HOUSE_TYPE=6,_getSwineryAge(T2.ROW_ID,NOW(),1),_getSwineryAge(T2.ROW_ID,NOW(),0)) SWINERY_AGE
+                   <!--DATEDIFF(NOW(),T2.LAST_OPERATE_DATE)+T2.SWINERY_DAYAGE SWINERY_AGE -->
+			FROM pp_l_pig T0
+			INNER JOIN pp_o_house T1 ON T0.HOUSE_ID=T1.ROW_ID AND T1.HOUSE_TYPE IN (6,8,9)
+			INNER JOIN pp_m_swinery T2 ON T0.SWINERY_ID=T2.ROW_ID AND T2.DELETED_FLAG=0 AND T2.STATUS=1
+			WHERE T0.FARM_ID = #{farmId} AND T0.DELETED_FLAG = 0 AND T0.STATUS = 1 AND T0.PIG_TYPE=3 AND T0.PIG_CLASS IN (12,13,14,15,16)
+			GROUP BY T0.HOUSE_ID,T0.SWINERY_ID
+	</select>
+	
+	<select id="searchLivestockByProduceToList" resultMap="validPigResult">
+			SELECT T0.PIG_TYPE,T0.PIG_CLASS,COUNT(T0.ROW_ID) PIG_QTY,T0.SEED_FLAG,T0.SEX
+            FROM pp_l_pig T0
+            INNER  JOIN pp_l_bill_towork T3
+			ON T0.FARM_ID=T3.FARM_ID AND T0.DELETED_FLAG = T3.DELETED_FLAG AND T0.STATUS = T3.STATUS AND T3.PIG_ID = T0.ROW_ID 
+			INNER JOIN hr_m_company T2 
+			ON T0.FARM_ID=T2.ROW_ID AND T2.DELETED_FLAG=0 AND T2.STATUS=1 
+			WHERE T0.DELETED_FLAG = '0' AND T0.STATUS = '1'
+			<if test="companyMark != null">AND (T2.COMPANY_MARK = #{companyMark} OR T2.COMPANY_MARK LIKE #{companyMark}",%")</if>
+	<![CDATA[
+			AND (T0.ORIGIN <> 3 OR T0.ORIGIN IS NULL) AND DATE(T3.TOWORK_DATE) <= CURDATE()
+			AND IFNULL(DATE(T3.TOWORK_DATE_OUT),IFNULL(DATE(T0.LEAVE_DATE),DATE(DATE_ADD(NOW(),INTERVAL 1 DAY)))) > CURDATE() AND (T0.PIG_CLASS <=18 OR T0.PIG_CLASS=24) 
+	]]>
+			GROUP BY T0.PIG_CLASS,T0.SEED_FLAG,T0.SEX
+	</select>
+	
+	<select id="searchBreedChangeToList" resultType='map'>
+			SELECT T0.LAST_STATUS lastStatus,COUNT(*) pigQty 
+			FROM  pp_l_bill_breed T0
+			INNER JOIN hr_m_company T2 
+			ON T0.FARM_ID=T2.ROW_ID AND T2.DELETED_FLAG=0 AND T2.STATUS=1 
+			WHERE 
+			T0.DELETED_FLAG = '0' 
+			<if test="companyMark != null">AND (T2.COMPANY_MARK = #{companyMark} OR T2.COMPANY_MARK LIKE #{companyMark}",%")</if>
+			<if test="startDate != null and endDate != null">AND T0.BREED_DATE_FIRST BETWEEN #{startDate} AND #{endDate}</if>
+			GROUP BY T0.LAST_STATUS
+	</select>
+	
+	<select id="searchPregnancyCheckChangeToList" resultType='map'>
+			SELECT T0.PREGNANCY_RESULT pregnancyResult,COUNT(*) pigQty
+			FROM pp_l_bill_pregnancy_check T0
+			INNER JOIN hr_m_company T2 
+			ON T0.FARM_ID=T2.ROW_ID AND T2.DELETED_FLAG=0 AND T2.STATUS=1 
+			WHERE T0.DELETED_FLAG = '0' 
+			<if test="companyMark != null">AND (T2.COMPANY_MARK = #{companyMark} OR T2.COMPANY_MARK LIKE #{companyMark}",%")</if>
+			<if test="startDate != null and endDate != null">AND T0.PREGNANCY_DATE BETWEEN #{startDate} AND #{endDate}</if>
+			GROUP BY T0.PREGNANCY_RESULT
+	</select>
+	
+	<select id="searchDeliveryChangeToList" resultType='map'>
+		<![CDATA[
+			SELECT COUNT(*) pigQty,IFNULL(SUM(T0.HEALTHY_NUM),0) healthyNum,IFNULL(SUM(T0.WEAK_NUM),0) weakNum,IFNULL(SUM(T0.STILLBIRTH_NUM),0) stillbirthNum,IFNULL(SUM(T0.MUTANT_NUM),0) mutantNum,IFNULL(SUM(T0.MUMMY_NUM),0) mummyNum,IFNULL(SUM(T0.BLACK_NUM),0) blackNum,IFNULL(SUM(T0.ALIVE_LITTER_Y),0) aliveLitterY,IFNULL(SUM(T0.ALIVE_LITTER_X),0) aliveLitterX,
+			IFNULL(SUM(IFNULL(T0.HEALTHY_NUM,0) + IFNULL(T0.WEAK_NUM,0) + IFNULL(T0.STILLBIRTH_NUM,0) + IFNULL(T0.MUTANT_NUM,0) + IFNULL(T0.MUMMY_NUM,0) + IFNULL(T0.BLACK_NUM,0)),0) totalQty, 
+			IFNULL(SUM(T0.ALIVE_LITTER_WEIGHT) / IF(_getSettingValueByCode(T0.FARM_ID,'RZBSCL') = 'ON',SUM(T0.HEALTHY_NUM),SUM(T0.HEALTHY_NUM) + SUM(T0.WEAK_NUM)),0) avgWeight,
+			IFNULL(IF(_getSettingValueByCode(T0.FARM_ID,'RZBSCL') = 'ON',SUM(T0.HEALTHY_NUM),SUM(T0.HEALTHY_NUM) + SUM(T0.WEAK_NUM)) / IF(COUNT(*) < 0,1,COUNT(*)),0) avgPigQty
+			FROM pp_l_bill_delivery T0
+			INNER JOIN hr_m_company T2 
+			ON T0.FARM_ID=T2.ROW_ID AND T2.DELETED_FLAG=0 AND T2.STATUS=1 
+			WHERE T0.DELETED_FLAG = '0'
+		]]>
+			<if test="companyMark != null">AND (T2.COMPANY_MARK = #{companyMark} OR T2.COMPANY_MARK LIKE #{companyMark}",%")</if>
+			<if test="startDate != null and endDate != null">AND T0.DELIVERY_DATE BETWEEN #{startDate} AND #{endDate}</if>
+			<!-- GROUP BY T0.FARM_ID -->
+	</select>
+	
+	<select id="searchWeanChangeToList" resultType='map'>
+	<![CDATA[
+			SELECT COUNT(*) pigQty,IFNULL(SUM(IFNULL(T0.WEAN_NUM,0)),0) weanNum,IFNULL(SUM(IFNULL(T0.WEAN_WEIGHT,0)),0) weanWeight,
+			IFNULL(SUM(IFNULL(T0.WEAN_NUM,0)) / IF(COUNT(*) < 0,1,COUNT(*)),0) avgPigQty,
+			IFNULL(SUM(IFNULL(T0.WEAN_WEIGHT,0)) / IF(COUNT(*) < 0,1,COUNT(*)),0) avgWeight,
+			IFNULL(SUM(IFNULL(T0.WEAN_WEIGHT,0)) / IF(SUM(IFNULL(T0.WEAN_WEIGHT,0))<0,1,SUM(IFNULL(T0.WEAN_WEIGHT,0))),0) avgPigWeight
+			FROM pp_l_bill_wean T0
+			INNER JOIN hr_m_company T2 
+			ON T0.FARM_ID=T2.ROW_ID AND T2.DELETED_FLAG=0 AND T2.STATUS=1 
+			WHERE T0.DELETED_FLAG = '0'
+	]]>
+			<if test="companyMark != null">AND (T2.COMPANY_MARK = #{companyMark} OR T2.COMPANY_MARK LIKE #{companyMark}",%")</if>
+			<if test="startDate != null and endDate != null">AND T0.WEAN_DATE BETWEEN #{startDate} AND #{endDate}</if>
+			<!-- GROUP BY T0.FARM_ID -->
+	</select>
+	
+	<select id="searchToChildCareChangeToList" resultType='map'>
+	<![CDATA[
+			SELECT 
+			COUNT(*) nestQty,
+			IFNULL(SUM(T0.CHILD_QTY),0) childQty,
+			IFNULL(SUM(T0.CHILDWEIGHT),0) childWeight,
+			IFNULL(SUM(T0.CHILDWEIGHT)/ IF(SUM(T0.CHILD_QTY)<0,1,SUM(T0.CHILD_QTY)),0) avgChildWeight,
+			IFNULL(AVG(T0.DATEAGE),0) avgDateage
+	]]>
+			FROM(
+				SELECT ROUND(AVG(DATEDIFF(T0.CHILD_DATE,T1.BIRTH_DATE))) DATEAGE,(T0.CHILD_WEIGHT * T0.CHILD_QTY) CHILDWEIGHT,T0.CHILD_QTY
+				FROM pp_l_bill_to_child T0
+				LEFT JOIN pp_l_pig T1
+				ON T0.FARM_ID = T1.FARM_ID AND T0.PIG_ID = T1.ROW_ID AND T1.PIG_TYPE = '3' AND T1.DELETED_FLAG = '0'
+				INNER JOIN hr_m_company T2 
+				ON T0.FARM_ID=T2.ROW_ID AND T2.DELETED_FLAG=0 AND T2.STATUS=1 
+				WHERE T0.DELETED_FLAG = '0'  
+				<if test="companyMark != null">AND (T2.COMPANY_MARK = #{companyMark} OR T2.COMPANY_MARK LIKE #{companyMark}",%")</if>
+				<if test="startDate != null and endDate != null">AND DATE(T0.CHILD_DATE) BETWEEN #{startDate} AND #{endDate}</if>
+				AND T0.CHANGE_HOUSE_TYPE=4
+				GROUP BY T0.BILL_ID,T0.HOUSE_ID
+				ORDER BY T0.BILL_ID,T0.LINE_NUMBER,T0.CHILD_DATE
+				) T0
+	</select>
+	
+	<select id="searchToFattenChangeToList" resultType='map'>
+	<![CDATA[
+			SELECT 
+			IFNULL(SUM(T0.CHILD_QTY),0) childQty,
+			IFNULL(SUM(T0.CHILDWEIGHT),0) childWeight,
+			IFNULL(SUM(T0.CHILDWEIGHT)/ IF(SUM(T0.CHILD_QTY)<0,1,SUM(T0.CHILD_QTY)),0) avgWeight,
+			IFNULL(AVG(T0.DATEAGE),0) dateage
+	]]>
+			FROM(
+				SELECT ROUND(AVG(DATEDIFF(T0.CHILD_DATE,T1.BIRTH_DATE))) DATEAGE,(T0.CHILD_WEIGHT * T0.CHILD_QTY) CHILDWEIGHT,T0.CHILD_QTY
+				FROM pp_l_bill_to_child T0
+				LEFT JOIN pp_l_pig T1
+				ON T0.FARM_ID = T1.FARM_ID AND T0.PIG_ID = T1.ROW_ID AND T1.PIG_TYPE = '3' AND T1.DELETED_FLAG = '0'
+				INNER JOIN hr_m_company T2 
+				ON T0.FARM_ID=T2.ROW_ID AND T2.DELETED_FLAG=0 AND T2.STATUS=1 
+				WHERE T0.DELETED_FLAG = '0'  
+				<if test="companyMark != null">AND (T2.COMPANY_MARK = #{companyMark} OR T2.COMPANY_MARK LIKE #{companyMark}",%")</if>
+				<if test="startDate != null and endDate != null">AND DATE(T0.CHILD_DATE) BETWEEN #{startDate} AND #{endDate}</if>
+				AND T0.CHANGE_HOUSE_TYPE=6
+				GROUP BY T0.BILL_ID,T0.HOUSE_ID
+				ORDER BY T0.BILL_ID,T0.LINE_NUMBER,T0.CHILD_DATE
+				) T0
+	</select>
+	
+	<select id="searchBreedPigDieChangeToList" resultType='map'>
+	<![CDATA[
+			SELECT IFNULL(SUM(IF(T4.PIG_TYPE = 1 AND T4.LEAVE_TYPE = 5 AND T4.PIG_CLASS = 1,1,0)),0) gttHbPigQty,
+			IFNULL(SUM(IF(T4.PIG_TYPE = 1 AND T4.LEAVE_TYPE = 5 AND T4.PIG_CLASS = 2,1,0)),0) gttScPigQty,
+			IFNULL(SUM(IF(T4.PIG_TYPE = 1 AND T4.LEAVE_TYPE = 2 AND T4.PIG_CLASS = 1,1,0)),0) gswHbpigQty,
+			IFNULL(SUM(IF(T4.PIG_TYPE = 1 AND T4.LEAVE_TYPE = 2 AND T4.PIG_CLASS = 2,1,0)),0) gswScPigQty,
+			IFNULL(SUM(IF(T4.PIG_TYPE = 2 AND T4.LEAVE_TYPE = 5 AND T4.PIG_CLASS = 3,1,0)),0) mttHbPigQty,
+			IFNULL(SUM(IF(T4.PIG_TYPE = 2 AND T4.LEAVE_TYPE = 5 AND T4.PIG_CLASS IN(4,6,7,8,9,11),1,0)),0) mttScPigQty,
+			IFNULL(SUM(IF(T4.PIG_TYPE = 2 AND T4.LEAVE_TYPE = 2 AND T4.PIG_CLASS = 3,1,0)),0) mswHbPigQty,
+			IFNULL(SUM(IF(T4.PIG_TYPE = 2 AND T4.LEAVE_TYPE = 2 AND T4.PIG_CLASS IN(4,6,7,8,9,11),1,0)),0) mswScPigQty
+	]]>
+			FROM pp_l_bill_leave T4
+			INNER JOIN hr_m_company T2 
+			ON T4.FARM_ID=T2.ROW_ID AND T2.DELETED_FLAG=0 AND T2.STATUS=1 
+			WHERE T4.DELETED_FLAG = '0' AND T4.PIG_TYPE BETWEEN 1 AND 2
+			<if test="companyMark != null">AND (T2.COMPANY_MARK = #{companyMark} OR T2.COMPANY_MARK LIKE #{companyMark}",%")</if>
+			<if test="startDate != null and endDate != null">AND T4.LEAVE_DATE BETWEEN #{startDate} AND #{endDate}</if>
+			<!-- GROUP BY T4.FARM_ID -->
+	</select>
+	
+	<select id="searchChildPigDieChangeToList" resultType='map'>
+			SELECT IFNULL(SUM(T0.LEAVE_QTY),0) pigQty
+			FROM pp_l_bill_child_die T0
+			INNER JOIN hr_m_company T2 
+			ON T0.FARM_ID=T2.ROW_ID AND T2.DELETED_FLAG=0 AND T2.STATUS=1 
+			WHERE T0.DELETED_FLAG = '0'
+			<if test="companyMark != null">AND (T2.COMPANY_MARK = #{companyMark} OR T2.COMPANY_MARK LIKE #{companyMark}",%")</if>
+			<if test="startDate != null and endDate != null">AND DATE(T0.LEAVE_DATE) BETWEEN #{startDate} AND #{endDate}</if>
+			AND T0.LEAVE_TYPE = 3
+			<!-- GROUP BY T0.FARM_ID -->
+	</select>
+	
+	<select id="searchChildCareDieChangeToList" resultType='map'>
+			SELECT COUNT(*) pigQty
+			FROM pp_l_bill_leave T0
+			INNER JOIN pp_o_house T1
+			ON T0.FARM_ID = T1.FARM_ID AND T0.HOUSE_ID = T1.ROW_ID AND T1.DELETED_FLAG ='0' AND T1.HOUSE_TYPE = 8
+			INNER JOIN hr_m_company T2 
+			ON T0.FARM_ID=T2.ROW_ID AND T2.DELETED_FLAG=0 AND T2.STATUS=1 
+			WHERE T0.DELETED_FLAG = '0'
+			<if test="companyMark != null">AND (T2.COMPANY_MARK = #{companyMark} OR T2.COMPANY_MARK LIKE #{companyMark}",%")</if>
+			<if test="startDate != null and endDate != null">AND DATE(T0.LEAVE_DATE) BETWEEN #{startDate} AND #{endDate}</if>
+			AND T0.LEAVE_TYPE = 4
+			<!-- GROUP BY T0.FARM_ID -->
+	</select>
+	
+	<select id="searchFattenDieChangeToList" resultType='map'>
+			SELECT COUNT(*) pigQty
+			FROM pp_l_bill_leave T0
+			INNER JOIN pp_o_house T1
+			ON T0.FARM_ID = T1.FARM_ID AND T0.HOUSE_ID = T1.ROW_ID AND T1.DELETED_FLAG ='0'  AND T1.HOUSE_TYPE = 9
+			INNER JOIN hr_m_company T2 
+			ON T0.FARM_ID=T2.ROW_ID AND T2.DELETED_FLAG=0 AND T2.STATUS=1 
+			WHERE T0.DELETED_FLAG = '0'
+			<if test="companyMark != null">AND (T2.COMPANY_MARK = #{companyMark} OR T2.COMPANY_MARK LIKE #{companyMark}",%")</if>
+			<if test="startDate != null and endDate != null">AND DATE(T0.LEAVE_DATE) BETWEEN #{startDate} AND #{endDate}</if>
+			AND T0.LEAVE_TYPE = 4
+			<!-- GROUP BY T0.FARM_ID -->
+	</select>
+	
+	<select id="searchChildCareSaleChangeToList" resultType='map'>
+	<![CDATA[
+			SELECT IFNULL(SUM(T0.a), 0) saleNum , IFNULL(SUM(T0.b), 0) totalWeight , IFNULL(SUM(T0.c),0) totalPrice,
+			IFNULL(SUM(T0.b)/ IF(SUM(T0.a)<0,1,SUM(T0.a)),0) avgWeight
+	]]>
+			FROM
+			(SELECT SUM(T3.SALE_NUM) a,
+			SUM(T3.TOTAL_WEIGHT) b , (SUM(T3.TOTAL_PRICE) + IFNULL(T0.PAYMENT_DIFF,0)) c
+			FROM pp_l_bill_pig_sale T0
+			LEFT JOIN pp_l_bill_pig_sale_detail T3
+			ON T0.FARM_ID = T3.FARM_ID AND T0.BILL_ID = T3.BILL_ID
+			INNER JOIN hr_m_company T2 
+			ON T0.FARM_ID=T2.ROW_ID AND T2.DELETED_FLAG=0 AND T2.STATUS=1 
+			WHERE T0.DELETED_FLAG = 0
+			AND T3.SALE_DESCRIBE =4
+			<if test="companyMark != null">AND (T2.COMPANY_MARK = #{companyMark} OR T2.COMPANY_MARK LIKE #{companyMark}",%")</if>
+			<if test="startDate != null and endDate != null">AND T3.SALE_DATE BETWEEN #{startDate} AND #{endDate}</if>
+			GROUP BY T0.PAYMENT_DIFF
+			ORDER BY T3.SALE_DATE,T3.BILL_ID,T3.LINE_NUMBER) T0
+	</select>
+	
+	<select id="searchFattenSaleChangeToList" resultType='map'>
+	<![CDATA[
+			SELECT IFNULL(SUM(T0.a), 0) saleNum , IFNULL(SUM(T0.b), 0) totalWeight , IFNULL(SUM(T0.c),0) totalPrice,
+			IFNULL(SUM(T0.b)/ IF(SUM(T0.a)<0,1,SUM(T0.a)),0) avgWeight
+	]]>
+			FROM
+			(SELECT SUM(T3.SALE_NUM) a,
+			SUM(T3.TOTAL_WEIGHT) b , (SUM(T3.TOTAL_PRICE) + IFNULL(T0.PAYMENT_DIFF,0)) c
+			FROM pp_l_bill_pig_sale T0
+			LEFT JOIN pp_l_bill_pig_sale_detail T3
+			ON T0.FARM_ID = T3.FARM_ID AND T0.BILL_ID = T3.BILL_ID
+			INNER JOIN hr_m_company T2 
+			ON T0.FARM_ID=T2.ROW_ID AND T2.DELETED_FLAG=0 AND T2.STATUS=1 
+			WHERE T0.DELETED_FLAG = 0
+			AND T3.SALE_DESCRIBE =3
+			<if test="companyMark != null">AND (T2.COMPANY_MARK = #{companyMark} OR T2.COMPANY_MARK LIKE #{companyMark}",%")</if>
+			<if test="startDate != null and endDate != null">AND T3.SALE_DATE BETWEEN #{startDate} AND #{endDate}</if>
+			GROUP BY T0.PAYMENT_DIFF
+			ORDER BY T3.SALE_DATE,T3.BILL_ID,T3.LINE_NUMBER) T0
+	</select>
+	
+	<select id="searchDefectsSaleChangeToList" resultType='map'>
+	<![CDATA[
+			SELECT IFNULL(SUM(T0.a), 0) saleNum , IFNULL(SUM(T0.b), 0) totalWeight , IFNULL(SUM(T0.c),0) totalPrice,
+			IFNULL(SUM(T0.b)/ IF(SUM(T0.a)<0,1,SUM(T0.a)),0) avgWeight
+	]]>
+			FROM
+			(SELECT SUM(T3.SALE_NUM) a,
+			SUM(T3.TOTAL_WEIGHT) b , (SUM(T3.TOTAL_PRICE) + IFNULL(T0.PAYMENT_DIFF,0)) c
+			FROM pp_l_bill_pig_sale T0
+			LEFT JOIN pp_l_bill_pig_sale_detail T3
+			ON T0.FARM_ID = T3.FARM_ID AND T0.BILL_ID = T3.BILL_ID
+			INNER JOIN hr_m_company T2 
+			ON T0.FARM_ID=T2.ROW_ID AND T2.DELETED_FLAG=0 AND T2.STATUS=1
+			WHERE T0.DELETED_FLAG = 0
+			AND T3.SALE_DESCRIBE =5
+			<if test="companyMark != null">AND (T2.COMPANY_MARK = #{companyMark} OR T2.COMPANY_MARK LIKE #{companyMark}",%")</if>
+			<if test="startDate != null and endDate != null">AND T3.SALE_DATE BETWEEN #{startDate} AND #{endDate}</if>
+			GROUP BY T0.PAYMENT_DIFF
+			ORDER BY T3.SALE_DATE,T3.BILL_ID,T3.LINE_NUMBER) T0
+	</select>
+	
+	<select id="searchSaleSemenToList" resultMap="validPigResult">
+			SELECT T0.ROW_ID,T0.SEMEN_BATCH_NO,T0.MATERIAL_ID,T0.PIG_ID,(SELECT COUNT(1) FROM pp_l_sperm_info T1 WHERE T1.SEMEN_ID = T0.ROW_ID AND T1.STATUS=T0.STATUS AND T1.FARM_ID=T0.FARM_ID AND T1.DELETED_FLAG=0 AND T1.IS_SALE=0) SEMEN_NUM,T0.HOUSE_ID,
+                   DATE_ADD(T0.SEMEN_DATE,INTERVAL (SELECT T1.SHELF_LIFE FROM cd_o_sperm T1 WHERE T1.MATERIAL_ID = T0.MATERIAL_ID AND T1.DELETED_FLAG=0)  DAY) VALID_DATE, T0.SEMEN_DATE,T0.WAREHOUSE_ID,
+                   (SELECT T2.WAREHOUSE_NAME FROM SC_M_WAREHOUSE T2 WHERE T2.ROW_ID=T0.WAREHOUSE_ID AND T2.DELETED_FLAG=T0.DELETED_FLAG AND T2.STATUS=T0.STATUS AND T2.FARM_ID=T0.FARM_ID) WAREHOUSE_NAME
+			FROM pp_l_bill_semen T0
+			WHERE T0.DELETED_FLAG=0 AND T0.STATUS = 1  AND T0.FARM_ID = #{farmId}
+			<if test="query != null"> AND T0.SEMEN_BATCH_NO LIKE "%"#{query}"%"</if>
+			<if test="semenIds != null"> AND T0.ROW_ID NOT IN (${semenIds})</if>
+	</select>
+	
+	<select id="searchPorkCheckByLastMonthToList" resultMap="validPigResult">
+		<![CDATA[
+			SELECT * FROM
+  				(SELECT 
+    				T0.ROW_ID AS houseId,T0.HOUSE_TYPE AS houseType,T0.HOUSE_NAME AS houseName,T5.SWINERY_ID AS swineryId,T5.SWINERY_NAME AS swineryName,IFNULL(T5.swineryAge,0) swineryAge,
+    				SUM(IF(T4.PIG_CLASS IN( '12','13','14','15','16'), 1, 0)) pigQty
+  				FROM PP_O_HOUSE T0 
+  				LEFT JOIN CD_L_PIG_HOUSE T1 ON ( T0.HOUSE_TYPE = T1.ROW_ID AND T1.DELETED_FLAG = '0' AND T1.ROW_ID BETWEEN 1 AND 9) 
+ 				LEFT JOIN 
+      				(SELECT T0.PIG_ID,T0.HOUSE_ID,DATE(IFNULL(T0.CHANGE_HOUSE_DATE_OUT,IFNULL(T1.LEAVE_DATE,DATE(DATE_ADD(NOW(), INTERVAL 1 DAY))))) END_DATE
+      				FROM PP_L_BILL_CHANGE_HOUSE T0 
+        			INNER JOIN PP_L_PIG T1 ON ( T0.FARM_ID = T1.FARM_ID AND T0.PIG_ID = T1.ROW_ID AND T1.DELETED_FLAG = '0' AND T1.ORIGIN <> 3) 
+        
+      				WHERE T0.DELETED_FLAG = '0' AND T0.STATUS = '1'
+      				AND T0.FARM_ID = #{farmId}
+      				AND T0.CHANGE_HOUSE_DATE <= #{billDate}
+        			) T3 
+        ]]>
+      			ON (T0.ROW_ID = T3.HOUSE_ID 
+      				AND T3.END_DATE > #{billDate}
+      				)
+      				
+    			LEFT JOIN 
+      				(SELECT T0.PIG_ID,T0.PIG_CLASS,DATE(IFNULL(T0.TOWORK_DATE_OUT,IFNULL(T1.LEAVE_DATE,DATE(DATE_ADD(NOW(), INTERVAL 1 DAY))))) END_DATE 
+      				FROM PP_L_BILL_TOWORK T0 
+        			LEFT JOIN PP_L_PIG T1 ON (T1.FARM_ID = T0.FARM_ID AND T1.ROW_ID = T0.PIG_ID AND T1.DELETED_FLAG = '0') 
+      				WHERE T0.DELETED_FLAG = '0' AND T0.STATUS = '1' 
+      				AND T0.FARM_ID = #{farmId}
+      	<![CDATA[
+      				AND T0.TOWORK_DATE <= #{billDate}
+      	]]>
+       				) T4 
+      			ON (T3.PIG_ID = T4.PIG_ID 
+      				AND T4.END_DATE > #{billDate}
+      				) 
+    			LEFT JOIN 
+      				(SELECT T0.PIG_ID,T0.SWINERY_ID,T2.SWINERY_NAME,T2.PIG_TYPE,DATE(IFNULL(T0.CHANGE_SWINERY_DATE_OUT,IFNULL(T1.LEAVE_DATE,DATE(DATE_ADD(NOW(), INTERVAL 1 DAY))))) END_DATE,
+      				ROUND(IF(T2.HOUSE_TYPE=6,_getSwineryAge(T2.ROW_ID,#{billDate},1),_getSwineryAge(T2.ROW_ID,#{billDate},0)),2) swineryAge
+      				FROM PP_L_BILL_CHANGE_SWINERY T0 
+        			LEFT JOIN PP_L_PIG T1 ON (T1.FARM_ID = T0.FARM_ID AND T1.ROW_ID = T0.PIG_ID AND T1.DELETED_FLAG = '0') 
+        			LEFT JOIN PP_M_SWINERY T2 ON ( T0.FARM_ID = T2.FARM_ID AND T0.SWINERY_ID = T2.ROW_ID AND T2.DELETED_FLAG = '0') 
+      				WHERE T0.DELETED_FLAG = '0' AND T0.STATUS = '1' AND T2.PIG_TYPE = 3 
+      				AND T0.FARM_ID = #{farmId}
+      	<![CDATA[
+      				AND T0.CHANGE_SWINERY_DATE <= #{billDate}
+      	]]>
+        			) T5 
+      			ON (T3.PIG_ID = T5.PIG_ID 
+      				AND T5.END_DATE > #{billDate}
+      				) 
+  				WHERE T0.DELETED_FLAG = '0' AND T0.HOUSE_TYPE IN ('6','8','9') 
+  				AND T0.FARM_ID = #{farmId}
+  				AND T5.SWINERY_ID IS NOT NULL GROUP BY T0.ROW_ID,
+    			T5.SWINERY_ID) A 
+			WHERE A.pigQty > 0 ORDER BY A.houseName,A.swineryName 
+		</select>
+		
+		<select id="searchPorkCheckByLastMonthBoarToList" resultType='map'>
+			<![CDATA[	
+			SELECT 	T0.ROW_ID houseId,
+					T0.HOUSE_NAME houseName,
+					SUM(IF(T4.PIG_CLASS = 1,1,0 )) hbgPigQty,
+					SUM(IF(T4.PIG_CLASS = 2,1,0 )) scgPigQty,
+					SUM(IF(T4.PIG_CLASS IN (3,4),1,0 )) hbmPigQty,
+					SUM(IF(T4.PIG_CLASS IN (5,6,7,8,9,10,11),1,0 )) scmPigQty 
+		
+			FROM pp_o_house T0 
+			LEFT JOIN cd_l_pig_house T1
+			ON T0.HOUSE_TYPE = T1.ROW_ID AND T1.DELETED_FLAG = '0' AND T1.ROW_ID BETWEEN 1 AND 9
+			LEFT JOIN (
+				SELECT T.HOUSE_ID,SUM(T.PIG_NUM) PIG_NUM FROM pp_o_pigpen T WHERE T.DELETED_FLAG = '0' AND T.FARM_ID=#{farmId} GROUP BY T.HOUSE_ID
+			)T2
+			ON T0.ROW_ID = T2.HOUSE_ID 
+			LEFT JOIN(
+				SELECT #{billDate} DATE,T0.PIG_ID,T0.HOUSE_ID,T0.PIG_CLASS,DATE(T0.CHANGE_HOUSE_DATE) STATUS_DATE,DATE(IFNULL(T1.CHANGE_HOUSE_DATE,IFNULL(T2.LEAVE_DATE,DATE(DATE_ADD(NOW(),INTERVAL 1 DAY))))) END_DATE
+				FROM pp_l_bill_change_house T0
+				LEFT JOIN pp_l_bill_change_house T1
+				ON T0.FARM_ID = T1.FARM_ID AND T0.ROW_ID = T1.CHANGE_HOUSE_ID AND  T1.DELETED_FLAG = '0' AND T1.STATUS = '1'
+				LEFT JOIN pp_l_bill_leave T2
+				ON T0.FARM_ID = T2.FARM_ID AND T0.PIG_ID = T2.PIG_ID AND T2.DELETED_FLAG = '0' AND T2.STATUS = '1'
+				INNER JOIN pp_l_pig T3
+				ON T0.FARM_ID = T3.FARM_ID AND T0.PIG_ID = T3.ROW_ID AND T3.DELETED_FLAG ='0' AND T3.ORIGIN <> 3
+				WHERE  T0.FARM_ID=#{farmId} AND T0.DELETED_FLAG = '0' AND T0.STATUS = '1' AND DATE(T0.CHANGE_HOUSE_DATE) <= #{billDate}
+				
+			) T3
+			ON T0.ROW_ID = T3.HOUSE_ID AND T3.END_DATE > #{billDate}
+			LEFT JOIN (
+				SELECT #{billDate} DATE,T0.PIG_ID,T0.PIG_CLASS,DATE(T0.TOWORK_DATE) STATUS_DATE,DATE(IFNULL(T1.TOWORK_DATE,IFNULL(T2.LEAVE_DATE,DATE(DATE_ADD(NOW(),INTERVAL 1 DAY))))) END_DATE
+				FROM pp_l_bill_towork T0
+				LEFT JOIN pp_l_bill_towork T1
+				ON T0.FARM_ID = T1.FARM_ID AND T0.ROW_ID = T1.CHANGE_PIG_CLASS_ID AND  T1.DELETED_FLAG = '0' AND T1.STATUS = '1'
+				LEFT JOIN pp_l_bill_leave T2
+				ON T0.FARM_ID = T2.FARM_ID AND T0.PIG_ID = T2.PIG_ID AND T2.DELETED_FLAG = '0' AND T2.STATUS = '1'
+				WHERE  T0.FARM_ID=#{farmId} AND T0.DELETED_FLAG = '0' AND T0.STATUS = '1' AND T0.TOWORK_DATE <= #{billDate}
+			) T4
+			ON T3.PIG_ID = T4.PIG_ID AND T4.END_DATE > #{billDate}
+			WHERE T0.FARM_ID=#{farmId} AND T0.DELETED_FLAG = '0' AND T1.ROW_ID BETWEEN 2 AND 7 
+			GROUP BY T0.ROW_ID
+			ORDER BY T0.HOUSE_NAME
+			]]>
+	</select>
+	
+	<select id="searchGoodPigDieToList" resultMap="validPigResult">
+			SELECT T0.PIG_ID,T0.PIG_TYPE,T0.PIG_TYPE_NAME,T0.EAR_BRAND,T0.EAR_SHORT,T0.HOUSE_ID,T0.PIGPEN_ID,T0.BREED_ID,T0.LINE_ID,T0.SWINERY_ID,
+                   T0.SWINERY_NAME,T0.BREED_NAME,T0.PIG_CLASS,T0.PIG_CLASS_NAME, T0.LINE_NAME,T0.HOUSE_NAME,T0.PIGPEN_NAME,T0.DATEAGE,T0.PARITY,T0.EAR_CODE_ID,
+                   T0.LOCATION,T0.PIG_INFO,MAX(T0.LAST_EVENT_DATE) LAST_EVENT_DATE,MAX(T0.LAST_EVENT_DATE) MIN_VALID_DATE,NOW() MAX_VALID_DATE,T0.SEX,T0.MATERIAL_ID,T2.HOUSE_TYPE,T1.SEED_FLAG
+			FROM pp_v_pig T0 
+			INNER JOIN pp_l_pig T1 ON T0.PIG_ID = T1.ROW_ID  AND T0.FARM_ID=T1.FARM_ID AND T1.DELETED_FLAG = '0'
+			INNER JOIN pp_o_house T2 ON T0.HOUSE_ID = T2.ROW_ID AND T0.FARM_ID=T2.FARM_ID AND T2.DELETED_FLAG = '0'
+			<if test="seedPigFlag == '1'.toString()"> INNER JOIN pp_l_bill_seed_detail T3 ON T0.PIG_ID = T3.PIG_ID AND T0.FARM_ID = T3.FARM_ID AND T3.DELETED_FLAG = '0' </if>
+			WHERE T0.FARM_ID = #{farmId} AND T0.DELETED_FLAG = '0' AND T0.STATUS = '1' AND T0.PIG_CLASS IN (14, 15, 16)
+			<if test="pigIds != null"> AND T0.ROW_ID NOT IN (${pigIds})</if>
+			<if test="query != null"> AND T0.EAR_SHORT LIKE "%"#{query}"%"</if>
+			<if test="pigClassIds != null">AND T0.PIG_CLASS =#{pigClassIds}</if>
+			<if test="houseIds != null">AND T0.HOUSE_ID =#{houseIds}</if>
+			<if test="swineryIds != null">AND T0.SWINERY_ID =#{swineryIds}</if>
+			<if test="breedIds != null">AND T0.BREED_ID =#{breedIds}</if>
+			<if test="minDateage != null">AND T0.DATEAGE  BETWEEN #{minDateage}</if>
+			<if test="maxDateage != null">AND #{maxDateage}</if>
+			<if test="seedPigFlag == '1'.toString()">AND T1.SEED_FLAG = 'Y' AND T1.IS_BATCH_SEED = 'Y'</if>
+			GROUP BY T0.ROW_ID
+	</select>
+		
+	<select id="searchTochildPigToList" resultMap="validPigResult">
+			SELECT T0.PIG_ID,T0.PIG_TYPE,T0.PIG_TYPE_NAME,T0.EAR_BRAND,T0.EAR_SHORT,T0.HOUSE_ID,T0.PIGPEN_ID,T0.BREED_ID,T0.LINE_ID,T0.SWINERY_ID,
+                   T0.SWINERY_NAME,T0.BREED_NAME,T0.PIG_CLASS,T0.PIG_CLASS_NAME, T0.LINE_NAME,T0.HOUSE_NAME,T0.PIGPEN_NAME,T0.DATEAGE,T0.PARITY,T0.EAR_CODE_ID,
+                   T0.LOCATION,T0.PIG_INFO,MAX(T0.LAST_EVENT_DATE) LAST_EVENT_DATE,MAX(T0.LAST_EVENT_DATE) MIN_VALID_DATE,NOW() MAX_VALID_DATE,T0.SEX,T0.MATERIAL_ID
+			FROM pp_v_pig T0 
+			INNER JOIN pp_l_pig T1 ON T0.PIG_ID = T1.ROW_ID  AND T0.FARM_ID=T1.FARM_ID AND T1.DELETED_FLAG = '0' 
+			<if test="seedPigFlag == '1'.toString()"> INNER JOIN pp_l_bill_seed_detail T2 ON T0.PIG_ID = T2.PIG_ID AND T0.FARM_ID = T2.FARM_ID AND T2.DELETED_FLAG = '0' </if>
+			WHERE T0.FARM_ID = #{farmId} AND T0.DELETED_FLAG = '0' AND T0.STATUS = '1' AND T0.PIG_CLASS IN (14,15)
+			<if test="pigIds != null"> AND T0.ROW_ID NOT IN (${pigIds})</if>
+			<if test="query != null"> AND T0.EAR_SHORT LIKE "%"#{query}"%"</if>
+			<if test="earBrand != null">AND T0.EAR_BRAND = #{earBrand}</if>
+			<if test="pigClassIds != null">AND T0.PIG_CLASS = #{pigClassIds}</if>
+			<if test="breedIds != null">AND T0.BREED_ID = #{breedIds}</if>
+			<if test="sex != null">AND T0.SEX = #{sex}</if>
+			<if test="houseIds != null">AND T0.HOUSE_ID =#{houseIds}</if>
+			<if test="swineryIds != null">AND T0.SWINERY_ID =#{swineryIds}</if>
+			<if test="seedPigFlag == '1'.toString()"> AND T1.SEED_FLAG = 'Y' AND T1.IS_BATCH_SEED = 'Y'</if>
+			GROUP BY T0.ROW_ID
+	</select>	
+	
+	<select id="searchToFattenPigToList" resultMap="validPigResult">
+			SELECT T0.PIG_ID,T0.PIG_TYPE,T0.PIG_TYPE_NAME,T0.EAR_BRAND,T0.EAR_SHORT,T0.HOUSE_ID,T0.PIGPEN_ID,T0.BREED_ID,T0.LINE_ID,T0.SWINERY_ID,
+                   T0.SWINERY_NAME,T0.BREED_NAME,T0.PIG_CLASS,T0.PIG_CLASS_NAME, T0.LINE_NAME,T0.HOUSE_NAME,T0.PIGPEN_NAME,T0.DATEAGE,T0.PARITY,T0.EAR_CODE_ID,
+                   T0.LOCATION,T0.PIG_INFO,MAX(T0.LAST_EVENT_DATE) LAST_EVENT_DATE,MAX(T0.LAST_EVENT_DATE) MIN_VALID_DATE,NOW() MAX_VALID_DATE,T0.SEX,T0.MATERIAL_ID
+			FROM pp_v_pig T0 
+			INNER JOIN pp_l_pig T1 ON T0.PIG_ID = T1.ROW_ID  AND T0.FARM_ID=T1.FARM_ID AND T1.DELETED_FLAG = '0' 
+			<if test="seedPigFlag == '1'.toString()"> INNER JOIN pp_l_bill_seed_detail T2 ON T0.PIG_ID = T2.PIG_ID AND T0.FARM_ID = T2.FARM_ID AND T2.DELETED_FLAG = '0' </if>
+			WHERE T0.FARM_ID = #{farmId} AND T0.DELETED_FLAG = '0' AND T0.STATUS = '1' AND T0.PIG_CLASS IN (15,16)
+			<if test="pigIds != null"> AND T0.ROW_ID NOT IN (${pigIds})</if>
+			<if test="query != null"> AND T0.EAR_SHORT LIKE "%"#{query}"%"</if>
+			<if test="earBrand != null">AND T0.EAR_BRAND = #{earBrand}</if>
+			<if test="pigClassIds != null">AND T0.PIG_CLASS = #{pigClassIds}</if>
+			<if test="breedIds != null">AND T0.BREED_ID = #{breedIds}</if>
+			<if test="sex != null">AND T0.SEX = #{sex}</if>
+			<if test="houseIds != null">AND T0.HOUSE_ID =#{houseIds}</if>
+			<if test="swineryIds != null">AND T0.SWINERY_ID =#{swineryIds}</if>
+			<if test="seedPigFlag == '1'.toString()"> AND T1.SEED_FLAG = 'Y' AND T1.IS_BATCH_SEED = 'Y'</if>
+			GROUP BY T0.ROW_ID
+	</select>	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="validPigResult"> ${sql} </select>
+</mapper>
+

@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.basicinfo.RoleMapper">
+
+	<resultMap id="RoleResult"  type="RoleModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="sortNbr" column="SORT_NBR" jdbcType="INTEGER" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="originFlag" column="ORIGIN_FLAG" jdbcType="CHAR" />
+		<result property="originApp" column="ORIGIN_APP" jdbcType="VARCHAR" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="farmId" column="FARM_ID" jdbcType="INTEGER" />
+		<result property="companyId" column="COMPANY_ID" jdbcType="INTEGER" />
+		<result property="businessCode" column="BUSINESS_CODE" jdbcType="VARCHAR" />
+		<result property="roleName" column="ROLE_NAME" jdbcType="VARCHAR" />
+		<result property="templateId" column="TEMPLATE_ID" jdbcType="INTEGER" />
+		<result property="roleType" column="ROLE_TYPE" jdbcType="VARCHAR" />
+		<result property="purchaseType" column="PURCHASE_TYPE" jdbcType="CHAR" />
+		<result property="showPrice" column="SHOW_PRICE" jdbcType="CHAR" />
+		<result property="iterceptUrl" column="ITERCEPT_URL" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="RoleModel_Column_List">
+		ROW_ID,NOTES,SORT_NBR,STATUS,DELETED_FLAG,ORIGIN_FLAG,ORIGIN_APP,BUSINESS_CODE,ROLE_NAME,COMPANY_ID,FARM_ID,TEMPLATE_ID,ROLE_TYPE,PURCHASE_TYPE,SHOW_PRICE,ITERCEPT_URL
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true"   keyProperty="rowId" parameterType="RoleModel">
+		INSERT INTO CD_O_ROLE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR,
+			STATUS,
+			DELETED_FLAG,
+			ORIGIN_FLAG,
+			ORIGIN_APP,
+			NOTES,
+			FARM_ID,
+			COMPANY_ID,
+			BUSINESS_CODE,
+			ROLE_NAME,
+			TEMPLATE_ID,
+			ROLE_TYPE,
+			PURCHASE_TYPE,
+			SHOW_PRICE,
+			ITERCEPT_URL
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ sortNbr,jdbcType=INTEGER},
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ originFlag,jdbcType=CHAR},
+			#{ originApp,jdbcType=VARCHAR},
+			#{ notes,jdbcType=VARCHAR},
+			#{ farmId,jdbcType=INTEGER},
+			#{ companyId,jdbcType=INTEGER},
+			#{ businessCode,jdbcType=VARCHAR},
+			#{ roleName,jdbcType=VARCHAR},
+			#{ templateId,jdbcType=INTEGER},
+			#{ roleType,jdbcType=VARCHAR},
+			#{ purchaseType,jdbcType=CHAR},
+			#{ showPrice,jdbcType=CHAR},
+			#{ iterceptUrl,jdbcType=VARCHAR}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO CD_O_ROLE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR ,
+			STATUS ,
+			DELETED_FLAG ,
+			ORIGIN_FLAG ,
+			ORIGIN_APP ,
+			NOTES ,
+			FARM_ID ,
+			COMPANY_ID ,
+			BUSINESS_CODE ,
+			ROLE_NAME ,
+			TEMPLATE_ID ,
+			ROLE_TYPE ,
+			PURCHASE_TYPE ,
+			SHOW_PRICE ,
+			ITERCEPT_URL 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.sortNbr,jdbcType=INTEGER},
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.originFlag,jdbcType=CHAR},
+				#{item.originApp,jdbcType=VARCHAR},
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.farmId,jdbcType=INTEGER},
+				#{item.companyId,jdbcType=INTEGER},
+				#{item.businessCode,jdbcType=VARCHAR},
+				#{item.roleName,jdbcType=VARCHAR},
+				#{item.templateId,jdbcType=INTEGER},
+				#{item.roleType,jdbcType=VARCHAR},
+				#{item.purchaseType,jdbcType=CHAR},
+				#{item.showPrice,jdbcType=CHAR},
+				#{item.iterceptUrl,jdbcType=VARCHAR}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="RoleModel" >
+		UPDATE CD_O_ROLE 
+		<set>
+		<if test="sortNbr != null">SORT_NBR = #{ sortNbr,jdbcType=INTEGER},</if>
+		<if test="status != null">STATUS = #{ status,jdbcType=CHAR},</if>
+		<if test="originFlag != null">ORIGIN_FLAG = #{ originFlag,jdbcType=CHAR},</if>
+		<if test="originApp != null">ORIGIN_APP = #{ originApp,jdbcType=VARCHAR},</if>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="businessCode != null">BUSINESS_CODE = #{ businessCode,jdbcType=VARCHAR},</if>
+		<if test="roleName != null">ROLE_NAME = #{ roleName,jdbcType=VARCHAR},</if>
+		<if test="templateId != null">TEMPLATE_ID = #{ templateId,jdbcType=INTEGER},</if>
+		<if test="roleType != null">ROLE_TYPE = #{ roleType,jdbcType=VARCHAR},</if>
+		<if test="purchaseType != null">PURCHASE_TYPE = #{ purchaseType,jdbcType=CHAR},</if>
+		<if test="showPrice != null">SHOW_PRICE = #{ showPrice,jdbcType=CHAR},</if>
+		<if test="iterceptUrl != null">ITERCEPT_URL = #{ iterceptUrl,jdbcType=VARCHAR}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE CD_O_ROLE 
+			<set>
+			<if test="item.sortNbr != null">SORT_NBR = #{item.sortNbr,jdbcType=INTEGER},</if>
+			<if test="item.status != null">STATUS = #{item.status,jdbcType=CHAR},</if>
+			<if test="item.originFlag != null">ORIGIN_FLAG = #{item.originFlag,jdbcType=CHAR},</if>
+			<if test="item.originApp != null">ORIGIN_APP = #{item.originApp,jdbcType=VARCHAR},</if>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.businessCode != null">BUSINESS_CODE = #{item.businessCode,jdbcType=VARCHAR},</if>
+			<if test="item.roleName != null">ROLE_NAME = #{item.roleName,jdbcType=VARCHAR},</if>
+			<if test="item.templateId != null">TEMPLATE_ID = #{item.templateId,jdbcType=INTEGER},</if>
+			<if test="item.roleType != null">ROLE_TYPE = #{item.roleType,jdbcType=VARCHAR},</if>
+			<if test="item.purchaseType != null">PURCHASE_TYPE = #{item.purchaseType,jdbcType=CHAR},</if>
+			<if test="item.showPrice != null">SHOW_PRICE = #{item.showPrice,jdbcType=CHAR},</if>
+			<if test="item.iterceptUrl != null">ITERCEPT_URL = #{item.iterceptUrl,jdbcType=VARCHAR}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  CD_O_ROLE
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  CD_O_ROLE
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE 
+		 ROW_ID =#{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  CD_O_ROLE
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' 
+		 AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+		 AND ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCons" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  CD_O_ROLE
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' ${item}
+		</foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="RoleResult">
+		SELECT 
+		<include refid="RoleModel_Column_List" />
+		FROM CD_O_ROLE WHERE DELETED_FLAG='0' 
+		AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="RoleResult" >
+		SELECT 
+		<include refid="RoleModel_Column_List" />
+		FROM CD_O_ROLE WHERE DELETED_FLAG='0'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="RoleResult" >
+		SELECT 
+		<include refid="RoleModel_Column_List" />
+		FROM CD_O_ROLE
+		WHERE DELETED_FLAG='0'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="RoleResult" >
+		SELECT 
+		<include refid="RoleModel_Column_List" />
+		FROM CD_O_ROLE
+		WHERE ${condition}
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAll" resultMap="RoleResult" >
+		SELECT *
+		FROM CD_O_ROLE
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="RoleResult"> ${sql} </select>
+
+</mapper>
+

@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.basicinfo.DisinfectorMapper">
+
+	<resultMap id="DisinfectorResult"  type="DisinfectorModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="sortNbr" column="SORT_NBR" jdbcType="INTEGER" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="originFlag" column="ORIGIN_FLAG" jdbcType="CHAR" />
+		<result property="originApp" column="ORIGIN_APP" jdbcType="VARCHAR" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="farmId" column="FARM_ID" jdbcType="INTEGER" />
+		<result property="companyId" column="COMPANY_ID" jdbcType="INTEGER" />
+		<result property="materialId" column="MATERIAL_ID" jdbcType="INTEGER" />
+		<result property="disinfectorModel" column="DISINFECTOR_MODEL" jdbcType="VARCHAR" />
+		<result property="shelfLife" column="SHELF_LIFE" jdbcType="VARCHAR" />
+		<result property="apperance" column="APPERANCE" jdbcType="LONGVARCHAR" />
+		<result property="pack" column="PACK" jdbcType="VARCHAR" />
+		<result property="disinfectorType" column="DISINFECTOR_TYPE" jdbcType="VARCHAR" />
+		<result property="effect" column="EFFECT" jdbcType="LONGVARCHAR" />
+		<result property="advantage" column="ADVANTAGE" jdbcType="LONGVARCHAR" />
+		<result property="disadvantage" column="DISADVANTAGE" jdbcType="LONGVARCHAR" />
+		<result property="usageDosage" column="USAGE_DOSAGE" jdbcType="LONGVARCHAR" />
+		<result property="notice" column="NOTICE" jdbcType="LONGVARCHAR" />
+		<result property="xjfzt" column="XJFZT" jdbcType="VARCHAR" />
+		<result property="fzgj" column="FZGJ" jdbcType="VARCHAR" />
+		<result property="zj" column="ZJ" jdbcType="VARCHAR" />
+		<result property="bmbd" column="BMBD" jdbcType="VARCHAR" />
+		<result property="fbmbd" column="FBMBD" jdbcType="VARCHAR" />
+		<result property="bz" column="BZ" jdbcType="VARCHAR" />
+		<result property="yjw" column="YJW" jdbcType="VARCHAR" />
+		<result property="ys" column="YS" jdbcType="VARCHAR" />
+		<result property="xdj" column="XDJ" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="DisinfectorModel_Column_List">
+		ROW_ID,SORT_NBR,STATUS,DELETED_FLAG,ORIGIN_FLAG,ORIGIN_APP,NOTES,FARM_ID,COMPANY_ID,MATERIAL_ID,DISINFECTOR_MODEL,SHELF_LIFE,APPERANCE,PACK,DISINFECTOR_TYPE,EFFECT,ADVANTAGE,DISADVANTAGE,USAGE_DOSAGE,NOTICE,XJFZT,FZGJ,ZJ,BMBD,FBMBD,BZ,YJW,YS,XDJ
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="rowId" parameterType="DisinfectorModel">
+		INSERT INTO CD_O_DISINFECTOR
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR,
+			STATUS,
+			DELETED_FLAG,
+			ORIGIN_FLAG,
+			ORIGIN_APP,
+			NOTES,
+			FARM_ID,
+			COMPANY_ID,
+			MATERIAL_ID,
+			DISINFECTOR_MODEL,
+			SHELF_LIFE,
+			APPERANCE,
+			PACK,
+			DISINFECTOR_TYPE,
+			EFFECT,
+			ADVANTAGE,
+			DISADVANTAGE,
+			USAGE_DOSAGE,
+			NOTICE,
+			XJFZT,
+			FZGJ,
+			ZJ,
+			BMBD,
+			FBMBD,
+			BZ,
+			YJW,
+			YS,
+			XDJ
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ sortNbr,jdbcType=INTEGER},
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ originFlag,jdbcType=CHAR},
+			#{ originApp,jdbcType=VARCHAR},
+			#{ notes,jdbcType=VARCHAR},
+			#{ farmId,jdbcType=INTEGER},
+			#{ companyId,jdbcType=INTEGER},
+			#{ materialId,jdbcType=INTEGER},
+			#{ disinfectorModel,jdbcType=VARCHAR},
+			#{ shelfLife,jdbcType=VARCHAR},
+			#{ apperance,jdbcType=LONGVARCHAR},
+			#{ pack,jdbcType=VARCHAR},
+			#{ disinfectorType,jdbcType=VARCHAR},
+			#{ effect,jdbcType=LONGVARCHAR},
+			#{ advantage,jdbcType=LONGVARCHAR},
+			#{ disadvantage,jdbcType=LONGVARCHAR},
+			#{ usageDosage,jdbcType=LONGVARCHAR},
+			#{ notice,jdbcType=LONGVARCHAR},
+			#{ xjfzt,jdbcType=VARCHAR},
+			#{ fzgj,jdbcType=VARCHAR},
+			#{ zj,jdbcType=VARCHAR},
+			#{ bmbd,jdbcType=VARCHAR},
+			#{ fbmbd,jdbcType=VARCHAR},
+			#{ bz,jdbcType=VARCHAR},
+			#{ yjw,jdbcType=VARCHAR},
+			#{ ys,jdbcType=VARCHAR},
+			#{ xdj,jdbcType=VARCHAR}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO CD_O_DISINFECTOR
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR ,
+			STATUS ,
+			DELETED_FLAG ,
+			ORIGIN_FLAG ,
+			ORIGIN_APP ,
+			NOTES ,
+			FARM_ID ,
+			COMPANY_ID ,
+			MATERIAL_ID ,
+			DISINFECTOR_MODEL ,
+			SHELF_LIFE ,
+			APPERANCE ,
+			PACK ,
+			DISINFECTOR_TYPE ,
+			EFFECT ,
+			ADVANTAGE ,
+			DISADVANTAGE ,
+			USAGE_DOSAGE ,
+			NOTICE ,
+			XJFZT ,
+			FZGJ ,
+			ZJ ,
+			BMBD ,
+			FBMBD ,
+			BZ ,
+			YJW ,
+			YS ,
+			XDJ 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.sortNbr,jdbcType=INTEGER},
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.originFlag,jdbcType=CHAR},
+				#{item.originApp,jdbcType=VARCHAR},
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.farmId,jdbcType=INTEGER},
+				#{item.companyId,jdbcType=INTEGER},
+				#{item.materialId,jdbcType=INTEGER},
+				#{item.disinfectorModel,jdbcType=VARCHAR},
+				#{item.shelfLife,jdbcType=VARCHAR},
+				#{item.apperance,jdbcType=LONGVARCHAR},
+				#{item.pack,jdbcType=VARCHAR},
+				#{item.disinfectorType,jdbcType=VARCHAR},
+				#{item.effect,jdbcType=LONGVARCHAR},
+				#{item.advantage,jdbcType=LONGVARCHAR},
+				#{item.disadvantage,jdbcType=LONGVARCHAR},
+				#{item.usageDosage,jdbcType=LONGVARCHAR},
+				#{item.notice,jdbcType=LONGVARCHAR},
+				#{item.xjfzt,jdbcType=VARCHAR},
+				#{item.fzgj,jdbcType=VARCHAR},
+				#{item.zj,jdbcType=VARCHAR},
+				#{item.bmbd,jdbcType=VARCHAR},
+				#{item.fbmbd,jdbcType=VARCHAR},
+				#{item.bz,jdbcType=VARCHAR},
+				#{item.yjw,jdbcType=VARCHAR},
+				#{item.ys,jdbcType=VARCHAR},
+				#{item.xdj,jdbcType=VARCHAR}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="DisinfectorModel" >
+		UPDATE CD_O_DISINFECTOR 
+		<set>
+		<if test="sortNbr != null">SORT_NBR = #{ sortNbr,jdbcType=INTEGER},</if>
+		<if test="originFlag != null">ORIGIN_FLAG = #{ originFlag,jdbcType=CHAR},</if>
+		<if test="originApp != null">ORIGIN_APP = #{ originApp,jdbcType=VARCHAR},</if>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="materialId != null">MATERIAL_ID = #{ materialId,jdbcType=INTEGER},</if>
+		<if test="disinfectorModel != null">DISINFECTOR_MODEL = #{ disinfectorModel,jdbcType=VARCHAR},</if>
+		<if test="shelfLife != null">SHELF_LIFE = #{ shelfLife,jdbcType=VARCHAR},</if>
+		<if test="apperance != null">APPERANCE = #{ apperance,jdbcType=LONGVARCHAR},</if>
+		<if test="pack != null">PACK = #{ pack,jdbcType=VARCHAR},</if>
+		<if test="disinfectorType != null">DISINFECTOR_TYPE = #{ disinfectorType,jdbcType=VARCHAR},</if>
+		<if test="effect != null">EFFECT = #{ effect,jdbcType=LONGVARCHAR},</if>
+		<if test="advantage != null">ADVANTAGE = #{ advantage,jdbcType=LONGVARCHAR},</if>
+		<if test="disadvantage != null">DISADVANTAGE = #{ disadvantage,jdbcType=LONGVARCHAR},</if>
+		<if test="usageDosage != null">USAGE_DOSAGE = #{ usageDosage,jdbcType=LONGVARCHAR},</if>
+		<if test="notice != null">NOTICE = #{ notice,jdbcType=LONGVARCHAR},</if>
+		<if test="xjfzt != null">XJFZT = #{ xjfzt,jdbcType=VARCHAR},</if>
+		<if test="fzgj != null">FZGJ = #{ fzgj,jdbcType=VARCHAR},</if>
+		<if test="zj != null">ZJ = #{ zj,jdbcType=VARCHAR},</if>
+		<if test="bmbd != null">BMBD = #{ bmbd,jdbcType=VARCHAR},</if>
+		<if test="fbmbd != null">FBMBD = #{ fbmbd,jdbcType=VARCHAR},</if>
+		<if test="bz != null">BZ = #{ bz,jdbcType=VARCHAR},</if>
+		<if test="yjw != null">YJW = #{ yjw,jdbcType=VARCHAR},</if>
+		<if test="ys != null">YS = #{ ys,jdbcType=VARCHAR},</if>
+		<if test="xdj != null">XDJ = #{ xdj,jdbcType=VARCHAR}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE CD_O_DISINFECTOR 
+			<set>
+			<if test="item.sortNbr != null">SORT_NBR = #{item.sortNbr,jdbcType=INTEGER},</if>
+			<if test="item.originFlag != null">ORIGIN_FLAG = #{item.originFlag,jdbcType=CHAR},</if>
+			<if test="item.originApp != null">ORIGIN_APP = #{item.originApp,jdbcType=VARCHAR},</if>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.materialId != null">MATERIAL_ID = #{item.materialId,jdbcType=INTEGER},</if>
+			<if test="item.disinfectorModel != null">DISINFECTOR_MODEL = #{item.disinfectorModel,jdbcType=VARCHAR},</if>
+			<if test="item.shelfLife != null">SHELF_LIFE = #{item.shelfLife,jdbcType=VARCHAR},</if>
+			<if test="item.apperance != null">APPERANCE = #{item.apperance,jdbcType=LONGVARCHAR},</if>
+			<if test="item.pack != null">PACK = #{item.pack,jdbcType=VARCHAR},</if>
+			<if test="item.disinfectorType != null">DISINFECTOR_TYPE = #{item.disinfectorType,jdbcType=VARCHAR},</if>
+			<if test="item.effect != null">EFFECT = #{item.effect,jdbcType=LONGVARCHAR},</if>
+			<if test="item.advantage != null">ADVANTAGE = #{item.advantage,jdbcType=LONGVARCHAR},</if>
+			<if test="item.disadvantage != null">DISADVANTAGE = #{item.disadvantage,jdbcType=LONGVARCHAR},</if>
+			<if test="item.usageDosage != null">USAGE_DOSAGE = #{item.usageDosage,jdbcType=LONGVARCHAR},</if>
+			<if test="item.notice != null">NOTICE = #{item.notice,jdbcType=LONGVARCHAR},</if>
+			<if test="item.xjfzt != null">XJFZT = #{item.xjfzt,jdbcType=VARCHAR},</if>
+			<if test="item.fzgj != null">FZGJ = #{item.fzgj,jdbcType=VARCHAR},</if>
+			<if test="item.zj != null">ZJ = #{item.zj,jdbcType=VARCHAR},</if>
+			<if test="item.bmbd != null">BMBD = #{item.bmbd,jdbcType=VARCHAR},</if>
+			<if test="item.fbmbd != null">FBMBD = #{item.fbmbd,jdbcType=VARCHAR},</if>
+			<if test="item.bz != null">BZ = #{item.bz,jdbcType=VARCHAR},</if>
+			<if test="item.yjw != null">YJW = #{item.yjw,jdbcType=VARCHAR},</if>
+			<if test="item.ys != null">YS = #{item.ys,jdbcType=VARCHAR},</if>
+			<if test="item.xdj != null">XDJ = #{item.xdj,jdbcType=VARCHAR}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  CD_O_DISINFECTOR
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  CD_O_DISINFECTOR
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE ROW_ID = #{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  CD_O_DISINFECTOR
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="DisinfectorResult">
+		SELECT *
+		FROM CD_O_DISINFECTOR WHERE DELETED_FLAG='0' AND STATUS = '1' 
+		AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="DisinfectorResult" >
+		SELECT *
+		FROM CD_O_DISINFECTOR WHERE DELETED_FLAG='0' AND STATUS = '1'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="DisinfectorResult" >
+		SELECT *
+		FROM CD_O_DISINFECTOR
+		WHERE DELETED_FLAG='0' AND STATUS = '1'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="DisinfectorResult" >
+		SELECT *
+		FROM CD_O_DISINFECTOR
+		WHERE ${condition}
+	</select>
+	
+	<!--供应链管理批量更新到所有猪场 -->
+	<update id="updateToFarms" parameterType="DisinfectorModel" >
+		UPDATE CD_O_DISINFECTOR 
+		<set>
+		<if test="sortNbr != null">SORT_NBR = #{ sortNbr,jdbcType=INTEGER},</if>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="disinfectorModel != null">DISINFECTOR_MODEL = #{ disinfectorModel,jdbcType=VARCHAR},</if>
+		<if test="shelfLife != null">SHELF_LIFE = #{ shelfLife,jdbcType=VARCHAR},</if>
+		<if test="apperance != null">APPERANCE = #{ apperance,jdbcType=LONGVARCHAR},</if>
+		<if test="pack != null">PACK = #{ pack,jdbcType=VARCHAR},</if>
+		<if test="disinfectorType != null">DISINFECTOR_TYPE = #{ disinfectorType,jdbcType=VARCHAR},</if>
+		<if test="effect != null">EFFECT = #{ effect,jdbcType=LONGVARCHAR},</if>
+		<if test="advantage != null">ADVANTAGE = #{ advantage,jdbcType=LONGVARCHAR},</if>
+		<if test="disadvantage != null">DISADVANTAGE = #{ disadvantage,jdbcType=LONGVARCHAR},</if>
+		<if test="usageDosage != null">USAGE_DOSAGE = #{ usageDosage,jdbcType=LONGVARCHAR},</if>
+		<if test="notice != null">NOTICE = #{ notice,jdbcType=LONGVARCHAR},</if>
+		<if test="xjfzt != null">XJFZT = #{ xjfzt,jdbcType=VARCHAR},</if>
+		<if test="fzgj != null">FZGJ = #{ fzgj,jdbcType=VARCHAR},</if>
+		<if test="zj != null">ZJ = #{ zj,jdbcType=VARCHAR},</if>
+		<if test="bmbd != null">BMBD = #{ bmbd,jdbcType=VARCHAR},</if>
+		<if test="fbmbd != null">FBMBD = #{ fbmbd,jdbcType=VARCHAR},</if>
+		<if test="bz != null">BZ = #{ bz,jdbcType=VARCHAR},</if>
+		<if test="yjw != null">YJW = #{ yjw,jdbcType=VARCHAR},</if>
+		<if test="ys != null">YS = #{ ys,jdbcType=VARCHAR},</if>
+		<if test="xdj != null">XDJ = #{ xdj,jdbcType=VARCHAR},</if>
+		MATERIAL_ID = MATERIAL_ID
+		</set>
+		WHERE
+		MATERIAL_ID IN (SELECT ROW_ID FROM CD_M_MATERIAL WHERE RELATED_ID = #{ materialId,jdbcType=INTEGER})
+	</update>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="DisinfectorResult"> ${sql} </select>
+
+</mapper>
+

@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.production.SemenSaleDetailMapper">
+
+	<resultMap id="SemenSaleDetailResult"  type="SemenSaleDetailModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="sortNbr" column="SORT_NBR" jdbcType="INTEGER" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="originFlag" column="ORIGIN_FLAG" jdbcType="CHAR" />
+		<result property="originApp" column="ORIGIN_APP" jdbcType="VARCHAR" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="semenSaleRowId" column="SEMEN_SALE_ROW_ID" jdbcType="INTEGER" />
+		<result property="spermId" column="SPERM_ID" jdbcType="INTEGER" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="SemenSaleDetailModel_Column_List">
+		ROW_ID,SORT_NBR,NOTES,SEMEN_SALE_ROW_ID,SPERM_ID
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true"   keyProperty="rowId" parameterType="SemenSaleDetailModel">
+		INSERT INTO PP_L_BILL_SEMEN_SALE_DETAIL
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR,
+			STATUS,
+			DELETED_FLAG,
+			ORIGIN_FLAG,
+			ORIGIN_APP,
+			NOTES,
+			SEMEN_SALE_ROW_ID,
+			SPERM_ID
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ sortNbr,jdbcType=INTEGER},
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ originFlag,jdbcType=CHAR},
+			#{ originApp,jdbcType=VARCHAR},
+			#{ notes,jdbcType=VARCHAR},
+			#{ semenSaleRowId,jdbcType=INTEGER},
+			#{ spermId,jdbcType=INTEGER}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO PP_L_BILL_SEMEN_SALE_DETAIL
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR ,
+			STATUS ,
+			DELETED_FLAG ,
+			ORIGIN_FLAG ,
+			ORIGIN_APP ,
+			NOTES ,
+			SEMEN_SALE_ROW_ID ,
+			SPERM_ID 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.sortNbr,jdbcType=INTEGER},
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.originFlag,jdbcType=CHAR},
+				#{item.originApp,jdbcType=VARCHAR},
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.semenSaleRowId,jdbcType=INTEGER},
+				#{item.spermId,jdbcType=INTEGER}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="SemenSaleDetailModel" >
+		UPDATE PP_L_BILL_SEMEN_SALE_DETAIL 
+		<set>
+		<if test="sortNbr != null">SORT_NBR = #{ sortNbr,jdbcType=INTEGER},</if>
+		<if test="status != null">STATUS = #{ status,jdbcType=CHAR},</if>
+		<if test="originFlag != null">ORIGIN_FLAG = #{ originFlag,jdbcType=CHAR},</if>
+		<if test="originApp != null">ORIGIN_APP = #{ originApp,jdbcType=VARCHAR},</if>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="semenSaleRowId != null">SEMEN_SALE_ROW_ID = #{ semenSaleRowId,jdbcType=INTEGER},</if>
+		<if test="spermId != null">SPERM_ID = #{ spermId,jdbcType=INTEGER}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE PP_L_BILL_SEMEN_SALE_DETAIL 
+			<set>
+			<if test="item.sortNbr != null">SORT_NBR = #{item.sortNbr,jdbcType=INTEGER},</if>
+			<if test="item.status != null">STATUS = #{item.status,jdbcType=CHAR},</if>
+			<if test="item.originFlag != null">ORIGIN_FLAG = #{item.originFlag,jdbcType=CHAR},</if>
+			<if test="item.originApp != null">ORIGIN_APP = #{item.originApp,jdbcType=VARCHAR},</if>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.semenSaleRowId != null">SEMEN_SALE_ROW_ID = #{item.semenSaleRowId,jdbcType=INTEGER},</if>
+			<if test="item.spermId != null">SPERM_ID = #{item.spermId,jdbcType=INTEGER}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  PP_L_BILL_SEMEN_SALE_DETAIL
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  PP_L_BILL_SEMEN_SALE_DETAIL
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE 
+		 ROW_ID =#{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  PP_L_BILL_SEMEN_SALE_DETAIL
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' 
+		 
+		 AND ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCons" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  PP_L_BILL_SEMEN_SALE_DETAIL
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' ${item}
+		</foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="SemenSaleDetailResult">
+		SELECT 
+		<include refid="SemenSaleDetailModel_Column_List" />
+		FROM PP_L_BILL_SEMEN_SALE_DETAIL WHERE DELETED_FLAG='0' 
+		
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="SemenSaleDetailResult" >
+		SELECT 
+		<include refid="SemenSaleDetailModel_Column_List" />
+		FROM PP_L_BILL_SEMEN_SALE_DETAIL WHERE DELETED_FLAG='0'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="SemenSaleDetailResult" >
+		SELECT 
+		<include refid="SemenSaleDetailModel_Column_List" />
+		FROM PP_L_BILL_SEMEN_SALE_DETAIL
+		WHERE DELETED_FLAG='0'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="SemenSaleDetailResult" >
+		SELECT 
+		<include refid="SemenSaleDetailModel_Column_List" />
+		FROM PP_L_BILL_SEMEN_SALE_DETAIL
+		WHERE ${condition}
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAll" resultMap="SemenSaleDetailResult" >
+		SELECT *
+		FROM PP_L_BILL_SEMEN_SALE_DETAIL
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="SemenSaleDetailResult"> ${sql} </select>
+
+	<!--撤销事件批量删除 -->
+	<update id="deletesForCancel" parameterType="java.util.List" >
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+		 UPDATE  PP_L_BILL_SEMEN_SALE_DETAIL
+		 SET
+		 DELETED_FLAG  =  '2'
+		 WHERE ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+        </foreach>	
+	</update>
+	
+</mapper>
+

@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="xn.pigfarm.mapper.backend.CdModuleMapper">
+
+	<resultMap id="cdModuleResult" type="CdModuleModel"  extends = "BaseMapper.BaseModelMap">
+		<result property="moduleId" column="MODULE_ID" jdbcType="INTEGER" />
+		<result property="parentId" column="PARENT_ID" jdbcType="INTEGER" />
+		<result property="moduleCode" column="MODULE_CODE" jdbcType="VARCHAR" />
+		<result property="moduleName" column="MODULE_NAME" jdbcType="VARCHAR" />
+		<result property="sortName" column="SORT_NAME" jdbcType="VARCHAR" />
+		<result property="moduleEnNa" column="MODULE_EN_NA" jdbcType="VARCHAR" />
+		<result property="sortEnNa" column="SORT_EN_NA" jdbcType="VARCHAR" />
+		<result property="iconCls" column="ICON_CLS" jdbcType="VARCHAR" />
+		<result property="glyph" column="GLYPH" jdbcType="VARCHAR" />
+		<result property="clickEvent" column="CLICK_EVENT" jdbcType="VARCHAR" />
+		<result property="menuType" column="MENU_TYPE" jdbcType="VARCHAR" />
+		<result property="moduleUrl" column="MODULE_URL" jdbcType="VARCHAR" />
+		<result property="component" column="COMPONENT" jdbcType="VARCHAR" />
+		<result property="moduleDesc" column="MODULE_DESC" jdbcType="VARCHAR" />
+		<result property="usingFlag" column="USING_FLAG" jdbcType="CHAR" />
+		<result property="levelNum" column="LEVEL_NUM" jdbcType="INTEGER" />
+		<result property="menuTypeName" column="MENU_TYPE_NAME" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<resultMap id="menuViewResult"  type="MenuView" >
+		<result property="parentId" column="PARENT_ID" jdbcType="INTEGER" />
+		<result property="menuType" column="MENU_TYPE" jdbcType="VARCHAR" />
+		<result property="moduleCode" column="MODULE_CODE" jdbcType="VARCHAR" />
+		<result property="moduleEnNa" column="MODULE_EN_NA" jdbcType="VARCHAR" />
+		<result property="sortEnNa" column="SORT_EN_NA" jdbcType="VARCHAR" />
+		<result property="moduleId" column="MODULE_ID" jdbcType="INTEGER" />
+		<result property="levelNum" column="LEVEL_NUM" jdbcType="INTEGER" />
+		<result property="moduleName" column="MODULE_NAME" jdbcType="VARCHAR" />
+		<result property="moduleUrl" column="MODULE_URL" jdbcType="VARCHAR" />
+		<result property="glyph" column="GLYPH" jdbcType="VARCHAR" />
+		<result property="iconCls" column="ICON_CLS" jdbcType="VARCHAR" />
+		<result property="clickEvent" column="CLICK_EVENT" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="Base_Column_List">
+		cm.ROW_ID,cm.NOTES,cm.SORT_NBR,cm.STATUS,cm.DELETED_FLAG,cm.ORIGIN_FLAG,cm.ORIGIN_APP,cm.MODULE_CODE,cm.MODULE_NAME,cm.SORT_NAME,cm.MODULE_EN_NA,cm.SORT_EN_NA,cm.ICON_CLS,cm.GLYPH,cm.CLICK_EVENT,cm.MENU_TYPE,cm.MODULE_URL,cm.COMPONENT,cm.USING_FLAG
+	</sql>
+	<sql id="List_Column_List">
+		cb.ROW_ID,cb.NOTES,cb.SORT_NBR,cb.STATUS,cb.DELETED_FLAG,cb.ORIGIN_FLAG,cb.ORIGIN_APP,cb.MODULE_ID,cb.PAGE_ID,cb.BTN_TYPE,cb.BTN_CODE,cb.BTN_NAME,cb.ICON_CLS,cb.FUN_NAME
+	</sql>
+
+	<!-- 带验证增 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="rowId" parameterType="CdModuleModel">
+		insert into cd_o_module
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="notes!= null">NOTES ,</if>
+			<if test="sortNbr!= null">SORT_NBR ,</if>
+			<if test="status!= null">STATUS ,</if>
+			<if test="deletedFlag!= null">DELETED_FLAG ,</if>
+			<if test="originFlag!= null">ORIGIN_FLAG ,</if>
+			<if test="originApp!= null">ORIGIN_APP ,</if>
+			<if test="moduleCode!= null">MODULE_CODE ,</if>
+			<if test="moduleName!= null">MODULE_NAME ,</if>
+			<if test="sortName!= null">SORT_NAME ,</if>
+			<if test="moduleEnNa!= null">MODULE_EN_NA ,</if>
+			<if test="sortEnNa!= null">SORT_EN_NA ,</if>
+			<if test="iconCls!= null">ICON_CLS ,</if>
+			<if test="glyph!= null">GLYPH ,</if>
+			<if test="clickEvent!= null">CLICK_EVENT ,</if>
+			<if test="menuType!= null">MENU_TYPE ,</if>
+			<if test="component!= null">COMPONENT ,</if>
+			<if test="moduleUrl!= null">MODULE_URL ,</if>
+			<if test="usingFlag!= null">USING_FLAG </if>
+			
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="notes!= null">#{ notes,jdbcType=VARCHAR} ,</if>
+			<if test="sortNbr!= null">#{ sortNbr,jdbcType=INTEGER} ,</if>
+			<if test="status!= null">#{ status,jdbcType=CHAR} ,</if>
+			<if test="deletedFlag!= null">#{ deletedFlag,jdbcType=CHAR} ,</if>
+			<if test="originFlag!= null">#{ originFlag,jdbcType=CHAR} ,</if>
+			<if test="originApp!= null">#{ originApp,jdbcType=VARCHAR} ,</if>
+			<if test="moduleCode!= null">#{ moduleCode,jdbcType=VARCHAR} ,</if>
+			<if test="moduleName!= null">#{ moduleName,jdbcType=VARCHAR} ,</if>
+			<if test="sortName!= null">#{ sortName,jdbcType=VARCHAR} ,</if>
+			<if test="moduleEnNa!= null">#{ moduleEnNa,jdbcType=VARCHAR} ,</if>
+			<if test="sortEnNa!= null">#{ sortEnNa,jdbcType=VARCHAR} ,</if>
+			<if test="iconCls!= null">#{ iconCls,jdbcType=VARCHAR} ,</if>
+			<if test="glyph!= null">#{ glyph,jdbcType=VARCHAR} ,</if>
+			<if test="clickEvent!= null">#{ clickEvent,jdbcType=VARCHAR} ,</if>
+			<if test="menuType!= null">#{ menuType,jdbcType=VARCHAR} ,</if>
+			<if test="component!= null">#{ component,jdbcType=VARCHAR} ,</if>
+			<if test="moduleUrl!= null">#{ moduleUrl,jdbcType=VARCHAR} ,</if>
+			<if test="usingFlag!= null">#{ usingFlag,jdbcType=CHAR} </if>
+
+		</trim>
+	</insert>
+	
+	<!--带验证更新 -->
+	<update id="update" parameterType="CdModuleModel">
+		update cd_o_module
+		<set>
+			<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR} ,</if>
+			<if test="sortNbr != null">SORT_NBR = #{ sortNbr,jdbcType=INTEGER} ,</if>
+			<if test="status != null">STATUS = #{ status,jdbcType=CHAR} ,</if>
+			<if test="originFlag != null">ORIGIN_FLAG = #{ originFlag,jdbcType=CHAR} ,</if>
+			<if test="originApp != null">ORIGIN_APP = #{ originApp,jdbcType=VARCHAR} ,</if>
+			<if test="moduleCode != null">MODULE_CODE = #{ moduleCode,jdbcType=VARCHAR} ,</if>
+			<if test="moduleName != null">MODULE_NAME = #{ moduleName,jdbcType=VARCHAR} ,</if>
+			<if test="sortName != null">SORT_NAME = #{ sortName,jdbcType=VARCHAR} ,</if>
+			<if test="moduleEnNa != null">MODULE_EN_NA = #{ moduleEnNa,jdbcType=VARCHAR} ,</if>
+			<if test="sortEnNa != null">SORT_EN_NA = #{ sortEnNa,jdbcType=VARCHAR} ,</if>
+			<if test="iconCls != null">ICON_CLS = #{ iconCls,jdbcType=VARCHAR} ,</if>
+			<if test="glyph != null">GLYPH = #{ glyph,jdbcType=VARCHAR} ,</if>
+			<if test="clickEvent != null">CLICK_EVENT = #{ clickEvent,jdbcType=VARCHAR} ,</if>
+			<if test="menuType != null">MENU_TYPE = #{ menuType,jdbcType=VARCHAR} ,</if>
+			<if test="component != null">COMPONENT = #{ component,jdbcType=VARCHAR} ,</if>
+			<if test="moduleUrl != null">MODULE_URL = #{ moduleUrl,jdbcType=VARCHAR} ,</if>
+			<if test="usingFlag != null">USING_FLAG = #{ usingFlag,jdbcType=CHAR} </if>
+
+		</set>
+		where
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes">
+		UPDATE	cd_o_module	SET	DELETED_FLAG = '1'
+		WHERE ROW_ID in
+		<foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</update>
+	
+	<!--查询 -->
+	<select id="searchToList" resultMap="cdModuleResult">
+		select
+		<include refid="Base_Column_List" />
+		from cd_o_module cm
+		where
+		cm.STATUS = 1 AND cm.DELETED_FLAG = 0
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="cdModuleResult" >
+		select
+		<include refid="Base_Column_List" />
+		from cd_o_module cm
+		where
+		cm.STATUS = 1 AND cm.DELETED_FLAG = 0  ${condition} 
+	</select>
+	
+	<select id="searchMenuByUserId" resultMap="cdModuleResult">
+		<![CDATA[ 
+			SELECT  T3.MODULE_ID,T3.LEVEL_NUM,T3.PARENT_ID,T4.MODULE_NAME,T4.MODULE_URL,T4.GLYPH,T4.ICON_CLS,T4.CLICK_EVENT
+			FROM cd_r_employee_role T0 
+			INNER JOIN cd_o_role T1
+			ON T0.ROLE_ID = T1.ROW_ID AND T1.DELETED_FLAG = '0' AND T1.STATUS = '1'
+			INNER JOIN cd_r_limit T2
+			ON T1.ROW_ID = T2.ROLE_ID AND T2.DELETED_FLAG = '0' AND T2.STATUS = '1'
+			INNER JOIN cd_r_menus T3
+			ON T3.TEMPLATE_ID = T1.TEMPLATE_ID AND T3.DELETED_FLAG = '0' AND T3.STATUS = '1'  AND T2.OBJ_ID = T3.MODULE_ID AND T2.OBJ_TYPE = 'URL'
+			INNER JOIN cd_o_module T4
+			ON T3.MODULE_ID = T4.ROW_ID AND T4.DELETED_FLAG = '0' AND T4.STATUS = '1'
+			
+			WHERE T0.EMPLOYEE_ID = #{employeeId} AND T0.DELETED_FLAG = '0' AND T0.STATUS = '1'
+			AND T1.COMPANY_ID = #{companyId}
+		]]>
+	</select>
+	
+	<select id="searchModuleChildren" resultMap="cdModuleResult">
+			SELECT cr.ROW_ID,cr.MODULE_ID,cm.MODULE_NAME,cr.PARENT_ID,cr.LEVEL_NUM
+			FROM  cd_r_menus cr
+			LEFT JOIN cd_o_module cm ON cr.MODULE_ID = cm.ROW_ID AND cm.DELETED_FLAG = 0 AND cm.STATUS = 1
+			WHERE cr.STATUS = 1 AND cr.DELETED_FLAG = 0
+			AND cr.TEMPLATE_ID = #{templateId}
+			AND cr.PARENT_ID = #{parentId}
+	</select>
+	
+	<select id="searchModuleByTemplateId" resultMap="menuViewResult">
+			SELECT cr.ROW_ID,cr.MODULE_ID,cm.MODULE_NAME,cr.PARENT_ID,cr.LEVEL_NUM
+			FROM  cd_r_menus cr
+			LEFT JOIN cd_o_module cm ON cr.MODULE_ID = cm.ROW_ID AND cm.DELETED_FLAG = 0 AND cm.STATUS = 1
+			WHERE cr.STATUS = 1 AND cr.DELETED_FLAG = 0
+			AND cr.TEMPLATE_ID = #{templateId}
+	</select>
+	<select id="searchModuleExcludeById" resultMap="cdModuleResult">
+	SELECT
+		cd.CODE_NAME MENU_TYPE_NAME,
+		<include refid="Base_Column_List" />
+		FROM cd_o_module cm
+		LEFT JOIN (SELECT cl.CODE_VALUE,cl.CODE_NAME FROM cd_l_code_list cl WHERE cl.TYPE_CODE = 'MENU_TYPE_MODULE' AND cl.DELETED_FLAG = '0' AND cl.STATUS = '1') cd
+		ON cm.MENU_TYPE = cd.CODE_VALUE
+		WHERE
+		cm.STATUS = 1 AND cm.DELETED_FLAG = 0 AND cm.USING_FLAG='Y' AND cm.MENU_TYPE IN ('1','3')
+	<!-- select
+		
+		<include refid="Base_Column_List" />
+		from cd_o_module cm
+		where
+		cm.STATUS = 1 AND cm.DELETED_FLAG = 0 AND cm.USING_FLAG='Y' AND cm.MENU_TYPE IN ('1','3') -->
+		<if test="ids.length > 0">
+		and
+		cm.ROW_ID not in
+		<foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		</if>
+	</select>
+</mapper>
+

@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.basicinfo.IndicatorMapper">
+
+	<resultMap id="IndicatorResult"  type="IndicatorModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="sortNbr" column="SORT_NBR" jdbcType="INTEGER" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="originFlag" column="ORIGIN_FLAG" jdbcType="CHAR" />
+		<result property="originApp" column="ORIGIN_APP" jdbcType="VARCHAR" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="farmId" column="FARM_ID" jdbcType="INTEGER" />
+		<result property="companyId" column="COMPANY_ID" jdbcType="INTEGER" />
+		<result property="indTypeId" column="IND_TYPE_ID" jdbcType="INTEGER" />
+		<result property="businessCode" column="BUSINESS_CODE" jdbcType="VARCHAR" />
+		<result property="indName" column="IND_NAME" jdbcType="VARCHAR" />
+		<result property="standardValue" column="STANDARD_VALUE" jdbcType="DECIMAL" />
+		<result property="minValue" column="MIN_VALUE" jdbcType="DECIMAL" />
+		<result property="maxValue" column="MAX_VALUE" jdbcType="DECIMAL" />
+		<result property="section" column="SECTION" jdbcType="DECIMAL" />
+		<result property="unit" column="UNIT" jdbcType="VARCHAR" />
+		<result property="formula" column="FORMULA" jdbcType="VARCHAR" />
+		<result property="description" column="DESCRIPTION" jdbcType="VARCHAR" />
+		<result property="weekStandardValue" column="WEEK_STANDARD_VALUE" jdbcType="DECIMAL" />
+		<result property="monthStandardValue" column="MONTH_STANDARD_VALUE" jdbcType="DECIMAL" />
+		<result property="quarterStandardValue" column="QUARTER_STANDARD_VALUE" jdbcType="DECIMAL" />
+		<result property="yearStandardValue" column="YEAR_STANDARD_VALUE" jdbcType="DECIMAL" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="IndicatorModel_Column_List">
+		ROW_ID,SORT_NBR,NOTES,IND_TYPE_ID,BUSINESS_CODE,IND_NAME,STANDARD_VALUE,MIN_VALUE,MAX_VALUE,SECTION,UNIT,FORMULA,DESCRIPTION,WEEK_STANDARD_VALUE,MONTH_STANDARD_VALUE,QUARTER_STANDARD_VALUE,YEAR_STANDARD_VALUE
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true"   keyProperty="rowId" parameterType="IndicatorModel">
+		INSERT INTO PP_L_INDICATOR
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR,
+			STATUS,
+			DELETED_FLAG,
+			ORIGIN_FLAG,
+			ORIGIN_APP,
+			NOTES,
+			FARM_ID,
+			COMPANY_ID,
+			IND_TYPE_ID,
+			BUSINESS_CODE,
+			IND_NAME,
+			STANDARD_VALUE,
+			MIN_VALUE,
+			MAX_VALUE,
+			SECTION,
+			UNIT,
+			FORMULA,
+			DESCRIPTION,
+			WEEK_STANDARD_VALUE,
+			MONTH_STANDARD_VALUE,
+			QUARTER_STANDARD_VALUE,
+			YEAR_STANDARD_VALUE
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ sortNbr,jdbcType=INTEGER},
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ originFlag,jdbcType=CHAR},
+			#{ originApp,jdbcType=VARCHAR},
+			#{ notes,jdbcType=VARCHAR},
+			#{ farmId,jdbcType=INTEGER},
+			#{ companyId,jdbcType=INTEGER},
+			#{ indTypeId,jdbcType=INTEGER},
+			#{ businessCode,jdbcType=VARCHAR},
+			#{ indName,jdbcType=VARCHAR},
+			#{ standardValue,jdbcType=DECIMAL},
+			#{ minValue,jdbcType=DECIMAL},
+			#{ maxValue,jdbcType=DECIMAL},
+			#{ section,jdbcType=DECIMAL},
+			#{ unit,jdbcType=VARCHAR},
+			#{ formula,jdbcType=VARCHAR},
+			#{ description,jdbcType=VARCHAR},
+			#{ weekStandardValue,jdbcType=DECIMAL},
+			#{ monthStandardValue,jdbcType=DECIMAL},
+			#{ quarterStandardValue,jdbcType=DECIMAL},
+			#{ yearStandardValue,jdbcType=DECIMAL}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO PP_L_INDICATOR
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR ,
+			STATUS ,
+			DELETED_FLAG ,
+			ORIGIN_FLAG ,
+			ORIGIN_APP ,
+			NOTES ,
+			FARM_ID ,
+			COMPANY_ID ,
+			IND_TYPE_ID ,
+			BUSINESS_CODE ,
+			IND_NAME ,
+			STANDARD_VALUE ,
+			MIN_VALUE ,
+			MAX_VALUE ,
+			SECTION ,
+			UNIT ,
+			FORMULA ,
+			DESCRIPTION ,
+			WEEK_STANDARD_VALUE ,
+			MONTH_STANDARD_VALUE ,
+			QUARTER_STANDARD_VALUE ,
+			YEAR_STANDARD_VALUE 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.sortNbr,jdbcType=INTEGER},
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.originFlag,jdbcType=CHAR},
+				#{item.originApp,jdbcType=VARCHAR},
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.farmId,jdbcType=INTEGER},
+				#{item.companyId,jdbcType=INTEGER},
+				#{item.indTypeId,jdbcType=INTEGER},
+				#{item.businessCode,jdbcType=VARCHAR},
+				#{item.indName,jdbcType=VARCHAR},
+				#{item.standardValue,jdbcType=DECIMAL},
+				#{item.minValue,jdbcType=DECIMAL},
+				#{item.maxValue,jdbcType=DECIMAL},
+				#{item.section,jdbcType=DECIMAL},
+				#{item.unit,jdbcType=VARCHAR},
+				#{item.formula,jdbcType=VARCHAR},
+				#{item.description,jdbcType=VARCHAR},
+				#{item.weekStandardValue,jdbcType=DECIMAL},
+				#{item.monthStandardValue,jdbcType=DECIMAL},
+				#{item.quarterStandardValue,jdbcType=DECIMAL},
+				#{item.yearStandardValue,jdbcType=DECIMAL}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="IndicatorModel" >
+		UPDATE PP_L_INDICATOR 
+		<set>
+		<if test="sortNbr != null">SORT_NBR = #{ sortNbr,jdbcType=INTEGER},</if>
+		<if test="status != null">STATUS = #{ status,jdbcType=CHAR},</if>
+		<if test="originFlag != null">ORIGIN_FLAG = #{ originFlag,jdbcType=CHAR},</if>
+		<if test="originApp != null">ORIGIN_APP = #{ originApp,jdbcType=VARCHAR},</if>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="indTypeId != null">IND_TYPE_ID = #{ indTypeId,jdbcType=INTEGER},</if>
+		<if test="businessCode != null">BUSINESS_CODE = #{ businessCode,jdbcType=VARCHAR},</if>
+		<if test="indName != null">IND_NAME = #{ indName,jdbcType=VARCHAR},</if>
+		<if test="standardValue != null">STANDARD_VALUE = #{ standardValue,jdbcType=DECIMAL},</if>
+		<if test="minValue != null">MIN_VALUE = #{ minValue,jdbcType=DECIMAL},</if>
+		<if test="maxValue != null">MAX_VALUE = #{ maxValue,jdbcType=DECIMAL},</if>
+		<if test="section != null">SECTION = #{ section,jdbcType=DECIMAL},</if>
+		<if test="unit != null">UNIT = #{ unit,jdbcType=VARCHAR},</if>
+		<if test="formula != null">FORMULA = #{ formula,jdbcType=VARCHAR},</if>
+		<if test="description != null">DESCRIPTION = #{ description,jdbcType=VARCHAR},</if>
+		<if test="weekStandardValue != null">WEEK_STANDARD_VALUE = #{ weekStandardValue,jdbcType=DECIMAL},</if>
+		<if test="monthStandardValue != null">MONTH_STANDARD_VALUE = #{ monthStandardValue,jdbcType=DECIMAL},</if>
+		<if test="quarterStandardValue != null">QUARTER_STANDARD_VALUE = #{ quarterStandardValue,jdbcType=DECIMAL},</if>
+		<if test="yearStandardValue != null">YEAR_STANDARD_VALUE = #{ yearStandardValue,jdbcType=DECIMAL}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE PP_L_INDICATOR 
+			<set>
+			<if test="item.sortNbr != null">SORT_NBR = #{item.sortNbr,jdbcType=INTEGER},</if>
+			<if test="item.status != null">STATUS = #{item.status,jdbcType=CHAR},</if>
+			<if test="item.originFlag != null">ORIGIN_FLAG = #{item.originFlag,jdbcType=CHAR},</if>
+			<if test="item.originApp != null">ORIGIN_APP = #{item.originApp,jdbcType=VARCHAR},</if>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.indTypeId != null">IND_TYPE_ID = #{item.indTypeId,jdbcType=INTEGER},</if>
+			<if test="item.businessCode != null">BUSINESS_CODE = #{item.businessCode,jdbcType=VARCHAR},</if>
+			<if test="item.indName != null">IND_NAME = #{item.indName,jdbcType=VARCHAR},</if>
+			<if test="item.standardValue != null">STANDARD_VALUE = #{item.standardValue,jdbcType=DECIMAL},</if>
+			<if test="item.minValue != null">MIN_VALUE = #{item.minValue,jdbcType=DECIMAL},</if>
+			<if test="item.maxValue != null">MAX_VALUE = #{item.maxValue,jdbcType=DECIMAL},</if>
+			<if test="item.section != null">SECTION = #{item.section,jdbcType=DECIMAL},</if>
+			<if test="item.unit != null">UNIT = #{item.unit,jdbcType=VARCHAR},</if>
+			<if test="item.formula != null">FORMULA = #{item.formula,jdbcType=VARCHAR},</if>
+			<if test="item.description != null">DESCRIPTION = #{item.description,jdbcType=VARCHAR},</if>
+			<if test="item.weekStandardValue != null">WEEK_STANDARD_VALUE = #{item.weekStandardValue,jdbcType=DECIMAL},</if>
+			<if test="item.monthStandardValue != null">MONTH_STANDARD_VALUE = #{item.monthStandardValue,jdbcType=DECIMAL},</if>
+			<if test="item.quarterStandardValue != null">QUARTER_STANDARD_VALUE = #{item.quarterStandardValue,jdbcType=DECIMAL},</if>
+			<if test="item.yearStandardValue != null">YEAR_STANDARD_VALUE = #{item.yearStandardValue,jdbcType=DECIMAL}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  PP_L_INDICATOR
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  PP_L_INDICATOR
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE 
+		 ROW_ID =#{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  PP_L_INDICATOR
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' 
+		 AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+		 AND ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCons" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  PP_L_INDICATOR
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' ${item}
+		</foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="IndicatorResult">
+		SELECT 
+		<include refid="IndicatorModel_Column_List" />
+		FROM PP_L_INDICATOR WHERE DELETED_FLAG='0' 
+		AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="IndicatorResult" >
+		SELECT 
+		<include refid="IndicatorModel_Column_List" />
+		FROM PP_L_INDICATOR WHERE DELETED_FLAG='0'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="IndicatorResult" >
+		SELECT 
+		<include refid="IndicatorModel_Column_List" />
+		FROM PP_L_INDICATOR
+		WHERE DELETED_FLAG='0'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="IndicatorResult" >
+		SELECT 
+		<include refid="IndicatorModel_Column_List" />
+		FROM PP_L_INDICATOR
+		WHERE ${condition}
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAll" resultMap="IndicatorResult" >
+		SELECT *
+		FROM PP_L_INDICATOR
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="IndicatorResult"> ${sql} </select>
+
+</mapper>
+

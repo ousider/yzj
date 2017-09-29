@@ -1,0 +1,63 @@
+
+$(document).ready(function(){
+	//对应公猪主数据
+	xnComboGrid({
+		id:'boarId',
+		idField:'rowId',
+		textField:'materialName',
+		url:'/material/searchBoarMaterialToList.do?pigType=1&rowId='+materialId,
+		required:true,
+		width:550,
+		columns:[[ 	
+		           	{field:'rowId',title:'ID',width:100,hidden:true},
+			        {field:'businessCode',title:'物料代码',width:100},
+			        {field:'materialName',title:'物料名称',width:100},
+			        {field:'materialSource',title:'物料来源',width:100},
+			        {field:'unit',title:'单位',width:100},
+			        {field:'notes',title:'备注',width:100}
+			    ]]
+	});
+	addFocus('boarId','grid');
+	$('#spermMotility').numberspinner({
+		prompt:'请输入精子活力',precision:2,increment:0.01
+	});
+	$('#spermDensity').numberspinner({
+		prompt:'请输入精子密度',precision:2,increment:0.01
+	});
+	$('#abnormationRate').numberspinner({
+		prompt:'畸形率',precision:2,increment:0.01
+	});
+	//凝聚度
+	xnCdCombobox({
+		id:'cohesion',
+		typeCode:'COHESION',
+	});
+	//颜色
+	xnCdCombobox({
+		id:'color',
+		typeCode:'SEMEN_COLOR'
+	});
+	$('#tstg').numberspinner({
+		prompt:'请输入保存温度',
+		required:true,
+		precision:1,
+		increment:0.1
+	});
+	$('#shelfLife').numberspinner({
+	    	value:7,
+        	min: 0,
+        	max: 30,
+		prompt:'请输入保质期',
+		required:true
+	});
+	//包装
+	xnCdCombobox({
+		id:'pack',
+		typeCode:'PACK'
+	});
+	var dts = $('#boarId').businessCode;
+	/*$('#notes').textbox({
+		prompt:'请输入备注',
+		multiline:true
+	});*/
+});

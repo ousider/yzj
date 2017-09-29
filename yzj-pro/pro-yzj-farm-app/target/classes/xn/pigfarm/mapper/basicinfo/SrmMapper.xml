@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.basicinfo.SrmMapper">
+
+	<resultMap id="SrmResult"  type="SrmModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="sortNbr" column="SORT_NBR" jdbcType="INTEGER" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="originFlag" column="ORIGIN_FLAG" jdbcType="CHAR" />
+		<result property="originApp" column="ORIGIN_APP" jdbcType="VARCHAR" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="farmId" column="FARM_ID" jdbcType="INTEGER" />
+		<result property="companyId" column="COMPANY_ID" jdbcType="INTEGER" />
+		<result property="cussupId" column="CUSSUP_ID" jdbcType="INTEGER" />
+		<result property="cussupType" column="CUSSUP_TYPE" jdbcType="CHAR" />
+		<result property="subjectId" column="SUBJECT_ID" jdbcType="INTEGER" />
+		<result property="createType" column="CREATE_TYPE" jdbcType="CHAR" />
+		<result property="isSaleAccount" column="IS_SALE_ACCOUNT" jdbcType="CHAR" />
+		<result property="legalPerson" column="LEGAL_PERSON" jdbcType="VARCHAR" />
+		<result property="supplierType" column="SUPPLIER_TYPE" jdbcType="VARCHAR" />
+		<result property="businessPartnerType" column="BUSINESS_PARTNER_TYPE" jdbcType="VARCHAR" />
+		<result property="tradeCurrency" column="TRADE_CURRENCY" jdbcType="VARCHAR" />
+		<result property="payCondition" column="PAY_CONDITION" jdbcType="VARCHAR" />
+		<result property="payDays" column="PAY_DAYS" jdbcType="VARCHAR" />
+		<result property="creditLimit" column="CREDIT_LIMIT" jdbcType="INTEGER" />
+		<result property="version" column="VERSION" jdbcType="INTEGER" />
+		<result property="customerType" column="CUSTOMER_TYPE" jdbcType="VARCHAR" />
+		<result property="sowSize" column="SOW_SIZE" jdbcType="INTEGER" />
+		<result property="customerLevel" column="CUSTOMER_LEVEL" jdbcType="VARCHAR" />
+		<result property="sellType" column="SELL_TYPE" jdbcType="VARCHAR" />
+		<result property="sellDivision" column="SELL_DIVISION" jdbcType="INTEGER" />
+		<result property="sellArea" column="SELL_AREA" jdbcType="INTEGER" />
+		<result property="salesman" column="SALESMAN" jdbcType="INTEGER" />
+		<result property="fixedBalanceDay" column="FIXED_BALANCE_DAY" jdbcType="INTEGER" />
+		<result property="collectCondition" column="COLLECT_CONDITION" jdbcType="VARCHAR" />
+		<result property="collectDays" column="COLLECT_DAYS" jdbcType="VARCHAR" />
+		<result property="financeArea" column="FINANCE_AREA" jdbcType="INTEGER" />
+		<result property="customerparent" column="CUSTOMERPARENT" jdbcType="INTEGER" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="SrmModel_Column_List">
+		ROW_ID,SORT_NBR,NOTES,FARM_ID,CUSSUP_ID,CUSSUP_TYPE,SUBJECT_ID,CREATE_TYPE,IS_SALE_ACCOUNT,LEGAL_PERSON,SUPPLIER_TYPE,BUSINESS_PARTNER_TYPE,TRADE_CURRENCY,PAY_CONDITION,PAY_DAYS,CREDIT_LIMIT,VERSION,CUSTOMER_TYPE,SOW_SIZE,CUSTOMER_LEVEL,SELL_TYPE,SELL_DIVISION,SELL_AREA,SALESMAN,FIXED_BALANCE_DAY,COLLECT_CONDITION,COLLECT_DAYS,FINANCE_AREA,CUSTOMERPARENT
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true"   keyProperty="rowId" parameterType="SrmModel">
+		INSERT INTO HR_R_SRM
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR,
+			STATUS,
+			DELETED_FLAG,
+			ORIGIN_FLAG,
+			ORIGIN_APP,
+			NOTES,
+			FARM_ID,
+			COMPANY_ID,
+			CUSSUP_ID,
+			CUSSUP_TYPE,
+			SUBJECT_ID,
+			CREATE_TYPE,
+			IS_SALE_ACCOUNT,
+			LEGAL_PERSON,
+			SUPPLIER_TYPE,
+			BUSINESS_PARTNER_TYPE,
+			TRADE_CURRENCY,
+			PAY_CONDITION,
+			PAY_DAYS,
+			CREDIT_LIMIT,
+			VERSION,
+			CUSTOMER_TYPE,
+			SOW_SIZE,
+			CUSTOMER_LEVEL,
+			SELL_TYPE,
+			SELL_DIVISION,
+			SELL_AREA,
+			SALESMAN,
+			FIXED_BALANCE_DAY,
+			COLLECT_CONDITION,
+			COLLECT_DAYS,
+			FINANCE_AREA,
+			CUSTOMERPARENT
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ sortNbr,jdbcType=INTEGER},
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ originFlag,jdbcType=CHAR},
+			#{ originApp,jdbcType=VARCHAR},
+			#{ notes,jdbcType=VARCHAR},
+			#{ farmId,jdbcType=INTEGER},
+			#{ companyId,jdbcType=INTEGER},
+			#{ cussupId,jdbcType=INTEGER},
+			#{ cussupType,jdbcType=CHAR},
+			#{ subjectId,jdbcType=INTEGER},
+			#{ createType,jdbcType=CHAR},
+			#{ isSaleAccount,jdbcType=CHAR},
+			#{ legalPerson,jdbcType=VARCHAR},
+			#{ supplierType,jdbcType=VARCHAR},
+			#{ businessPartnerType,jdbcType=VARCHAR},
+			#{ tradeCurrency,jdbcType=VARCHAR},
+			#{ payCondition,jdbcType=VARCHAR},
+			#{ payDays,jdbcType=VARCHAR},
+			#{ creditLimit,jdbcType=INTEGER},
+			#{ version,jdbcType=INTEGER},
+			#{ customerType,jdbcType=VARCHAR},
+			#{ sowSize,jdbcType=INTEGER},
+			#{ customerLevel,jdbcType=VARCHAR},
+			#{ sellType,jdbcType=VARCHAR},
+			#{ sellDivision,jdbcType=INTEGER},
+			#{ sellArea,jdbcType=INTEGER},
+			#{ salesman,jdbcType=INTEGER},
+			#{ fixedBalanceDay,jdbcType=INTEGER},
+			#{ collectCondition,jdbcType=VARCHAR},
+			#{ collectDays,jdbcType=VARCHAR},
+			#{ financeArea,jdbcType=INTEGER},
+			#{ customerparent,jdbcType=INTEGER}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO HR_R_SRM
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR ,
+			STATUS ,
+			DELETED_FLAG ,
+			ORIGIN_FLAG ,
+			ORIGIN_APP ,
+			NOTES ,
+			FARM_ID ,
+			COMPANY_ID ,
+			CUSSUP_ID ,
+			CUSSUP_TYPE ,
+			SUBJECT_ID ,
+			CREATE_TYPE ,
+			IS_SALE_ACCOUNT ,
+			LEGAL_PERSON ,
+			SUPPLIER_TYPE ,
+			BUSINESS_PARTNER_TYPE ,
+			TRADE_CURRENCY ,
+			PAY_CONDITION ,
+			PAY_DAYS ,
+			CREDIT_LIMIT ,
+			VERSION ,
+			CUSTOMER_TYPE ,
+			SOW_SIZE ,
+			CUSTOMER_LEVEL ,
+			SELL_TYPE ,
+			SELL_DIVISION ,
+			SELL_AREA ,
+			SALESMAN ,
+			FIXED_BALANCE_DAY ,
+			COLLECT_CONDITION ,
+			COLLECT_DAYS ,
+			FINANCE_AREA ,
+			CUSTOMERPARENT 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.sortNbr,jdbcType=INTEGER},
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.originFlag,jdbcType=CHAR},
+				#{item.originApp,jdbcType=VARCHAR},
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.farmId,jdbcType=INTEGER},
+				#{item.companyId,jdbcType=INTEGER},
+				#{item.cussupId,jdbcType=INTEGER},
+				#{item.cussupType,jdbcType=CHAR},
+				#{item.subjectId,jdbcType=INTEGER},
+				#{item.createType,jdbcType=CHAR},
+				#{item.isSaleAccount,jdbcType=CHAR},
+				#{item.legalPerson,jdbcType=VARCHAR},
+				#{item.supplierType,jdbcType=VARCHAR},
+				#{item.businessPartnerType,jdbcType=VARCHAR},
+				#{item.tradeCurrency,jdbcType=VARCHAR},
+				#{item.payCondition,jdbcType=VARCHAR},
+				#{item.payDays,jdbcType=VARCHAR},
+				#{item.creditLimit,jdbcType=INTEGER},
+				#{item.version,jdbcType=INTEGER},
+				#{item.customerType,jdbcType=VARCHAR},
+				#{item.sowSize,jdbcType=INTEGER},
+				#{item.customerLevel,jdbcType=VARCHAR},
+				#{item.sellType,jdbcType=VARCHAR},
+				#{item.sellDivision,jdbcType=INTEGER},
+				#{item.sellArea,jdbcType=INTEGER},
+				#{item.salesman,jdbcType=INTEGER},
+				#{item.fixedBalanceDay,jdbcType=INTEGER},
+				#{item.collectCondition,jdbcType=VARCHAR},
+				#{item.collectDays,jdbcType=VARCHAR},
+				#{item.financeArea,jdbcType=INTEGER},
+				#{item.customerparent,jdbcType=INTEGER}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="SrmModel" >
+		UPDATE HR_R_SRM 
+		<set>
+		<if test="sortNbr != null">SORT_NBR = #{ sortNbr,jdbcType=INTEGER},</if>
+		<if test="status != null">STATUS = #{ status,jdbcType=CHAR},</if>
+		<if test="originFlag != null">ORIGIN_FLAG = #{ originFlag,jdbcType=CHAR},</if>
+		<if test="originApp != null">ORIGIN_APP = #{ originApp,jdbcType=VARCHAR},</if>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="cussupId != null">CUSSUP_ID = #{ cussupId,jdbcType=INTEGER},</if>
+		<if test="cussupType != null">CUSSUP_TYPE = #{ cussupType,jdbcType=CHAR},</if>
+		<if test="subjectId != null">SUBJECT_ID = #{ subjectId,jdbcType=INTEGER},</if>
+		<if test="createType != null">CREATE_TYPE = #{ createType,jdbcType=CHAR},</if>
+		<if test="isSaleAccount != null">IS_SALE_ACCOUNT = #{ isSaleAccount,jdbcType=CHAR},</if>
+		<if test="legalPerson != null">LEGAL_PERSON = #{ legalPerson,jdbcType=VARCHAR},</if>
+		<if test="supplierType != null">SUPPLIER_TYPE = #{ supplierType,jdbcType=VARCHAR},</if>
+		<if test="businessPartnerType != null">BUSINESS_PARTNER_TYPE = #{ businessPartnerType,jdbcType=VARCHAR},</if>
+		<if test="tradeCurrency != null">TRADE_CURRENCY = #{ tradeCurrency,jdbcType=VARCHAR},</if>
+		<if test="payCondition != null">PAY_CONDITION = #{ payCondition,jdbcType=VARCHAR},</if>
+		<if test="payDays != null">PAY_DAYS = #{ payDays,jdbcType=VARCHAR},</if>
+		<if test="creditLimit != null">CREDIT_LIMIT = #{ creditLimit,jdbcType=INTEGER},</if>
+		<if test="version != null">VERSION = #{ version,jdbcType=INTEGER},</if>
+		<if test="customerType != null">CUSTOMER_TYPE = #{ customerType,jdbcType=VARCHAR},</if>
+		<if test="sowSize != null">SOW_SIZE = #{ sowSize,jdbcType=INTEGER},</if>
+		<if test="customerLevel != null">CUSTOMER_LEVEL = #{ customerLevel,jdbcType=VARCHAR},</if>
+		<if test="sellType != null">SELL_TYPE = #{ sellType,jdbcType=VARCHAR},</if>
+		<if test="sellDivision != null">SELL_DIVISION = #{ sellDivision,jdbcType=INTEGER},</if>
+		<if test="sellArea != null">SELL_AREA = #{ sellArea,jdbcType=INTEGER},</if>
+		<if test="salesman != null">SALESMAN = #{ salesman,jdbcType=INTEGER},</if>
+		<if test="fixedBalanceDay != null">FIXED_BALANCE_DAY = #{ fixedBalanceDay,jdbcType=INTEGER},</if>
+		<if test="collectCondition != null">COLLECT_CONDITION = #{ collectCondition,jdbcType=VARCHAR},</if>
+		<if test="collectDays != null">COLLECT_DAYS = #{ collectDays,jdbcType=VARCHAR},</if>
+		<if test="financeArea != null">FINANCE_AREA = #{ financeArea,jdbcType=INTEGER},</if>
+		<if test="customerparent != null">CUSTOMERPARENT = #{ customerparent,jdbcType=INTEGER}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE HR_R_SRM 
+			<set>
+			<if test="item.sortNbr != null">SORT_NBR = #{item.sortNbr,jdbcType=INTEGER},</if>
+			<if test="item.status != null">STATUS = #{item.status,jdbcType=CHAR},</if>
+			<if test="item.originFlag != null">ORIGIN_FLAG = #{item.originFlag,jdbcType=CHAR},</if>
+			<if test="item.originApp != null">ORIGIN_APP = #{item.originApp,jdbcType=VARCHAR},</if>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.cussupId != null">CUSSUP_ID = #{item.cussupId,jdbcType=INTEGER},</if>
+			<if test="item.cussupType != null">CUSSUP_TYPE = #{item.cussupType,jdbcType=CHAR},</if>
+			<if test="item.subjectId != null">SUBJECT_ID = #{item.subjectId,jdbcType=INTEGER},</if>
+			<if test="item.createType != null">CREATE_TYPE = #{item.createType,jdbcType=CHAR},</if>
+			<if test="item.isSaleAccount != null">IS_SALE_ACCOUNT = #{item.isSaleAccount,jdbcType=CHAR},</if>
+			<if test="item.legalPerson != null">LEGAL_PERSON = #{item.legalPerson,jdbcType=VARCHAR},</if>
+			<if test="item.supplierType != null">SUPPLIER_TYPE = #{item.supplierType,jdbcType=VARCHAR},</if>
+			<if test="item.businessPartnerType != null">BUSINESS_PARTNER_TYPE = #{item.businessPartnerType,jdbcType=VARCHAR},</if>
+			<if test="item.tradeCurrency != null">TRADE_CURRENCY = #{item.tradeCurrency,jdbcType=VARCHAR},</if>
+			<if test="item.payCondition != null">PAY_CONDITION = #{item.payCondition,jdbcType=VARCHAR},</if>
+			<if test="item.payDays != null">PAY_DAYS = #{item.payDays,jdbcType=VARCHAR},</if>
+			<if test="item.creditLimit != null">CREDIT_LIMIT = #{item.creditLimit,jdbcType=INTEGER},</if>
+			<if test="item.version != null">VERSION = #{item.version,jdbcType=INTEGER},</if>
+			<if test="item.customerType != null">CUSTOMER_TYPE = #{item.customerType,jdbcType=VARCHAR},</if>
+			<if test="item.sowSize != null">SOW_SIZE = #{item.sowSize,jdbcType=INTEGER},</if>
+			<if test="item.customerLevel != null">CUSTOMER_LEVEL = #{item.customerLevel,jdbcType=VARCHAR},</if>
+			<if test="item.sellType != null">SELL_TYPE = #{item.sellType,jdbcType=VARCHAR},</if>
+			<if test="item.sellDivision != null">SELL_DIVISION = #{item.sellDivision,jdbcType=INTEGER},</if>
+			<if test="item.sellArea != null">SELL_AREA = #{item.sellArea,jdbcType=INTEGER},</if>
+			<if test="item.salesman != null">SALESMAN = #{item.salesman,jdbcType=INTEGER},</if>
+			<if test="item.fixedBalanceDay != null">FIXED_BALANCE_DAY = #{item.fixedBalanceDay,jdbcType=INTEGER},</if>
+			<if test="item.collectCondition != null">COLLECT_CONDITION = #{item.collectCondition,jdbcType=VARCHAR},</if>
+			<if test="item.collectDays != null">COLLECT_DAYS = #{item.collectDays,jdbcType=VARCHAR},</if>
+			<if test="item.financeArea != null">FINANCE_AREA = #{item.financeArea,jdbcType=INTEGER},</if>
+			<if test="item.customerparent != null">CUSTOMERPARENT = #{item.customerparent,jdbcType=INTEGER}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  HR_R_SRM
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  HR_R_SRM
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE 
+		 ROW_ID =#{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  HR_R_SRM
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' 
+		 AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+		 AND ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCons" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  HR_R_SRM
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' ${item}
+		</foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="SrmResult">
+		SELECT 
+		<include refid="SrmModel_Column_List" />
+		FROM HR_R_SRM WHERE DELETED_FLAG='0' 
+		AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="SrmResult" >
+		SELECT 
+		<include refid="SrmModel_Column_List" />
+		FROM HR_R_SRM WHERE DELETED_FLAG='0'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="SrmResult" >
+		SELECT 
+		<include refid="SrmModel_Column_List" />
+		FROM HR_R_SRM
+		WHERE DELETED_FLAG='0'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="SrmResult" >
+		SELECT 
+		<include refid="SrmModel_Column_List" />
+		FROM HR_R_SRM
+		WHERE ${condition}
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAll" resultMap="SrmResult" >
+		SELECT *
+		FROM HR_R_SRM
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="SrmResult"> ${sql} </select>
+
+</mapper>
+

@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.supplychian.PriceListDetailMapper">
+
+	<resultMap id="PriceListDetailResult"  type="PriceListDetailModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="farmId" column="FARM_ID" jdbcType="INTEGER" />
+		<result property="companyId" column="COMPANY_ID" jdbcType="INTEGER" />
+		<result property="priceListId" column="PRICE_LIST_ID" jdbcType="INTEGER" />
+		<result property="priceListLn" column="PRICE_LIST_LN" jdbcType="INTEGER" />
+		<result property="materialId" column="MATERIAL_ID" jdbcType="INTEGER" />
+		<result property="price" column="PRICE" jdbcType="DECIMAL" />
+		<result property="startDate" column="START_DATE" jdbcType="DATE" />
+		<result property="endDate" column="END_DATE" jdbcType="DATE" />
+		<result property="createId" column="CREATE_ID" jdbcType="INTEGER" />
+		<result property="createDate" column="CREATE_DATE" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="PriceListDetailModel_Column_List">
+		ROW_ID,NOTES,PRICE_LIST_ID,PRICE_LIST_LN,MATERIAL_ID,PRICE,START_DATE,END_DATE,CREATE_ID,CREATE_DATE
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true"   keyProperty="rowId" parameterType="PriceListDetailModel">
+		INSERT INTO SC_M_BILL_PRICE_LIST_DETAIL
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			STATUS,
+			DELETED_FLAG,
+			NOTES,
+			FARM_ID,
+			COMPANY_ID,
+			PRICE_LIST_ID,
+			PRICE_LIST_LN,
+			MATERIAL_ID,
+			PRICE,
+			START_DATE,
+			END_DATE,
+			CREATE_ID,
+			CREATE_DATE
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ notes,jdbcType=VARCHAR},
+			#{ farmId,jdbcType=INTEGER},
+			#{ companyId,jdbcType=INTEGER},
+			#{ priceListId,jdbcType=INTEGER},
+			#{ priceListLn,jdbcType=INTEGER},
+			#{ materialId,jdbcType=INTEGER},
+			#{ price,jdbcType=DECIMAL},
+			#{ startDate,jdbcType=DATE},
+			#{ endDate,jdbcType=DATE},
+			#{ createId,jdbcType=INTEGER},
+			#{ createDate,jdbcType=TIMESTAMP}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO SC_M_BILL_PRICE_LIST_DETAIL
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			STATUS ,
+			DELETED_FLAG ,
+			NOTES ,
+			FARM_ID ,
+			COMPANY_ID ,
+			PRICE_LIST_ID ,
+			PRICE_LIST_LN ,
+			MATERIAL_ID ,
+			PRICE ,
+			START_DATE ,
+			END_DATE ,
+			CREATE_ID ,
+			CREATE_DATE 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.farmId,jdbcType=INTEGER},
+				#{item.companyId,jdbcType=INTEGER},
+				#{item.priceListId,jdbcType=INTEGER},
+				#{item.priceListLn,jdbcType=INTEGER},
+				#{item.materialId,jdbcType=INTEGER},
+				#{item.price,jdbcType=DECIMAL},
+				#{item.startDate,jdbcType=DATE},
+				#{item.endDate,jdbcType=DATE},
+				#{item.createId,jdbcType=INTEGER},
+				#{item.createDate,jdbcType=TIMESTAMP}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="PriceListDetailModel" >
+		UPDATE SC_M_BILL_PRICE_LIST_DETAIL 
+		<set>
+		<if test="status != null">STATUS = #{ status,jdbcType=CHAR},</if>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="priceListId != null">PRICE_LIST_ID = #{ priceListId,jdbcType=INTEGER},</if>
+		<if test="priceListLn != null">PRICE_LIST_LN = #{ priceListLn,jdbcType=INTEGER},</if>
+		<if test="materialId != null">MATERIAL_ID = #{ materialId,jdbcType=INTEGER},</if>
+		<if test="price != null">PRICE = #{ price,jdbcType=DECIMAL},</if>
+		<if test="startDate != null">START_DATE = #{ startDate,jdbcType=DATE},</if>
+		<if test="endDate != null">END_DATE = #{ endDate,jdbcType=DATE},</if>
+		<if test="createId != null">CREATE_ID = #{ createId,jdbcType=INTEGER},</if>
+		<if test="createDate != null">CREATE_DATE = #{ createDate,jdbcType=TIMESTAMP}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE SC_M_BILL_PRICE_LIST_DETAIL 
+			<set>
+			<if test="item.status != null">STATUS = #{item.status,jdbcType=CHAR},</if>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.priceListId != null">PRICE_LIST_ID = #{item.priceListId,jdbcType=INTEGER},</if>
+			<if test="item.priceListLn != null">PRICE_LIST_LN = #{item.priceListLn,jdbcType=INTEGER},</if>
+			<if test="item.materialId != null">MATERIAL_ID = #{item.materialId,jdbcType=INTEGER},</if>
+			<if test="item.price != null">PRICE = #{item.price,jdbcType=DECIMAL},</if>
+			<if test="item.startDate != null">START_DATE = #{item.startDate,jdbcType=DATE},</if>
+			<if test="item.endDate != null">END_DATE = #{item.endDate,jdbcType=DATE},</if>
+			<if test="item.createId != null">CREATE_ID = #{item.createId,jdbcType=INTEGER},</if>
+			<if test="item.createDate != null">CREATE_DATE = #{item.createDate,jdbcType=TIMESTAMP}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  SC_M_BILL_PRICE_LIST_DETAIL
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  SC_M_BILL_PRICE_LIST_DETAIL
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE 
+		 ROW_ID =#{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  SC_M_BILL_PRICE_LIST_DETAIL
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' 
+		 AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+		 AND ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCons" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  SC_M_BILL_PRICE_LIST_DETAIL
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' ${item}
+		</foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="PriceListDetailResult">
+		SELECT 
+		<include refid="PriceListDetailModel_Column_List" />
+		FROM SC_M_BILL_PRICE_LIST_DETAIL WHERE DELETED_FLAG='0' 
+		AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="PriceListDetailResult" >
+		SELECT 
+		<include refid="PriceListDetailModel_Column_List" />
+		FROM SC_M_BILL_PRICE_LIST_DETAIL WHERE DELETED_FLAG='0'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="PriceListDetailResult" >
+		SELECT 
+		<include refid="PriceListDetailModel_Column_List" />
+		FROM SC_M_BILL_PRICE_LIST_DETAIL
+		WHERE DELETED_FLAG='0'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="PriceListDetailResult" >
+		SELECT 
+		<include refid="PriceListDetailModel_Column_List" />
+		FROM SC_M_BILL_PRICE_LIST_DETAIL
+		WHERE ${condition}
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAll" resultMap="PriceListDetailResult" >
+		SELECT *
+		FROM SC_M_BILL_PRICE_LIST_DETAIL
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="PriceListDetailResult"> ${sql} </select>
+
+</mapper>
+

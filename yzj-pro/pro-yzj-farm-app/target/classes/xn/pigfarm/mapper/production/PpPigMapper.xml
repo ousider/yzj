@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="xn.pigfarm.mapper.production.PpPigMapper">
+
+	<resultMap id="ppPigResult" type="PpPigModel" extends = "BaseMapper.BaseModelMap"  >
+		<result property="farmName" column="FARM_NAME" jdbcType="VARCHAR" />
+		<result property="lineId" column="LINE_ID" jdbcType="INTEGER" />
+		<result property="lineName" column="LINE_NAME" jdbcType="VARCHAR" />
+		<result property="swineryId" column="SWINERY_ID" jdbcType="INTEGER" />
+		<result property="swineryName" column="SWINERY_NAME" jdbcType="VARCHAR" />
+		<result property="houseId" column="HOUSE_ID" jdbcType="INTEGER" />
+		<result property="houseName" column="HOUSE_NAME" jdbcType="VARCHAR" />
+		<result property="pigpenId" column="PIGPEN_ID" jdbcType="INTEGER" />
+		<result property="pigpenName" column="PIGPEN_NAME" jdbcType="VARCHAR" />
+		<result property="earCodeId" column="EAR_CODE_ID" jdbcType="INTEGER" />
+		<result property="earBrand" column="EAR_BRAND" jdbcType="VARCHAR" />
+		<result property="earShort" column="EAR_SHORT" jdbcType="VARCHAR" />
+		<result property="earThorn" column="EAR_THORN" jdbcType="VARCHAR" />
+		<result property="materialId" column="MATERIAL_ID" jdbcType="INTEGER" />
+		<result property="materialName" column="MATERIAL_NAME" jdbcType="VARCHAR" />
+		<result property="pigType" column="PIG_TYPE" jdbcType="VARCHAR" />
+		<result property="pigTypeName" column="PIG_TYPE_NAME" jdbcType="VARCHAR" />
+		<result property="sex" column="SEX" jdbcType="VARCHAR" />
+		<result property="sexName" column="SEX_NAME" jdbcType="VARCHAR" />
+		<result property="breedId" column="BREED_ID" jdbcType="INTEGER" />
+		<result property="breedName" column="BREED_NAME" jdbcType="VARCHAR" />
+		<result property="strain" column="STRAIN" jdbcType="VARCHAR" />
+		<result property="pigClass" column="PIG_CLASS" jdbcType="INTEGER" />
+		<result property="pigClassName" column="PIG_CLASS_NAME" jdbcType="VARCHAR" />
+		<result property="bodyCondition" column="BODY_CONDITION" jdbcType="VARCHAR" />
+		<result property="parity" column="PARITY" jdbcType="INTEGER" />
+		<result property="birthParity" column="BIRTH_PARITY" jdbcType="INTEGER" />
+		<result property="houseNum" column="HOUSE_NUM" jdbcType="INTEGER" />
+		<result property="birthDate" column="BIRTH_DATE" jdbcType="DATE" />
+		<result property="birthWeight" column="BIRTH_WEIGHT" jdbcType="DECIMAL" />
+		<result property="enterDate" column="ENTER_DATE" jdbcType="DATE" />
+		<result property="enterWeight" column="ENTER_WEIGHT" jdbcType="DECIMAL" />
+		<result property="enterPigClass" column="ENTER_PIG_CLASS" jdbcType="INTEGER" />
+		<result property="enterParity" column="ENTER_PARITY" jdbcType="INTEGER" />
+		<result property="worker" column="WORKER" jdbcType="INTEGER" />
+		<result property="boardSowId" column="BOARD_SOW_ID" jdbcType="INTEGER" />
+		<result property="boardEarBrand" column="BOARD_EAR_BRAND" jdbcType="VARCHAR" />
+		<result property="mewDayAge" column="MEW_DAY_AGE" jdbcType="INTEGER" />
+		<result property="mewWeight" column="MEW_WEIGHT" jdbcType="DECIMAL" />
+		<result property="rightTeatNum" column="RIGHT_TEAT_NUM" jdbcType="INTEGER" />
+		<result property="leftTeatNum" column="LEFT_TEAT_NUM" jdbcType="INTEGER" />
+		<result property="coefficientInbred" column="COEFFICIENT_INBRED" jdbcType="DECIMAL" />
+		<result property="supplierId" column="SUPPLIER_ID" jdbcType="INTEGER" />
+		<result property="origin" column="ORIGIN" jdbcType="VARCHAR" />
+		<result property="lastEventDate" column="LAST_EVENT_DATE" jdbcType="DATE" />
+		<result property="location" column="LOCATION" jdbcType="VARCHAR" />
+		<result property="pigInfo" column="PIG_INFO" jdbcType="VARCHAR" />
+	</resultMap>
+	
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="Head_Column_List">
+		p.EAR_BRAND,p.LINE_NAME,p.SWINERY_NAME,p.HOUSE_NAME,p.PIGPEN_NAME,p.MATERIAL_NAME,p.BREED_NAME,p.BOARD_EAR_BRAND,p.EAR_SHORT,p.EAR_THORN,
+		p.PIG_TYPE_NAME,
+		p.ROW_ID,p.NOTES,p.SORT_NBR,p.STATUS,p.DELETED_FLAG,p.ORIGIN_FLAG,p.ORIGIN_APP,p.COMPANY_ID,p.FARM_ID,p.LINE_ID,p.SWINERY_ID,p.SWINERY_NAME,p.HOUSE_ID,p.PIGPEN_ID,p.EAR_CODE_ID,p.MATERIAL_ID,p.PIG_TYPE,p.SEX,p.SEX_NAME,p.BREED_ID,p.STRAIN,p.PIG_CLASS,p.PIG_CLASS_NAME,p.BODY_CONDITION,p.PARITY,p.BIRTH_PARITY,p.HOUSE_NUM,p.BIRTH_DATE,p.BIRTH_WEIGHT,p.ENTER_DATE,p.ENTER_WEIGHT,p.ENTER_PIG_CLASS,p.ENTER_PARITY,p.WORKER,p.BOARD_SOW_ID,p.MEW_DAY_AGE,p.MEW_WEIGHT,p.RIGHT_TEAT_NUM,p.LEFT_TEAT_NUM,p.COEFFICIENT_INBRED,p.SUPPLIER_ID,p.ORIGIN,p.LAST_EVENT_DATE
+	</sql>
+		
+	<!--批量删除 -->
+	<update id="deleteByKey">
+		UPDATE	pp_l_pig
+		SET	DELETED_FLAG = '1'
+		WHERE ROW_ID in
+		<foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</update>
+	<!--查询主表 -->
+	<select id="searchPigToPage" resultMap="ppPigResult">
+		select
+		<include refid="Head_Column_List" />
+		from pp_v_pig p
+		where 
+		p.STATUS = 1 AND p.DELETED_FLAG = 0 and p.FARM_ID = #{farmId} 
+	</select>
+	
+</mapper>
+

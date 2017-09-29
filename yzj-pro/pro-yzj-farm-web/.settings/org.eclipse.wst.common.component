@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="pro-yzj-farm-web">
+        <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
+        <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <dependent-module archiveName="pro-yzj-farm-app-0.0.25-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/pro-yzj-farm-app/pro-yzj-farm-app">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="yzj-core-0.4.24-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/yzj-core/yzj-core">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="context-root" value="pigfarm"/>
+        <property name="java-output-path" value="/pro-yzj-farm-web/target/classes"/>
+    </wb-module>
+</project-modules>

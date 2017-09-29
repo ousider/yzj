@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="xn.pigfarm.mapper.basicinfo.CdMaterialGroupMapper">
+
+	<resultMap id="cdMaterialGroupResult" type="CdMaterialGroupModel" extends = "BaseMapper.BaseModelMap"  >
+		<result property="companyId" column="COMPANY_ID" jdbcType="INTEGER" />
+		<result property="businessCode" column="BUSINESS_CODE" jdbcType="VARCHAR" />
+		<result property="groupName" column="GROUP_NAME" jdbcType="VARCHAR" />
+		<result property="supGroupId" column="SUP_GROUP_ID" jdbcType="INTEGER" />
+		<result property="subjectId" column="SUBJECT_ID" jdbcType="INTEGER" />
+		<result property="materialType" column="MATERIAL_TYPE" jdbcType="VARCHAR" />
+
+	</resultMap>
+	
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="Head_Column_List">
+		mg.ROW_ID,mg.NOTES,mg.SORT_NBR,mg.STATUS,mg.DELETED_FLAG,mg.ORIGIN_FLAG,mg.ORIGIN_APP,mg.COMPANY_ID,
+		mg.BUSINESS_CODE,mg.GROUP_NAME,mg.SUP_GROUP_ID,mg.SUBJECT_ID,mg.MATERIAL_TYPE
+	</sql>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="List_Column_List">
+		m.ROW_ID,m.NOTES,m.SORT_NBR,m.STATUS,m.DELETED_FLAG,m.ORIGIN_FLAG,m.ORIGIN_APP,m.RELATED_ID,m.COMPANY_ID,m.GROUP_ID,m.BUSINESS_CODE,m.MATERIAL_NAME,m.MATERIAL_TYPE,m.MATERIAL_SOURCE,m.UNIT,m.IS_WAREHOUSE,m.IS_PURCHASE,m.IS_SELL,m.DEFAULT_WAREHOUSE,m.PRICE,m.CAN_LOSE_STOCK,m.CAN_PURCHASE_RETURN,m.CAN_SCRAP,m.SPEC,m.SPEC_NUM,m.SAFE_STOCK,m.STOCK_SUBJECT_ID,m.COST_ACC_SUBJECT_ID,m.SALES_SUBJECT_ID,m.RMVALUERATE
+	</sql>
+
+	<!-- 带验证增 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="rowId" parameterType="CdMaterialGroupModel">
+		insert into cd_m_material_group
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="notes != null">NOTES ,</if>
+			<if test="sortNbr != null">SORT_NBR ,</if>
+			<if test="status != null">STATUS ,</if>
+			<if test="deletedFlag != null">DELETED_FLAG ,</if>
+			<if test="originFlag != null">ORIGIN_FLAG ,</if>
+			<if test="originApp != null">ORIGIN_APP ,</if>
+			<if test="companyId != 0">COMPANY_ID ,</if>
+			<if test="businessCode != null">BUSINESS_CODE ,</if>
+			<if test="groupName != null">GROUP_NAME ,</if>
+			<if test="supGroupId != 0">SUP_GROUP_ID ,</if>
+			<if test="subjectId != null">SUBJECT_ID ,</if>
+			<if test="materialType != null">MATERIAL_TYPE </if>
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="notes != null">#{ notes,jdbcType=VARCHAR} ,</if>
+			<if test="sortNbr != null">#{ sortNbr,jdbcType=INTEGER} ,</if>
+			<if test="status != null">#{ status,jdbcType=CHAR} ,</if>
+			<if test="deletedFlag != null">#{ deletedFlag,jdbcType=CHAR} ,</if>
+			<if test="originFlag != null">#{ originFlag,jdbcType=CHAR} ,</if>
+			<if test="originApp != null">#{ originApp,jdbcType=VARCHAR} ,</if>
+			<if test="companyId != 0">#{ companyId,jdbcType=INTEGER} ,</if>
+			<if test="businessCode != null">#{ businessCode,jdbcType=VARCHAR} ,</if>
+			<if test="groupName != null">#{ groupName,jdbcType=VARCHAR} ,</if>
+			<if test="supGroupId != 0">#{ supGroupId,jdbcType=INTEGER} ,</if>
+			<if test="subjectId != null">#{ subjectId,jdbcType=INTEGER} ,</if>
+			<if test="materialType != null">#{ materialType,jdbcType=VARCHAR} </if>
+		</trim>
+	</insert>
+	
+		
+	<!--带验证更新 -->
+	<update id="update" parameterType="CdMaterialGroupModel">
+		update cd_m_material_group
+		<set>
+			<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR} ,</if>
+			<if test="sortNbr != null">SORT_NBR = #{ sortNbr,jdbcType=INTEGER} ,</if>
+			<if test="originFlag != null">ORIGIN_FLAG = #{ originFlag,jdbcType=CHAR} ,</if>
+			<if test="originApp != null">ORIGIN_APP = #{ originApp,jdbcType=VARCHAR} ,</if>
+			<if test="businessCode != null">RELATED_ID = #{ relatedId,jdbcType=VARCHAR} ,</if>
+			<if test="groupName != null">RELATED_ID = #{ groupName,jdbcType=VARCHAR} ,</if>
+			<if test="supGroupId != 0">RELATED_ID = #{ supGroupId,jdbcType=INTEGER} ,</if>
+			<if test="subjectId != null">RELATED_ID = #{ subjectId,jdbcType=INTEGER} ,</if>
+			<if test="materialType != null">RELATED_ID = #{ materialType,jdbcType=VARCHAR} </if>
+
+		</set>
+		where
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deleteByKey">
+		UPDATE	cd_m_material_group
+		SET	DELETED_FLAG = '1'
+		WHERE ROW_ID in
+		<foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</update>
+	<!--查询主表 -->
+	<select id="searchMaterialGroupToList" resultMap="cdMaterialGroupResult">
+		select
+		<include refid="Head_Column_List" />,m.MATERIAL_NAME
+		from cd_m_material_group mg
+		INNER JOIN cd_m_material m
+		ON mg.MATERIAL_TYPE = m.MATERIAL_TYPE and m.STATUS = 1 AND m.DELETED_FLAG = 0
+		where
+		mg.STATUS = 1 AND mg.DELETED_FLAG = 0 and mg.FARM_ID = #{farmId}
+		GROUP BY mg.ROW_ID
+	</select>
+	
+	<select id="searchById" resultMap="cdMaterialGroupResult" parameterType="long">
+		select
+		<include refid="Head_Column_List" />
+		from cd_m_material_group mg
+		where
+		mg.ROW_ID = #{ rowId,jdbcType=INTEGER} AND mg.STATUS = 1 AND mg.DELETED_FLAG = 0
+	</select>
+	
+	
+</mapper>
+

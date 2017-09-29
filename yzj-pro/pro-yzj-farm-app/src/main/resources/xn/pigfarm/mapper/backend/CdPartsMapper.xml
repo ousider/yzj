@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="xn.pigfarm.mapper.backend.CdPartsMapper">
+
+	<resultMap id="CdPartsResult"  type="CdPartsModel" extends = "BaseMapper.BaseModelMap">
+		<result property="partsCode" column="PARTS_CODE" jdbcType="VARCHAR" />
+		<result property="partsName" column="PARTS_NAME" jdbcType="VARCHAR" />
+		<result property="moduleName" column="MODULE_NAME" jdbcType="VARCHAR" />
+		<result property="iconCls" column="ICON_CLS" jdbcType="VARCHAR" />
+		<result property="glyph" column="GLYPH" jdbcType="VARCHAR" />
+		<result property="usingFlag" column="USING_FLAG" jdbcType="CHAR" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="CdPartsModel_Column_List">
+		ROW_ID,NOTES,SORT_NBR,STATUS,DELETED_FLAG,ORIGIN_FLAG,ORIGIN_APP,PARTS_CODE,PARTS_NAME,MODULE_NAME,ICON_CLS,GLYPH,USING_FLAG
+	</sql>
+
+	<!-- 带验证增 -->
+	<insert id="insert" parameterType="CdPartsModel">
+		insert into cd_o_parts
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="notes != null">NOTES ,</if>
+			<if test="sortNbr != null">SORT_NBR ,</if>
+			<if test="status != null">STATUS ,</if>
+			<if test="deletedFlag != null">DELETED_FLAG ,</if>
+			<if test="originFlag != null">ORIGIN_FLAG ,</if>
+			<if test="originApp != null">ORIGIN_APP ,</if>
+			<if test="partsCode != null">PARTS_CODE ,</if>
+			<if test="partsName != null">PARTS_NAME ,</if>
+			<if test="moduleName != null">MODULE_NAME ,</if>
+			<if test="iconCls != null">ICON_CLS ,</if>
+			<if test="glyph != null">GLYPH ,</if>
+			<if test="usingFlag != null">USING_FLAG </if>
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="notes != null">#{ notes,jdbcType=VARCHAR},</if>
+			<if test="sortNbr != null">#{ sortNbr,jdbcType=INTEGER},</if>
+			<if test="status != null">#{ status,jdbcType=CHAR},</if>
+			<if test="deletedFlag != null">#{ deletedFlag,jdbcType=CHAR},</if>
+			<if test="originFlag != null">#{ originFlag,jdbcType=CHAR},</if>
+			<if test="originApp != null">#{ originApp,jdbcType=VARCHAR},</if>
+			<if test="partsCode != null">#{ partsCode,jdbcType=VARCHAR},</if>
+			<if test="partsName != null">#{ partsName,jdbcType=VARCHAR},</if>
+			<if test="moduleName != null">#{ moduleName,jdbcType=VARCHAR},</if>
+			<if test="iconCls != null">#{ iconCls,jdbcType=VARCHAR},</if>
+			<if test="glyph != null">#{ glyph,jdbcType=VARCHAR},</if>
+			<if test="usingFlag != null">#{ usingFlag,jdbcType=CHAR}</if>
+		</trim>
+	</insert>
+	
+	<!-- 带验证批量增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		insert into cd_o_parts
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			NOTES ,
+			SORT_NBR ,
+			STATUS ,
+			DELETED_FLAG ,
+			ORIGIN_FLAG ,
+			ORIGIN_APP ,
+			PARTS_CODE ,
+			PARTS_NAME ,
+			MODULE_NAME ,
+			ICON_CLS ,
+			GLYPH ,
+			USING_FLAG 
+		</trim>
+		values
+		<foreach collection="records" item="item" index="index"  separator="," >
+			#{item.notes,jdbcType=VARCHAR},
+			#{item.sortNbr,jdbcType=INTEGER},
+			#{item.status,jdbcType=CHAR},
+			#{item.deletedFlag,jdbcType=CHAR},
+			#{item.originFlag,jdbcType=CHAR},
+			#{item.originApp,jdbcType=VARCHAR},
+			#{item.partsCode,jdbcType=VARCHAR},
+			#{item.partsName,jdbcType=VARCHAR},
+			#{item.moduleName,jdbcType=VARCHAR},
+			#{item.iconCls,jdbcType=VARCHAR},
+			#{item.glyph,jdbcType=VARCHAR},
+			#{item.usingFlag,jdbcType=CHAR}
+		</foreach>	
+	</insert>
+	
+	<!--带验证更新 -->
+	<update id="update" parameterType="CdPartsModel">
+		update cd_o_parts 
+		<set>
+			<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+			<if test="sortNbr != null">SORT_NBR = #{ sortNbr,jdbcType=INTEGER},</if>
+			<if test="status != null">STATUS = #{ status,jdbcType=CHAR},</if>
+			<if test="deletedFlag != null">DELETED_FLAG = #{ deletedFlag,jdbcType=CHAR},</if>
+			<if test="originFlag != null">ORIGIN_FLAG = #{ originFlag,jdbcType=CHAR},</if>
+			<if test="originApp != null">ORIGIN_APP = #{ originApp,jdbcType=VARCHAR},</if>
+			<if test="partsCode != null">PARTS_CODE = #{ partsCode,jdbcType=VARCHAR},</if>
+			<if test="partsName != null">PARTS_NAME = #{ partsName,jdbcType=VARCHAR},</if>
+			<if test="moduleName != null">MODULE_NAME = #{ moduleName,jdbcType=VARCHAR},</if>
+			<if test="iconCls != null">ICON_CLS = #{ iconCls,jdbcType=VARCHAR},</if>
+			<if test="glyph != null">GLYPH = #{ glyph,jdbcType=VARCHAR},</if>
+			<if test="usingFlag != null">USING_FLAG = #{ usingFlag,jdbcType=CHAR}</if>
+		</set>
+		where
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--带验证批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			update cd_o_parts 
+			<set>
+				<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+				<if test="item.sortNbr != null">SORT_NBR = #{item.sortNbr,jdbcType=INTEGER},</if>
+				<if test="item.status != null">STATUS = #{item.status,jdbcType=CHAR},</if>
+				<if test="item.deletedFlag != null">DELETED_FLAG = #{item.deletedFlag,jdbcType=CHAR},</if>
+				<if test="item.originFlag != null">ORIGIN_FLAG = #{item.originFlag,jdbcType=CHAR},</if>
+				<if test="item.originApp != null">ORIGIN_APP = #{item.originApp,jdbcType=VARCHAR},</if>
+				<if test="item.partsCode != null">PARTS_CODE = #{item.partsCode,jdbcType=VARCHAR},</if>
+				<if test="item.partsName != null">PARTS_NAME = #{item.partsName,jdbcType=VARCHAR},</if>
+				<if test="item.moduleName != null">MODULE_NAME = #{item.moduleName,jdbcType=VARCHAR},</if>
+				<if test="item.iconCls != null">ICON_CLS = #{item.iconCls,jdbcType=VARCHAR},</if>
+				<if test="item.glyph != null">GLYPH = #{item.glyph,jdbcType=VARCHAR},</if>
+				<if test="item.usingFlag != null">USING_FLAG = #{item.usingFlag,jdbcType=CHAR}</if>
+			</set>
+			where		
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes"  >
+		UPDATE
+		    cd_o_parts
+		SET
+			DELETED_FLAG    =  '1'
+        WHERE ROW_ID in 
+        <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+		 #{item}        
+	  </foreach>	
+	</update>
+	
+	<!--根据主键查询 -->
+	<select id="searchById" resultMap="CdPartsResult" parameterType="long">
+		select
+		<include refid="CdPartsModel_Column_List" />
+		from cd_o_parts
+		where
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+
+	<!--查询没有删除的记录 -->
+	<select id="searchToList" resultMap="CdPartsResult">
+		SELECT 
+		<include refid="CdPartsModel_Column_List" />
+		FROM
+		cd_o_parts
+		WHERE DELETED_FLAG='0' AND STATUS = '1'
+	</select>
+
+</mapper>
+

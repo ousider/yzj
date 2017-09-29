@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="xn.pigfarm.mapper.production.SearchSemenMapper">
+
+	<resultMap id="validSemenResult" type="ValidSemenModel">
+		<result property = "pigId" column = "PIG_ID" />  
+		<result property = "earBrand" column = "EAR_BRAND" />  
+		<result property = "semenCode" column = "SEMEN_CODE" /> 
+		<result property = "semenId" column = "SEMEN_ID" /> 
+		<result property = "semenCollectionDate" column = "SEMEN_COLLECTION_DATE" />   
+	</resultMap>
+
+	<select id="searchSemenToList" parameterType="ValidSemenModel" statementType="CALLABLE" resultMap="validSemenResult"  >
+		CALL P_SearchSemen(
+			#{queryType ,jdbcType=VARCHAR },
+			#{query,jdbcType=VARCHAR},
+			#{sememIds ,jdbcType=VARCHAR},
+			#{companyId,jdbcType=INTEGER},
+			#{farmId,jdbcType=INTEGER},
+			#{breedType,jdbcType=INTEGER },
+			#{breedDate ,jdbcType=DATE},
+			#{createId      ,jdbcType=INTEGER         },
+			#{offset       ,jdbcType=INTEGER    },
+			#{pagesize       ,jdbcType=INTEGER     },
+			#{totalCount,mode=OUT,javaType=Long,jdbcType=INTEGER      },
+			
+			#{errorCode,mode=OUT,javaType=String,jdbcType=VARCHAR         },
+			#{errorMessage ,mode=OUT,javaType=String,jdbcType=VARCHAR     }
+		)
+	</select>
+	
+</mapper>
+

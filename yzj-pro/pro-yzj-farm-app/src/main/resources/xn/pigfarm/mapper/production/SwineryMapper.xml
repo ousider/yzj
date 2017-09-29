@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.production.SwineryMapper">
+
+	<resultMap id="SwineryResult"  type="SwineryModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="sortNbr" column="SORT_NBR" jdbcType="INTEGER" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="originFlag" column="ORIGIN_FLAG" jdbcType="CHAR" />
+		<result property="originApp" column="ORIGIN_APP" jdbcType="VARCHAR" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="farmId" column="FARM_ID" jdbcType="INTEGER" />
+		<result property="companyId" column="COMPANY_ID" jdbcType="INTEGER" />
+		<result property="lineId" column="LINE_ID" jdbcType="INTEGER" />
+		<result property="businessCode" column="BUSINESS_CODE" jdbcType="VARCHAR" />
+		<result property="houseType" column="HOUSE_TYPE" jdbcType="INTEGER" />
+		<result property="swineryName" column="SWINERY_NAME" jdbcType="VARCHAR" />
+		<result property="createType" column="CREATE_TYPE" jdbcType="VARCHAR" />
+		<result property="pigType" column="PIG_TYPE" jdbcType="VARCHAR" />
+		<result property="porkSwineryId" column="PORK_SWINERY_ID" jdbcType="INTEGER" />
+		<result property="planHead" column="PLAN_HEAD" jdbcType="INTEGER" />
+		<result property="beginDate" column="BEGIN_DATE" jdbcType="DATE" />
+		<result property="endDate" column="END_DATE" jdbcType="DATE" />
+		<result property="weekNum" column="WEEK_NUM" jdbcType="INTEGER" />
+		<result property="swineryDayage" column="SWINERY_DAYAGE" jdbcType="DECIMAL" />
+		<result property="lastOperateDate" column="LAST_OPERATE_DATE" jdbcType="DATE" />
+		<result property="startOperateDate" column="START_OPERATE_DATE" jdbcType="DATE" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="SwineryModel_Column_List">
+		ROW_ID,SORT_NBR,STATUS,NOTES,LINE_ID,BUSINESS_CODE,HOUSE_TYPE,SWINERY_NAME,CREATE_TYPE,PIG_TYPE,PORK_SWINERY_ID,PLAN_HEAD,BEGIN_DATE,END_DATE,WEEK_NUM,SWINERY_DAYAGE,LAST_OPERATE_DATE,START_OPERATE_DATE
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true"   keyProperty="rowId" parameterType="SwineryModel">
+		INSERT INTO PP_M_SWINERY
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR,
+			STATUS,
+			DELETED_FLAG,
+			ORIGIN_FLAG,
+			ORIGIN_APP,
+			NOTES,
+			FARM_ID,
+			COMPANY_ID,
+			LINE_ID,
+			BUSINESS_CODE,
+			HOUSE_TYPE,
+			SWINERY_NAME,
+			CREATE_TYPE,
+			PIG_TYPE,
+			PORK_SWINERY_ID,
+			PLAN_HEAD,
+			BEGIN_DATE,
+			END_DATE,
+			WEEK_NUM,
+			SWINERY_DAYAGE,
+			LAST_OPERATE_DATE,
+			START_OPERATE_DATE
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ sortNbr,jdbcType=INTEGER},
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ originFlag,jdbcType=CHAR},
+			#{ originApp,jdbcType=VARCHAR},
+			#{ notes,jdbcType=VARCHAR},
+			#{ farmId,jdbcType=INTEGER},
+			#{ companyId,jdbcType=INTEGER},
+			#{ lineId,jdbcType=INTEGER},
+			#{ businessCode,jdbcType=VARCHAR},
+			#{ houseType,jdbcType=INTEGER},
+			#{ swineryName,jdbcType=VARCHAR},
+			#{ createType,jdbcType=VARCHAR},
+			#{ pigType,jdbcType=VARCHAR},
+			#{ porkSwineryId,jdbcType=INTEGER},
+			#{ planHead,jdbcType=INTEGER},
+			#{ beginDate,jdbcType=DATE},
+			#{ endDate,jdbcType=DATE},
+			#{ weekNum,jdbcType=INTEGER},
+			#{ swineryDayage,jdbcType=DECIMAL},
+			#{ lastOperateDate,jdbcType=DATE},
+			#{ startOperateDate,jdbcType=DATE}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO PP_M_SWINERY
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR ,
+			STATUS ,
+			DELETED_FLAG ,
+			ORIGIN_FLAG ,
+			ORIGIN_APP ,
+			NOTES ,
+			FARM_ID ,
+			COMPANY_ID ,
+			LINE_ID ,
+			BUSINESS_CODE ,
+			HOUSE_TYPE ,
+			SWINERY_NAME ,
+			CREATE_TYPE ,
+			PIG_TYPE ,
+			PORK_SWINERY_ID ,
+			PLAN_HEAD ,
+			BEGIN_DATE ,
+			END_DATE ,
+			WEEK_NUM ,
+			SWINERY_DAYAGE ,
+			LAST_OPERATE_DATE ,
+			START_OPERATE_DATE 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.sortNbr,jdbcType=INTEGER},
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.originFlag,jdbcType=CHAR},
+				#{item.originApp,jdbcType=VARCHAR},
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.farmId,jdbcType=INTEGER},
+				#{item.companyId,jdbcType=INTEGER},
+				#{item.lineId,jdbcType=INTEGER},
+				#{item.businessCode,jdbcType=VARCHAR},
+				#{item.houseType,jdbcType=INTEGER},
+				#{item.swineryName,jdbcType=VARCHAR},
+				#{item.createType,jdbcType=VARCHAR},
+				#{item.pigType,jdbcType=VARCHAR},
+				#{item.porkSwineryId,jdbcType=INTEGER},
+				#{item.planHead,jdbcType=INTEGER},
+				#{item.beginDate,jdbcType=DATE},
+				#{item.endDate,jdbcType=DATE},
+				#{item.weekNum,jdbcType=INTEGER},
+				#{item.swineryDayage,jdbcType=DECIMAL},
+				#{item.lastOperateDate,jdbcType=DATE},
+				#{item.startOperateDate,jdbcType=DATE}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="SwineryModel" >
+		UPDATE PP_M_SWINERY 
+		<set>
+		<if test="sortNbr != null">SORT_NBR = #{ sortNbr,jdbcType=INTEGER},</if>
+		<if test="status != null">STATUS = #{ status,jdbcType=CHAR},</if>
+		<if test="originFlag != null">ORIGIN_FLAG = #{ originFlag,jdbcType=CHAR},</if>
+		<if test="originApp != null">ORIGIN_APP = #{ originApp,jdbcType=VARCHAR},</if>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="lineId != null">LINE_ID = #{ lineId,jdbcType=INTEGER},</if>
+		<if test="businessCode != null">BUSINESS_CODE = #{ businessCode,jdbcType=VARCHAR},</if>
+		<if test="houseType != null">HOUSE_TYPE = #{ houseType,jdbcType=INTEGER},</if>
+		<if test="swineryName != null">SWINERY_NAME = #{ swineryName,jdbcType=VARCHAR},</if>
+		<if test="createType != null">CREATE_TYPE = #{ createType,jdbcType=VARCHAR},</if>
+		<if test="pigType != null">PIG_TYPE = #{ pigType,jdbcType=VARCHAR},</if>
+		<if test="porkSwineryId != null">PORK_SWINERY_ID = #{ porkSwineryId,jdbcType=INTEGER},</if>
+		<if test="planHead != null">PLAN_HEAD = #{ planHead,jdbcType=INTEGER},</if>
+		<if test="beginDate != null">BEGIN_DATE = #{ beginDate,jdbcType=DATE},</if>
+		<if test="endDate != null">END_DATE = #{ endDate,jdbcType=DATE},</if>
+		<if test="weekNum != null">WEEK_NUM = #{ weekNum,jdbcType=INTEGER},</if>
+		<if test="swineryDayage != null">SWINERY_DAYAGE = #{ swineryDayage,jdbcType=DECIMAL},</if>
+		<if test="lastOperateDate != null">LAST_OPERATE_DATE = #{ lastOperateDate,jdbcType=DATE},</if>
+		<if test="startOperateDate != null">START_OPERATE_DATE = #{ startOperateDate,jdbcType=DATE}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE PP_M_SWINERY 
+			<set>
+			<if test="item.sortNbr != null">SORT_NBR = #{item.sortNbr,jdbcType=INTEGER},</if>
+			<if test="item.status != null">STATUS = #{item.status,jdbcType=CHAR},</if>
+			<if test="item.originFlag != null">ORIGIN_FLAG = #{item.originFlag,jdbcType=CHAR},</if>
+			<if test="item.originApp != null">ORIGIN_APP = #{item.originApp,jdbcType=VARCHAR},</if>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.lineId != null">LINE_ID = #{item.lineId,jdbcType=INTEGER},</if>
+			<if test="item.businessCode != null">BUSINESS_CODE = #{item.businessCode,jdbcType=VARCHAR},</if>
+			<if test="item.houseType != null">HOUSE_TYPE = #{item.houseType,jdbcType=INTEGER},</if>
+			<if test="item.swineryName != null">SWINERY_NAME = #{item.swineryName,jdbcType=VARCHAR},</if>
+			<if test="item.createType != null">CREATE_TYPE = #{item.createType,jdbcType=VARCHAR},</if>
+			<if test="item.pigType != null">PIG_TYPE = #{item.pigType,jdbcType=VARCHAR},</if>
+			<if test="item.porkSwineryId != null">PORK_SWINERY_ID = #{item.porkSwineryId,jdbcType=INTEGER},</if>
+			<if test="item.planHead != null">PLAN_HEAD = #{item.planHead,jdbcType=INTEGER},</if>
+			<if test="item.beginDate != null">BEGIN_DATE = #{item.beginDate,jdbcType=DATE},</if>
+			<if test="item.endDate != null">END_DATE = #{item.endDate,jdbcType=DATE},</if>
+			<if test="item.weekNum != null">WEEK_NUM = #{item.weekNum,jdbcType=INTEGER},</if>
+			<if test="item.swineryDayage != null">SWINERY_DAYAGE = #{item.swineryDayage,jdbcType=DECIMAL},</if>
+			<if test="item.lastOperateDate != null">LAST_OPERATE_DATE = #{item.lastOperateDate,jdbcType=DATE},</if>
+			<if test="item.startOperateDate != null">START_OPERATE_DATE = #{item.startOperateDate,jdbcType=DATE}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  PP_M_SWINERY
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  PP_M_SWINERY
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE 
+		 ROW_ID =#{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  PP_M_SWINERY
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' 
+		 AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+		 AND ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCons" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  PP_M_SWINERY
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' ${item}
+		</foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="SwineryResult">
+		SELECT 
+		<include refid="SwineryModel_Column_List" />
+		FROM PP_M_SWINERY WHERE DELETED_FLAG='0' 
+		AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="SwineryResult" >
+		SELECT 
+		<include refid="SwineryModel_Column_List" />
+		FROM PP_M_SWINERY WHERE DELETED_FLAG='0'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="SwineryResult" >
+		SELECT 
+		<include refid="SwineryModel_Column_List" />
+		FROM PP_M_SWINERY
+		WHERE DELETED_FLAG='0'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="SwineryResult" >
+		SELECT 
+		<include refid="SwineryModel_Column_List" />
+		FROM PP_M_SWINERY
+		WHERE ${condition}
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAll" resultMap="SwineryResult" >
+		SELECT *
+		FROM PP_M_SWINERY
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="SwineryResult"> ${sql} </select>
+
+</mapper>
+

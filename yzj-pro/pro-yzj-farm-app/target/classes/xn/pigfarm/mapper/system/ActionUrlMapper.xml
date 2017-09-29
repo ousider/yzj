@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.system.ActionUrlMapper">
+
+	<resultMap id="ActionUrlResult"  type="ActionUrlModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="sortNbr" column="SORT_NBR" jdbcType="INTEGER" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="moduleId" column="MODULE_ID" jdbcType="INTEGER" />
+		<result property="moduleName" column="MODULE_NAME" jdbcType="VARCHAR" />
+		<result property="moduleUrl" column="MODULE_URL" jdbcType="VARCHAR" />
+		<result property="actioner" column="ACTIONER" jdbcType="INTEGER" />
+		<result property="actionTime" column="ACTION_TIME" jdbcType="TIMESTAMP" />
+		<result property="farmId" column="FARM_ID" jdbcType="INTEGER" />
+		<result property="companyId" column="COMPANY_ID" jdbcType="INTEGER" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="ActionUrlModel_Column_List">
+		ROW_ID,SORT_NBR,MODULE_ID,MODULE_NAME,MODULE_URL,ACTIONER,ACTION_TIME,
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true"   keyProperty="rowId" parameterType="ActionUrlModel">
+		INSERT INTO SYS_L_ACTION_URL
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR,
+			STATUS,
+			DELETED_FLAG,
+			MODULE_ID,
+			MODULE_NAME,
+			MODULE_URL,
+			ACTIONER,
+			ACTION_TIME,
+			FARM_ID,
+			COMPANY_ID
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ sortNbr,jdbcType=INTEGER},
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ moduleId,jdbcType=INTEGER},
+			#{ moduleName,jdbcType=VARCHAR},
+			#{ moduleUrl,jdbcType=VARCHAR},
+			#{ actioner,jdbcType=INTEGER},
+			#{ actionTime,jdbcType=TIMESTAMP},
+			#{ farmId,jdbcType=INTEGER},
+			#{ companyId,jdbcType=INTEGER}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO SYS_L_ACTION_URL
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR ,
+			STATUS ,
+			DELETED_FLAG ,
+			MODULE_ID ,
+			MODULE_NAME ,
+			MODULE_URL ,
+			ACTIONER ,
+			ACTION_TIME ,
+			FARM_ID ,
+			COMPANY_ID 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.sortNbr,jdbcType=INTEGER},
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.moduleId,jdbcType=INTEGER},
+				#{item.moduleName,jdbcType=VARCHAR},
+				#{item.moduleUrl,jdbcType=VARCHAR},
+				#{item.actioner,jdbcType=INTEGER},
+				#{item.actionTime,jdbcType=TIMESTAMP},
+				#{item.farmId,jdbcType=INTEGER},
+				#{item.companyId,jdbcType=INTEGER}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="ActionUrlModel" >
+		UPDATE SYS_L_ACTION_URL 
+		<set>
+		<if test="sortNbr != null">SORT_NBR = #{ sortNbr,jdbcType=INTEGER},</if>
+		<if test="status != null">STATUS = #{ status,jdbcType=CHAR},</if>
+		<if test="moduleId != null">MODULE_ID = #{ moduleId,jdbcType=INTEGER},</if>
+		<if test="moduleName != null">MODULE_NAME = #{ moduleName,jdbcType=VARCHAR},</if>
+		<if test="moduleUrl != null">MODULE_URL = #{ moduleUrl,jdbcType=VARCHAR},</if>
+		<if test="actioner != null">ACTIONER = #{ actioner,jdbcType=INTEGER},</if>
+		<if test="actionTime != null">ACTION_TIME = #{ actionTime,jdbcType=TIMESTAMP},</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE SYS_L_ACTION_URL 
+			<set>
+			<if test="item.sortNbr != null">SORT_NBR = #{item.sortNbr,jdbcType=INTEGER},</if>
+			<if test="item.status != null">STATUS = #{item.status,jdbcType=CHAR},</if>
+			<if test="item.moduleId != null">MODULE_ID = #{item.moduleId,jdbcType=INTEGER},</if>
+			<if test="item.moduleName != null">MODULE_NAME = #{item.moduleName,jdbcType=VARCHAR},</if>
+			<if test="item.moduleUrl != null">MODULE_URL = #{item.moduleUrl,jdbcType=VARCHAR},</if>
+			<if test="item.actioner != null">ACTIONER = #{item.actioner,jdbcType=INTEGER},</if>
+			<if test="item.actionTime != null">ACTION_TIME = #{item.actionTime,jdbcType=TIMESTAMP},</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  SYS_L_ACTION_URL
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  SYS_L_ACTION_URL
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE 
+		 ROW_ID =#{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  SYS_L_ACTION_URL
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' 
+		 AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+		 AND ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCons" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  SYS_L_ACTION_URL
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' ${item}
+		</foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="ActionUrlResult">
+		SELECT 
+		<include refid="ActionUrlModel_Column_List" />
+		FROM SYS_L_ACTION_URL WHERE DELETED_FLAG='0' 
+		AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="ActionUrlResult" >
+		SELECT 
+		<include refid="ActionUrlModel_Column_List" />
+		FROM SYS_L_ACTION_URL WHERE DELETED_FLAG='0'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="ActionUrlResult" >
+		SELECT 
+		<include refid="ActionUrlModel_Column_List" />
+		FROM SYS_L_ACTION_URL
+		WHERE DELETED_FLAG='0'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="ActionUrlResult" >
+		SELECT 
+		<include refid="ActionUrlModel_Column_List" />
+		FROM SYS_L_ACTION_URL
+		WHERE ${condition}
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAll" resultMap="ActionUrlResult" >
+		SELECT *
+		FROM SYS_L_ACTION_URL
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="ActionUrlResult"> ${sql} </select>
+
+</mapper>
+

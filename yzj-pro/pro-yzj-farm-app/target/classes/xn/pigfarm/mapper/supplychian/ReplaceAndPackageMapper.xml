@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.supplychian.ReplaceAndPackageMapper">
+
+	<resultMap id="ReplaceAndPackageResult"  type="ReplaceAndPackageModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="farmId" column="FARM_ID" jdbcType="INTEGER" />
+		<result property="companyId" column="COMPANY_ID" jdbcType="INTEGER" />
+		<result property="groupName" column="GROUP_NAME" jdbcType="VARCHAR" />
+		<result property="supplierId" column="SUPPLIER_ID" jdbcType="INTEGER" />
+		<result property="groupModel" column="GROUP_MODEL" jdbcType="VARCHAR" />
+		<result property="createId" column="CREATE_ID" jdbcType="INTEGER" />
+		<result property="createDate" column="CREATE_DATE" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="ReplaceAndPackageModel_Column_List">
+		ROW_ID,NOTES,GROUP_NAME,SUPPLIER_ID,GROUP_MODEL,CREATE_ID,CREATE_DATE
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true"   keyProperty="rowId" parameterType="ReplaceAndPackageModel">
+		INSERT INTO SC_M_REPLACE_AND_PACKAGE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			DELETED_FLAG,
+			NOTES,
+			FARM_ID,
+			COMPANY_ID,
+			GROUP_NAME,
+			SUPPLIER_ID,
+			GROUP_MODEL,
+			CREATE_ID,
+			CREATE_DATE
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ notes,jdbcType=VARCHAR},
+			#{ farmId,jdbcType=INTEGER},
+			#{ companyId,jdbcType=INTEGER},
+			#{ groupName,jdbcType=VARCHAR},
+			#{ supplierId,jdbcType=INTEGER},
+			#{ groupModel,jdbcType=VARCHAR},
+			#{ createId,jdbcType=INTEGER},
+			#{ createDate,jdbcType=TIMESTAMP}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO SC_M_REPLACE_AND_PACKAGE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			DELETED_FLAG ,
+			NOTES ,
+			FARM_ID ,
+			COMPANY_ID ,
+			GROUP_NAME ,
+			SUPPLIER_ID ,
+			GROUP_MODEL ,
+			CREATE_ID ,
+			CREATE_DATE 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.farmId,jdbcType=INTEGER},
+				#{item.companyId,jdbcType=INTEGER},
+				#{item.groupName,jdbcType=VARCHAR},
+				#{item.supplierId,jdbcType=INTEGER},
+				#{item.groupModel,jdbcType=VARCHAR},
+				#{item.createId,jdbcType=INTEGER},
+				#{item.createDate,jdbcType=TIMESTAMP}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="ReplaceAndPackageModel" >
+		UPDATE SC_M_REPLACE_AND_PACKAGE 
+		<set>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="groupName != null">GROUP_NAME = #{ groupName,jdbcType=VARCHAR},</if>
+		<if test="supplierId != null">SUPPLIER_ID = #{ supplierId,jdbcType=INTEGER},</if>
+		<if test="groupModel != null">GROUP_MODEL = #{ groupModel,jdbcType=VARCHAR},</if>
+		<if test="createId != null">CREATE_ID = #{ createId,jdbcType=INTEGER},</if>
+		<if test="createDate != null">CREATE_DATE = #{ createDate,jdbcType=TIMESTAMP}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE SC_M_REPLACE_AND_PACKAGE 
+			<set>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.groupName != null">GROUP_NAME = #{item.groupName,jdbcType=VARCHAR},</if>
+			<if test="item.supplierId != null">SUPPLIER_ID = #{item.supplierId,jdbcType=INTEGER},</if>
+			<if test="item.groupModel != null">GROUP_MODEL = #{item.groupModel,jdbcType=VARCHAR},</if>
+			<if test="item.createId != null">CREATE_ID = #{item.createId,jdbcType=INTEGER},</if>
+			<if test="item.createDate != null">CREATE_DATE = #{item.createDate,jdbcType=TIMESTAMP}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  SC_M_REPLACE_AND_PACKAGE
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  SC_M_REPLACE_AND_PACKAGE
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE 
+		 ROW_ID =#{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  SC_M_REPLACE_AND_PACKAGE
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' 
+		 AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+		 AND ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCons" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  SC_M_REPLACE_AND_PACKAGE
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' ${item}
+		</foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="ReplaceAndPackageResult">
+		SELECT 
+		<include refid="ReplaceAndPackageModel_Column_List" />
+		FROM SC_M_REPLACE_AND_PACKAGE WHERE DELETED_FLAG='0' 
+		AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="ReplaceAndPackageResult" >
+		SELECT 
+		<include refid="ReplaceAndPackageModel_Column_List" />
+		FROM SC_M_REPLACE_AND_PACKAGE WHERE DELETED_FLAG='0'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="ReplaceAndPackageResult" >
+		SELECT 
+		<include refid="ReplaceAndPackageModel_Column_List" />
+		FROM SC_M_REPLACE_AND_PACKAGE
+		WHERE DELETED_FLAG='0'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="ReplaceAndPackageResult" >
+		SELECT 
+		<include refid="ReplaceAndPackageModel_Column_List" />
+		FROM SC_M_REPLACE_AND_PACKAGE
+		WHERE ${condition}
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAll" resultMap="ReplaceAndPackageResult" >
+		SELECT *
+		FROM SC_M_REPLACE_AND_PACKAGE
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="ReplaceAndPackageResult"> ${sql} </select>
+
+</mapper>
+

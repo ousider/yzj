@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.production.SpermInfoMapper">
+
+	<resultMap id="SpermInfoResult"  type="SpermInfoModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="sortNbr" column="SORT_NBR" jdbcType="INTEGER" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="originFlag" column="ORIGIN_FLAG" jdbcType="CHAR" />
+		<result property="originApp" column="ORIGIN_APP" jdbcType="VARCHAR" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="farmId" column="FARM_ID" jdbcType="INTEGER" />
+		<result property="companyId" column="COMPANY_ID" jdbcType="INTEGER" />
+		<result property="materialId" column="MATERIAL_ID" jdbcType="INTEGER" />
+		<result property="businessCode" column="BUSINESS_CODE" jdbcType="INTEGER" />
+		<result property="sowPigId" column="SOW_PIG_ID" jdbcType="INTEGER" />
+		<result property="semenId" column="SEMEN_ID" jdbcType="INTEGER" />
+		<result property="semenCode" column="SEMEN_CODE" jdbcType="VARCHAR" />
+		<result property="externalCode" column="EXTERNAL_CODE" jdbcType="VARCHAR" />
+		<result property="warehouseId" column="WAREHOUSE_ID" jdbcType="INTEGER" />
+		<result property="isCheck" column="IS_CHECK" jdbcType="CHAR" />
+		<result property="checkDate" column="CHECK_DATE" jdbcType="TIMESTAMP" />
+		<result property="checkBy" column="CHECK_BY" jdbcType="INTEGER" />
+		<result property="spec" column="SPEC" jdbcType="VARCHAR" />
+		<result property="spermMotility" column="SPERM_MOTILITY" jdbcType="DECIMAL" />
+		<result property="spermDensity" column="SPERM_DENSITY" jdbcType="DECIMAL" />
+		<result property="abnormationRate" column="ABNORMATION_RATE" jdbcType="DECIMAL" />
+		<result property="cohesion" column="COHESION" jdbcType="VARCHAR" />
+		<result property="color" column="COLOR" jdbcType="VARCHAR" />
+		<result property="tstg" column="TSTG" jdbcType="DECIMAL" />
+		<result property="shelfLife" column="SHELF_LIFE" jdbcType="INTEGER" />
+		<result property="pack" column="PACK" jdbcType="VARCHAR" />
+		<result property="useDate" column="USE_DATE" jdbcType="TIMESTAMP" />
+		<result property="scrapDate" column="SCRAP_DATE" jdbcType="TIMESTAMP" />
+		<result property="scrapBy" column="SCRAP_BY" jdbcType="INTEGER" />
+		<result property="scrapCause" column="SCRAP_CAUSE" jdbcType="VARCHAR" />
+		<result property="worker" column="WORKER" jdbcType="INTEGER" />
+		<result property="semenDate" column="SEMEN_DATE" jdbcType="TIMESTAMP" />
+		<result property="price" column="PRICE" jdbcType="DECIMAL" />
+		<result property="sellPrice" column="SELL_PRICE" jdbcType="DECIMAL" />
+		<result property="billId" column="BILL_ID" jdbcType="INTEGER" />
+		<result property="isSale" column="IS_SALE" jdbcType="INTEGER" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="SpermInfoModel_Column_List">
+		ROW_ID,SORT_NBR,STATUS,NOTES,MATERIAL_ID,BUSINESS_CODE,SOW_PIG_ID,SEMEN_ID,SEMEN_CODE,EXTERNAL_CODE,WAREHOUSE_ID,IS_CHECK,CHECK_DATE,CHECK_BY,SPEC,SPERM_MOTILITY,SPERM_DENSITY,ABNORMATION_RATE,COHESION,COLOR,TSTG,SHELF_LIFE,PACK,USE_DATE,SCRAP_DATE,SCRAP_BY,SCRAP_CAUSE,WORKER,SEMEN_DATE,PRICE,SELL_PRICE,BILL_ID,IS_SALE
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true"   keyProperty="rowId" parameterType="SpermInfoModel">
+		INSERT INTO PP_L_SPERM_INFO
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR,
+			STATUS,
+			DELETED_FLAG,
+			ORIGIN_FLAG,
+			ORIGIN_APP,
+			NOTES,
+			FARM_ID,
+			COMPANY_ID,
+			MATERIAL_ID,
+			BUSINESS_CODE,
+			SOW_PIG_ID,
+			SEMEN_ID,
+			SEMEN_CODE,
+			EXTERNAL_CODE,
+			WAREHOUSE_ID,
+			IS_CHECK,
+			CHECK_DATE,
+			CHECK_BY,
+			SPEC,
+			SPERM_MOTILITY,
+			SPERM_DENSITY,
+			ABNORMATION_RATE,
+			COHESION,
+			COLOR,
+			TSTG,
+			SHELF_LIFE,
+			PACK,
+			USE_DATE,
+			SCRAP_DATE,
+			SCRAP_BY,
+			SCRAP_CAUSE,
+			WORKER,
+			SEMEN_DATE,
+			PRICE,
+			SELL_PRICE,
+			BILL_ID,
+			IS_SALE
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ sortNbr,jdbcType=INTEGER},
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ originFlag,jdbcType=CHAR},
+			#{ originApp,jdbcType=VARCHAR},
+			#{ notes,jdbcType=VARCHAR},
+			#{ farmId,jdbcType=INTEGER},
+			#{ companyId,jdbcType=INTEGER},
+			#{ materialId,jdbcType=INTEGER},
+			#{ businessCode,jdbcType=INTEGER},
+			#{ sowPigId,jdbcType=INTEGER},
+			#{ semenId,jdbcType=INTEGER},
+			#{ semenCode,jdbcType=VARCHAR},
+			#{ externalCode,jdbcType=VARCHAR},
+			#{ warehouseId,jdbcType=INTEGER},
+			#{ isCheck,jdbcType=CHAR},
+			#{ checkDate,jdbcType=TIMESTAMP},
+			#{ checkBy,jdbcType=INTEGER},
+			#{ spec,jdbcType=VARCHAR},
+			#{ spermMotility,jdbcType=DECIMAL},
+			#{ spermDensity,jdbcType=DECIMAL},
+			#{ abnormationRate,jdbcType=DECIMAL},
+			#{ cohesion,jdbcType=VARCHAR},
+			#{ color,jdbcType=VARCHAR},
+			#{ tstg,jdbcType=DECIMAL},
+			#{ shelfLife,jdbcType=INTEGER},
+			#{ pack,jdbcType=VARCHAR},
+			#{ useDate,jdbcType=TIMESTAMP},
+			#{ scrapDate,jdbcType=TIMESTAMP},
+			#{ scrapBy,jdbcType=INTEGER},
+			#{ scrapCause,jdbcType=VARCHAR},
+			#{ worker,jdbcType=INTEGER},
+			#{ semenDate,jdbcType=TIMESTAMP},
+			#{ price,jdbcType=DECIMAL},
+			#{ sellPrice,jdbcType=DECIMAL},
+			#{ billId,jdbcType=INTEGER},
+			#{ isSale,jdbcType=INTEGER}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO PP_L_SPERM_INFO
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR ,
+			STATUS ,
+			DELETED_FLAG ,
+			ORIGIN_FLAG ,
+			ORIGIN_APP ,
+			NOTES ,
+			FARM_ID ,
+			COMPANY_ID ,
+			MATERIAL_ID ,
+			BUSINESS_CODE ,
+			SOW_PIG_ID ,
+			SEMEN_ID ,
+			SEMEN_CODE ,
+			EXTERNAL_CODE ,
+			WAREHOUSE_ID ,
+			IS_CHECK ,
+			CHECK_DATE ,
+			CHECK_BY ,
+			SPEC ,
+			SPERM_MOTILITY ,
+			SPERM_DENSITY ,
+			ABNORMATION_RATE ,
+			COHESION ,
+			COLOR ,
+			TSTG ,
+			SHELF_LIFE ,
+			PACK ,
+			USE_DATE ,
+			SCRAP_DATE ,
+			SCRAP_BY ,
+			SCRAP_CAUSE ,
+			WORKER ,
+			SEMEN_DATE ,
+			PRICE ,
+			SELL_PRICE ,
+			BILL_ID ,
+			IS_SALE 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.sortNbr,jdbcType=INTEGER},
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.originFlag,jdbcType=CHAR},
+				#{item.originApp,jdbcType=VARCHAR},
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.farmId,jdbcType=INTEGER},
+				#{item.companyId,jdbcType=INTEGER},
+				#{item.materialId,jdbcType=INTEGER},
+				#{item.businessCode,jdbcType=INTEGER},
+				#{item.sowPigId,jdbcType=INTEGER},
+				#{item.semenId,jdbcType=INTEGER},
+				#{item.semenCode,jdbcType=VARCHAR},
+				#{item.externalCode,jdbcType=VARCHAR},
+				#{item.warehouseId,jdbcType=INTEGER},
+				#{item.isCheck,jdbcType=CHAR},
+				#{item.checkDate,jdbcType=TIMESTAMP},
+				#{item.checkBy,jdbcType=INTEGER},
+				#{item.spec,jdbcType=VARCHAR},
+				#{item.spermMotility,jdbcType=DECIMAL},
+				#{item.spermDensity,jdbcType=DECIMAL},
+				#{item.abnormationRate,jdbcType=DECIMAL},
+				#{item.cohesion,jdbcType=VARCHAR},
+				#{item.color,jdbcType=VARCHAR},
+				#{item.tstg,jdbcType=DECIMAL},
+				#{item.shelfLife,jdbcType=INTEGER},
+				#{item.pack,jdbcType=VARCHAR},
+				#{item.useDate,jdbcType=TIMESTAMP},
+				#{item.scrapDate,jdbcType=TIMESTAMP},
+				#{item.scrapBy,jdbcType=INTEGER},
+				#{item.scrapCause,jdbcType=VARCHAR},
+				#{item.worker,jdbcType=INTEGER},
+				#{item.semenDate,jdbcType=TIMESTAMP},
+				#{item.price,jdbcType=DECIMAL},
+				#{item.sellPrice,jdbcType=DECIMAL},
+				#{item.billId,jdbcType=INTEGER},
+				#{item.isSale,jdbcType=INTEGER}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="SpermInfoModel" >
+		UPDATE PP_L_SPERM_INFO 
+		<set>
+		<if test="sortNbr != null">SORT_NBR = #{ sortNbr,jdbcType=INTEGER},</if>
+		<if test="status != null">STATUS = #{ status,jdbcType=CHAR},</if>
+		<if test="originFlag != null">ORIGIN_FLAG = #{ originFlag,jdbcType=CHAR},</if>
+		<if test="originApp != null">ORIGIN_APP = #{ originApp,jdbcType=VARCHAR},</if>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="materialId != null">MATERIAL_ID = #{ materialId,jdbcType=INTEGER},</if>
+		<if test="businessCode != null">BUSINESS_CODE = #{ businessCode,jdbcType=INTEGER},</if>
+		<if test="sowPigId != null">SOW_PIG_ID = #{ sowPigId,jdbcType=INTEGER},</if>
+		<if test="semenId != null">SEMEN_ID = #{ semenId,jdbcType=INTEGER},</if>
+		<if test="semenCode != null">SEMEN_CODE = #{ semenCode,jdbcType=VARCHAR},</if>
+		<if test="externalCode != null">EXTERNAL_CODE = #{ externalCode,jdbcType=VARCHAR},</if>
+		<if test="warehouseId != null">WAREHOUSE_ID = #{ warehouseId,jdbcType=INTEGER},</if>
+		<if test="isCheck != null">IS_CHECK = #{ isCheck,jdbcType=CHAR},</if>
+		<if test="checkDate != null">CHECK_DATE = #{ checkDate,jdbcType=TIMESTAMP},</if>
+		<if test="checkBy != null">CHECK_BY = #{ checkBy,jdbcType=INTEGER},</if>
+		<if test="spec != null">SPEC = #{ spec,jdbcType=VARCHAR},</if>
+		<if test="spermMotility != null">SPERM_MOTILITY = #{ spermMotility,jdbcType=DECIMAL},</if>
+		<if test="spermDensity != null">SPERM_DENSITY = #{ spermDensity,jdbcType=DECIMAL},</if>
+		<if test="abnormationRate != null">ABNORMATION_RATE = #{ abnormationRate,jdbcType=DECIMAL},</if>
+		<if test="cohesion != null">COHESION = #{ cohesion,jdbcType=VARCHAR},</if>
+		<if test="color != null">COLOR = #{ color,jdbcType=VARCHAR},</if>
+		<if test="tstg != null">TSTG = #{ tstg,jdbcType=DECIMAL},</if>
+		<if test="shelfLife != null">SHELF_LIFE = #{ shelfLife,jdbcType=INTEGER},</if>
+		<if test="pack != null">PACK = #{ pack,jdbcType=VARCHAR},</if>
+		<if test="useDate != null">USE_DATE = #{ useDate,jdbcType=TIMESTAMP},</if>
+		<if test="scrapDate != null">SCRAP_DATE = #{ scrapDate,jdbcType=TIMESTAMP},</if>
+		<if test="scrapBy != null">SCRAP_BY = #{ scrapBy,jdbcType=INTEGER},</if>
+		<if test="scrapCause != null">SCRAP_CAUSE = #{ scrapCause,jdbcType=VARCHAR},</if>
+		<if test="worker != null">WORKER = #{ worker,jdbcType=INTEGER},</if>
+		<if test="semenDate != null">SEMEN_DATE = #{ semenDate,jdbcType=TIMESTAMP},</if>
+		<if test="price != null">PRICE = #{ price,jdbcType=DECIMAL},</if>
+		<if test="sellPrice != null">SELL_PRICE = #{ sellPrice,jdbcType=DECIMAL},</if>
+		<if test="billId != null">BILL_ID = #{ billId,jdbcType=INTEGER},</if>
+		<if test="isSale != null">IS_SALE = #{ isSale,jdbcType=INTEGER}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE PP_L_SPERM_INFO 
+			<set>
+			<if test="item.sortNbr != null">SORT_NBR = #{item.sortNbr,jdbcType=INTEGER},</if>
+			<if test="item.status != null">STATUS = #{item.status,jdbcType=CHAR},</if>
+			<if test="item.originFlag != null">ORIGIN_FLAG = #{item.originFlag,jdbcType=CHAR},</if>
+			<if test="item.originApp != null">ORIGIN_APP = #{item.originApp,jdbcType=VARCHAR},</if>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.materialId != null">MATERIAL_ID = #{item.materialId,jdbcType=INTEGER},</if>
+			<if test="item.businessCode != null">BUSINESS_CODE = #{item.businessCode,jdbcType=INTEGER},</if>
+			<if test="item.sowPigId != null">SOW_PIG_ID = #{item.sowPigId,jdbcType=INTEGER},</if>
+			<if test="item.semenId != null">SEMEN_ID = #{item.semenId,jdbcType=INTEGER},</if>
+			<if test="item.semenCode != null">SEMEN_CODE = #{item.semenCode,jdbcType=VARCHAR},</if>
+			<if test="item.externalCode != null">EXTERNAL_CODE = #{item.externalCode,jdbcType=VARCHAR},</if>
+			<if test="item.warehouseId != null">WAREHOUSE_ID = #{item.warehouseId,jdbcType=INTEGER},</if>
+			<if test="item.isCheck != null">IS_CHECK = #{item.isCheck,jdbcType=CHAR},</if>
+			<if test="item.checkDate != null">CHECK_DATE = #{item.checkDate,jdbcType=TIMESTAMP},</if>
+			<if test="item.checkBy != null">CHECK_BY = #{item.checkBy,jdbcType=INTEGER},</if>
+			<if test="item.spec != null">SPEC = #{item.spec,jdbcType=VARCHAR},</if>
+			<if test="item.spermMotility != null">SPERM_MOTILITY = #{item.spermMotility,jdbcType=DECIMAL},</if>
+			<if test="item.spermDensity != null">SPERM_DENSITY = #{item.spermDensity,jdbcType=DECIMAL},</if>
+			<if test="item.abnormationRate != null">ABNORMATION_RATE = #{item.abnormationRate,jdbcType=DECIMAL},</if>
+			<if test="item.cohesion != null">COHESION = #{item.cohesion,jdbcType=VARCHAR},</if>
+			<if test="item.color != null">COLOR = #{item.color,jdbcType=VARCHAR},</if>
+			<if test="item.tstg != null">TSTG = #{item.tstg,jdbcType=DECIMAL},</if>
+			<if test="item.shelfLife != null">SHELF_LIFE = #{item.shelfLife,jdbcType=INTEGER},</if>
+			<if test="item.pack != null">PACK = #{item.pack,jdbcType=VARCHAR},</if>
+			<if test="item.useDate != null">USE_DATE = #{item.useDate,jdbcType=TIMESTAMP},</if>
+			<if test="item.scrapDate != null">SCRAP_DATE = #{item.scrapDate,jdbcType=TIMESTAMP},</if>
+			<if test="item.scrapBy != null">SCRAP_BY = #{item.scrapBy,jdbcType=INTEGER},</if>
+			<if test="item.scrapCause != null">SCRAP_CAUSE = #{item.scrapCause,jdbcType=VARCHAR},</if>
+			<if test="item.worker != null">WORKER = #{item.worker,jdbcType=INTEGER},</if>
+			<if test="item.semenDate != null">SEMEN_DATE = #{item.semenDate,jdbcType=TIMESTAMP},</if>
+			<if test="item.price != null">PRICE = #{item.price,jdbcType=DECIMAL},</if>
+			<if test="item.sellPrice != null">SELL_PRICE = #{item.sellPrice,jdbcType=DECIMAL},</if>
+			<if test="item.billId != null">BILL_ID = #{item.billId,jdbcType=INTEGER},</if>
+			<if test="item.isSale != null">IS_SALE = #{item.isSale,jdbcType=INTEGER}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  PP_L_SPERM_INFO
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  PP_L_SPERM_INFO
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE 
+		 ROW_ID =#{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  PP_L_SPERM_INFO
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' 
+		 AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+		 AND ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCons" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  PP_L_SPERM_INFO
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' ${item}
+		</foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="SpermInfoResult">
+		SELECT 
+		<include refid="SpermInfoModel_Column_List" />
+		FROM PP_L_SPERM_INFO WHERE DELETED_FLAG='0' 
+		AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="SpermInfoResult" >
+		SELECT 
+		<include refid="SpermInfoModel_Column_List" />
+		FROM PP_L_SPERM_INFO WHERE DELETED_FLAG='0'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="SpermInfoResult" >
+		SELECT 
+		<include refid="SpermInfoModel_Column_List" />
+		FROM PP_L_SPERM_INFO
+		WHERE DELETED_FLAG='0'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="SpermInfoResult" >
+		SELECT 
+		<include refid="SpermInfoModel_Column_List" />
+		FROM PP_L_SPERM_INFO
+		WHERE ${condition}
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAll" resultMap="SpermInfoResult" >
+		SELECT *
+		FROM PP_L_SPERM_INFO
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="SpermInfoResult"> ${sql} </select>
+
+	<!--撤销事件批量删除 -->
+	<update id="deletesForCancel" parameterType="java.util.List" >
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+		 UPDATE  PP_L_SPERM_INFO
+		 SET
+		 DELETED_FLAG  =  '2'
+		 WHERE ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+        </foreach>	
+	</update>
+
+</mapper>
+

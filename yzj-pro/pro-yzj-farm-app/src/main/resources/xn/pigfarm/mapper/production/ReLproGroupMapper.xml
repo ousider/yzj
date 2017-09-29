@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.production.ReLproGroupMapper">
+
+	<resultMap id="ReLproGroupResult"  type="ReLproGroupModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="sortNbr" column="SORT_NBR" jdbcType="INTEGER" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="reportId" column="REPORT_ID" jdbcType="INTEGER" />
+		<result property="farmId" column="FARM_ID" jdbcType="INTEGER" />
+		<result property="proType" column="PRO_TYPE" jdbcType="INTEGER" />
+		<result property="indicator" column="INDICATOR" jdbcType="INTEGER" />
+		<result property="bestValue" column="BEST_VALUE" jdbcType="INTEGER" />
+		<result property="bestFarmId" column="BEST_FARM_ID" jdbcType="INTEGER" />
+		<result property="bestPigQty" column="BEST_PIG_QTY" jdbcType="INTEGER" />
+		<result property="worstValue" column="WORST_VALUE" jdbcType="INTEGER" />
+		<result property="worstFarmId" column="WORST_FARM_ID" jdbcType="INTEGER" />
+		<result property="worstPigQty" column="WORST_PIG_QTY" jdbcType="INTEGER" />
+		<result property="createId" column="CREATE_ID" jdbcType="INTEGER" />
+		<result property="createDate" column="CREATE_DATE" jdbcType="DATE" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="ReLproGroupModel_Column_List">
+		ROW_ID,SORT_NBR,NOTES,REPORT_ID,PRO_TYPE,INDICATOR,BEST_VALUE,BEST_FARM_ID,BEST_PIG_QTY,WORST_VALUE,WORST_FARM_ID,WORST_PIG_QTY,CREATE_ID,CREATE_DATE
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true"   parameterType="ReLproGroupModel">
+		INSERT INTO RE_L_PRO_GROUP
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ROW_ID,
+			SORT_NBR,
+			DELETED_FLAG,
+			STATUS,
+			NOTES,
+			REPORT_ID,
+			FARM_ID,
+			PRO_TYPE,
+			INDICATOR,
+			BEST_VALUE,
+			BEST_FARM_ID,
+			BEST_PIG_QTY,
+			WORST_VALUE,
+			WORST_FARM_ID,
+			WORST_PIG_QTY,
+			CREATE_ID,
+			CREATE_DATE
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ rowId,jdbcType=INTEGER},
+			#{ sortNbr,jdbcType=INTEGER},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ status,jdbcType=CHAR},
+			#{ notes,jdbcType=VARCHAR},
+			#{ reportId,jdbcType=INTEGER},
+			#{ farmId,jdbcType=INTEGER},
+			#{ proType,jdbcType=INTEGER},
+			#{ indicator,jdbcType=INTEGER},
+			#{ bestValue,jdbcType=INTEGER},
+			#{ bestFarmId,jdbcType=INTEGER},
+			#{ bestPigQty,jdbcType=INTEGER},
+			#{ worstValue,jdbcType=INTEGER},
+			#{ worstFarmId,jdbcType=INTEGER},
+			#{ worstPigQty,jdbcType=INTEGER},
+			#{ createId,jdbcType=INTEGER},
+			#{ createDate,jdbcType=DATE}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO RE_L_PRO_GROUP
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ROW_ID ,
+			SORT_NBR ,
+			DELETED_FLAG ,
+			STATUS ,
+			NOTES ,
+			REPORT_ID ,
+			FARM_ID ,
+			PRO_TYPE ,
+			INDICATOR ,
+			BEST_VALUE ,
+			BEST_FARM_ID ,
+			BEST_PIG_QTY ,
+			WORST_VALUE ,
+			WORST_FARM_ID ,
+			WORST_PIG_QTY ,
+			CREATE_ID ,
+			CREATE_DATE 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.rowId,jdbcType=INTEGER},
+				#{item.sortNbr,jdbcType=INTEGER},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.status,jdbcType=CHAR},
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.reportId,jdbcType=INTEGER},
+				#{item.farmId,jdbcType=INTEGER},
+				#{item.proType,jdbcType=INTEGER},
+				#{item.indicator,jdbcType=INTEGER},
+				#{item.bestValue,jdbcType=INTEGER},
+				#{item.bestFarmId,jdbcType=INTEGER},
+				#{item.bestPigQty,jdbcType=INTEGER},
+				#{item.worstValue,jdbcType=INTEGER},
+				#{item.worstFarmId,jdbcType=INTEGER},
+				#{item.worstPigQty,jdbcType=INTEGER},
+				#{item.createId,jdbcType=INTEGER},
+				#{item.createDate,jdbcType=DATE}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="ReLproGroupModel" >
+		UPDATE RE_L_PRO_GROUP 
+		<set>
+		<if test="sortNbr != null">SORT_NBR = #{ sortNbr,jdbcType=INTEGER},</if>
+		<if test="status != null">STATUS = #{ status,jdbcType=CHAR},</if>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="reportId != null">REPORT_ID = #{ reportId,jdbcType=INTEGER},</if>
+		<if test="proType != null">PRO_TYPE = #{ proType,jdbcType=INTEGER},</if>
+		<if test="indicator != null">INDICATOR = #{ indicator,jdbcType=INTEGER},</if>
+		<if test="bestValue != null">BEST_VALUE = #{ bestValue,jdbcType=INTEGER},</if>
+		<if test="bestFarmId != null">BEST_FARM_ID = #{ bestFarmId,jdbcType=INTEGER},</if>
+		<if test="bestPigQty != null">BEST_PIG_QTY = #{ bestPigQty,jdbcType=INTEGER},</if>
+		<if test="worstValue != null">WORST_VALUE = #{ worstValue,jdbcType=INTEGER},</if>
+		<if test="worstFarmId != null">WORST_FARM_ID = #{ worstFarmId,jdbcType=INTEGER},</if>
+		<if test="worstPigQty != null">WORST_PIG_QTY = #{ worstPigQty,jdbcType=INTEGER},</if>
+		<if test="createId != null">CREATE_ID = #{ createId,jdbcType=INTEGER},</if>
+		<if test="createDate != null">CREATE_DATE = #{ createDate,jdbcType=DATE}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE RE_L_PRO_GROUP 
+			<set>
+			<if test="item.sortNbr != null">SORT_NBR = #{item.sortNbr,jdbcType=INTEGER},</if>
+			<if test="item.status != null">STATUS = #{item.status,jdbcType=CHAR},</if>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.reportId != null">REPORT_ID = #{item.reportId,jdbcType=INTEGER},</if>
+			<if test="item.proType != null">PRO_TYPE = #{item.proType,jdbcType=INTEGER},</if>
+			<if test="item.indicator != null">INDICATOR = #{item.indicator,jdbcType=INTEGER},</if>
+			<if test="item.bestValue != null">BEST_VALUE = #{item.bestValue,jdbcType=INTEGER},</if>
+			<if test="item.bestFarmId != null">BEST_FARM_ID = #{item.bestFarmId,jdbcType=INTEGER},</if>
+			<if test="item.bestPigQty != null">BEST_PIG_QTY = #{item.bestPigQty,jdbcType=INTEGER},</if>
+			<if test="item.worstValue != null">WORST_VALUE = #{item.worstValue,jdbcType=INTEGER},</if>
+			<if test="item.worstFarmId != null">WORST_FARM_ID = #{item.worstFarmId,jdbcType=INTEGER},</if>
+			<if test="item.worstPigQty != null">WORST_PIG_QTY = #{item.worstPigQty,jdbcType=INTEGER},</if>
+			<if test="item.createId != null">CREATE_ID = #{item.createId,jdbcType=INTEGER},</if>
+			<if test="item.createDate != null">CREATE_DATE = #{item.createDate,jdbcType=DATE}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  RE_L_PRO_GROUP
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  RE_L_PRO_GROUP
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE 
+		 ROW_ID =#{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  RE_L_PRO_GROUP
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' 
+		 AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+		 AND ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCons" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  RE_L_PRO_GROUP
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' ${item}
+		</foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="ReLproGroupResult">
+		SELECT 
+		<include refid="ReLproGroupModel_Column_List" />
+		FROM RE_L_PRO_GROUP WHERE DELETED_FLAG='0' 
+		AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="ReLproGroupResult" >
+		SELECT 
+		<include refid="ReLproGroupModel_Column_List" />
+		FROM RE_L_PRO_GROUP WHERE DELETED_FLAG='0'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="ReLproGroupResult" >
+		SELECT 
+		<include refid="ReLproGroupModel_Column_List" />
+		FROM RE_L_PRO_GROUP
+		WHERE DELETED_FLAG='0'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="ReLproGroupResult" >
+		SELECT 
+		<include refid="ReLproGroupModel_Column_List" />
+		FROM RE_L_PRO_GROUP
+		WHERE ${condition}
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAll" resultMap="ReLproGroupResult" >
+		SELECT *
+		FROM RE_L_PRO_GROUP
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="ReLproGroupResult"> ${sql} </select>
+
+</mapper>
+

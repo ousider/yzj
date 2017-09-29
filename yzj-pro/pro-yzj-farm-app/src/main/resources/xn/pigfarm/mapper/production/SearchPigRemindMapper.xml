@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.production.SearchPigRemindMapper">
+
+	<!-- 判断是否存在或是否离场 -->
+	<select id="searchPigExists" resultType="map">
+		<![CDATA[
+			SELECT t1.LAST_EVENT_DATE,IF(COUNT(*) <= 0
+				,CONCAT('【',${earBrand},'】耳号不存在，请重新输入！')
+				,CONCAT('【',T2.EAR_BRAND,'】猪只在【',DATE(T4.TOWORK_DATE),',',T3.PIG_CLASS_NAME,
+				IF(T1.PIG_CLASS = 24,'','离场'),TIMESTAMPDIFF(DAY,T4.TOWORK_DATE,NOW()),'天】,请重新输入！')) INFO
+			FROM pp_l_pig T1 
+			LEFT JOIN pp_l_ear_code T2 
+			ON t1.FARM_ID = t2.FARM_ID AND t1.DELETED_FLAG = t2.DELETED_FLAG AND t1.STATUS = t2.STATUS AND t1.EAR_CODE_ID = t2.ROW_ID 
+			LEFT JOIN cd_l_pig_class T3 
+			ON t1.DELETED_FLAG = t3.DELETED_FLAG AND t1.STATUS = t3.STATUS AND t1.PIG_CLASS = t3.ROW_ID 
+			LEFT JOIN pp_l_bill_towork T4 
+			ON t1.FARM_ID = t4.FARM_ID AND t1.DELETED_FLAG = t4.DELETED_FLAG AND t1.STATUS = t4.STATUS AND t1.ROW_ID = t4.PIG_ID AND t1.LAST_BILL_ID = t4.BILL_ID
+			WHERE T1.FARM_ID = ${farmId} AND T1.DELETED_FLAG = '0' AND t1.STATUS = 1 AND T1.PIG_CLASS > 18 AND T2.EAR_BRAND IN (${earBrand})
+		]]>
+	</select>
+	
+		<!-- 根据猪只状态判断是否可用 -->
+	<select id="searchPigIsThePigClass" resultType="map">
+		<![CDATA[
+			
+			SELECT 
+			CONCAT('【',T0.EAR_BRAND,'】该猪,【',IFNULL(DATE(T2.TOWORK_DATE),''),'',t0.PIG_CLASS_NAME,IFNULL(TIMESTAMPDIFF(DAY,DATE(T2.TOWORK_DATE),NOW()),''),'天】不是','【',#{remind},'】',',不能进行【${eventName}】事件操作，请重新输入！') INFO
+			FROM PP_V_PIG T0 
+			LEFT JOIN pp_l_pig T1 
+			ON t0.FARM_ID = t1.FARM_ID AND t0.DELETED_FLAG = t1.DELETED_FLAG AND t0.STATUS = t1.STATUS AND t0.PIG_ID = t1.ROW_ID 
+			LEFT JOIN pp_l_bill_towork T2 
+			ON t0.FARM_ID = T2.FARM_ID AND t0.DELETED_FLAG = T2.DELETED_FLAG AND t0.STATUS = T2.STATUS AND t0.PIG_ID = T2.PIG_ID AND T1.LAST_BILL_ID = T2.BILL_ID
+			WHERE T0.FARM_ID = ${farmId} AND T0.DELETED_FLAG = '0' AND T0.PIG_TYPE BETWEEN 1 AND 3  AND T0.PIG_CLASS NOT IN (${pigClass})  AND T0.PIG_CLASS <= 18   AND T0.EAR_BRAND IN (${earBrand})
+			
+		]]>
+	</select>
+	
+		<!-- 根据猪 主数据和状态 判断是否可转生产 -->
+	<select id="searchPigIsTheMaterialAndThisPigClass" resultType="map">
+	<!-- 	<![CDATA[
+			SELECT IFNULL(t2.PUBERTY_DAY_AGE , T3.PRODUCTION_DAY_AGE) PRODUCT_DAY_AGE, IF(DATE_ADD(t0.BIRTH_DATE,INTERVAL IFNULL(t2.PUBERTY_DAY_AGE , T3.PRODUCTION_DAY_AGE) DAY) < DATE(NOW()),CONCAT('【',t0.EAR_BRAND,'】猪只状态为【',T0.PIG_CLASS_NAME,'】不属于【',#{remind},'】，不能进行【${eventName}】事件操作，请重新输入！'),CONCAT('【',t0.EAR_BRAND,'】猪只未达到转生产日龄,请重新选择猪只!')) INFO
+			FROM PP_V_PIG T0 
+			LEFT JOIN CD_M_MATERIAL t1 ON t0.DELETED_FLAG = t1.DELETED_FLAG AND t0.FARM_ID = t1.FARM_ID AND t0.STATUS = t1.STATUS AND t0.MATERIAL_ID = t1.ROW_ID
+			LEFT JOIN CD_O_SOW t2 ON t0.DELETED_FLAG = t2.DELETED_FLAG AND t0.FARM_ID = t2.FARM_ID AND t0.STATUS = t2.STATUS AND t1.ROW_ID = t2.MATERIAL_ID
+			LEFT JOIN CD_O_BOAR t3 ON t0.DELETED_FLAG = t3.DELETED_FLAG AND t0.FARM_ID = t3.FARM_ID AND t0.STATUS = t3.STATUS AND t1.ROW_ID = t3.MATERIAL_ID
+			WHERE T0.FARM_ID = ${farmId} AND T0.DELETED_FLAG = '0' AND T0.PIG_TYPE BETWEEN 1 AND 2  AND T0.PIG_CLASS NOT IN (${pigClass})  AND T0.PIG_CLASS <= 18   AND T0.EAR_BRAND IN (${earBrand})
+		]]>
+	</select>
+	<select id="searchPigIsThePigClass2" resultType="map"> -->
+		<![CDATA[
+			SELECT
+				 IFNULL(t2.PUBERTY_DAY_AGE , T3.PRODUCTION_DAY_AGE) PRODUCT_DAY_AGE,
+				 IF(
+				 	DATE_ADD(t0.BIRTH_DATE,INTERVAL IFNULL(t2.PUBERTY_DAY_AGE , T3.PRODUCTION_DAY_AGE) DAY) < DATE(NOW()),
+					CONCAT('【',t0.EAR_BRAND,'】猪只状态为【',T0.PIG_CLASS_NAME,'】不属于【',#{remind},'】，不能进行【${eventName}】事件操作，请重新输入！'),
+					CONCAT('【',t0.EAR_BRAND,'】猪只未达到转生产日龄,请重新选择猪只!')
+				) INFO
+			FROM PP_V_PIG T0 
+			LEFT JOIN cd_m_material t1 ON t0.DELETED_FLAG = t1.DELETED_FLAG AND t0.FARM_ID = t1.FARM_ID AND t0.STATUS = t1.STATUS AND t0.MATERIAL_ID = t1.ROW_ID
+			LEFT JOIN CD_O_SOW t2 ON t0.DELETED_FLAG = t2.DELETED_FLAG AND t0.FARM_ID = t2.FARM_ID AND t0.STATUS = t2.STATUS AND t1.ROW_ID = t2.MATERIAL_ID
+			LEFT JOIN cd_o_boar t3 ON t0.DELETED_FLAG = t3.DELETED_FLAG AND t0.FARM_ID = t3.FARM_ID AND t0.STATUS = t3.STATUS AND t1.ROW_ID = t3.MATERIAL_ID
+			WHERE T0.FARM_ID = ${farmId} AND T0.DELETED_FLAG = '0' AND T0.PIG_TYPE BETWEEN 1 AND 2  AND T0.PIG_CLASS IN (${pigClass})  AND T0.PIG_CLASS <= 18   AND T0.EAR_BRAND IN (${earBrand})
+		]]>
+	</select>
+	
+	<!-- 根据  猪只状态及主数据日龄  判断是否可配种 -->
+	<select id="searchPigIsThePigClass2we" resultType="map">
+		<![CDATA[
+			SELECT t2.SEX_DAY_AGE SEX_DAY_AGE, 
+			  IF(
+			    TIMESTAMPDIFF(DAY,T0.LAST_CLASS_DATE,NOW()) < T2.SEX_DAY_AGE AND T0.PIG_CLASS = 3  
+			    ,CONCAT('【',T0.EAR_BRAND,'】猪只【后备',TIMESTAMPDIFF(DAY,T0.LAST_CLASS_DATE,NOW()),'天距离初配日龄',T2.SEX_DAY_AGE - TIMESTAMPDIFF(DAY,T0.LAST_CLASS_DATE,NOW()),'天】,请重新选择猪只!')
+			    ,IF(TIMESTAMPDIFF(DAY,T0.LAST_CLASS_DATE,NOW()) >= T2.SEX_DAY_AGE AND T0.PIG_CLASS = 3  
+			    ,CONCAT('【',T0.EAR_BRAND,'】猪只状态为【',T0.PIG_CLASS_NAME,'】','请先做转生产操作，或请重新输入！')
+			    ,CONCAT('【',T0.EAR_BRAND,'】猪只状态为【',T0.PIG_CLASS_NAME,'】不属于【','生产母猪','】，不能进行【配种】事件操作，请重新输入！')
+			    )
+			    ) INFO 
+			FROM PP_V_PIG T0 
+			LEFT JOIN cd_m_material t1 ON t0.DELETED_FLAG = t1.DELETED_FLAG AND t0.FARM_ID = t1.FARM_ID AND t0.STATUS = t1.STATUS AND t0.MATERIAL_ID = t1.ROW_ID
+			LEFT JOIN CD_O_SOW t2 ON t0.DELETED_FLAG = t2.DELETED_FLAG AND t0.FARM_ID = t2.FARM_ID AND t0.STATUS = t2.STATUS AND t1.ROW_ID = t2.MATERIAL_ID
+			LEFT JOIN cd_o_boar t3 ON t0.DELETED_FLAG = t3.DELETED_FLAG AND t0.FARM_ID = t3.FARM_ID AND t0.STATUS = t3.STATUS AND t1.ROW_ID = t3.MATERIAL_ID
+			WHERE T0.FARM_ID = ${farmId} AND T0.DELETED_FLAG = '0' AND t0.STATUS = '1' AND T0.PIG_TYPE IN ( ${pigType} ) AND T0.PIG_CLASS <= 18   AND T0.EAR_BRAND IN (${earBrand})
+		]]>
+	</select>
+	
+	<!-- 根据猪只状态及日龄判断是否可转产房 -->
+	<select id="searchPigToDeliveryHouseAge" resultType="map">
+		<![CDATA[
+			SELECT t2.SEX_DAY_AGE SEX_DAY_AGE, 
+				 IF(
+				 	DATE_ADD(t4.BREED_DATE_FIRST,INTERVAL t2.CHANGE_LABOR-t2.ERROR_LABOR  DAY) < DATE(NOW()),
+					CONCAT('【',t0.EAR_BRAND,'】猪只状态为【',T0.PIG_CLASS_NAME,'】不属于【',#{remind},'】，不能进行【${eventName}】事件操作，请重新输入！'),
+					CONCAT('【',t0.EAR_BRAND,'】猪只未达到妊娠日龄,请重新选择猪只!')
+				) INFO
+			FROM PP_V_PIG T0 
+			LEFT JOIN cd_m_material t1 ON t0.DELETED_FLAG = t1.DELETED_FLAG AND t0.FARM_ID = t1.FARM_ID AND t0.STATUS = t1.STATUS AND t0.MATERIAL_ID = t1.ROW_ID
+			LEFT JOIN CD_O_SOW t2 ON t0.DELETED_FLAG = t2.DELETED_FLAG AND t0.FARM_ID = t2.FARM_ID AND t0.STATUS = t2.STATUS AND t1.ROW_ID = t2.MATERIAL_ID
+			LEFT JOIN cd_o_boar t3 ON t0.DELETED_FLAG = t3.DELETED_FLAG AND t0.FARM_ID = t3.FARM_ID AND t0.STATUS = t3.STATUS AND t1.ROW_ID = t3.MATERIAL_ID
+			LEFT JOIN 
+			(SELECT * FROM PP_L_BILL_BREED TB WHERE TB.DELETED_FLAG = '0' AND TB.STATUS = '1' GROUP BY TB.PIG_ID ORDER BY TB.ROW_ID DESC) T4 
+			ON T0.FARM_ID = T4.FARM_ID AND T0.PIG_ID = T4.PIG_ID
+			WHERE T0.FARM_ID = ${farmId} AND T0.DELETED_FLAG = '0' AND T0.PIG_TYPE BETWEEN 1 AND 2  AND T0.PIG_CLASS IN (${pigClass})  AND T0.PIG_CLASS <= 18   AND T0.EAR_BRAND IN (${earBrand})
+		]]>
+	</select>
+	
+		<!-- 根据猪只状态及日龄判断是否可分娩 -->
+	<select id="searchPigDeliveryAge" resultType="map">
+		<![CDATA[
+			SELECT t2.SEX_DAY_AGE SEX_DAY_AGE, 
+				 IF(
+				 	DATE_ADD(t4.BREED_DATE_FIRST,INTERVAL t2.PREGNANCY_DAYS-t2.ERROR_LIMIT  DAY) < DATE(NOW()),
+					CONCAT('【',t0.EAR_BRAND,'】猪只状态为【',T0.PIG_CLASS_NAME,'】不属于【',#{remind},'】，不能进行【${eventName}】事件操作，请重新输入！'),
+					CONCAT('【',t0.EAR_BRAND,'】猪只未达到妊娠日龄,请重新选择猪只!')
+				) INFO
+			FROM PP_V_PIG T0 
+			LEFT JOIN cd_m_material t1 ON t0.DELETED_FLAG = t1.DELETED_FLAG AND t0.FARM_ID = t1.FARM_ID AND t0.STATUS = t1.STATUS AND t0.MATERIAL_ID = t1.ROW_ID
+			LEFT JOIN CD_O_SOW t2 ON t0.DELETED_FLAG = t2.DELETED_FLAG AND t0.FARM_ID = t2.FARM_ID AND t0.STATUS = t2.STATUS AND t1.ROW_ID = t2.MATERIAL_ID
+			LEFT JOIN cd_o_boar t3 ON t0.DELETED_FLAG = t3.DELETED_FLAG AND t0.FARM_ID = t3.FARM_ID AND t0.STATUS = t3.STATUS AND t1.ROW_ID = t3.MATERIAL_ID
+			LEFT JOIN 
+			(SELECT * FROM PP_L_BILL_BREED TB WHERE TB.DELETED_FLAG = '0' AND TB.STATUS = '1' GROUP BY TB.PIG_ID ORDER BY TB.ROW_ID DESC) T4 
+			ON T0.FARM_ID = T4.FARM_ID AND T0.PIG_ID = T4.PIG_ID
+			WHERE T0.FARM_ID = ${farmId} AND T0.DELETED_FLAG = '0' AND T0.PIG_TYPE BETWEEN 1 AND 2  AND T0.PIG_CLASS IN (${pigClass})  AND T0.PIG_CLASS <= 18   AND T0.EAR_BRAND IN (${earBrand})
+		]]>
+	</select>
+	
+		<!-- 判断猪只类别判断是否可用 -->
+	<select id="searchPigMessageOfThePigType" resultType="map">
+		<![CDATA[
+			SELECT 1 SORT_NBR ,CONCAT('【',t1.EAR_BRAND,'】猪只状态为【',T2.PIG_CLASS_NAME,'】不属于【',#{remind},'】，不能进行【${eventName}】事件操作，请重新输入！') INFO
+			FROM PP_L_PIG T0 LEFT JOIN PP_L_EAR_CODE T1
+			ON T0.FARM_ID = T1.FARM_ID AND T0.DELETED_FLAG = T1.DELETED_FLAG AND T0.STATUS = T1.STATUS AND T0.EAR_CODE_ID = T1.ROW_ID
+			LEFT JOIN CD_L_PIG_CLASS T2 ON T0.PIG_CLASS = T2.ROW_ID
+			WHERE T0.DELETED_FLAG=0 AND T0.STATUS=1 AND T0.PIG_TYPE IN (${pigType}) AND T0.PIG_CLASS NOT IN (${pigClass}) AND T0.FARM_ID =  ${farmId}  AND T1.EAR_BRAND IN (${earBrand})
+		]]>
+	</select>
+	
+	<!-- 判断该猪是否已经申请淘汰 -->
+	<select id="searchPigMessageOfTableObsolete" resultType="map">
+		<![CDATA[
+			SELECT COUNT(1) FROM pp_v_pig T0 
+			WHERE T0.DELETED_FLAG = 0 AND T0.STATUS = 1 AND T0.PIG_TYPE IN(1,2) AND T0.PIG_CLASS NOT IN(10,23,24,25)
+			AND NOT EXISTS(SELECT 1 FROM pp_l_bill_boar_obsolete WHERE DELETED_FLAG = 0 AND STATUS <> 3 AND PIG_ID = T0.PIG_ID LIMIT 1) 
+			AND  T0.FARM_ID = 7 AND  T0.DATEAGE BETWEEN 0 AND 999999999 AND  T0.EAR_BRAND IN (${earBrand})
+		]]>
+	</select>
+	
+	<select id="searchPigRemind" resultType="map">
+		<![CDATA[
+			SELECT 2 SORT_NBR ,'' EVENT_NAME,CONCAT('猪只在【',DATE(T0.LAST_CLASS_DATE),'】天，在系统中已离场，不能进行事件操作，请重新输入！') INFO
+			FROM pp_v_pig T0
+			WHERE T0.DELETED_FLAG = '0' AND T0.PIG_CLASS > 18 AND T0.PIG_ID = ${pigId}
+			UNION
+			SELECT 1 SORT_NBR ,'PREPUBERTAL_CHECK' EVENT_NAME,CONCAT('猪只状态为【',T0.PIG_CLASS_NAME,'】不属于后备母猪，不能进行【后备情期鉴定】事件操作，请重新输入！') INFO
+			FROM pp_v_pig T0
+			WHERE T0.DELETED_FLAG = '0' AND T0.PIG_TYPE = 2  AND T0.PIG_CLASS <> 3 AND T0.pig_id = ${pigId}
+			UNION
+			SELECT 2 SORT_NBR ,'PREPUBERTAL_CHECK' EVENT_NAME,CONCAT('猪只日龄为【',T0.DATEAGE,'】未到初情日龄【',T1.PUBERTY_DAY_AGE,'】，不能进行【后备情期鉴定】事件操作，请重新输入或者修改主数据上的“初情日龄”！') INFO
+			FROM pp_v_pig T0
+			LEFT JOIN cd_o_sow T1
+			ON T0.FARM_ID = T1.FARM_ID AND T0.MATERIAL_ID = T1.MATERIAL_ID AND T1.DELETED_FLAG = '0'
+			WHERE T0.DELETED_FLAG = '0' AND T0.PIG_TYPE = 2  AND T0.PIG_CLASS = 3 AND T0.DATEAGE < T1.PUBERTY_DAY_AGE 
+			AND T0.pig_id = ${pigId}
+			UNION
+			SELECT 1 SORT_NBR ,'BREED' EVENT_NAME,CONCAT('猪只状态为【',T0.PIG_CLASS_NAME,'】不属于生产母猪，不能进行【配种】事件操作，请先录入【后备情期鉴定】或请重新输入！') INFO
+			FROM pp_v_pig T0
+			WHERE T0.DELETED_FLAG = '0' AND T0.PIG_TYPE = 2  AND T0.PIG_CLASS = 3 AND T0.pig_id = ${pigId}
+			UNION
+			SELECT 2 SORT_NBR ,'BREED' EVENT_NAME,CONCAT('猪只状态为【',T0.PIG_CLASS_NAME,'】不属于可配母猪，不能进行【配种】事件操作，请先录入【妊娠检查，结果：为反情、流产、阴性等】或请重新输入！') INFO
+			FROM pp_v_pig T0
+			WHERE T0.DELETED_FLAG = '0' AND T0.PIG_TYPE = 2  AND T0.PIG_CLASS BETWEEN 9 AND 10 AND T0.pig_id = ${pigId}
+			UNION
+			SELECT 1 SORT_NBR ,'PREGNANCY_CHECK' EVENT_NAME,CONCAT('猪只状态为【',T0.PIG_CLASS_NAME,'】不属于怀孕母猪，不能进行【妊娠检查】事件操作，请先录入【配种】事件或请重新输入！') INFO
+			FROM pp_v_pig T0
+			WHERE T0.DELETED_FLAG = '0' AND T0.PIG_TYPE = 2  AND T0.PIG_CLASS <> 9 AND T0.pig_id = ${pigId}
+			UNION
+			SELECT 1 SORT_NBR ,'CHANGE_LABOR_HOUSE' EVENT_NAME,CONCAT('猪只状态为【',T0.PIG_CLASS_NAME,'】不属于怀孕母猪，不能进行【转产房】事件操作，请先录入【配种】事件或请重新输入！') INFO
+			FROM pp_v_pig T0
+			WHERE T0.DELETED_FLAG = '0' AND T0.PIG_TYPE = 2  AND T0.PIG_CLASS <> 9 AND T0.pig_id = ${pigId}
+			UNION
+			SELECT 2 SORT_NBR ,'CHANGE_LABOR_HOUSE' EVENT_NAME,CONCAT('猪只状态为【',T0.PIG_CLASS_NAME,'】不属于怀孕母猪，不能进行【转产房】事件操作，请先录入【配种】事件或请重新输入！') INFO
+			FROM pp_v_pig T0
+			LEFT JOIN cd_o_sow T1
+			ON T0.FARM_ID = T1.FARM_ID AND T0.MATERIAL_ID = T1.MATERIAL_ID AND T1.DELETED_FLAG = '0' 
+			WHERE T0.DELETED_FLAG = '0' AND T0.PIG_TYPE = 2  AND T0.PIG_CLASS = 9 AND T0.pig_id = ${pigId}
+			UNION
+			SELECT 1 SORT_NBR ,'DELIVERY' EVENT_NAME,CONCAT('猪只状态为【',T0.PIG_CLASS_NAME,'】不属于怀孕母猪，不能进行【分娩】事件操作，请先录入【配种】事件或请重新输入！') INFO
+			FROM pp_v_pig T0
+			WHERE T0.DELETED_FLAG = '0' AND T0.PIG_TYPE = 2  AND T0.PIG_CLASS = 9 AND T0.pig_id = ${pigId}
+			UNION
+			SELECT 2 SORT_NBR ,'DELIVERY' EVENT_NAME,CONCAT('猪只不在产房，不能进行【分娩】事件操作，请先录入【转产房】事件或请重新输入！') INFO
+			FROM pp_v_pig T0
+			INNER JOIN pp_o_house T1
+			ON T0.FARM_ID = T1.FARM_ID AND T0.HOUSE_ID = T1.ROW_ID AND T1.HOUSE_TYPE <> 6 AND T1.DELETED_FLAG = '0'
+			WHERE T0.DELETED_FLAG = '0' AND T0.PIG_TYPE = 2  AND T0.PIG_CLASS = 9 AND T0.pig_id = ${pigId}
+			UNION
+			SELECT 2 SORT_NBR ,'DELIVERY' EVENT_NAME,CONCAT('猪只状态为【',T0.PIG_CLASS_NAME,'】不属于哺乳母猪，不能进行【断奶】事件操作，请先录入【分娩】事件或请重新输入！') INFO
+			FROM pp_v_pig T0
+			INNER JOIN pp_o_house T1
+			ON T0.FARM_ID = T1.FARM_ID AND T0.HOUSE_ID = T1.ROW_ID AND T1.HOUSE_TYPE <> 6 AND T1.DELETED_FLAG = '0'
+			WHERE T0.DELETED_FLAG = '0' AND T0.PIG_TYPE = 2  AND T0.PIG_CLASS = 10 AND T0.pig_id = ${pigId}
+		]]>
+	
+	</select>
+	
+	<!-- 判断精液批号是否存在 -->
+	<select id="searchSemenExists" resultType="map">
+		<![CDATA[
+			SELECT IF(COUNT(*) <= 0,concat('【',${earBrand},'】精液批号不存在，请重新输入！'),'Y') INFO
+			FROM PP_L_BILL_SEMEN T0
+			WHERE T0.FARM_ID = ${farmId} AND T0.DELETED_FLAG = '0' AND T0.SEMEN_BATCH_NO IN (${earBrand})
+		]]>
+	</select>
+	
+	<!-- 查询猪只基本信息 -->
+	<select id="searchPigByEarBrand" resultType="map">
+		<![CDATA[
+			SELECT * 
+			FROM PP_V_PIG T0
+			WHERE T0.FARM_ID = ${farmId} AND T0.DELETED_FLAG = '0' AND T0.STATUS = 1 AND  T0.EAR_BRAND IN (${earBrand})
+		]]>
+		<if test="pigIds != null">
+			AND T0.PIG_ID IN (${pigIds})
+		</if>
+	</select>
+	
+</mapper>
+

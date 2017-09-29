@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.backend.CodeListMapper">
+
+	<resultMap id="CodeListResult"  type="CodeListModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="sortNbr" column="SORT_NBR" jdbcType="INTEGER" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="originFlag" column="ORIGIN_FLAG" jdbcType="CHAR" />
+		<result property="originApp" column="ORIGIN_APP" jdbcType="VARCHAR" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="typeCode" column="TYPE_CODE" jdbcType="VARCHAR" />
+		<result property="typeName" column="TYPE_NAME" jdbcType="VARCHAR" />
+		<result property="codeValue" column="CODE_VALUE" jdbcType="VARCHAR" />
+		<result property="codeName" column="CODE_NAME" jdbcType="VARCHAR" />
+		<result property="supType" column="SUP_TYPE" jdbcType="VARCHAR" />
+		<result property="linkValue" column="LINK_VALUE" jdbcType="VARCHAR" />
+		<result property="isDefault" column="IS_DEFAULT" jdbcType="CHAR" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="CodeListModel_Column_List">
+		ROW_ID,SORT_NBR,STATUS,DELETED_FLAG,ORIGIN_FLAG,ORIGIN_APP,NOTES,TYPE_CODE,TYPE_NAME,CODE_VALUE,CODE_NAME,SUP_TYPE,LINK_VALUE,IS_DEFAULT
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="rowId" parameterType="CodeListModel">
+		INSERT INTO CD_L_CODE_LIST
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR,
+			STATUS,
+			DELETED_FLAG,
+			ORIGIN_FLAG,
+			ORIGIN_APP,
+			NOTES,
+			TYPE_CODE,
+			TYPE_NAME,
+			CODE_VALUE,
+			CODE_NAME,
+			SUP_TYPE,
+			LINK_VALUE,
+			IS_DEFAULT
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ sortNbr,jdbcType=INTEGER},
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ originFlag,jdbcType=CHAR},
+			#{ originApp,jdbcType=VARCHAR},
+			#{ notes,jdbcType=VARCHAR},
+			#{ typeCode,jdbcType=VARCHAR},
+			#{ typeName,jdbcType=VARCHAR},
+			#{ codeValue,jdbcType=VARCHAR},
+			#{ codeName,jdbcType=VARCHAR},
+			#{ supType,jdbcType=VARCHAR},
+			#{ linkValue,jdbcType=VARCHAR},
+			#{ isDefault,jdbcType=CHAR}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO CD_L_CODE_LIST
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR ,
+			STATUS ,
+			DELETED_FLAG ,
+			ORIGIN_FLAG ,
+			ORIGIN_APP ,
+			NOTES ,
+			TYPE_CODE ,
+			TYPE_NAME ,
+			CODE_VALUE ,
+			CODE_NAME ,
+			SUP_TYPE ,
+			LINK_VALUE ,
+			IS_DEFAULT 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.sortNbr,jdbcType=INTEGER},
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.originFlag,jdbcType=CHAR},
+				#{item.originApp,jdbcType=VARCHAR},
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.typeCode,jdbcType=VARCHAR},
+				#{item.typeName,jdbcType=VARCHAR},
+				#{item.codeValue,jdbcType=VARCHAR},
+				#{item.codeName,jdbcType=VARCHAR},
+				#{item.supType,jdbcType=VARCHAR},
+				#{item.linkValue,jdbcType=VARCHAR},
+				#{item.isDefault,jdbcType=CHAR}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="CodeListModel" >
+		UPDATE CD_L_CODE_LIST 
+		<set>
+		<if test="sortNbr != null">SORT_NBR = #{ sortNbr,jdbcType=INTEGER},</if>
+		<if test="originFlag != null">ORIGIN_FLAG = #{ originFlag,jdbcType=CHAR},</if>
+		<if test="originApp != null">ORIGIN_APP = #{ originApp,jdbcType=VARCHAR},</if>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="typeCode != null">TYPE_CODE = #{ typeCode,jdbcType=VARCHAR},</if>
+		<if test="typeName != null">TYPE_NAME = #{ typeName,jdbcType=VARCHAR},</if>
+		<if test="codeValue != null">CODE_VALUE = #{ codeValue,jdbcType=VARCHAR},</if>
+		<if test="codeName != null">CODE_NAME = #{ codeName,jdbcType=VARCHAR},</if>
+		<if test="supType != null">SUP_TYPE = #{ supType,jdbcType=VARCHAR},</if>
+		<if test="linkValue != null">LINK_VALUE = #{ linkValue,jdbcType=VARCHAR},</if>
+		<if test="isDefault != null">IS_DEFAULT = #{ isDefault,jdbcType=CHAR}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE CD_L_CODE_LIST 
+			<set>
+			<if test="item.sortNbr != null">SORT_NBR = #{item.sortNbr,jdbcType=INTEGER},</if>
+			<if test="item.originFlag != null">ORIGIN_FLAG = #{item.originFlag,jdbcType=CHAR},</if>
+			<if test="item.originApp != null">ORIGIN_APP = #{item.originApp,jdbcType=VARCHAR},</if>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.typeCode != null">TYPE_CODE = #{item.typeCode,jdbcType=VARCHAR},</if>
+			<if test="item.typeName != null">TYPE_NAME = #{item.typeName,jdbcType=VARCHAR},</if>
+			<if test="item.codeValue != null">CODE_VALUE = #{item.codeValue,jdbcType=VARCHAR},</if>
+			<if test="item.codeName != null">CODE_NAME = #{item.codeName,jdbcType=VARCHAR},</if>
+			<if test="item.supType != null">SUP_TYPE = #{item.supType,jdbcType=VARCHAR},</if>
+			<if test="item.linkValue != null">LINK_VALUE = #{item.linkValue,jdbcType=VARCHAR},</if>
+			<if test="item.isDefault != null">IS_DEFAULT = #{item.isDefault,jdbcType=CHAR}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  CD_L_CODE_LIST
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  CD_L_CODE_LIST
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE ROW_ID = #{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  CD_L_CODE_LIST
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="CodeListResult">
+		SELECT *
+		FROM CD_L_CODE_LIST WHERE DELETED_FLAG='0' AND STATUS = '1' 
+		
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="CodeListResult" >
+		SELECT *
+		FROM CD_L_CODE_LIST WHERE DELETED_FLAG='0' AND STATUS = '1'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="CodeListResult" >
+		SELECT *
+		FROM CD_L_CODE_LIST
+		WHERE DELETED_FLAG='0' AND STATUS = '1'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="CodeListResult" >
+		SELECT *
+		FROM CD_L_CODE_LIST
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="CodeListResult"> ${sql} </select>
+
+</mapper>
+

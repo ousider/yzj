@@ -1,0 +1,12 @@
+$(document).ready(function(){
+	$('#brand').textbox({
+		prompt:'请输入品牌'
+	});
+	$('#model').textbox({
+		prompt:'请输入型号'
+	});
+	$('#direction').textbox({
+		prompt:'请输入说明书',
+		multiline:true
+	});
+});

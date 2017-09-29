@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.production.SelectBreedMapper">
+
+	<resultMap id="SelectBreedResult"  type="SelectBreedModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="sortNbr" column="SORT_NBR" jdbcType="INTEGER" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="originFlag" column="ORIGIN_FLAG" jdbcType="CHAR" />
+		<result property="originApp" column="ORIGIN_APP" jdbcType="VARCHAR" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="farmId" column="FARM_ID" jdbcType="INTEGER" />
+		<result property="companyId" column="COMPANY_ID" jdbcType="INTEGER" />
+		<result property="lineNumber" column="LINE_NUMBER" jdbcType="INTEGER" />
+		<result property="pigId" column="PIG_ID" jdbcType="INTEGER" />
+		<result property="pigSex" column="PIG_SEX" jdbcType="VARCHAR" />
+		<result property="swineryId" column="SWINERY_ID" jdbcType="INTEGER" />
+		<result property="earBrand" column="EAR_BRAND" jdbcType="VARCHAR" />
+		<result property="houseId" column="HOUSE_ID" jdbcType="INTEGER" />
+		<result property="pigpenId" column="PIGPEN_ID" jdbcType="INTEGER" />
+		<result property="inHouseId" column="IN_HOUSE_ID" jdbcType="INTEGER" />
+		<result property="inPigpenId" column="IN_PIGPEN_ID" jdbcType="INTEGER" />
+		<result property="billId" column="BILL_ID" jdbcType="INTEGER" />
+		<result property="pigType" column="PIG_TYPE" jdbcType="VARCHAR" />
+		<result property="worker" column="WORKER" jdbcType="INTEGER" />
+		<result property="seletcDate" column="SELETC_DATE" jdbcType="DATE" />
+		<result property="createId" column="CREATE_ID" jdbcType="INTEGER" />
+		<result property="createDate" column="CREATE_DATE" jdbcType="DATE" />
+		<result property="lastMaterialId" column="LAST_MATERIAL_ID" jdbcType="INTEGER" />
+		<result property="weight" column="WEIGHT" jdbcType="DECIMAL" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="SelectBreedModel_Column_List">
+		ROW_ID,SORT_NBR,NOTES,LINE_NUMBER,PIG_ID,PIG_SEX,SWINERY_ID,EAR_BRAND,HOUSE_ID,PIGPEN_ID,IN_HOUSE_ID,IN_PIGPEN_ID,BILL_ID,PIG_TYPE,WORKER,SELETC_DATE,CREATE_ID,CREATE_DATE,LAST_MATERIAL_ID,WEIGHT
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true"   keyProperty="rowId" parameterType="SelectBreedModel">
+		INSERT INTO PP_L_BILL_SELECT_BREED
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR,
+			STATUS,
+			DELETED_FLAG,
+			ORIGIN_FLAG,
+			ORIGIN_APP,
+			NOTES,
+			FARM_ID,
+			COMPANY_ID,
+			LINE_NUMBER,
+			PIG_ID,
+			PIG_SEX,
+			SWINERY_ID,
+			EAR_BRAND,
+			HOUSE_ID,
+			PIGPEN_ID,
+			IN_HOUSE_ID,
+			IN_PIGPEN_ID,
+			BILL_ID,
+			PIG_TYPE,
+			WORKER,
+			SELETC_DATE,
+			CREATE_ID,
+			CREATE_DATE,
+			LAST_MATERIAL_ID,
+			WEIGHT
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ sortNbr,jdbcType=INTEGER},
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ originFlag,jdbcType=CHAR},
+			#{ originApp,jdbcType=VARCHAR},
+			#{ notes,jdbcType=VARCHAR},
+			#{ farmId,jdbcType=INTEGER},
+			#{ companyId,jdbcType=INTEGER},
+			#{ lineNumber,jdbcType=INTEGER},
+			#{ pigId,jdbcType=INTEGER},
+			#{ pigSex,jdbcType=VARCHAR},
+			#{ swineryId,jdbcType=INTEGER},
+			#{ earBrand,jdbcType=VARCHAR},
+			#{ houseId,jdbcType=INTEGER},
+			#{ pigpenId,jdbcType=INTEGER},
+			#{ inHouseId,jdbcType=INTEGER},
+			#{ inPigpenId,jdbcType=INTEGER},
+			#{ billId,jdbcType=INTEGER},
+			#{ pigType,jdbcType=VARCHAR},
+			#{ worker,jdbcType=INTEGER},
+			#{ seletcDate,jdbcType=TIMESTAMP},
+			#{ createId,jdbcType=INTEGER},
+			#{ createDate,jdbcType=TIMESTAMP},
+			#{ lastMaterialId,jdbcType=INTEGER},
+			#{ weight,jdbcType=DECIMAL}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO PP_L_BILL_SELECT_BREED
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR ,
+			STATUS ,
+			DELETED_FLAG ,
+			ORIGIN_FLAG ,
+			ORIGIN_APP ,
+			NOTES ,
+			FARM_ID ,
+			COMPANY_ID ,
+			LINE_NUMBER ,
+			PIG_ID ,
+			PIG_SEX ,
+			SWINERY_ID ,
+			EAR_BRAND ,
+			HOUSE_ID ,
+			PIGPEN_ID ,
+			IN_HOUSE_ID ,
+			IN_PIGPEN_ID ,
+			BILL_ID ,
+			PIG_TYPE ,
+			WORKER ,
+			SELETC_DATE ,
+			CREATE_ID ,
+			CREATE_DATE ,
+			LAST_MATERIAL_ID ,
+			WEIGHT 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.sortNbr,jdbcType=INTEGER},
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.originFlag,jdbcType=CHAR},
+				#{item.originApp,jdbcType=VARCHAR},
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.farmId,jdbcType=INTEGER},
+				#{item.companyId,jdbcType=INTEGER},
+				#{item.lineNumber,jdbcType=INTEGER},
+				#{item.pigId,jdbcType=INTEGER},
+				#{item.pigSex,jdbcType=VARCHAR},
+				#{item.swineryId,jdbcType=INTEGER},
+				#{item.earBrand,jdbcType=VARCHAR},
+				#{item.houseId,jdbcType=INTEGER},
+				#{item.pigpenId,jdbcType=INTEGER},
+				#{item.inHouseId,jdbcType=INTEGER},
+				#{item.inPigpenId,jdbcType=INTEGER},
+				#{item.billId,jdbcType=INTEGER},
+				#{item.pigType,jdbcType=VARCHAR},
+				#{item.worker,jdbcType=INTEGER},
+				#{item.seletcDate,jdbcType=TIMESTAMP},
+				#{item.createId,jdbcType=INTEGER},
+				#{item.createDate,jdbcType=TIMESTAMP},
+				#{item.lastMaterialId,jdbcType=INTEGER},
+				#{item.weight,jdbcType=DECIMAL}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="SelectBreedModel" >
+		UPDATE PP_L_BILL_SELECT_BREED 
+		<set>
+		<if test="sortNbr != null">SORT_NBR = #{ sortNbr,jdbcType=INTEGER},</if>
+		<if test="status != null">STATUS = #{ status,jdbcType=CHAR},</if>
+		<if test="originFlag != null">ORIGIN_FLAG = #{ originFlag,jdbcType=CHAR},</if>
+		<if test="originApp != null">ORIGIN_APP = #{ originApp,jdbcType=VARCHAR},</if>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="lineNumber != null">LINE_NUMBER = #{ lineNumber,jdbcType=INTEGER},</if>
+		<if test="pigId != null">PIG_ID = #{ pigId,jdbcType=INTEGER},</if>
+		<if test="pigSex != null">PIG_SEX = #{ pigSex,jdbcType=VARCHAR},</if>
+		<if test="swineryId != null">SWINERY_ID = #{ swineryId,jdbcType=INTEGER},</if>
+		<if test="earBrand != null">EAR_BRAND = #{ earBrand,jdbcType=VARCHAR},</if>
+		<if test="houseId != null">HOUSE_ID = #{ houseId,jdbcType=INTEGER},</if>
+		<if test="pigpenId != null">PIGPEN_ID = #{ pigpenId,jdbcType=INTEGER},</if>
+		<if test="inHouseId != null">IN_HOUSE_ID = #{ inHouseId,jdbcType=INTEGER},</if>
+		<if test="inPigpenId != null">IN_PIGPEN_ID = #{ inPigpenId,jdbcType=INTEGER},</if>
+		<if test="billId != null">BILL_ID = #{ billId,jdbcType=INTEGER},</if>
+		<if test="pigType != null">PIG_TYPE = #{ pigType,jdbcType=VARCHAR},</if>
+		<if test="worker != null">WORKER = #{ worker,jdbcType=INTEGER},</if>
+		<if test="seletcDate != null">SELETC_DATE = #{ seletcDate,jdbcType=TIMESTAMP},</if>
+		<if test="createId != null">CREATE_ID = #{ createId,jdbcType=INTEGER},</if>
+		<if test="createDate != null">CREATE_DATE = #{ createDate,jdbcType=TIMESTAMP},</if>
+		<if test="lastMaterialId != null">LAST_MATERIAL_ID = #{ lastMaterialId,jdbcType=INTEGER},</if>
+		<if test="weight != null">WEIGHT = #{ weight,jdbcType=DECIMAL}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE PP_L_BILL_SELECT_BREED 
+			<set>
+			<if test="item.sortNbr != null">SORT_NBR = #{item.sortNbr,jdbcType=INTEGER},</if>
+			<if test="item.status != null">STATUS = #{item.status,jdbcType=CHAR},</if>
+			<if test="item.originFlag != null">ORIGIN_FLAG = #{item.originFlag,jdbcType=CHAR},</if>
+			<if test="item.originApp != null">ORIGIN_APP = #{item.originApp,jdbcType=VARCHAR},</if>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.lineNumber != null">LINE_NUMBER = #{item.lineNumber,jdbcType=INTEGER},</if>
+			<if test="item.pigId != null">PIG_ID = #{item.pigId,jdbcType=INTEGER},</if>
+			<if test="item.pigSex != null">PIG_SEX = #{item.pigSex,jdbcType=VARCHAR},</if>
+			<if test="item.swineryId != null">SWINERY_ID = #{item.swineryId,jdbcType=INTEGER},</if>
+			<if test="item.earBrand != null">EAR_BRAND = #{item.earBrand,jdbcType=VARCHAR},</if>
+			<if test="item.houseId != null">HOUSE_ID = #{item.houseId,jdbcType=INTEGER},</if>
+			<if test="item.pigpenId != null">PIGPEN_ID = #{item.pigpenId,jdbcType=INTEGER},</if>
+			<if test="item.inHouseId != null">IN_HOUSE_ID = #{item.inHouseId,jdbcType=INTEGER},</if>
+			<if test="item.inPigpenId != null">IN_PIGPEN_ID = #{item.inPigpenId,jdbcType=INTEGER},</if>
+			<if test="item.billId != null">BILL_ID = #{item.billId,jdbcType=INTEGER},</if>
+			<if test="item.pigType != null">PIG_TYPE = #{item.pigType,jdbcType=VARCHAR},</if>
+			<if test="item.worker != null">WORKER = #{item.worker,jdbcType=INTEGER},</if>
+			<if test="item.seletcDate != null">SELETC_DATE = #{item.seletcDate,jdbcType=TIMESTAMP},</if>
+			<if test="item.createId != null">CREATE_ID = #{item.createId,jdbcType=INTEGER},</if>
+			<if test="item.createDate != null">CREATE_DATE = #{item.createDate,jdbcType=TIMESTAMP},</if>
+			<if test="item.lastMaterialId != null">LAST_MATERIAL_ID = #{item.lastMaterialId,jdbcType=INTEGER},</if>
+			<if test="item.weight != null">WEIGHT = #{item.weight,jdbcType=DECIMAL}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  PP_L_BILL_SELECT_BREED
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  PP_L_BILL_SELECT_BREED
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE 
+		 ROW_ID =#{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  PP_L_BILL_SELECT_BREED
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' 
+		 AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+		 AND ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCons" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  PP_L_BILL_SELECT_BREED
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' ${item}
+		</foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="SelectBreedResult">
+		SELECT 
+		<include refid="SelectBreedModel_Column_List" />
+		FROM PP_L_BILL_SELECT_BREED WHERE DELETED_FLAG='0' 
+		AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="SelectBreedResult" >
+		SELECT 
+		<include refid="SelectBreedModel_Column_List" />
+		FROM PP_L_BILL_SELECT_BREED WHERE DELETED_FLAG='0'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="SelectBreedResult" >
+		SELECT 
+		<include refid="SelectBreedModel_Column_List" />
+		FROM PP_L_BILL_SELECT_BREED
+		WHERE DELETED_FLAG='0'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="SelectBreedResult" >
+		SELECT 
+		<include refid="SelectBreedModel_Column_List" />
+		FROM PP_L_BILL_SELECT_BREED
+		WHERE ${condition}
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAll" resultMap="SelectBreedResult" >
+		SELECT *
+		FROM PP_L_BILL_SELECT_BREED
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="SelectBreedResult"> ${sql} </select>
+
+</mapper>
+

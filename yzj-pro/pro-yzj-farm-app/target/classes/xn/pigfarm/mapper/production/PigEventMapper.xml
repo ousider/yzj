@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="xn.pigfarm.mapper.production.PigEventMapper">
+
+	<resultMap id="pigMoveInResult" type="PigMoveInView" extends = "BaseMapper.BaseModelMap"  >
+		<result property="companyId" column="COMPANY_ID" jdbcType="INTEGER" />
+		<result property="farmId" column="FARM_ID" jdbcType="INTEGER" />
+		<result property="businessCode" column="BUSINESS_CODE" jdbcType="VARCHAR" />
+		<result property="eventCode" column="EVENT_CODE" jdbcType="VARCHAR" />
+		
+		<result property="createBy" column="CREATE_BY" jdbcType="INTEGER" />
+		<result property="createName" column="CREATE_NAME" jdbcType="INTEGER" />
+		<result property="billDate" column="BILL_DATE" jdbcType="DATE" />
+		<result property="createDate" column="CREATE_DATE" jdbcType="DATE" />
+		<result property="relateBillId" column="RELATE_BILL_ID" jdbcType="INTEGER" />
+	</resultMap>
+	
+	
+
+	<!-- 带验证增 -->
+	<insert id="pigMoveIn" useGeneratedKeys="true" keyProperty="billId" parameterType="PigMoveInView" statementType="CALLABLE">
+		CALL P_PigMoveIn(
+			#{optType           },
+			#{lineNumber        },
+			#{rowId             },
+			#{notes             },
+			#{originFlag        },
+			#{originApp         },
+			#{companyId         },
+			#{farmId            },
+			#{lineId            },
+			#{swineryId         },
+			#{houseId           },
+			#{pigPenId          },
+			#{earBrand          },
+			#{earShort          },
+			#{earThorn          },
+			#{electronicEarNo   },
+			#{fatherEar         },
+			#{motherEar         },
+			#{boardSowId        },
+			#{materialId        },
+			#{pigType           },
+			#{sex               },
+			#{breedId           },
+			#{strain            },
+			#{pigClass          },
+			#{bodyCondition     },
+			#{parity            },
+			#{birthParity       },
+			#{houseNum          },
+			#{birthDate         },
+			#{birthWeight       },
+			#{enterDate         },
+			#{enterWeight       },
+			#{onPrice           },
+			#{enterParity       },
+			#{worker            },
+			#{mewDayAge         },
+			#{mewWeight         },
+			#{rightTeatNum      },
+			#{leftTeatNum       },
+			#{supplierId        },
+			#{origin            },
+			#{billId            },
+			#{createId          },
+			#{relationPigId     },
+			#{seedFlag          },
+			#{eventName         },
+			#{errorCode,mode=OUT,javaType=String,jdbcType=VARCHAR         },
+			#{errorMessage ,mode=OUT,javaType=String,jdbcType=VARCHAR     }
+		)
+	</insert>
+	
+	<insert id="changeEarBand" useGeneratedKeys="true" keyProperty="billId" parameterType="ChangeEarBandView" statementType="CALLABLE">
+		CALL P_ChangeEarBrand(
+			#{lineNumber        },
+			#{rowId             },
+			#{notes             },
+			#{originFlag        },
+			#{originApp         },
+			#{pigId            },
+			#{newEarBrand            },
+			#{newEarShort         },
+			#{newEarThorn           },
+			#{newElectronicEarNo          },
+			#{enterDate         },
+			#{worker            },
+			#{billId            },
+			#{createId          },
+			#{eventName         },
+			#{errorCode,mode=OUT,javaType=String,jdbcType=VARCHAR         },
+			#{errorMessage ,mode=OUT,javaType=String,jdbcType=VARCHAR     }
+		)
+	</insert>
+	
+	<insert id="backfat" useGeneratedKeys="true" keyProperty="billId" parameterType="BackfatView" statementType="CALLABLE">
+		CALL P_Backfat(
+			#{lineNumber        },
+			#{rowId             },
+			#{notes             },
+			#{originFlag        },
+			#{originApp         },
+			#{pigId            },
+			
+			#{backfat            },
+			#{score         },
+			#{backfatStage      },
+			
+			#{enterDate         },
+			#{worker            },
+			#{billId            },
+			#{createId          },
+			#{eventName         },
+			#{errorCode,mode=OUT,javaType=String,jdbcType=VARCHAR         },
+			#{errorMessage ,mode=OUT,javaType=String,jdbcType=VARCHAR     }
+		)
+	</insert>
+	
+	<insert id="changeHouse" useGeneratedKeys="true" keyProperty="billId" parameterType="ChangeHouseView" statementType="CALLABLE">
+		CALL P_ChangeHouse(
+			#{lineNumber        },
+			#{rowId             },
+			#{notes             },
+			#{originFlag        },
+			#{originApp         },
+			#{pigId            },
+			
+			#{changeHouseType       },
+			#{inSwineryId        },
+			#{inHouseId        },
+			#{inPigpenId         },
+			#{changeWeight       },
+			#{backfat            },
+			#{weighType         },
+			
+			#{enterDate         },
+			#{worker            },
+			#{billId            },
+			#{createId          },
+			#{eventName         },
+			#{errorCode,mode=OUT,javaType=String,jdbcType=VARCHAR         },
+			#{errorMessage ,mode=OUT,javaType=String,jdbcType=VARCHAR     }
+		)
+	</insert>
+	
+	<insert id="changeSwinery" useGeneratedKeys="true" keyProperty="billId" parameterType="ChangeSwineryView" statementType="CALLABLE">
+		CALL P_ChangeSwinery(
+			#{lineNumber        },
+			#{rowId             },
+			#{notes             },
+			#{originFlag        },
+			#{originApp         },
+			#{pigId            },
+			
+			#{inSwineryId       },
+			
+			#{enterDate         },
+			#{worker            },
+			#{billId            },
+			#{createId          },
+			#{eventName         },
+			#{errorCode,mode=OUT,javaType=String,jdbcType=VARCHAR         },
+			#{errorMessage ,mode=OUT,javaType=String,jdbcType=VARCHAR     }
+		)
+	</insert>
+	
+	<insert id="reserveToProduct" useGeneratedKeys="true" keyProperty="billId" parameterType="ReserveToProductView" statementType="CALLABLE">
+		CALL P_ReserveToProduct(
+			#{lineNumber        },
+			#{rowId             },
+			#{notes             },
+			#{originFlag        },
+			#{originApp         },
+			#{pigId            },
+			#{newEarBrand            },
+			#{newHouseId         },
+			#{newPigpen           },
+			
+			#{enterDate         },
+			#{worker            },
+			#{billId            },
+			#{createId          },
+			#{eventName         },
+			#{errorCode,mode=OUT,javaType=String,jdbcType=VARCHAR         },
+			#{errorMessage ,mode=OUT,javaType=String,jdbcType=VARCHAR     }
+		)
+	</insert>
+	
+	<insert id="semen" useGeneratedKeys="true" keyProperty="billId" parameterType="SemenView" statementType="CALLABLE">
+		CALL P_Semen(
+			#{lineNumber        },
+			#{rowId             },
+			#{notes             },
+			#{originFlag        },
+			#{originApp         },
+			#{pigId            },
+			
+			#{semenType        },
+			#{semenQty         },
+			#{anhNum           },
+			#{spermNum           },
+			
+			#{price            },
+			#{analust         },
+			#{spermMotility           },
+			#{spermDensity            },
+			#{abnormationRate         },
+			#{cohesion           },
+			#{odour            },
+			#{color         },
+			#{pack           },
+			#{spec            },
+			#{warehouseId         },
+			#{origin            },
+			#{supplierId        },
+			#{validDate         },
+			#{semenBatchNo      },
+			
+			
+			#{enterDate         },
+			#{semenDate         },
+			#{dayAge            },
+			#{earBrand          },
+			#{boarMaterialId    },
+			#{shelfLife    },
+			#{breedId   },
+			#{farmId    },
+			#{companyId    },
+			#{worker            },
+			#{billId            },
+			#{createId          },
+			#{eventName         },
+			#{spermInfoId,mode=OUT,javaType=Integer,jdbcType=INTEGER         },
+			#{errorCode,mode=OUT,javaType=String,jdbcType=VARCHAR         },
+			#{errorMessage ,mode=OUT,javaType=String,jdbcType=VARCHAR     }
+		)
+	</insert>
+	
+	<insert id="breed" useGeneratedKeys="true" keyProperty="billId" parameterType="BreedView" statementType="CALLABLE">
+		CALL P_Breed(
+			#{lineNumber        },
+			#{rowId             },
+			#{notes             },
+			#{originFlag        },
+			#{originApp         },
+			#{pigId            },
+			
+			#{breedType        },
+			#{enterDate         },
+			#{breedBoarFirst           },
+			#{breedDateSecond            },
+			#{breedBoarSecond         },
+			#{breedDateThird           },
+			#{breedBoarThird            },
+			#{jlScore         },
+			#{szScore           },
+			#{dlScore            },
+			#{semenQuality       },
+			#{worker            },
+			#{billId            },
+			#{createId          },
+			#{eventName         },
+			#{errorCode,mode=OUT,javaType=String,jdbcType=VARCHAR         },
+			#{errorMessage ,mode=OUT,javaType=String,jdbcType=VARCHAR     }
+		)
+	</insert>
+	
+	<insert id="pregnancyCheck" useGeneratedKeys="true" keyProperty="billId" parameterType="PregnancyCheckView" statementType="CALLABLE">
+		CALL P_PregnancyCheck(
+			#{lineNumber        },
+			#{rowId             },
+			#{notes             },
+			#{originFlag        },
+			#{originApp         },
+			#{pigId            },
+			
+			#{pregnancyType     },
+			#{pregnancyResult   },
+			#{unpregnancyCause  },
+			
+			#{enterDate         },
+			#{worker            },
+			#{billId            },
+			#{createId          },
+			#{eventName         },
+			#{errorCode,mode=OUT,javaType=String,jdbcType=VARCHAR         },
+			#{errorMessage ,mode=OUT,javaType=String,jdbcType=VARCHAR     }
+		)
+	</insert>
+	
+	<insert id="delivery" useGeneratedKeys="true" keyProperty="billId" parameterType="DeliveryView" statementType="CALLABLE">
+		CALL P_Delivery(
+			#{lineNumber        },
+			#{rowId             },
+			#{notes             },
+			#{originFlag        },
+			#{originApp         },
+			#{pigId            },
+			
+			#{labor     },
+			#{aliveLitterWeight   },
+			#{healthyNum  },
+			#{weakNum  },
+			#{stillbirthNum  },
+			#{mutantNum  },
+			#{mummyNum  },
+			#{blackNum  },
+			#{aliveLitterY  },
+			#{aliveLitterX  },
+			#{deliveryType  },
+			
+			#{enterDate         },
+			#{worker            },
+			#{billId            },
+			#{createId          },
+			#{eventName         },
+			#{errorCode,mode=OUT,javaType=String,jdbcType=VARCHAR         },
+			#{errorMessage ,mode=OUT,javaType=String,jdbcType=VARCHAR     }
+		)
+	</insert>
+	<insert id="createPorkPig" useGeneratedKeys="true" keyProperty="billId" parameterType="CreatePorkPigView" statementType="CALLABLE">
+		CALL P_CreatePorkPig(
+			#{lineNumber        },
+			#{originFlag        },
+			#{originApp         },
+			#{farmId            },
+			
+			#{sowId     },
+			#{birthDate   },
+			#{aliveLitterWeight  },
+			#{healthyNum  },
+			#{weakNum  },
+			#{stillbirthNum  },
+			#{mutantNum  },
+			#{mummyNum  },
+			#{blackNum  },
+			#{actionType  },
+			
+			#{worker            },
+			#{billId            },
+			#{createId          },
+			#{eventName         },
+			#{errorCode,mode=OUT,javaType=String,jdbcType=VARCHAR         },
+			#{errorMessage ,mode=OUT,javaType=String,jdbcType=VARCHAR     }
+		)
+	</insert>
+	
+	<insert id="childPigDie" useGeneratedKeys="true" keyProperty="billId" parameterType="ChildDieView" statementType="CALLABLE">
+		CALL P_ChildDie(
+			#{lineNumber        },
+			#{rowId             },
+			#{notes             },
+			#{originFlag        },
+			#{originApp         },
+			#{companyId         },
+			#{farmId         },
+			#{houseId         },
+			#{pigpenId         },
+			#{swineryId         },
+			#{pigId            },
+			#{customerId },
+			#{leaveReason     },
+			#{leaveWeight   },
+			#{leaveQty  },
+			#{money },
+			
+			#{enterDate         },
+			#{worker            },
+			#{billId            },
+			#{createId          },
+			#{eventName         },
+			#{flag  },
+			#{errorCode,mode=OUT,javaType=String,jdbcType=VARCHAR         },
+			#{errorMessage ,mode=OUT,javaType=String,jdbcType=VARCHAR     }
+		)
+	</insert>
+	
+	<insert id="foster" useGeneratedKeys="true" keyProperty="billId" parameterType="FosterView" statementType="CALLABLE">
+		CALL P_Foster(
+			#{lineNumber        },
+			#{rowId             },
+			#{notes             },
+			#{originFlag        },
+			#{originApp         },
+			
+			#{pigId            },
+			#{boardSowId },
+			#{fosterReason     },
+			#{fosterWeight   },
+			#{fosterQty  },
+			
+			#{enterDate         },
+			#{worker            },
+			#{billId            },
+			#{createId          },
+			#{eventName         },
+			#{flag              },
+			#{errorCode,mode=OUT,javaType=String,jdbcType=VARCHAR         },
+			#{errorMessage ,mode=OUT,javaType=String,jdbcType=VARCHAR     }
+		)
+	</insert>
+	
+	<insert id="toChild" useGeneratedKeys="true" keyProperty="billId" parameterType="ToChildView" statementType="CALLABLE">
+		CALL P_ToChild(
+			#{lineNumber        },
+			#{rowId             },
+			#{notes             },
+			#{sortNbr             },
+			#{originFlag        },
+			#{originApp         },
+			
+			#{companyId            },
+			#{farmId            },
+			#{oldSwineryId      },
+			#{swineryId            },
+			#{houseId            },
+			#{inHouseId            },
+			#{pigpenId            },
+			#{inPigpenId            },
+			#{mergeSwinery },
+			
+			#{changeHouseType     },
+			#{childWeight   },
+			#{childQty  },
+			#{pigIds    },
+			
+			#{enterDate         },
+			#{worker            },
+			#{billId            },
+			#{createId          },
+			#{eventName         },
+			#{createSwineryId,mode=OUT,javaType=Long,jdbcType=INTEGER     },
+			#{errorCode,mode=OUT,javaType=String,jdbcType=VARCHAR         },
+			#{errorMessage ,mode=OUT,javaType=String,jdbcType=VARCHAR     }
+		)
+	</insert>
+	
+	<insert id="wean" useGeneratedKeys="true" keyProperty="billId" parameterType="WeanView" statementType="CALLABLE">
+		CALL P_Wean(
+			#{lineNumber        },
+			#{rowId             },
+			#{notes             },
+			#{originFlag        },
+			#{originApp         },
+			#{pigId            },
+			
+			#{weanNum     },
+			#{dieNum     },
+			#{weanWeight   },
+			#{sysInput  },
+			
+			#{enterDate         },
+			#{worker            },
+			#{billId            },
+			#{createId          },
+			#{eventName         },
+			#{flag              },
+			#{errorCode,mode=OUT,javaType=String,jdbcType=VARCHAR         },
+			#{errorMessage ,mode=OUT,javaType=String,jdbcType=VARCHAR     }
+		)
+	</insert>
+	
+	<insert id="leave" useGeneratedKeys="true" keyProperty="billId" parameterType="LeaveView" statementType="CALLABLE">
+		CALL P_Leave(
+			#{lineNumber        },
+			#{rowId             },
+			#{notes             },
+			#{originFlag        },
+			#{originApp         },
+			#{pigId            },
+			
+			#{leaveReason     },
+			#{leaveWeight   },
+			#{leavePrice  },
+			#{customerId  },
+			
+			#{enterDate         },
+			#{worker            },
+			#{billId            },
+			#{createId          },
+			#{eventName         },
+			#{errorCode,mode=OUT,javaType=String,jdbcType=VARCHAR         },
+			#{errorMessage ,mode=OUT,javaType=String,jdbcType=VARCHAR     }
+		)
+	</insert>
+	
+	<insert id="deletePig" parameterType="java.util.Map" statementType="CALLABLE">
+		CALL P_DeletePig(
+			#{lineNumber        },
+			#{notes             },
+			#{originFlag        },
+			#{originApp         },
+
+			#{pigId            },
+			#{enterDate         },
+			#{worker            },
+			#{billId            },
+			#{createId          },
+			#{eventName         },
+			#{errorCode,mode=OUT,javaType=String,jdbcType=VARCHAR         },
+			#{errorMessage ,mode=OUT,javaType=String,jdbcType=VARCHAR     }
+		)
+	</insert>
+	
+</mapper>
+

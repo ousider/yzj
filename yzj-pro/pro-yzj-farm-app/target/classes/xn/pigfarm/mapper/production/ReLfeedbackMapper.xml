@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.production.ReLfeedbackMapper">
+
+	<resultMap id="ReLfeedbackResult"  type="ReLfeedbackModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="sortNbr" column="SORT_NBR" jdbcType="INTEGER" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="reportId" column="REPORT_ID" jdbcType="INTEGER" />
+		<result property="farmId" column="FARM_ID" jdbcType="INTEGER" />
+		<result property="createId" column="CREATE_ID" jdbcType="INTEGER" />
+		<result property="createDate" column="CREATE_DATE" jdbcType="TIMESTAMP" />
+		<result property="content" column="CONTENT" jdbcType="LONGVARCHAR" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="ReLfeedbackModel_Column_List">
+		ROW_ID,SORT_NBR,NOTES,REPORT_ID,CREATE_ID,CREATE_DATE,CONTENT
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true"   keyProperty="rowId" parameterType="ReLfeedbackModel">
+		INSERT INTO RE_L_FEEDBACK
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR,
+			DELETED_FLAG,
+			STATUS,
+			NOTES,
+			REPORT_ID,
+			FARM_ID,
+			CREATE_ID,
+			CREATE_DATE,
+			CONTENT
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ sortNbr,jdbcType=INTEGER},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ status,jdbcType=CHAR},
+			#{ notes,jdbcType=VARCHAR},
+			#{ reportId,jdbcType=INTEGER},
+			#{ farmId,jdbcType=INTEGER},
+			#{ createId,jdbcType=INTEGER},
+			#{ createDate,jdbcType=TIMESTAMP},
+			#{ content,jdbcType=LONGVARCHAR}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO RE_L_FEEDBACK
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR ,
+			DELETED_FLAG ,
+			STATUS ,
+			NOTES ,
+			REPORT_ID ,
+			FARM_ID ,
+			CREATE_ID ,
+			CREATE_DATE ,
+			CONTENT 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.sortNbr,jdbcType=INTEGER},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.status,jdbcType=CHAR},
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.reportId,jdbcType=INTEGER},
+				#{item.farmId,jdbcType=INTEGER},
+				#{item.createId,jdbcType=INTEGER},
+				#{item.createDate,jdbcType=TIMESTAMP},
+				#{item.content,jdbcType=LONGVARCHAR}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="ReLfeedbackModel" >
+		UPDATE RE_L_FEEDBACK 
+		<set>
+		<if test="sortNbr != null">SORT_NBR = #{ sortNbr,jdbcType=INTEGER},</if>
+		<if test="status != null">STATUS = #{ status,jdbcType=CHAR},</if>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="reportId != null">REPORT_ID = #{ reportId,jdbcType=INTEGER},</if>
+		<if test="createId != null">CREATE_ID = #{ createId,jdbcType=INTEGER},</if>
+		<if test="createDate != null">CREATE_DATE = #{ createDate,jdbcType=TIMESTAMP},</if>
+		<if test="content != null">CONTENT = #{ content,jdbcType=LONGVARCHAR}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE RE_L_FEEDBACK 
+			<set>
+			<if test="item.sortNbr != null">SORT_NBR = #{item.sortNbr,jdbcType=INTEGER},</if>
+			<if test="item.status != null">STATUS = #{item.status,jdbcType=CHAR},</if>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.reportId != null">REPORT_ID = #{item.reportId,jdbcType=INTEGER},</if>
+			<if test="item.createId != null">CREATE_ID = #{item.createId,jdbcType=INTEGER},</if>
+			<if test="item.createDate != null">CREATE_DATE = #{item.createDate,jdbcType=TIMESTAMP},</if>
+			<if test="item.content != null">CONTENT = #{item.content,jdbcType=LONGVARCHAR}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  RE_L_FEEDBACK
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  RE_L_FEEDBACK
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE 
+		 ROW_ID =#{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  RE_L_FEEDBACK
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' 
+		 AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+		 AND ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCons" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  RE_L_FEEDBACK
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' ${item}
+		</foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="ReLfeedbackResult">
+		SELECT 
+		<include refid="ReLfeedbackModel_Column_List" />
+		FROM RE_L_FEEDBACK WHERE DELETED_FLAG='0' 
+		AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="ReLfeedbackResult" >
+		SELECT 
+		<include refid="ReLfeedbackModel_Column_List" />
+		FROM RE_L_FEEDBACK WHERE DELETED_FLAG='0'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="ReLfeedbackResult" >
+		SELECT 
+		<include refid="ReLfeedbackModel_Column_List" />
+		FROM RE_L_FEEDBACK
+		WHERE DELETED_FLAG='0'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="ReLfeedbackResult" >
+		SELECT 
+		<include refid="ReLfeedbackModel_Column_List" />
+		FROM RE_L_FEEDBACK
+		WHERE ${condition}
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAll" resultMap="ReLfeedbackResult" >
+		SELECT *
+		FROM RE_L_FEEDBACK
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="ReLfeedbackResult"> ${sql} </select>
+
+</mapper>
+

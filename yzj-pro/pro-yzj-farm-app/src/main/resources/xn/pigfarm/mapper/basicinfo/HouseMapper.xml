@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.basicinfo.HouseMapper">
+
+	<resultMap id="HouseResult"  type="HouseModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="sortNbr" column="SORT_NBR" jdbcType="INTEGER" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="originFlag" column="ORIGIN_FLAG" jdbcType="CHAR" />
+		<result property="originApp" column="ORIGIN_APP" jdbcType="VARCHAR" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="farmId" column="FARM_ID" jdbcType="INTEGER" />
+		<result property="companyId" column="COMPANY_ID" jdbcType="INTEGER" />
+		<result property="businessCode" column="BUSINESS_CODE" jdbcType="VARCHAR" />
+		<result property="houseName" column="HOUSE_NAME" jdbcType="VARCHAR" />
+		<result property="breederId" column="BREEDER_ID" jdbcType="INTEGER" />
+		<result property="houseType" column="HOUSE_TYPE" jdbcType="INTEGER" />
+		<result property="lineId" column="LINE_ID" jdbcType="INTEGER" />
+		<result property="pigClass" column="PIG_CLASS" jdbcType="VARCHAR" />
+		<result property="disinfectDay" column="DISINFECT_DAY" jdbcType="INTEGER" />
+		<result property="disinfectMethod" column="DISINFECT_METHOD" jdbcType="VARCHAR" />
+		<result property="columnNum" column="COLUMN_NUM" jdbcType="INTEGER" />
+		<result property="shape" column="SHAPE" jdbcType="VARCHAR" />
+		<result property="area" column="AREA" jdbcType="DECIMAL" />
+		<result property="length" column="LENGTH" jdbcType="DECIMAL" />
+		<result property="width" column="WIDTH" jdbcType="DECIMAL" />
+		<result property="height" column="HEIGHT" jdbcType="DECIMAL" />
+		<result property="houseClass" column="HOUSE_CLASS" jdbcType="INTEGER" />
+		<result property="depreciationPolicy" column="DEPRECIATION_POLICY" jdbcType="INTEGER" />
+		<result property="cost" column="COST" jdbcType="DECIMAL" />
+		<result property="penNum" column="PEN_NUM" jdbcType="INTEGER" />
+		<result property="maxCapacity" column="MAX_CAPACITY" jdbcType="INTEGER" />
+		<result property="housePrifixCode" column="HOUSE_PRIFIX_CODE" jdbcType="CHAR" />
+		<result property="houseUnitNumber" column="HOUSE_UNIT_NUMBER" jdbcType="INTEGER" />
+		<result property="houseBuildingNumber" column="HOUSE_BUILDING_NUMBER" jdbcType="INTEGER" />
+		<result property="isFosterHouse" column="IS_FOSTER_HOUSE" jdbcType="CHAR" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="HouseModel_Column_List">
+		ROW_ID,SORT_NBR,NOTES,STATUS,DELETED_FLAG,ORIGIN_FLAG,ORIGIN_APP,COMPANY_ID,BUSINESS_CODE,HOUSE_NAME,BREEDER_ID,HOUSE_TYPE,LINE_ID,PIG_CLASS,DISINFECT_DAY,DISINFECT_METHOD,COLUMN_NUM,SHAPE,AREA,LENGTH,WIDTH,HEIGHT,HOUSE_CLASS,DEPRECIATION_POLICY,COST,PEN_NUM,MAX_CAPACITY,HOUSE_PRIFIX_CODE,HOUSE_UNIT_NUMBER,HOUSE_BUILDING_NUMBER,IS_FOSTER_HOUSE
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true"   keyProperty="rowId" parameterType="HouseModel">
+		INSERT INTO PP_O_HOUSE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR,
+			STATUS,
+			DELETED_FLAG,
+			ORIGIN_FLAG,
+			ORIGIN_APP,
+			NOTES,
+			FARM_ID,
+			COMPANY_ID,
+			BUSINESS_CODE,
+			HOUSE_NAME,
+			BREEDER_ID,
+			HOUSE_TYPE,
+			LINE_ID,
+			PIG_CLASS,
+			DISINFECT_DAY,
+			DISINFECT_METHOD,
+			COLUMN_NUM,
+			SHAPE,
+			AREA,
+			LENGTH,
+			WIDTH,
+			HEIGHT,
+			HOUSE_CLASS,
+			DEPRECIATION_POLICY,
+			COST,
+			PEN_NUM,
+			MAX_CAPACITY,
+			HOUSE_PRIFIX_CODE,
+			HOUSE_UNIT_NUMBER,
+			HOUSE_BUILDING_NUMBER,
+			IS_FOSTER_HOUSE
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ sortNbr,jdbcType=INTEGER},
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ originFlag,jdbcType=CHAR},
+			#{ originApp,jdbcType=VARCHAR},
+			#{ notes,jdbcType=VARCHAR},
+			#{ farmId,jdbcType=INTEGER},
+			#{ companyId,jdbcType=INTEGER},
+			#{ businessCode,jdbcType=VARCHAR},
+			#{ houseName,jdbcType=VARCHAR},
+			#{ breederId,jdbcType=INTEGER},
+			#{ houseType,jdbcType=INTEGER},
+			#{ lineId,jdbcType=INTEGER},
+			#{ pigClass,jdbcType=VARCHAR},
+			#{ disinfectDay,jdbcType=INTEGER},
+			#{ disinfectMethod,jdbcType=VARCHAR},
+			#{ columnNum,jdbcType=INTEGER},
+			#{ shape,jdbcType=VARCHAR},
+			#{ area,jdbcType=DECIMAL},
+			#{ length,jdbcType=DECIMAL},
+			#{ width,jdbcType=DECIMAL},
+			#{ height,jdbcType=DECIMAL},
+			#{ houseClass,jdbcType=INTEGER},
+			#{ depreciationPolicy,jdbcType=INTEGER},
+			#{ cost,jdbcType=DECIMAL},
+			#{ penNum,jdbcType=INTEGER},
+			#{ maxCapacity,jdbcType=INTEGER},
+			#{ housePrifixCode,jdbcType=CHAR},
+			#{ houseUnitNumber,jdbcType=INTEGER},
+			#{ houseBuildingNumber,jdbcType=INTEGER},
+			#{ isFosterHouse,jdbcType=CHAR}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO PP_O_HOUSE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR ,
+			STATUS ,
+			DELETED_FLAG ,
+			ORIGIN_FLAG ,
+			ORIGIN_APP ,
+			NOTES ,
+			FARM_ID ,
+			COMPANY_ID ,
+			BUSINESS_CODE ,
+			HOUSE_NAME ,
+			BREEDER_ID ,
+			HOUSE_TYPE ,
+			LINE_ID ,
+			PIG_CLASS ,
+			DISINFECT_DAY ,
+			DISINFECT_METHOD ,
+			COLUMN_NUM ,
+			SHAPE ,
+			AREA ,
+			LENGTH ,
+			WIDTH ,
+			HEIGHT ,
+			HOUSE_CLASS ,
+			DEPRECIATION_POLICY ,
+			COST ,
+			PEN_NUM ,
+			MAX_CAPACITY ,
+			HOUSE_PRIFIX_CODE ,
+			HOUSE_UNIT_NUMBER ,
+			HOUSE_BUILDING_NUMBER ,
+			IS_FOSTER_HOUSE 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.sortNbr,jdbcType=INTEGER},
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.originFlag,jdbcType=CHAR},
+				#{item.originApp,jdbcType=VARCHAR},
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.farmId,jdbcType=INTEGER},
+				#{item.companyId,jdbcType=INTEGER},
+				#{item.businessCode,jdbcType=VARCHAR},
+				#{item.houseName,jdbcType=VARCHAR},
+				#{item.breederId,jdbcType=INTEGER},
+				#{item.houseType,jdbcType=INTEGER},
+				#{item.lineId,jdbcType=INTEGER},
+				#{item.pigClass,jdbcType=VARCHAR},
+				#{item.disinfectDay,jdbcType=INTEGER},
+				#{item.disinfectMethod,jdbcType=VARCHAR},
+				#{item.columnNum,jdbcType=INTEGER},
+				#{item.shape,jdbcType=VARCHAR},
+				#{item.area,jdbcType=DECIMAL},
+				#{item.length,jdbcType=DECIMAL},
+				#{item.width,jdbcType=DECIMAL},
+				#{item.height,jdbcType=DECIMAL},
+				#{item.houseClass,jdbcType=INTEGER},
+				#{item.depreciationPolicy,jdbcType=INTEGER},
+				#{item.cost,jdbcType=DECIMAL},
+				#{item.penNum,jdbcType=INTEGER},
+				#{item.maxCapacity,jdbcType=INTEGER},
+				#{item.housePrifixCode,jdbcType=CHAR},
+				#{item.houseUnitNumber,jdbcType=INTEGER},
+				#{item.houseBuildingNumber,jdbcType=INTEGER},
+				#{item.isFosterHouse,jdbcType=CHAR}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="HouseModel" >
+		UPDATE PP_O_HOUSE 
+		<set>
+		<if test="sortNbr != null">SORT_NBR = #{ sortNbr,jdbcType=INTEGER},</if>
+		<if test="status != null">STATUS = #{ status,jdbcType=CHAR},</if>
+		<if test="originFlag != null">ORIGIN_FLAG = #{ originFlag,jdbcType=CHAR},</if>
+		<if test="originApp != null">ORIGIN_APP = #{ originApp,jdbcType=VARCHAR},</if>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="businessCode != null">BUSINESS_CODE = #{ businessCode,jdbcType=VARCHAR},</if>
+		<if test="houseName != null">HOUSE_NAME = #{ houseName,jdbcType=VARCHAR},</if>
+		<if test="breederId != null">BREEDER_ID = #{ breederId,jdbcType=INTEGER},</if>
+		<if test="houseType != null">HOUSE_TYPE = #{ houseType,jdbcType=INTEGER},</if>
+		<if test="lineId != null">LINE_ID = #{ lineId,jdbcType=INTEGER},</if>
+		<if test="pigClass != null">PIG_CLASS = #{ pigClass,jdbcType=VARCHAR},</if>
+		<if test="disinfectDay != null">DISINFECT_DAY = #{ disinfectDay,jdbcType=INTEGER},</if>
+		<if test="disinfectMethod != null">DISINFECT_METHOD = #{ disinfectMethod,jdbcType=VARCHAR},</if>
+		<if test="columnNum != null">COLUMN_NUM = #{ columnNum,jdbcType=INTEGER},</if>
+		<if test="shape != null">SHAPE = #{ shape,jdbcType=VARCHAR},</if>
+		<if test="area != null">AREA = #{ area,jdbcType=DECIMAL},</if>
+		<if test="length != null">LENGTH = #{ length,jdbcType=DECIMAL},</if>
+		<if test="width != null">WIDTH = #{ width,jdbcType=DECIMAL},</if>
+		<if test="height != null">HEIGHT = #{ height,jdbcType=DECIMAL},</if>
+		<if test="houseClass != null">HOUSE_CLASS = #{ houseClass,jdbcType=INTEGER},</if>
+		<if test="depreciationPolicy != null">DEPRECIATION_POLICY = #{ depreciationPolicy,jdbcType=INTEGER},</if>
+		<if test="cost != null">COST = #{ cost,jdbcType=DECIMAL},</if>
+		<if test="penNum != null">PEN_NUM = #{ penNum,jdbcType=INTEGER},</if>
+		<if test="maxCapacity != null">MAX_CAPACITY = #{ maxCapacity,jdbcType=INTEGER},</if>
+<!-- 		<if test="housePrifixCode != null">HOUSE_PRIFIX_CODE = #{ housePrifixCode,jdbcType=CHAR},</if> -->
+<!-- 		<if test="houseUnitNumber != null">HOUSE_UNIT_NUMBER = #{ houseUnitNumber,jdbcType=INTEGER},</if> -->
+<!-- 		<if test="houseBuildingNumber != null">HOUSE_BUILDING_NUMBER = #{ houseBuildingNumber,jdbcType=INTEGER},</if> -->
+<!-- 		<if test="isFosterHouse != null">IS_FOSTER_HOUSE = #{ isFosterHouse,jdbcType=CHAR}</if> -->
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE PP_O_HOUSE 
+			<set>
+			<if test="item.sortNbr != null">SORT_NBR = #{item.sortNbr,jdbcType=INTEGER},</if>
+			<if test="item.status != null">STATUS = #{item.status,jdbcType=CHAR},</if>
+			<if test="item.originFlag != null">ORIGIN_FLAG = #{item.originFlag,jdbcType=CHAR},</if>
+			<if test="item.originApp != null">ORIGIN_APP = #{item.originApp,jdbcType=VARCHAR},</if>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.businessCode != null">BUSINESS_CODE = #{item.businessCode,jdbcType=VARCHAR},</if>
+			<if test="item.houseName != null">HOUSE_NAME = #{item.houseName,jdbcType=VARCHAR},</if>
+			<if test="item.breederId != null">BREEDER_ID = #{item.breederId,jdbcType=INTEGER},</if>
+			<if test="item.houseType != null">HOUSE_TYPE = #{item.houseType,jdbcType=INTEGER},</if>
+			<if test="item.lineId != null">LINE_ID = #{item.lineId,jdbcType=INTEGER},</if>
+			<if test="item.pigClass != null">PIG_CLASS = #{item.pigClass,jdbcType=VARCHAR},</if>
+			<if test="item.disinfectDay != null">DISINFECT_DAY = #{item.disinfectDay,jdbcType=INTEGER},</if>
+			<if test="item.disinfectMethod != null">DISINFECT_METHOD = #{item.disinfectMethod,jdbcType=VARCHAR},</if>
+			<if test="item.columnNum != null">COLUMN_NUM = #{item.columnNum,jdbcType=INTEGER},</if>
+			<if test="item.shape != null">SHAPE = #{item.shape,jdbcType=VARCHAR},</if>
+			<if test="item.area != null">AREA = #{item.area,jdbcType=DECIMAL},</if>
+			<if test="item.length != null">LENGTH = #{item.length,jdbcType=DECIMAL},</if>
+			<if test="item.width != null">WIDTH = #{item.width,jdbcType=DECIMAL},</if>
+			<if test="item.height != null">HEIGHT = #{item.height,jdbcType=DECIMAL},</if>
+			<if test="item.houseClass != null">HOUSE_CLASS = #{item.houseClass,jdbcType=INTEGER},</if>
+			<if test="item.depreciationPolicy != null">DEPRECIATION_POLICY = #{item.depreciationPolicy,jdbcType=INTEGER},</if>
+			<if test="item.cost != null">COST = #{item.cost,jdbcType=DECIMAL},</if>
+			<if test="item.penNum != null">PEN_NUM = #{item.penNum,jdbcType=INTEGER},</if>
+			<if test="item.maxCapacity != null">MAX_CAPACITY = #{item.maxCapacity,jdbcType=INTEGER},</if>
+<!-- 			<if test="item.housePrifixCode != null">HOUSE_PRIFIX_CODE = #{item.housePrifixCode,jdbcType=CHAR},</if> -->
+<!-- 			<if test="item.houseUnitNumber != null">HOUSE_UNIT_NUMBER = #{item.houseUnitNumber,jdbcType=INTEGER},</if> -->
+<!-- 			<if test="item.houseBuildingNumber != null">HOUSE_BUILDING_NUMBER = #{item.houseBuildingNumber,jdbcType=INTEGER},</if> -->
+<!-- 			<if test="item.isFosterHouse != null">IS_FOSTER_HOUSE = #{item.isFosterHouse,jdbcType=CHAR}</if> -->
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  PP_O_HOUSE
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  PP_O_HOUSE
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE 
+		 ROW_ID =#{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  PP_O_HOUSE
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' 
+		 AND ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCons" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  PP_O_HOUSE
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' ${item}
+		</foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="HouseResult">
+		SELECT 
+		<include refid="HouseModel_Column_List" />
+		FROM PP_O_HOUSE WHERE DELETED_FLAG='0' AND STATUS = '1' 
+		AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="HouseResult" >
+		SELECT 
+		<include refid="HouseModel_Column_List" />
+		FROM PP_O_HOUSE WHERE DELETED_FLAG='0' AND STATUS = '1'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="HouseResult" >
+		SELECT 
+		<include refid="HouseModel_Column_List" />
+		FROM PP_O_HOUSE
+		WHERE DELETED_FLAG='0' AND STATUS = '1' ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="HouseResult" >
+		SELECT 
+		<include refid="HouseModel_Column_List" />
+		FROM PP_O_HOUSE
+		WHERE ${condition}
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAll" resultMap="HouseResult" >
+		SELECT *
+		FROM PP_O_HOUSE
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="HouseResult"> ${sql} </select>
+	
+	<!-- 根据猪舍id查询 - 猪舍基本信息 -->
+	<select id="searchHouseDetailedToPage" resultType="map">
+		<![CDATA[ 
+			SELECT 
+				T0.ROW_ID rowId,
+				T0.HOUSE_NAME houseName,
+				T4.HOUSE_TYPE_NAME houseTypeName,
+				GROUP_CONCAT(DISTINCT T5.SWINERY_NAME) swineryName,
+				COUNT(1) housePigQty,
+				IFNULL(T0.AREA,0) area,
+				IFNULL(T0.DISINFECT_METHOD,'') disinfectMethod,
+				IFNULL(T0.DISINFECT_DAY,'') disinfectDay,
+				T6.USER_NAME userName,
+				GROUP_CONCAT(DISTINCT T7.PIG_CLASS_NAME) pigClass
+			
+			FROM PP_O_HOUSE T0
+			INNER JOIN CD_L_PIG_HOUSE T4
+			ON T0.HOUSE_TYPE = T4.ROW_ID
+			INNER JOIN PP_L_PIG T1
+			ON T0.FARM_ID = T1.FARM_ID AND T0.DELETED_FLAG = T1.DELETED_FLAG AND T0.STATUS = T1.STATUS AND T0.ROW_ID = T1.HOUSE_ID
+			
+			LEFT JOIN PP_M_SWINERY T5 
+			ON T0.FARM_ID = T5.FARM_ID AND T0.DELETED_FLAG = T5.DELETED_FLAG AND T0.STATUS = T5.STATUS AND T1.SWINERY_ID = T5.ROW_ID
+			LEFT JOIN HR_M_USER T6
+			ON T0.DELETED_FLAG = T6.DELETED_FLAG AND T0.STATUS = T6.STATUS AND T0.BREEDER_ID = T6.ROW_ID
+			LEFT JOIN CD_L_PIG_CLASS T7
+			ON T0.DELETED_FLAG = T7.DELETED_FLAG AND T0.STATUS = T7.STATUS AND T1.PIG_CLASS = T7.ROW_ID 
+			
+			WHERE t0.DELETED_FLAG = 0 AND t0.STATUS = 1 AND t0.FARM_ID = ${farmId}
+			AND (T1.PIG_CLASS <= 18 OR T1.PIG_CLASS = 24 )
+			AND t0.ROW_ID = ${houseId}
+			GROUP BY t0.ROW_ID
+		]]>
+	</select>
+	
+	<!-- 根据猪舍id查询 - 猪只详细信息 -->
+	<select id="searchHousePigDetailedToPage" resultType="map"> 
+		<![CDATA[ 
+			SELECT 
+				T0.ROW_ID rowId,
+				T6.EAR_BRAND earBrand,
+				T7.PIG_CLASS_NAME pigClassName,
+				IFNULL(TIMESTAMPDIFF(DAY,T8.TOWORK_DATE,NOW()),0) pigClassDay,
+				T5.SWINERY_NAME swineryName,
+				T1.BIRTH_DATE birthDate,
+				TIMESTAMPDIFF(DAY,T1.BIRTH_DATE,NOW()) day,
+				DATE(T2.CHANGE_HOUSE_DATE) changeHouseDate,
+				TIMESTAMPDIFF(DAY,T2.CHANGE_HOUSE_DATE,NOW()) changeHouseDay
+			FROM PP_O_HOUSE T0
+			INNER JOIN CD_L_PIG_HOUSE T4
+			ON T0.HOUSE_TYPE = T4.ROW_ID
+			INNER JOIN PP_L_PIG T1
+			ON T0.FARM_ID = T1.FARM_ID AND T0.DELETED_FLAG = T1.DELETED_FLAG AND T0.STATUS = T1.STATUS AND T0.ROW_ID = T1.HOUSE_ID
+			INNER JOIN PP_L_BILL_CHANGE_HOUSE T2
+			ON T0.FARM_ID = T2.FARM_ID AND T0.DELETED_FLAG = T2.DELETED_FLAG AND T0.STATUS = T2.STATUS AND T1.ROW_ID = T2.PIG_ID AND T1.LAST_BILL_ID = T2.BILL_ID AND T0.ROW_ID = T2.HOUSE_ID
+			LEFT JOIN PP_L_BILL_CHANGE_HOUSE T3
+			ON T0.FARM_ID = T3.FARM_ID AND T0.DELETED_FLAG = T3.DELETED_FLAG AND T0.STATUS = T3.STATUS AND T2.PIG_ID = T3.PIG_ID AND T2.CHANGE_HOUSE_ID = T3.ROW_ID 
+			LEFT JOIN PP_M_SWINERY T5 
+			ON T0.FARM_ID = T5.FARM_ID AND T0.DELETED_FLAG = T5.DELETED_FLAG AND T0.STATUS = T5.STATUS AND T1.SWINERY_ID = T5.ROW_ID
+			LEFT JOIN PP_L_EAR_CODE T6
+			ON T0.FARM_ID = T6.FARM_ID AND T0.DELETED_FLAG = T6.DELETED_FLAG AND T0.STATUS = T6.STATUS AND T1.EAR_CODE_ID = T6.ROW_ID
+			LEFT JOIN CD_L_PIG_CLASS T7
+			ON T0.DELETED_FLAG = T7.DELETED_FLAG AND T0.STATUS = T7.STATUS AND T1.PIG_CLASS = T7.ROW_ID 
+			LEFT JOIN pp_l_bill_towork T8
+			ON T0.FARM_ID = T8.FARM_ID AND T0.DELETED_FLAG = T8.DELETED_FLAG AND T0.STATUS = T8.STATUS AND T1.ROW_ID = T8.PIG_ID AND T1.LAST_BILL_ID = T8.BILL_ID
+			WHERE t0.DELETED_FLAG = 0 AND t0.STATUS = 1 AND t0.FARM_ID = #{farmId} 
+			AND t1.PIG_CLASS <= 18
+			AND t0.ROW_ID =  ${houseId}
+		]]>
+	 </select>
+
+</mapper>
+

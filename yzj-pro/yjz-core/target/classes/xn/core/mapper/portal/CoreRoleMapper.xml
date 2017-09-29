@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="xn.core.mapper.portal.CoreRoleMapper">
+
+	<resultMap id="MenuResult"  type="MenuView" >
+		<result property="parentId" column="PARENT_ID" jdbcType="INTEGER" />
+		<result property="menuType" column="MENU_TYPE" jdbcType="VARCHAR" />
+		<result property="moduleCode" column="MODULE_CODE" jdbcType="VARCHAR" />
+		<result property="moduleEnNa" column="MODULE_EN_NA" jdbcType="VARCHAR" />
+		<result property="sortEnNa" column="SORT_EN_NA" jdbcType="VARCHAR" />
+		<result property="moduleId" column="MODULE_ID" jdbcType="INTEGER" />
+		<result property="levelNum" column="LEVEL_NUM" jdbcType="INTEGER" />
+		<result property="moduleName" column="MODULE_NAME" jdbcType="VARCHAR" />
+		<result property="moduleUrl" column="MODULE_URL" jdbcType="VARCHAR" />
+		<result property="glyph" column="GLYPH" jdbcType="VARCHAR" />
+		<result property="iconCls" column="ICON_CLS" jdbcType="VARCHAR" />
+		<result property="clickEvent" column="CLICK_EVENT" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<resultMap id="CdRoleModelResult" type="CoreRoleModel" extends="BaseMapper.BaseModelMap">
+		<result property="businessCode" column="BUSINESS_CODE" jdbcType="VARCHAR" />
+		<result property="roleName" column="ROLE_NAME" jdbcType="VARCHAR" />
+		<result property="companyId" column="COMPANY_ID" jdbcType="INTEGER" />
+		<result property="templateId" column="TEMPLATE_ID" jdbcType="INTEGER" />
+		<result property="roleType" column="ROLE_TYPE" jdbcType="VARCHAR" />
+		<result property="iterceptUrl" column="ITERCEPT_URL" jdbcType="VARCHAR" />
+		<collection property="cdModule" javaType="MenuView" resultMap="MenuResult" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="Base_Column_List">
+		ROW_ID,NOTES,SORT_NBR,STATUS,DELETED_FLAG,ORIGIN_FLAG,ORIGIN_APP,BUSINESS_CODE,ROLE_NAME,COMPANY_ID,TEMPLATE_ID,ROLE_TYPE
+	</sql>
+	
+	<!--查询角色对应菜单 -->
+	<select id="searchUserByResources" resultMap="CdRoleModelResult">
+		SELECT 
+		  r.`ROW_ID`,
+		  r.`NOTES`,
+		  r.`SORT_NBR`,
+		  r.`STATUS`,
+		  r.`DELETED_FLAG`,
+		  r.`ORIGIN_FLAG`,
+		  r.`ORIGIN_APP`,
+		  r.`BUSINESS_CODE`,
+		  r.`ROLE_NAME`,
+		  r.`COMPANY_ID`,
+		  r.`TEMPLATE_ID`,
+		  r.`ROLE_TYPE` ,
+		  r.`ITERCEPT_URL`,
+		  md.`ROW_ID` AS md_ROW_ID,
+		  md.`NOTES` AS md_NOTES,
+		  md.`SORT_NBR`  AS md_SORT_NBR,
+		  md.`STATUS` AS md_STATUS,
+		  md.`DELETED_FLAG` AS md_DELETED_FLAG ,
+		  md.`ORIGIN_FLAG` AS md_ORIGIN_FLAG,
+		  md.`ORIGIN_APP` AS md_ORIGIN_APP,
+		  md.`MODULE_CODE`,
+		  md.`MODULE_NAME`,
+		  md.`SORT_NAME`,
+		  md.`MODULE_EN_NA`,
+		  md.`SORT_EN_NA`,
+		  md.`ICON_CLS`,
+		  md.`GLYPH`,
+		  md.`CLICK_EVENT`,
+		  md.`MENU_TYPE`,
+		  md.`COMPONENT`,
+		  md.`MODULE_URL`,
+		  md.`USING_FLAG`
+		FROM `hr_m_user` u 
+		INNER JOIN `cd_r_employee_role` er  ON  u.`EMPLOYEE_ID` = er.`EMPLOYEE_ID` AND u.`STATUS`='1' AND u.`DELETED_FLAG`='0' 
+		INNER JOIN `cd_o_role`  r  ON er.`ROLE_ID`=r.`ROW_ID`  AND r.`STATUS`='1' AND r.`DELETED_FLAG`='0'
+		INNER JOIN `cd_o_template` t ON r.`TEMPLATE_ID` = t.`ROW_ID` AND t.`STATUS`='1' AND t.`DELETED_FLAG`='0'
+		INNER JOIN `cd_r_menus` m ON t.`ROW_ID`= m.`TEMPLATE_ID` AND m.`STATUS`='1' AND m.`DELETED_FLAG`='0'
+		INNER JOIN `cd_o_module` md ON md.`ROW_ID`=m.`MODULE_ID` AND md.`STATUS`='1' AND md.`DELETED_FLAG`='0'
+	</select>
+	
+	<!--根据用户名查询角色对应菜单 -->
+	<select id="searchUserByRole" parameterType="java.lang.String"  resultMap="CdRoleModelResult">
+		SELECT 
+		  r.`ROW_ID`,
+		  r.`NOTES`,
+		  r.`SORT_NBR`,
+		  r.`STATUS`,
+		  r.`DELETED_FLAG`,
+		  r.`ORIGIN_FLAG`,
+		  r.`ORIGIN_APP`,
+		  r.`BUSINESS_CODE`,
+		  r.`ROLE_NAME`,
+		  r.`COMPANY_ID`,
+		  r.`TEMPLATE_ID`,
+		  r.`ROLE_TYPE`,
+		  r.`ITERCEPT_URL`,
+		  md.`ROW_ID` AS md_ROW_ID,
+		  md.`NOTES` AS md_NOTES,
+		  md.`SORT_NBR`  AS md_SORT_NBR,
+		  md.`STATUS` AS md_STATUS,
+		  md.`DELETED_FLAG` AS md_DELETED_FLAG ,
+		  md.`ORIGIN_FLAG` AS md_ORIGIN_FLAG,
+		  md.`ORIGIN_APP` AS md_ORIGIN_APP,
+		  md.`MODULE_CODE`,
+		  md.`MODULE_NAME`,
+		  md.`SORT_NAME`,
+		  md.`MODULE_EN_NA`,
+		  md.`SORT_EN_NA`,
+		  md.`ICON_CLS`,
+		  md.`GLYPH`,
+		  md.`CLICK_EVENT`,
+		  md.`MENU_TYPE`,
+		  md.`COMPONENT`,
+		  md.`MODULE_URL`,
+		  md.`USING_FLAG` 
+		FROM `hr_m_user` u 
+		INNER JOIN `cd_r_employee_role` er  ON  u.`EMPLOYEE_ID` = er.`EMPLOYEE_ID` AND u.`STATUS`='1' AND u.`DELETED_FLAG`='0'  AND u.`USER_NAME` = #{userName,jdbcType=VARCHAR} 
+		INNER JOIN `cd_o_role`  r  ON er.`ROLE_ID`=r.`ROW_ID`  AND r.`STATUS`='1' AND r.`DELETED_FLAG`='0'
+		INNER JOIN `cd_o_template` t ON r.`TEMPLATE_ID` = t.`ROW_ID` AND t.`STATUS`='1' AND t.`DELETED_FLAG`='0'
+		INNER JOIN `cd_r_menus` m ON t.`ROW_ID`= m.`TEMPLATE_ID` AND m.`STATUS`='1' AND m.`DELETED_FLAG`='0'
+		INNER JOIN `cd_o_module` md ON md.`ROW_ID`=m.`MODULE_ID` AND md.`STATUS`='1' AND md.`DELETED_FLAG`='0'
+	</select>
+</mapper>
+

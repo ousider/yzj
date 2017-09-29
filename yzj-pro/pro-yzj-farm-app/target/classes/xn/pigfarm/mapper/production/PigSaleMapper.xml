@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.production.PigSaleMapper">
+
+	<resultMap id="PigSaleResult"  type="PigSaleModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="farmId" column="FARM_ID" jdbcType="INTEGER" />
+		<result property="companyId" column="COMPANY_ID" jdbcType="INTEGER" />
+		<result property="billId" column="BILL_ID" jdbcType="INTEGER" />
+		<result property="otherFee" column="OTHER_FEE" jdbcType="DECIMAL" />
+		<result property="paymentDiff" column="PAYMENT_DIFF" jdbcType="DECIMAL" />
+		<result property="saleType" column="SALE_TYPE" jdbcType="VARCHAR" />
+		<result property="customerId" column="CUSTOMER_ID" jdbcType="INTEGER" />
+		<result property="createId" column="CREATE_ID" jdbcType="INTEGER" />
+		<result property="createDate" column="CREATE_DATE" jdbcType="TIMESTAMP" />
+		<result property="saleBillType" column="SALE_BILL_TYPE" jdbcType="INTEGER" />
+		<result property="saleStatus" column="SALE_STATUS" jdbcType="CHAR" />
+		<result property="salesman" column="SALESMAN" jdbcType="INTEGER" />
+		<result property="sapSaleType" column="SAP_SALE_TYPE" jdbcType="CHAR" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="PigSaleModel_Column_List">
+		ROW_ID,NOTES,FARM_ID,BILL_ID,OTHER_FEE,PAYMENT_DIFF,SALE_TYPE,CUSTOMER_ID,CREATE_ID,CREATE_DATE,SALE_BILL_TYPE,SALE_STATUS,SALESMAN,SAP_SALE_TYPE
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true"   keyProperty="rowId" parameterType="PigSaleModel">
+		INSERT INTO PP_L_BILL_PIG_SALE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			NOTES,
+			STATUS,
+			DELETED_FLAG,
+			FARM_ID,
+			COMPANY_ID,
+			BILL_ID,
+			OTHER_FEE,
+			PAYMENT_DIFF,
+			SALE_TYPE,
+			CUSTOMER_ID,
+			CREATE_ID,
+			CREATE_DATE,
+			SALE_BILL_TYPE,
+			SALE_STATUS,
+			SALESMAN,
+			SAP_SALE_TYPE
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ notes,jdbcType=VARCHAR},
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ farmId,jdbcType=INTEGER},
+			#{ companyId,jdbcType=INTEGER},
+			#{ billId,jdbcType=INTEGER},
+			#{ otherFee,jdbcType=DECIMAL},
+			#{ paymentDiff,jdbcType=DECIMAL},
+			#{ saleType,jdbcType=VARCHAR},
+			#{ customerId,jdbcType=INTEGER},
+			#{ createId,jdbcType=INTEGER},
+			#{ createDate,jdbcType=TIMESTAMP},
+			#{ saleBillType,jdbcType=INTEGER},
+			#{ saleStatus,jdbcType=CHAR},
+			#{ salesman,jdbcType=INTEGER},
+			#{ sapSaleType,jdbcType=CHAR}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO PP_L_BILL_PIG_SALE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			NOTES ,
+			STATUS ,
+			DELETED_FLAG ,
+			FARM_ID ,
+			COMPANY_ID ,
+			BILL_ID ,
+			OTHER_FEE ,
+			PAYMENT_DIFF ,
+			SALE_TYPE ,
+			CUSTOMER_ID ,
+			CREATE_ID ,
+			CREATE_DATE ,
+			SALE_BILL_TYPE ,
+			SALE_STATUS ,
+			SALESMAN ,
+			SAP_SALE_TYPE 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.farmId,jdbcType=INTEGER},
+				#{item.companyId,jdbcType=INTEGER},
+				#{item.billId,jdbcType=INTEGER},
+				#{item.otherFee,jdbcType=DECIMAL},
+				#{item.paymentDiff,jdbcType=DECIMAL},
+				#{item.saleType,jdbcType=VARCHAR},
+				#{item.customerId,jdbcType=INTEGER},
+				#{item.createId,jdbcType=INTEGER},
+				#{item.createDate,jdbcType=TIMESTAMP},
+				#{item.saleBillType,jdbcType=INTEGER},
+				#{item.saleStatus,jdbcType=CHAR},
+				#{item.salesman,jdbcType=INTEGER},
+				#{item.sapSaleType,jdbcType=CHAR}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="PigSaleModel" >
+		UPDATE PP_L_BILL_PIG_SALE 
+		<set>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="status != null">STATUS = #{ status,jdbcType=CHAR},</if>
+		<if test="billId != null">BILL_ID = #{ billId,jdbcType=INTEGER},</if>
+		<if test="otherFee != null">OTHER_FEE = #{ otherFee,jdbcType=DECIMAL},</if>
+		<if test="paymentDiff != null">PAYMENT_DIFF = #{ paymentDiff,jdbcType=DECIMAL},</if>
+		<if test="saleType != null">SALE_TYPE = #{ saleType,jdbcType=VARCHAR},</if>
+		<if test="customerId != null">CUSTOMER_ID = #{ customerId,jdbcType=INTEGER},</if>
+		<if test="createId != null">CREATE_ID = #{ createId,jdbcType=INTEGER},</if>
+		<if test="createDate != null">CREATE_DATE = #{ createDate,jdbcType=TIMESTAMP},</if>
+		<if test="saleBillType != null">SALE_BILL_TYPE = #{ saleBillType,jdbcType=INTEGER},</if>
+		<if test="saleStatus != null">SALE_STATUS = #{ saleStatus,jdbcType=CHAR},</if>
+		<if test="salesman != null">SALESMAN = #{ salesman,jdbcType=INTEGER},</if>
+		<if test="sapSaleType != null">SAP_SALE_TYPE = #{ sapSaleType,jdbcType=CHAR}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE PP_L_BILL_PIG_SALE 
+			<set>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.status != null">STATUS = #{item.status,jdbcType=CHAR},</if>
+			<if test="item.billId != null">BILL_ID = #{item.billId,jdbcType=INTEGER},</if>
+			<if test="item.otherFee != null">OTHER_FEE = #{item.otherFee,jdbcType=DECIMAL},</if>
+			<if test="item.paymentDiff != null">PAYMENT_DIFF = #{item.paymentDiff,jdbcType=DECIMAL},</if>
+			<if test="item.saleType != null">SALE_TYPE = #{item.saleType,jdbcType=VARCHAR},</if>
+			<if test="item.customerId != null">CUSTOMER_ID = #{item.customerId,jdbcType=INTEGER},</if>
+			<if test="item.createId != null">CREATE_ID = #{item.createId,jdbcType=INTEGER},</if>
+			<if test="item.createDate != null">CREATE_DATE = #{item.createDate,jdbcType=TIMESTAMP},</if>
+			<if test="item.saleBillType != null">SALE_BILL_TYPE = #{item.saleBillType,jdbcType=INTEGER},</if>
+			<if test="item.saleStatus != null">SALE_STATUS = #{item.saleStatus,jdbcType=CHAR},</if>
+			<if test="item.salesman != null">SALESMAN = #{item.salesman,jdbcType=INTEGER},</if>
+			<if test="item.sapSaleType != null">SAP_SALE_TYPE = #{item.sapSaleType,jdbcType=CHAR}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  PP_L_BILL_PIG_SALE
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  PP_L_BILL_PIG_SALE
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE 
+		 ROW_ID =#{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  PP_L_BILL_PIG_SALE
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' 
+		 AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+		 AND ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCons" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  PP_L_BILL_PIG_SALE
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' ${item}
+		</foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="PigSaleResult">
+		SELECT 
+		<include refid="PigSaleModel_Column_List" />
+		FROM PP_L_BILL_PIG_SALE WHERE DELETED_FLAG='0' 
+		AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="PigSaleResult" >
+		SELECT 
+		<include refid="PigSaleModel_Column_List" />
+		FROM PP_L_BILL_PIG_SALE WHERE DELETED_FLAG='0'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="PigSaleResult" >
+		SELECT 
+		<include refid="PigSaleModel_Column_List" />
+		FROM PP_L_BILL_PIG_SALE
+		WHERE DELETED_FLAG='0'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="PigSaleResult" >
+		SELECT 
+		<include refid="PigSaleModel_Column_List" />
+		FROM PP_L_BILL_PIG_SALE
+		WHERE ${condition}
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAll" resultMap="PigSaleResult" >
+		SELECT *
+		FROM PP_L_BILL_PIG_SALE
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="PigSaleResult"> ${sql} </select>
+    
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon2" parameterType="java.util.Map" >
+	<![CDATA[ 
+		 UPDATE  PP_L_BILL_PIG_SALE
+		 SET
+		 DELETED_FLAG = '2' WHERE DELETED_FLAG <> '2' ${condition}
+	]]>
+	</update>
+  
+</mapper>
+

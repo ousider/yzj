@@ -1,0 +1,27 @@
+$(document).ready(function(){
+	$('#drugType').textbox({
+		prompt:'请输入药品类型'
+	});
+	$('#shelflife').textbox({
+		prompt:'请输入保质期'
+	});
+	$('#package').textbox({
+		prompt:'请输入包装'
+	});
+	$('#apperance').textbox({
+		prompt:'请输入性状',
+		multiline:true
+	});
+	$('#adverseReactions').textbox({
+		prompt:'请输入不良反应',
+		multiline:true
+	});
+	$('#application').textbox({
+		prompt:'请输入应用',
+		multiline:true
+	});
+	/*$('#notes').textbox({
+		prompt:'请输入备注',
+		multiline:true
+	});*/
+});

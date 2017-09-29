@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.basicinfo.SettingMapper">
+
+	<resultMap id="SettingResult"  type="SettingModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="sortNbr" column="SORT_NBR" jdbcType="INTEGER" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="originFlag" column="ORIGIN_FLAG" jdbcType="CHAR" />
+		<result property="originApp" column="ORIGIN_APP" jdbcType="VARCHAR" />
+		<result property="companyId" column="COMPANY_ID" jdbcType="INTEGER" />
+		<result property="farmId" column="FARM_ID" jdbcType="INTEGER" />
+		<result property="farmType" column="FARM_TYPE" jdbcType="VARCHAR" />
+		<result property="settingModule" column="SETTING_MODULE" jdbcType="VARCHAR" />
+		<result property="groupCode" column="GROUP_CODE" jdbcType="VARCHAR" />
+		<result property="groupName" column="GROUP_NAME" jdbcType="LONGVARCHAR" />
+		<result property="settingName" column="SETTING_NAME" jdbcType="VARCHAR" />
+		<result property="settingCode" column="SETTING_CODE" jdbcType="VARCHAR" />
+		<result property="settingValue" column="SETTING_VALUE" jdbcType="VARCHAR" />
+		<result property="sowType" column="SOW_TYPE" jdbcType="VARCHAR" />
+		<result property="memo" column="MEMO" jdbcType="LONGVARCHAR" />
+		<result property="correlationId" column="CORRELATION_ID" jdbcType="INTEGER" />
+		<result property="createId" column="CREATE_ID" jdbcType="INTEGER" />
+		<result property="createDate" column="CREATE_DATE" jdbcType="TIMESTAMP" />
+		<result property="updateId" column="UPDATE_ID" jdbcType="INTEGER" />
+		<result property="updateDate" column="UPDATE_DATE" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="SettingModel_Column_List">
+		ROW_ID,NOTES,SORT_NBR,STATUS,DELETED_FLAG,ORIGIN_FLAG,ORIGIN_APP,COMPANY_ID,FARM_ID,FARM_TYPE,SETTING_MODULE,GROUP_CODE,GROUP_NAME,SETTING_NAME,SETTING_CODE,SETTING_VALUE,SOW_TYPE,MEMO,CORRELATION_ID,CREATE_ID,CREATE_DATE,UPDATE_ID,UPDATE_DATE
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="rowId" parameterType="SettingModel">
+		INSERT INTO CD_M_SETTING
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			NOTES,
+			SORT_NBR,
+			STATUS,
+			DELETED_FLAG,
+			ORIGIN_FLAG,
+			ORIGIN_APP,
+			COMPANY_ID,
+			FARM_ID,
+			FARM_TYPE,
+			SETTING_MODULE,
+			GROUP_CODE,
+			GROUP_NAME,
+			SETTING_NAME,
+			SETTING_CODE,
+			SETTING_VALUE,
+			SOW_TYPE,
+			MEMO,
+			CORRELATION_ID,
+			CREATE_ID,
+			CREATE_DATE,
+			UPDATE_ID,
+			UPDATE_DATE
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ notes,jdbcType=VARCHAR},
+			#{ sortNbr,jdbcType=INTEGER},
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ originFlag,jdbcType=CHAR},
+			#{ originApp,jdbcType=VARCHAR},
+			#{ companyId,jdbcType=INTEGER},
+			#{ farmId,jdbcType=INTEGER},
+			#{ farmType,jdbcType=VARCHAR},
+			#{ settingModule,jdbcType=VARCHAR},
+			#{ groupCode,jdbcType=VARCHAR},
+			#{ groupName,jdbcType=LONGVARCHAR},
+			#{ settingName,jdbcType=VARCHAR},
+			#{ settingCode,jdbcType=VARCHAR},
+			#{ settingValue,jdbcType=VARCHAR},
+			#{ sowType,jdbcType=VARCHAR},
+			#{ memo,jdbcType=LONGVARCHAR},
+			#{ correlationId,jdbcType=INTEGER},
+			#{ createId,jdbcType=INTEGER},
+			#{ createDate,jdbcType=TIMESTAMP},
+			#{ updateId,jdbcType=INTEGER},
+			#{ updateDate,jdbcType=TIMESTAMP}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO CD_M_SETTING
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			NOTES ,
+			SORT_NBR ,
+			STATUS ,
+			DELETED_FLAG ,
+			ORIGIN_FLAG ,
+			ORIGIN_APP ,
+			COMPANY_ID ,
+			FARM_ID ,
+			FARM_TYPE ,
+			SETTING_MODULE ,
+			GROUP_CODE ,
+			GROUP_NAME ,
+			SETTING_NAME ,
+			SETTING_CODE ,
+			SETTING_VALUE ,
+			SOW_TYPE ,
+			MEMO ,
+			CORRELATION_ID ,
+			CREATE_ID ,
+			CREATE_DATE ,
+			UPDATE_ID ,
+			UPDATE_DATE 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.sortNbr,jdbcType=INTEGER},
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.originFlag,jdbcType=CHAR},
+				#{item.originApp,jdbcType=VARCHAR},
+				#{item.companyId,jdbcType=INTEGER},
+				#{item.farmId,jdbcType=INTEGER},
+				#{item.farmType,jdbcType=VARCHAR},
+				#{item.settingModule,jdbcType=VARCHAR},
+				#{item.groupCode,jdbcType=VARCHAR},
+				#{item.groupName,jdbcType=LONGVARCHAR},
+				#{item.settingName,jdbcType=VARCHAR},
+				#{item.settingCode,jdbcType=VARCHAR},
+				#{item.settingValue,jdbcType=VARCHAR},
+				#{item.sowType,jdbcType=VARCHAR},
+				#{item.memo,jdbcType=LONGVARCHAR},
+				#{item.correlationId,jdbcType=INTEGER},
+				#{item.createId,jdbcType=INTEGER},
+				#{item.createDate,jdbcType=TIMESTAMP},
+				#{item.updateId,jdbcType=INTEGER},
+				#{item.updateDate,jdbcType=TIMESTAMP}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="SettingModel" >
+		UPDATE CD_M_SETTING 
+		<set>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="sortNbr != null">SORT_NBR = #{ sortNbr,jdbcType=INTEGER},</if>
+		<if test="originFlag != null">ORIGIN_FLAG = #{ originFlag,jdbcType=CHAR},</if>
+		<if test="originApp != null">ORIGIN_APP = #{ originApp,jdbcType=VARCHAR},</if>
+		<if test="farmType != null">FARM_TYPE = #{ farmType,jdbcType=VARCHAR},</if>
+		<if test="settingModule != null">SETTING_MODULE = #{ settingModule,jdbcType=VARCHAR},</if>
+		<if test="groupCode != null">GROUP_CODE = #{ groupCode,jdbcType=VARCHAR},</if>
+		<if test="groupName != null">GROUP_NAME = #{ groupName,jdbcType=LONGVARCHAR},</if>
+		<if test="settingName != null">SETTING_NAME = #{ settingName,jdbcType=VARCHAR},</if>
+		<if test="settingCode != null">SETTING_CODE = #{ settingCode,jdbcType=VARCHAR},</if>
+		<if test="settingValue != null">SETTING_VALUE = #{ settingValue,jdbcType=VARCHAR},</if>
+		<if test="sowType != null">SOW_TYPE = #{ sowType,jdbcType=VARCHAR},</if>
+		<if test="memo != null">MEMO = #{ memo,jdbcType=LONGVARCHAR},</if>
+		<if test="correlationId != null">CORRELATION_ID = #{ correlationId,jdbcType=INTEGER},</if>
+		<if test="createId != null">CREATE_ID = #{ createId,jdbcType=INTEGER},</if>
+		<if test="createDate != null">CREATE_DATE = #{ createDate,jdbcType=TIMESTAMP},</if>
+		<if test="updateId != null">UPDATE_ID = #{ updateId,jdbcType=INTEGER},</if>
+		<if test="updateDate != null">UPDATE_DATE = #{ updateDate,jdbcType=TIMESTAMP}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE CD_M_SETTING 
+			<set>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.sortNbr != null">SORT_NBR = #{item.sortNbr,jdbcType=INTEGER},</if>
+			<if test="item.originFlag != null">ORIGIN_FLAG = #{item.originFlag,jdbcType=CHAR},</if>
+			<if test="item.originApp != null">ORIGIN_APP = #{item.originApp,jdbcType=VARCHAR},</if>
+			<if test="item.farmType != null">FARM_TYPE = #{item.farmType,jdbcType=VARCHAR},</if>
+			<if test="item.settingModule != null">SETTING_MODULE = #{item.settingModule,jdbcType=VARCHAR},</if>
+			<if test="item.groupCode != null">GROUP_CODE = #{item.groupCode,jdbcType=VARCHAR},</if>
+			<if test="item.groupName != null">GROUP_NAME = #{item.groupName,jdbcType=LONGVARCHAR},</if>
+			<if test="item.settingName != null">SETTING_NAME = #{item.settingName,jdbcType=VARCHAR},</if>
+			<if test="item.settingCode != null">SETTING_CODE = #{item.settingCode,jdbcType=VARCHAR},</if>
+			<if test="item.settingValue != null">SETTING_VALUE = #{item.settingValue,jdbcType=VARCHAR},</if>
+			<if test="item.sowType != null">SOW_TYPE = #{item.sowType,jdbcType=VARCHAR},</if>
+			<if test="item.memo != null">MEMO = #{item.memo,jdbcType=LONGVARCHAR},</if>
+			<if test="item.correlationId != null">CORRELATION_ID = #{item.correlationId,jdbcType=INTEGER},</if>
+			<if test="item.createId != null">CREATE_ID = #{item.createId,jdbcType=INTEGER},</if>
+			<if test="item.createDate != null">CREATE_DATE = #{item.createDate,jdbcType=TIMESTAMP},</if>
+			<if test="item.updateId != null">UPDATE_ID = #{item.updateId,jdbcType=INTEGER},</if>
+			<if test="item.updateDate != null">UPDATE_DATE = #{item.updateDate,jdbcType=TIMESTAMP}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  CD_M_SETTING
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  CD_M_SETTING
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE ROW_ID = #{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  CD_M_SETTING
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="SettingResult">
+		SELECT *
+		FROM CD_M_SETTING WHERE DELETED_FLAG='0' AND STATUS = '1' 
+		AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="SettingResult" >
+		SELECT *
+		FROM CD_M_SETTING WHERE DELETED_FLAG='0' AND STATUS = '1'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="SettingResult" >
+		SELECT *
+		FROM CD_M_SETTING
+		WHERE DELETED_FLAG='0' AND STATUS = '1'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="SettingResult" >
+		SELECT *
+		FROM CD_M_SETTING
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="SettingResult"> ${sql} </select>
+
+</mapper>
+

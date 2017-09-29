@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="xn.pigfarm.mapper.backend.CdMenusMapper">
+
+	<resultMap id="cdMenusResult" type="CdMenusModel"  extends = "BaseMapper.BaseModelMap">
+		<result property="correlationId" column="CORRELATION_ID" jdbcType="INTEGER" />
+		<result property="subsystemId" column="SUBSYSTEM_ID" jdbcType="INTEGER" />
+		<result property="levelNum" column="LEVEL_NUM" jdbcType="INTEGER" />
+		<result property="parentId" column="PARENT_ID" jdbcType="INTEGER" />
+		<result property="moduleId" column="MODULE_ID" jdbcType="INTEGER" />
+		<result property="moduleName" column="MODULE_NAME" jdbcType="VARCHAR" />
+		<result property="templateId" column="TEMPLATE_ID" jdbcType="INTEGER" />
+
+	</resultMap>
+	
+	<select id="searchModuleByTemplateId" resultMap="cdMenusResult">
+			SELECT cr.ROW_ID,cr.MODULE_ID,cm.MODULE_NAME,cr.PARENT_ID
+			FROM  cd_r_menus cr
+			LEFT JOIN cd_o_module cm ON cr.MODULE_ID = cm.ROW_ID AND cm.DELETED_FLAG = 0 AND cm.STATUS = 1
+			WHERE cr.STATUS = 1 AND cr.DELETED_FLAG = 0
+			AND cr.TEMPLATE_ID = #{templateId}
+	</select>
+	
+	<select id="searchModuleChildren" resultMap="cdMenusResult">
+			SELECT cr.ROW_ID,cr.MODULE_ID,cm.MODULE_NAME,cr.PARENT_ID
+			FROM  cd_r_menus cr
+			LEFT JOIN cd_o_module cm ON cr.MODULE_ID = cm.ROW_ID AND cm.DELETED_FLAG = 0 AND cm.STATUS = 1
+			WHERE cr.STATUS = 1 AND cr.DELETED_FLAG = 0
+			AND cr.TEMPLATE_ID = #{templateId}
+			AND cr.PARENT_ID = #{parentId}
+	</select>
+	
+</mapper>
+

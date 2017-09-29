@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.core.mapper.system.SequenceMapper">
+
+	<resultMap id="SequenceResult"  type="SequenceModel" >
+		<result property="seqName" column="seq_name" jdbcType="VARCHAR" />
+		<result property="currentVal" column="current_val" jdbcType="INTEGER" />
+		<result property="incrementVal" column="increment_val" jdbcType="INTEGER" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="SequenceModel_Column_List">
+		seq_name,current_val,increment_val
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="rowId" parameterType="SequenceModel">
+		INSERT INTO SEQUENCE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			current_val,
+			increment_val
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ currentVal,jdbcType=INTEGER},
+			#{ incrementVal,jdbcType=INTEGER}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO SEQUENCE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			current_val ,
+			increment_val 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.currentVal,jdbcType=INTEGER},
+				#{item.incrementVal,jdbcType=INTEGER}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="SequenceModel" >
+		UPDATE SEQUENCE 
+		<set>
+		<if test="currentVal != null">current_val = #{ currentVal,jdbcType=INTEGER},</if>
+		<if test="incrementVal != null">increment_val = #{ incrementVal,jdbcType=INTEGER}</if>
+		</set>
+		WHERE
+		seq_name = #{ seqName,jdbcType=VARCHAR}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE SEQUENCE 
+			<set>
+			<if test="item.currentVal != null">current_val = #{item.currentVal,jdbcType=INTEGER},</if>
+			<if test="item.incrementVal != null">increment_val = #{item.incrementVal,jdbcType=INTEGER}</if>
+			</set>
+			WHERE
+			seq_name = #{item.seqName,jdbcType=VARCHAR}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  SEQUENCE
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		seq_name = #{ seqName,jdbcType=VARCHAR}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  SEQUENCE
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE ROW_ID = #{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  SEQUENCE
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="SequenceResult">
+		SELECT *
+		FROM SEQUENCE WHERE DELETED_FLAG='0' AND STATUS = '1' 
+		
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="SequenceResult" >
+		SELECT *
+		FROM SEQUENCE WHERE DELETED_FLAG='0' AND STATUS = '1'  AND
+		seq_name = #{ seqName,jdbcType=VARCHAR}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="SequenceResult" >
+		SELECT *
+		FROM SEQUENCE
+		WHERE DELETED_FLAG='0' AND STATUS = '1'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="SequenceResult" >
+		SELECT *
+		FROM SEQUENCE
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="SequenceResult"> ${sql} </select>
+	
+	<select id="getSeq" parameterType="String"  resultType="long">
+		SELECT CURRENT_VAL + INCREMENT_VAL FROM SEQUENCE WHERE SEQ_NAME = #{seq_name} FOR UPDATE
+	</select>
+
+</mapper>
+

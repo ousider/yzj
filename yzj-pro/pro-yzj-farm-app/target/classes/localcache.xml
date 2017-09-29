@@ -1,0 +1,7 @@
+﻿<?xml version = '1.0' encoding = 'UTF-8'?>
+
+<localcaches>
+    <cache className="xn.core.cache.readonlycache.PigInfoReadOnlyCache" cronExpr="0 0 0 * * ?"  init="true" />
+    <cache className="xn.core.cache.readonlycache.BasicTableCache" cronExpr="0 0 0 * * ?"  init="true" />
+    <cache className="xn.core.cache.readonlycache.MaterialInfoReadOnlyCache" cronExpr="0 0 0 * * ?" init="true" />
+</localcaches>

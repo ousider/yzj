@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.hana.mapper.common.IHanaParamMapper">
+
+	<resultMap id="MTC_ITFCResult" type="MTC_ITFC" >
+		<result property="mtcID" column="MTC_ID" jdbcType="INTEGER" />
+		<result property="mtcBranch" column="MTC_Branch" jdbcType="VARCHAR" />
+		<result property="mtcDocDate" column="MTC_DocDate" jdbcType="DATE" />
+		<result property="mtcObjCode" column="MTC_ObjCode" jdbcType="VARCHAR" />
+		<result property="mtcDocNum" column="MTC_DocNum" jdbcType="VARCHAR" />
+		<result property="mtcPriority" column="MTC_Priority" jdbcType="INTEGER" />
+		<result property="mtcTransType" column="MTC_TransType" jdbcType="VARCHAR" />
+		<result property="mtcBaseEntry" column="MTC_BaseEntry" jdbcType="VARCHAR" />
+		<result property="mtcFlag" column="MTC_Flag" jdbcType="VARCHAR" />
+		<result property="mtcCreateTime" column="MTC_CreateTime" jdbcType="TIMESTAMP" />
+		<result property="mtcStatus" column="MTC_Status" jdbcType="VARCHAR" />
+		<result property="mtcUpdateTime" column="MTC_UpdateTime" jdbcType="TIMESTAMP" />
+		<result property="mtcErrorMsg" column="MTC_ErrorMsg" jdbcType="VARCHAR" />
+		<result property="mtcTimes" column="MTC_Times" jdbcType="INTEGER" />
+		<result property="mtcDataFile" column="MTC_DataFile" jdbcType="VARCHAR" />
+		<result property="mtcDataFileLen" column="MTC_DataFileLen" jdbcType="INTEGER" />
+	</resultMap>
+	
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="false" parameterType="MTC_ITFC">
+		INSERT INTO MTC_ITFC
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			"MTC_ID",
+			"MTC_Branch",
+			"MTC_DocDate",
+			"MTC_ObjCode",
+			"MTC_DocNum",
+			"MTC_Priority",
+			"MTC_TransType",
+			"MTC_BaseEntry",
+			"MTC_Flag",
+			"MTC_CreateTime",
+			"MTC_Status",
+			"MTC_UpdateTime",
+			"MTC_ErrorMsg",
+			"MTC_Times",
+			"MTC_DataFile",
+			"MTC_DataFileLen"
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SEQ_ITFC.NEXTVAL,
+			#{MTC_Branch,jdbcType=VARCHAR},
+			#{MTC_DocDate,jdbcType=DATE},
+			#{MTC_ObjCode,jdbcType=VARCHAR},
+			#{MTC_DocNum,jdbcType=VARCHAR},
+			#{MTC_Priority,jdbcType=INTEGER},
+			#{MTC_TransType,jdbcType=VARCHAR},
+			#{MTC_BaseEntry,jdbcType=VARCHAR},
+			#{MTC_Flag,jdbcType=VARCHAR},
+			#{MTC_CreateTime,jdbcType=TIMESTAMP},
+			#{MTC_Status,jdbcType=VARCHAR},
+			#{MTC_UpdateTime,jdbcType=TIMESTAMP},
+			#{MTC_ErrorMsg,jdbcType=VARCHAR},
+			#{MTC_Times,jdbcType=INTEGER},
+			#{MTC_DataFile,jdbcType=VARCHAR},
+			#{MTC_DataFileLen,jdbcType=INTEGER}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" useGeneratedKeys="false" parameterType="java.util.List">
+		INSERT INTO MTC_ITFC
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			"MTC_ID",
+			"MTC_Branch",
+			"MTC_DocDate",
+			"MTC_ObjCode",
+			"MTC_DocNum",
+			"MTC_Priority",
+			"MTC_TransType",
+			"MTC_BaseEntry",
+			"MTC_Flag",
+			"MTC_CreateTime",
+			"MTC_Status",
+			"MTC_UpdateTime",
+			"MTC_ErrorMsg",
+			"MTC_Times",
+			"MTC_DataFile",
+			"MTC_DataFileLen"
+		</trim>
+			SELECT
+				SEQ_ITFC.NEXTVAL,
+				A.*
+			FROM 
+				(
+		<foreach collection="records" item="item" index="index" separator="UNION ALL" >
+				SELECT
+					#{item.MTC_Branch,jdbcType=VARCHAR},
+					#{item.MTC_DocDate,jdbcType=DATE},
+					#{item.MTC_ObjCode,jdbcType=VARCHAR},
+					#{item.MTC_DocNum,jdbcType=VARCHAR},
+					#{item.MTC_Priority,jdbcType=INTEGER},
+					#{item.MTC_TransType,jdbcType=VARCHAR},
+					#{item.MTC_BaseEntry,jdbcType=VARCHAR},
+					#{item.MTC_Flag,jdbcType=VARCHAR},
+					#{item.MTC_CreateTime,jdbcType=TIMESTAMP},
+					#{item.MTC_Status,jdbcType=VARCHAR},
+					#{item.MTC_UpdateTime,jdbcType=TIMESTAMP},
+					#{item.MTC_ErrorMsg,jdbcType=VARCHAR},
+					#{item.MTC_Times,jdbcType=INTEGER},
+					#{item.MTC_DataFile,jdbcType=VARCHAR},
+					#{item.MTC_DataFileLen,jdbcType=INTEGER}
+				FROM
+					DUMMY
+		</foreach>
+				) A
+	</insert>
+	
+	<select id="getObjectInfos" resultType="java.util.HashMap">
+		${sql}
+	</select>
+	
+</mapper>
+

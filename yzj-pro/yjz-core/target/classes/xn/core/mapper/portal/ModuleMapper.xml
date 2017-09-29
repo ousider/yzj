@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.core.mapper.portal.ModuleMapper">
+
+	<resultMap id="ModuleResult"  type="ModuleModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="sortNbr" column="SORT_NBR" jdbcType="INTEGER" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="originFlag" column="ORIGIN_FLAG" jdbcType="CHAR" />
+		<result property="originApp" column="ORIGIN_APP" jdbcType="VARCHAR" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="moduleCode" column="MODULE_CODE" jdbcType="VARCHAR" />
+		<result property="moduleName" column="MODULE_NAME" jdbcType="VARCHAR" />
+		<result property="sortName" column="SORT_NAME" jdbcType="VARCHAR" />
+		<result property="moduleEnNa" column="MODULE_EN_NA" jdbcType="VARCHAR" />
+		<result property="sortEnNa" column="SORT_EN_NA" jdbcType="VARCHAR" />
+		<result property="iconCls" column="ICON_CLS" jdbcType="VARCHAR" />
+		<result property="glyph" column="GLYPH" jdbcType="VARCHAR" />
+		<result property="clickEvent" column="CLICK_EVENT" jdbcType="VARCHAR" />
+		<result property="menuType" column="MENU_TYPE" jdbcType="VARCHAR" />
+		<result property="component" column="COMPONENT" jdbcType="VARCHAR" />
+		<result property="moduleUrl" column="MODULE_URL" jdbcType="VARCHAR" />
+		<result property="usingFlag" column="USING_FLAG" jdbcType="CHAR" />
+		<result property="isQuickMenu" column="IS_QUICK_MENU" jdbcType="CHAR" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="ModuleModel_Column_List">
+		ROW_ID,SORT_NBR,STATUS,DELETED_FLAG,ORIGIN_FLAG,ORIGIN_APP,NOTES,MODULE_CODE,MODULE_NAME,SORT_NAME,MODULE_EN_NA,SORT_EN_NA,ICON_CLS,GLYPH,CLICK_EVENT,MENU_TYPE,COMPONENT,MODULE_URL,USING_FLAG,IS_QUICK_MENU
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="rowId" parameterType="ModuleModel">
+		INSERT INTO CD_O_MODULE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR,
+			STATUS,
+			DELETED_FLAG,
+			ORIGIN_FLAG,
+			ORIGIN_APP,
+			NOTES,
+			MODULE_CODE,
+			MODULE_NAME,
+			SORT_NAME,
+			MODULE_EN_NA,
+			SORT_EN_NA,
+			ICON_CLS,
+			GLYPH,
+			CLICK_EVENT,
+			MENU_TYPE,
+			COMPONENT,
+			MODULE_URL,
+			USING_FLAG,
+			IS_QUICK_MENU
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ sortNbr,jdbcType=INTEGER},
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ originFlag,jdbcType=CHAR},
+			#{ originApp,jdbcType=VARCHAR},
+			#{ notes,jdbcType=VARCHAR},
+			#{ moduleCode,jdbcType=VARCHAR},
+			#{ moduleName,jdbcType=VARCHAR},
+			#{ sortName,jdbcType=VARCHAR},
+			#{ moduleEnNa,jdbcType=VARCHAR},
+			#{ sortEnNa,jdbcType=VARCHAR},
+			#{ iconCls,jdbcType=VARCHAR},
+			#{ glyph,jdbcType=VARCHAR},
+			#{ clickEvent,jdbcType=VARCHAR},
+			#{ menuType,jdbcType=VARCHAR},
+			#{ component,jdbcType=VARCHAR},
+			#{ moduleUrl,jdbcType=VARCHAR},
+			#{ usingFlag,jdbcType=CHAR},
+			#{ isQuickMenu,jdbcType=CHAR}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO CD_O_MODULE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR ,
+			STATUS ,
+			DELETED_FLAG ,
+			ORIGIN_FLAG ,
+			ORIGIN_APP ,
+			NOTES ,
+			MODULE_CODE ,
+			MODULE_NAME ,
+			SORT_NAME ,
+			MODULE_EN_NA ,
+			SORT_EN_NA ,
+			ICON_CLS ,
+			GLYPH ,
+			CLICK_EVENT ,
+			MENU_TYPE ,
+			COMPONENT ,
+			MODULE_URL ,
+			USING_FLAG ,
+			IS_QUICK_MENU 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.sortNbr,jdbcType=INTEGER},
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.originFlag,jdbcType=CHAR},
+				#{item.originApp,jdbcType=VARCHAR},
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.moduleCode,jdbcType=VARCHAR},
+				#{item.moduleName,jdbcType=VARCHAR},
+				#{item.sortName,jdbcType=VARCHAR},
+				#{item.moduleEnNa,jdbcType=VARCHAR},
+				#{item.sortEnNa,jdbcType=VARCHAR},
+				#{item.iconCls,jdbcType=VARCHAR},
+				#{item.glyph,jdbcType=VARCHAR},
+				#{item.clickEvent,jdbcType=VARCHAR},
+				#{item.menuType,jdbcType=VARCHAR},
+				#{item.component,jdbcType=VARCHAR},
+				#{item.moduleUrl,jdbcType=VARCHAR},
+				#{item.usingFlag,jdbcType=CHAR},
+				#{item.isQuickMenu,jdbcType=CHAR}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="ModuleModel" >
+		UPDATE CD_O_MODULE 
+		<set>
+		<if test="sortNbr != null">SORT_NBR = #{ sortNbr,jdbcType=INTEGER},</if>
+		<if test="originFlag != null">ORIGIN_FLAG = #{ originFlag,jdbcType=CHAR},</if>
+		<if test="originApp != null">ORIGIN_APP = #{ originApp,jdbcType=VARCHAR},</if>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="moduleCode != null">MODULE_CODE = #{ moduleCode,jdbcType=VARCHAR},</if>
+		<if test="moduleName != null">MODULE_NAME = #{ moduleName,jdbcType=VARCHAR},</if>
+		<if test="sortName != null">SORT_NAME = #{ sortName,jdbcType=VARCHAR},</if>
+		<if test="moduleEnNa != null">MODULE_EN_NA = #{ moduleEnNa,jdbcType=VARCHAR},</if>
+		<if test="sortEnNa != null">SORT_EN_NA = #{ sortEnNa,jdbcType=VARCHAR},</if>
+		<if test="iconCls != null">ICON_CLS = #{ iconCls,jdbcType=VARCHAR},</if>
+		<if test="glyph != null">GLYPH = #{ glyph,jdbcType=VARCHAR},</if>
+		<if test="clickEvent != null">CLICK_EVENT = #{ clickEvent,jdbcType=VARCHAR},</if>
+		<if test="menuType != null">MENU_TYPE = #{ menuType,jdbcType=VARCHAR},</if>
+		<if test="component != null">COMPONENT = #{ component,jdbcType=VARCHAR},</if>
+		<if test="moduleUrl != null">MODULE_URL = #{ moduleUrl,jdbcType=VARCHAR},</if>
+		<if test="usingFlag != null">USING_FLAG = #{ usingFlag,jdbcType=CHAR},</if>
+		<if test="isQuickMenu != null">IS_QUICK_MENU = #{ isQuickMenu,jdbcType=CHAR}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE CD_O_MODULE 
+			<set>
+			<if test="item.sortNbr != null">SORT_NBR = #{item.sortNbr,jdbcType=INTEGER},</if>
+			<if test="item.originFlag != null">ORIGIN_FLAG = #{item.originFlag,jdbcType=CHAR},</if>
+			<if test="item.originApp != null">ORIGIN_APP = #{item.originApp,jdbcType=VARCHAR},</if>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.moduleCode != null">MODULE_CODE = #{item.moduleCode,jdbcType=VARCHAR},</if>
+			<if test="item.moduleName != null">MODULE_NAME = #{item.moduleName,jdbcType=VARCHAR},</if>
+			<if test="item.sortName != null">SORT_NAME = #{item.sortName,jdbcType=VARCHAR},</if>
+			<if test="item.moduleEnNa != null">MODULE_EN_NA = #{item.moduleEnNa,jdbcType=VARCHAR},</if>
+			<if test="item.sortEnNa != null">SORT_EN_NA = #{item.sortEnNa,jdbcType=VARCHAR},</if>
+			<if test="item.iconCls != null">ICON_CLS = #{item.iconCls,jdbcType=VARCHAR},</if>
+			<if test="item.glyph != null">GLYPH = #{item.glyph,jdbcType=VARCHAR},</if>
+			<if test="item.clickEvent != null">CLICK_EVENT = #{item.clickEvent,jdbcType=VARCHAR},</if>
+			<if test="item.menuType != null">MENU_TYPE = #{item.menuType,jdbcType=VARCHAR},</if>
+			<if test="item.component != null">COMPONENT = #{item.component,jdbcType=VARCHAR},</if>
+			<if test="item.moduleUrl != null">MODULE_URL = #{item.moduleUrl,jdbcType=VARCHAR},</if>
+			<if test="item.usingFlag != null">USING_FLAG = #{item.usingFlag,jdbcType=CHAR},</if>
+			<if test="item.isQuickMenu != null">IS_QUICK_MENU = #{item.isQuickMenu,jdbcType=CHAR}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  CD_O_MODULE
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  CD_O_MODULE
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE ROW_ID = #{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  CD_O_MODULE
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="ModuleResult">
+		SELECT *
+		FROM CD_O_MODULE WHERE DELETED_FLAG='0' AND STATUS = '1' 
+		
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="ModuleResult" >
+		SELECT *
+		FROM CD_O_MODULE WHERE DELETED_FLAG='0' AND STATUS = '1'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="ModuleResult" >
+		SELECT *
+		FROM CD_O_MODULE
+		WHERE DELETED_FLAG='0' AND STATUS = '1'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="ModuleResult" >
+		SELECT *
+		FROM CD_O_MODULE
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="ModuleResult"> ${sql} </select>
+
+</mapper>
+

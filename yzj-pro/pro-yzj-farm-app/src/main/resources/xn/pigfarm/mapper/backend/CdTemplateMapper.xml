@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.backend.CdTemplateMapper">
+
+	<resultMap id="cdTemplateResult" type="CdTemplateModel" extends = "BaseMapper.BaseModelMap"  >
+		<result property="templateName" column="TEMPLATE_NAME" jdbcType="VARCHAR" />
+		<result property="templateStyle" column="TEMPLATE_STYLE" jdbcType="VARCHAR" />
+	</resultMap>
+	
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="Base_Column_List">
+		b.ROW_ID,b.NOTES,b.SORT_NBR,b.STATUS,b.DELETED_FLAG,b.ORIGIN_FLAG,b.ORIGIN_APP,
+		b.TEMPLATE_NAME,b.TEMPLATE_STYLE
+	</sql>
+	
+	<!-- 查询 -->
+	<select id="searchToList" resultMap="cdTemplateResult">
+		select
+		<include refid="Base_Column_List" />
+		from cd_o_template b
+		where
+		b.STATUS = 1 AND b.DELETED_FLAG = 0
+	</select>
+	
+</mapper>

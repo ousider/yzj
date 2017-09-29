@@ -1,0 +1,1799 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.production.ReLproDetailMapper">
+
+	<resultMap id="ReLproDetailResult"  type="ReLproDetailModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="sortNbr" column="SORT_NBR" jdbcType="INTEGER" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="reportId" column="REPORT_ID" jdbcType="INTEGER" />
+		<result property="farmId" column="FARM_ID" jdbcType="INTEGER" />
+		<result property="proType" column="PRO_TYPE" jdbcType="INTEGER" />
+		<result property="indicator" column="INDICATOR" jdbcType="INTEGER" />
+		<result property="pigQty" column="PIG_QTY" jdbcType="INTEGER" />
+		<result property="groupTarget" column="GROUP_TARGET" jdbcType="INTEGER" />
+		<result property="groupActual" column="GROUP_ACTUAL" jdbcType="DOUBLE" />
+		<result property="createId" column="CREATE_ID" jdbcType="INTEGER" />
+		<result property="createDate" column="CREATE_DATE" jdbcType="DATE" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="ReLproDetailModel_Column_List">
+		ROW_ID,SORT_NBR,NOTES,REPORT_ID,PRO_TYPE,INDICATOR,PIG_QTY,GROUP_TARGET,GROUP_ACTUAL,CREATE_ID,CREATE_DATE
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true"   parameterType="ReLproDetailModel">
+		INSERT INTO RE_L_PRO_DETAIL
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ROW_ID,
+			SORT_NBR,
+			DELETED_FLAG,
+			STATUS,
+			NOTES,
+			REPORT_ID,
+			FARM_ID,
+			PRO_TYPE,
+			INDICATOR,
+			PIG_QTY,
+			GROUP_TARGET,
+			GROUP_ACTUAL,
+			CREATE_ID,
+			CREATE_DATE
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ rowId,jdbcType=INTEGER},
+			#{ sortNbr,jdbcType=INTEGER},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ status,jdbcType=CHAR},
+			#{ notes,jdbcType=VARCHAR},
+			#{ reportId,jdbcType=INTEGER},
+			#{ farmId,jdbcType=INTEGER},
+			#{ proType,jdbcType=INTEGER},
+			#{ indicator,jdbcType=INTEGER},
+			#{ pigQty,jdbcType=INTEGER},
+			#{ groupTarget,jdbcType=INTEGER},
+			#{ groupActual,jdbcType=DOUBLE},
+			#{ createId,jdbcType=INTEGER},
+			#{ createDate,jdbcType=DATE}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO RE_L_PRO_DETAIL
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ROW_ID ,
+			SORT_NBR ,
+			DELETED_FLAG ,
+			STATUS ,
+			NOTES ,
+			REPORT_ID ,
+			FARM_ID ,
+			PRO_TYPE ,
+			INDICATOR ,
+			PIG_QTY ,
+			GROUP_TARGET ,
+			GROUP_ACTUAL ,
+			CREATE_ID ,
+			CREATE_DATE 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.rowId,jdbcType=INTEGER},
+				#{item.sortNbr,jdbcType=INTEGER},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.status,jdbcType=CHAR},
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.reportId,jdbcType=INTEGER},
+				#{item.farmId,jdbcType=INTEGER},
+				#{item.proType,jdbcType=INTEGER},
+				#{item.indicator,jdbcType=INTEGER},
+				#{item.pigQty,jdbcType=INTEGER},
+				#{item.groupTarget,jdbcType=DOUBLE},
+				#{item.groupActual,jdbcType=INTEGER},
+				#{item.createId,jdbcType=INTEGER},
+				#{item.createDate,jdbcType=DATE}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="ReLproDetailModel" >
+		UPDATE RE_L_PRO_DETAIL 
+		<set>
+		<if test="sortNbr != null">SORT_NBR = #{ sortNbr,jdbcType=INTEGER},</if>
+		<if test="status != null">STATUS = #{ status,jdbcType=CHAR},</if>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="reportId != null">REPORT_ID = #{ reportId,jdbcType=INTEGER},</if>
+		<if test="proType != null">PRO_TYPE = #{ proType,jdbcType=INTEGER},</if>
+		<if test="indicator != null">INDICATOR = #{ indicator,jdbcType=INTEGER},</if>
+		<if test="pigQty != null">PIG_QTY = #{ pigQty,jdbcType=INTEGER},</if>
+		<if test="groupTarget != null">GROUP_TARGET = #{ groupTarget,jdbcType=INTEGER},</if>
+		<if test="groupActual != null">GROUP_ACTUAL = #{ groupActual,jdbcType=DOUBLE},</if>
+		<if test="createId != null">CREATE_ID = #{ createId,jdbcType=INTEGER},</if>
+		<if test="createDate != null">CREATE_DATE = #{ createDate,jdbcType=DATE}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE RE_L_PRO_DETAIL 
+			<set>
+			<if test="item.sortNbr != null">SORT_NBR = #{item.sortNbr,jdbcType=INTEGER},</if>
+			<if test="item.status != null">STATUS = #{item.status,jdbcType=CHAR},</if>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.reportId != null">REPORT_ID = #{item.reportId,jdbcType=INTEGER},</if>
+			<if test="item.proType != null">PRO_TYPE = #{item.proType,jdbcType=INTEGER},</if>
+			<if test="item.indicator != null">INDICATOR = #{item.indicator,jdbcType=INTEGER},</if>
+			<if test="item.pigQty != null">PIG_QTY = #{item.pigQty,jdbcType=INTEGER},</if>
+			<if test="item.groupTarget != null">GROUP_TARGET = #{item.groupTarget,jdbcType=DOUBLE},</if>
+			<if test="item.groupActual != null">GROUP_ACTUAL = #{item.groupActual,jdbcType=INTEGER},</if>
+			<if test="item.createId != null">CREATE_ID = #{item.createId,jdbcType=INTEGER},</if>
+			<if test="item.createDate != null">CREATE_DATE = #{item.createDate,jdbcType=DATE}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  RE_L_PRO_DETAIL
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  RE_L_PRO_DETAIL
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE 
+		 ROW_ID =#{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  RE_L_PRO_DETAIL
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' 
+		 AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+		 AND ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCons" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  RE_L_PRO_DETAIL
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' ${item}
+		</foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="ReLproDetailResult">
+		SELECT 
+		<include refid="ReLproDetailModel_Column_List" />
+		FROM RE_L_PRO_DETAIL WHERE DELETED_FLAG='0' 
+		AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="ReLproDetailResult" >
+		SELECT 
+		<include refid="ReLproDetailModel_Column_List" />
+		FROM RE_L_PRO_DETAIL WHERE DELETED_FLAG='0'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="ReLproDetailResult" >
+		SELECT 
+		<include refid="ReLproDetailModel_Column_List" />
+		FROM RE_L_PRO_DETAIL
+		WHERE DELETED_FLAG='0'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="ReLproDetailResult" >
+		SELECT 
+		<include refid="ReLproDetailModel_Column_List" />
+		FROM RE_L_PRO_DETAIL
+		WHERE ${condition}
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAll" resultMap="ReLproDetailResult" >
+		SELECT *
+		FROM RE_L_PRO_DETAIL
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="ReLproDetailResult"> ${sql} </select>
+
+	<!--生产数据数据汇总目标-->
+	<select id="searchProduceDataByTarget" resultType="java.util.Map" >
+		SELECT p1.BUSINESS_CODE businessCode,
+ 			    CASE WHEN #{reportType}=1 THEN IFNULL(IF(p2.WEEK_STANDARD_VALUE IS NULL,p1.WEEK_STANDARD_VALUE,p2.WEEK_STANDARD_VALUE),0) 
+     			WHEN #{reportType}=2 THEN IFNULL(IF(p2.MONTH_STANDARD_VALUE IS NULL,p1.MONTH_STANDARD_VALUE,p2.MONTH_STANDARD_VALUE),0) 
+     			WHEN #{reportType}=3 THEN IFNULL(IF(p2.QUARTER_STANDARD_VALUE IS NULL,p1.QUARTER_STANDARD_VALUE,p2.QUARTER_STANDARD_VALUE),0) 		
+    			WHEN #{reportType}=4 THEN IFNULL(IF(p2.YEAR_STANDARD_VALUE IS NULL,p1.YEAR_STANDARD_VALUE,p2.YEAR_STANDARD_VALUE),0) 	
+     			END	standardValue
+		FROM
+		pp_l_indicator p1 
+			LEFT JOIN pp_l_indicator p2 
+		    ON p1.BUSINESS_CODE = p2.BUSINESS_CODE 
+		    AND p2.DELETED_FLAG = '0' 
+		    AND p2.STATUS = '1' 
+		    AND p2.FARM_ID = #{selectFarm} 
+		WHERE p1.DELETED_FLAG = '0' 
+		AND p1.STATUS = '1' 
+		AND p1.FARM_ID = 2 
+	</select>
+
+	<!--生产数据汇总-繁殖-配种数-->
+	<select id="searchProduceDataByBreed" parameterType="java.util.Map" resultType="java.util.Map" >
+		SELECT T3.ROW_ID farmId,COUNT(*) pigQty,T3.SORT_NAME farmName
+  		FROM pp_l_bill_breed T1
+ 		INNER JOIN hr_m_company T2 ON (T1.FARM_ID=T2.ROW_ID AND T2.DELETED_FLAG='0')
+ 		INNER JOIN HR_M_COMPANY T3 ON (T3.DELETED_FLAG = '0'AND (T2.COMPANY_MARK = T3.COMPANY_MARK OR T2.COMPANY_MARK LIKE CONCAT(T3.COMPANY_MARK, ',%'))) 
+ 		WHERE T1.DELETED_FLAG = '0'
+  		AND T1.BREED_DATE_FIRST BETWEEN #{ startDate,jdbcType=DATE} AND #{ endDate,jdbcType=DATE}
+  		<if test="isLike == 1">
+  		AND T3.COMPANY_MARK LIKE #{companyMark}",%"
+  		</if>
+  		<if test="isLike == 0">
+  		AND T3.COMPANY_MARK = #{companyMark}
+  		</if>
+  		<if test="isIn == 1">
+  		AND T3.ACCOUNT_COMPANY_CLASS IN (3,4)
+  		</if>
+  		GROUP BY T3.ROW_ID
+  		ORDER BY pigQty DESC
+	</select>
+	
+	<!--生产数据汇总-繁殖-返+假+流-->
+	<select id="searchProduceDataByFJL" parameterType="java.util.Map" resultType="java.util.Map" >
+  		SELECT COUNT(*) pigQty,T2.ROW_ID farmId
+		FROM pp_l_bill_pregnancy_check T0
+		INNER JOIN hr_m_company T1 ON T0.FARM_ID=T1.ROW_ID AND T1.DELETED_FLAG='0'
+		INNER JOIN hr_m_company T2 ON (
+		T2.DELETED_FLAG = '0'
+		AND (T1.COMPANY_MARK = T2.COMPANY_MARK OR T1.COMPANY_MARK LIKE CONCAT(T2.COMPANY_MARK, ',%'))
+		) 
+		WHERE T0.DELETED_FLAG = '0'
+		AND T0.PREGNANCY_DATE BETWEEN #{ startDate,jdbcType=DATE}
+		AND #{ endDate,jdbcType=DATE}
+		AND T0.PREGNANCY_RESULT IN (4,5,6)
+		<if test="isLike == 1">
+  		AND T2.COMPANY_MARK LIKE #{companyMark}",%"
+  		</if>
+  		<if test="isLike == 0">
+  		AND T2.COMPANY_MARK = #{companyMark}
+  		</if>
+  		<if test="isIn == 1">
+  		AND T2.ACCOUNT_COMPANY_CLASS IN (3,4)
+  		</if>
+		GROUP BY T2.ROW_ID
+		ORDER BY pigQty ASC
+	</select>
+
+	<!--生产数据汇总-生产母猪-存栏-->
+	<select id="searchProduceDataByLivestock" resultType="java.util.Map" >
+		SELECT 
+		IFNULL(SUM(IF(T0.PIG_CLASS IN(5,6,7,8,9,10,11) OR (T0.PIG_CLASS=24 AND T5.PIG_CLASS IN(5,6,7,8,9,10,11)),1,0 )),0) SC_PIG_QTY, 
+		IFNULL(SUM(IF(T0.PIG_CLASS IN(3,4) OR (T0.PIG_CLASS=24 AND T5.PIG_CLASS IN(3,4)),1,0 )),0) HB_PIG_QTY,
+		IFNULL(SUM(IF(T0.PIG_CLASS IN(12,13,14,15,16) OR (T0.PIG_CLASS=24 AND T5.PIG_CLASS IN(12,13,14,15,16)) ,1,0 )),0) GOOD_PIG_QTY, 
+		T0.FARM_ID
+   		FROM pp_l_bill_towork T0
+	   	LEFT JOIN pp_l_pig T3
+	   	ON T0.FARM_ID=T3.FARM_ID AND T3.DELETED_FLAG='0' AND T3.STATUS='1' AND T0.PIG_ID = T3.ROW_ID 
+	   	LEFT JOIN hr_m_company T4
+	   	ON T0.FARM_ID = T4.ROW_ID AND T4.DELETED_FLAG = '0'
+	   	LEFT JOIN pp_l_bill_towork T5
+		ON T0.CHANGE_PIG_CLASS_ID=T5.ROW_ID AND T5.DELETED_FLAG='0' AND T5.STATUS='1'
+	   	WHERE  T0.DELETED_FLAG = '0' AND T0.STATUS = '1' 
+	<![CDATA[	AND DATE(T0.TOWORK_DATE) <= #{ endDate,jdbcType=DATE}  AND (T3.ORIGIN <> 3 OR T3.ORIGIN IS NULL) ]]>
+	   	AND IFNULL(DATE(T0.TOWORK_DATE_OUT),IFNULL(DATE(T3.LEAVE_DATE),DATE(DATE_ADD(NOW(),INTERVAL 1 DAY)))) > #{ endDate,jdbcType=DATE}
+	   	AND (T4.COMPANY_MARK =#{companyMark} OR T4.COMPANY_MARK LIKE #{companyMark}",%")
+	</select>
+	
+	<!--生产数据汇总-上市-商品猪销售头数-->
+	<select id="searchProduceDataByGoodsSell" resultType="java.util.Map" >
+		SELECT 	IFNULL(SUM(IF(T2.SALE_DESCRIBE IN (3,4,8,9,10) AND T0.SALE_STATUS IN (2,3),T2.SALE_NUM,0)),0) GOOD_PIG_QTY, <!-- 上市头数-->
+		IFNULL(SUM(IF(T2.SALE_DESCRIBE=4 AND T0.SALE_STATUS IN (2,3),T2.SALE_NUM,0)),0) MZ_PIG_QTY, <!-- 苗猪头数-->
+		IFNULL(SUM(IF(T2.SALE_DESCRIBE=3 AND T0.SALE_STATUS IN (2,3),T2.SALE_NUM,0)),0) FZ_PIG_QTY, <!-- 肉猪头数-->
+		T0.FARM_ID
+		FROM pp_l_bill_pig_sale T0
+		INNER JOIN hr_m_company T1 ON T0.FARM_ID=T1.ROW_ID AND T1.DELETED_FLAG='0' AND T1.STATUS='1'
+		LEFT JOIN pp_l_bill_pig_sale_detail T2 ON T0.FARM_ID = T2.FARM_ID AND T0.BILL_ID = T2.BILL_ID AND T2.DELETED_FLAG='0' AND T2.STATUS='1'
+		WHERE T0.DELETED_FLAG = '0' 
+		AND T2.SALE_DATE BETWEEN #{ startDate,jdbcType=DATE} AND #{ endDate,jdbcType=DATE}
+		AND T0.SALE_BILL_TYPE =2
+		AND (T1.COMPANY_MARK=#{companyMark} OR T1.COMPANY_MARK LIKE #{companyMark}",%")
+	</select>
+	
+	<!--死亡率-总厂死亡率-->
+	<select id="searchProduceDataByTotalMortality" parameterType="java.util.Map" resultType="java.util.Map" >
+	<![CDATA[
+		SELECT T2.ROW_ID AS farmId, T2.SORT_NAME AS farmSortName, T2.COMPANY_MARK AS companyMark, IFNULL(T2.deliveryDieChildPigQty, 0) AS deliveryDieChildPigQty, 
+		IFNULL(T2.toCareDieChildPigQty, 0) AS toCareDieChildPigQty,
+		IFNULL(T2.toFatDieChildPigQty, 0) AS toFatDieChildPigQty, IFNULL(T2.birthChildPigQty, 0) AS birthChildPigQty, 
+		IFNULL( deliveryDieChildPigQty + toCareDieChildPigQty + toFatDieChildPigQty,0) AS allDieChildPigQty,
+		CONCAT(ROUND(IFNULL(deliveryDieChildPigQty / birthChildPigQty, 0) * 100, 2)) AS deliveryDieChildPigPercent,
+		CONCAT(ROUND(IFNULL(toCareDieChildPigQty / birthChildPigQty, 0) * 100, 2)) AS toCareDieChildPigPercent,
+		CONCAT(ROUND(IFNULL(toFatDieChildPigQty / birthChildPigQty, 0) * 100, 2)) AS toFatDieChildPigPercent,
+		CONCAT(ROUND(IFNULL((deliveryDieChildPigQty + toCareDieChildPigQty + toFatDieChildPigQty) / birthChildPigQty, 0) * 100, 2)) AS allDieChildPigPercent
+		FROM (
+			SELECT T1.ROW_ID, T1.SORT_NAME, T1.COMPANY_MARK, (
+			SELECT COUNT(1) AS dieChildPigQty
+			FROM PP_L_BILL_LEAVE A LEFT JOIN PP_O_HOUSE B ON B.DELETED_FLAG = '0'
+			AND B.STATUS = '1'
+			AND A.FARM_ID = B.FARM_ID
+			AND A.HOUSE_ID = B.ROW_ID INNER JOIN HR_M_COMPANY C ON C.DELETED_FLAG = '0'
+			AND A.FARM_ID = C.ROW_ID
+			WHERE A.DELETED_FLAG = '0'
+				AND A.STATUS = '1'
+				AND A.PIG_CLASS IN (12, IF((
+					SELECT SETTING_VALUE
+					FROM CD_M_SETTING
+					WHERE SETTING_CODE = 'RZBSCL'
+						AND FARM_ID = A.FARM_ID
+					) = 'ON', 12, 13), 14)
+				AND A.LEAVE_TYPE IN (3, 4)
+				AND B.HOUSE_TYPE = 6
+				AND A.LEAVE_DATE >= #{ startDate,jdbcType=DATE}
+				AND A.LEAVE_DATE <= #{ endDate,jdbcType=DATE}
+				AND (C.COMPANY_MARK = T1.COMPANY_MARK
+					OR C.COMPANY_MARK LIKE CONCAT(T1.COMPANY_MARK, ',%'))
+			) AS deliveryDieChildPigQty, (
+			SELECT COUNT(1) AS dieChildPigQty
+			FROM PP_L_BILL_LEAVE A LEFT JOIN PP_O_HOUSE B ON B.DELETED_FLAG = '0'
+			AND B.STATUS = '1'
+			AND A.FARM_ID = B.FARM_ID
+			AND A.HOUSE_ID = B.ROW_ID INNER JOIN HR_M_COMPANY C ON C.DELETED_FLAG = '0'
+			AND A.FARM_ID = C.ROW_ID
+			WHERE A.DELETED_FLAG = '0'
+				AND A.STATUS = '1'
+				AND A.PIG_CLASS = 15
+				AND A.LEAVE_TYPE IN (3, 4)
+				AND B.HOUSE_TYPE = 8
+				AND A.LEAVE_DATE >= #{ startDate,jdbcType=DATE}
+				AND A.LEAVE_DATE <= #{ endDate,jdbcType=DATE}
+				AND (C.COMPANY_MARK = T1.COMPANY_MARK
+					OR C.COMPANY_MARK LIKE CONCAT(T1.COMPANY_MARK, ',%'))
+			) AS toCareDieChildPigQty
+		, (
+			SELECT COUNT(1) AS dieChildPigQty
+			FROM PP_L_BILL_LEAVE A LEFT JOIN PP_O_HOUSE B ON B.DELETED_FLAG = '0'
+			AND B.STATUS = '1'
+			AND A.FARM_ID = B.FARM_ID
+			AND A.HOUSE_ID = B.ROW_ID INNER JOIN HR_M_COMPANY C ON C.DELETED_FLAG = '0'
+			AND A.FARM_ID = C.ROW_ID
+			WHERE A.DELETED_FLAG = '0'
+				AND A.STATUS = '1'
+				AND A.PIG_CLASS = 16
+				AND A.LEAVE_TYPE IN (3, 4)
+				AND B.HOUSE_TYPE = 9
+				AND A.LEAVE_DATE >= #{ startDate,jdbcType=DATE}
+				AND A.LEAVE_DATE <= #{ endDate,jdbcType=DATE}
+				AND (C.COMPANY_MARK = T1.COMPANY_MARK
+					OR C.COMPANY_MARK LIKE CONCAT(T1.COMPANY_MARK, ',%'))
+			) AS toFatDieChildPigQty, (
+			SELECT SUM(IFNULL(HEALTHY_NUM, 0)) + IF((
+					SELECT SETTING_VALUE
+					FROM CD_M_SETTING
+					WHERE SETTING_CODE = 'RZBSCL'
+						AND FARM_ID = A.FARM_ID
+					) = 'ON', 0, SUM(IF(WEAK_NUM IS NULL, 0, WEAK_NUM)))
+			FROM PP_L_BILL_DELIVERY A INNER JOIN HR_M_COMPANY B ON B.DELETED_FLAG = '0'
+			AND B.ROW_ID = A.FARM_ID
+			WHERE A.DELETED_FLAG = '0'
+				AND A.DELIVERY_DATE >= #{ startDate,jdbcType=DATE}
+				AND A.DELIVERY_DATE <= #{ endDate,jdbcType=DATE}
+				AND (T1.ACCOUNT_COMPANY_CLASS = 5
+					AND (B.COMPANY_MARK = T2.COMPANY_MARK
+						OR B.COMPANY_MARK LIKE CONCAT(T2.COMPANY_MARK, ',%'))
+					OR T1.ACCOUNT_COMPANY_CLASS <> 5
+					AND (B.COMPANY_MARK = T1.COMPANY_MARK
+						OR B.COMPANY_MARK LIKE CONCAT(T1.COMPANY_MARK, ',%')))
+			) AS birthChildPigQty
+		FROM HR_M_COMPANY T1 INNER JOIN HR_M_COMPANY T2 ON T2.DELETED_FLAG = '0']]>
+		AND T1.SUP_COMPANY_ID = T2.ROW_ID
+		WHERE T1.DELETED_FLAG = '0'
+		<if test="isLike == 1">
+  		AND T1.COMPANY_MARK LIKE #{companyMark}",%"
+  		</if>
+  		<if test="isLike == 0">
+  		AND T1.COMPANY_MARK = #{companyMark}
+  		</if>
+  		<if test="isIn == 1">
+  		AND T1.ACCOUNT_COMPANY_CLASS IN (3,4)
+  		</if>
+		) T2
+		WHERE  birthChildPigQty>0
+	</select>
+	
+	<!--死亡率-分场死亡率-->
+	<select id="searchProduceDataByMortality" parameterType="java.util.Map" resultType="java.util.Map" >
+			SELECT
+				T4.FARM_ID farmId,T4.LEAVE_QTY leaveQty,T4.GROUP_ACTUAL groupActual
+			FROM
+			(
+	    		SELECT  IFNULL(T2.FARM_ID,T1.FARM_ID) F	ARM_ID
+	    			,(IFNULL(T2.PIG_QTY,0) + IF(_getSettingValueByCode(T3.FARM_ID,'CCZSWSSW') = 'ON',IFNULL(T3.PIG_QTY,0),0)) AS LEAVE_QTY
+	    			,((IFNULL(T2.PIG_QTY,0) + IF(_getSettingValueByCode(T3.FARM_ID,'CCZSWSSW') = 'ON',IFNULL(T3.PIG_QTY,0),0)) / T1.DELIVERY_LIVE_NUMBER) * 100 GROUP_ACTUAL
+	   			FROM 
+	    		(
+					SELECT 
+						T0.FARM_ID,
+						SUM(IF(_getSettingValueByCode(T0.FARM_ID,'RZBSCL') = 'ON',T0.HEALTHY_NUM,T0.HEALTHY_NUM + T0.WEAK_NUM))  AS DELIVERY_LIVE_NUMBER
+		 				FROM pp_l_bill_delivery T0
+		 				INNER JOIN hr_m_company T3 
+		 				ON T0.FARM_ID=T3.ROW_ID AND T3.DELETED_FLAG='0' AND T3.STATUS='1'
+		 	   			WHERE T0.DELETED_FLAG = '0'
+		   				AND (T3.COMPANY_MARK = #{companyMark}  OR T3.COMPANY_MARK LIKE #{companyMark} ",%")
+						AND T0.DELIVERY_DATE BETWEEN #{ startDate,jdbcType=DATE}
+						AND  #{ endDate,jdbcType=DATE}
+		   		) T1
+	   			LEFT JOIN (
+				   SELECT T0.FARM_ID,IFNULL(COUNT(*),0) PIG_QTY
+				   FROM pp_l_bill_leave T0
+				   INNER JOIN pp_o_house T1
+				   ON T0.FARM_ID = T1.FARM_ID AND T0.HOUSE_ID = T1.ROW_ID AND T1.DELETED_FLAG = '0'  
+				   <if test="houseType == null">
+			   		AND T1.HOUSE_TYPE IN (6,8,9)
+			   	   </if>
+			   	   <if test="houseType != null">
+			   		AND T1.HOUSE_TYPE IN (#{houseType})
+			   	   </if>
+				   INNER JOIN hr_m_company T2 
+				   ON T0.FARM_ID=T2.ROW_ID AND T2.DELETED_FLAG='0' AND T2.STATUS='1'
+				   WHERE T0.DELETED_FLAG = '0'
+				   AND (T2.COMPANY_MARK = #{companyMark}  OR T2.COMPANY_MARK LIKE #{companyMark} ",%")
+				   AND T0.LEAVE_DATE BETWEEN #{ startDate,jdbcType=DATE}
+				   AND  #{ endDate,jdbcType=DATE}
+				   AND T0.PIG_TYPE = 3 
+				   <if test="leaveType == null">
+			   	   AND T0.LEAVE_TYPE IN (3,4)
+			   	   </if>
+			   	   <if test="leaveType != null">
+			   	   AND T0.LEAVE_TYPE IN (#{leaveType})
+			   	   </if>
+				   GROUP BY T0.FARM_ID
+	   			) T2
+				ON 1 = 1
+				LEFT JOIN (
+				   	SELECT T0.FARM_ID,IFNULL(SUM(T3.SALE_NUM),0) PIG_QTY
+					FROM pp_l_bill_pig_sale T0 
+					LEFT JOIN pp_l_bill_pig_sale_detail T3 
+					ON T0.FARM_ID = T3.FARM_ID 
+					AND T0.BILL_ID = T3.BILL_ID 
+					INNER JOIN pp_o_house T2
+					ON T3.FARM_ID = T2.FARM_ID AND T3.HOUSE_ID = T2.ROW_ID AND T2.DELETED_FLAG = '0'  
+					<if test="houseType == null">
+			   		AND T2.HOUSE_TYPE IN (6,8,9)
+			   	    </if>
+			   	    <if test="houseType != null">
+			   		AND T2.HOUSE_TYPE IN (#{houseType})
+			   	    </if>
+					INNER JOIN hr_m_company T4 
+					ON T0.FARM_ID=T4.ROW_ID AND T4.DELETED_FLAG='0' AND T4.STATUS='1'
+					WHERE T0.DELETED_FLAG = '0' 
+					AND T3.SALE_DATE BETWEEN #{ startDate,jdbcType=DATE}
+					AND  #{ endDate,jdbcType=DATE}
+					AND (T4.COMPANY_MARK = #{companyMark}  OR T4.COMPANY_MARK LIKE #{companyMark} ",%")
+					AND T3.SALE_DESCRIBE = 5 
+					GROUP BY T0.FARM_ID
+	   			) T3
+	  			 ON (T2.FARM_ID = T3.FARM_ID)
+	  	 ) T4
+	   	 ORDER BY T4.GROUP_ACTUAL ASC
+	</select>
+	
+	<!--流程指标-分场窝均产活仔数-->
+	<select id="searchProduceDataByLitterSize" parameterType="java.util.Map" resultType="java.util.Map" >
+		SELECT IFNULL(T0.farmId,0) farmId,IFNULL(T0.pigQty,0) pigQty,IFNULL(T0.nest,0) nest,IFNULL(T0.groupActual,0) groupActual,IFNULL(T0.aliveLitterWeight,0) aliveLitterWeight
+		FROM(
+			SELECT T0.FARM_ID farmId,
+			SUM(IF(_getSettingValueByCode(T0.FARM_ID,'RZBSCL') = 'ON',T0.HEALTHY_NUM,T0.HEALTHY_NUM + T0.WEAK_NUM)) pigQty,
+			COUNT(*) nest,
+			SUM(IF(_getSettingValueByCode(T0.FARM_ID,'RZBSCL') = 'ON',T0.HEALTHY_NUM,T0.HEALTHY_NUM + T0.WEAK_NUM))/COUNT(*) groupActual,
+			SUM(T0.ALIVE_LITTER_WEIGHT)/SUM(IF(_getSettingValueByCode(T0.FARM_ID,'RZBSCL') = 'ON',T0.HEALTHY_NUM,T0.HEALTHY_NUM + T0.WEAK_NUM)) aliveLitterWeight
+			FROM pp_l_bill_delivery T0
+			INNER JOIN hr_m_company T1
+			ON T0.FARM_ID=T1.ROW_ID AND T1.DELETED_FLAG='0' AND T1.STATUS='1'
+			WHERE T0.DELETED_FLAG = '0' AND T0.STATUS = '1'
+			AND (T1.COMPANY_MARK = #{companyMark} OR T1.COMPANY_MARK LIKE #{companyMark}",%")
+			AND T0.DELIVERY_DATE BETWEEN #{ startDate,jdbcType=DATE} AND #{ endDate,jdbcType=DATE}
+			 <if test="isTotalField == 0">
+			GROUP BY T1.ROW_ID
+			</if>
+			ORDER BY groupActual DESC
+		) T0
+	</select>
+	
+		<!--流程指标-分娩率(月)-->
+	<select id="searchProduceDataByDeliveryRate" parameterType="java.util.Map" resultType="java.util.Map" >
+			SELECT 
+			IF(SUM(T0.TOTAL_BREED_NUM)>0,(SUM(T0.DELIVERY_NUM) + SUM(T0.BREED_NUM)) / SUM(T0.TOTAL_BREED_NUM),0)*100 groupActual,
+			(SUM(T0.DELIVERY_NUM) + SUM(T0.BREED_NUM)) pigQty,T3.ROW_ID farmId,SUM(T0.TOTAL_BREED_NUM) totalPigQty
+			 FROM 
+			(
+				SELECT 	T0.BREED_NUM TOTAL_BREED_NUM,T1.DELIVERY_NUM,T2.BREED_NUM ,T0.FARM_ID
+				FROM (		
+			<!-- 配种数-->
+					SELECT COUNT(1) BREED_NUM,T0.FARM_ID,T2.COMPANY_MARK,t2.SORT_NAME
+					FROM pp_l_bill_breed T0
+					INNER JOIN pp_l_pig T1
+					ON T0.FARM_ID = T1.FARM_ID AND T0.PIG_ID = T1.ROW_ID AND T1.PIG_TYPE = '2' AND T1.DELETED_FLAG = '0'
+					INNER JOIN hr_m_company T2 
+					ON T0.FARM_ID=T2.ROW_ID AND T2.DELETED_FLAG='0' AND T2.STATUS='1'
+					WHERE T0.DELETED_FLAG = '0'
+					 AND (T2.COMPANY_MARK = #{companyMark} OR T2.COMPANY_MARK LIKE #{companyMark}",%")
+					AND T0.BREED_DATE_FIRST BETWEEN DATE_ADD(DATE_SUB(#{ endDate,jdbcType=DATE},INTERVAL 4 MONTH),INTERVAL -DAY(DATE_SUB(#{ endDate,jdbcType=DATE},INTERVAL 4 MONTH))+1 DAY)
+					AND LAST_DAY(DATE_SUB(#{ endDate,jdbcType=DATE},INTERVAL 4 MONTH)) 
+					GROUP BY T0.FARM_ID
+				)T0
+			INNER JOIN (
+			<!-- 分娩数 -->
+					SELECT  COUNT(1) DELIVERY_NUM,T0.FARM_ID
+					FROM pp_l_bill_delivery T0
+					LEFT JOIN pp_l_pig T1
+					ON T0.FARM_ID = T1.FARM_ID AND T0.PIG_ID = T1.ROW_ID AND T1.DELETED_FLAG = '0'
+					LEFT JOIN pp_o_house T2
+					ON T0.FARM_ID = T2.FARM_ID AND T0.HOUSE_ID = T2.ROW_ID AND T2.DELETED_FLAG = '0'
+					LEFT JOIN pp_l_bill_breed T3
+					ON T0.FARM_ID = T3.FARM_ID AND T0.PIG_ID = T3.PIG_ID AND T0.PRO_NO = T3.PRO_NO
+					LEFT JOIN cd_l_breed T4
+					ON T1.BREED_ID = T4.ROW_ID AND T1.DELETED_FLAG = '0'
+					LEFT JOIN cd_o_sow T5
+					ON t1.FARM_ID = T5.FARM_ID AND t1.DELETED_FLAG = T5.DELETED_FLAG AND t1.STATUS = T5.STATUS AND t1.MATERIAL_ID = T5.MATERIAL_ID
+					INNER JOIN hr_m_company T6
+					ON T0.FARM_ID=T6.ROW_ID AND T6.DELETED_FLAG='0' AND T6.STATUS='1'
+					WHERE T0.DELETED_FLAG = '0' 
+					AND T3.BREED_DATE_FIRST BETWEEN DATE_ADD(DATE_SUB(#{ endDate,jdbcType=DATE},INTERVAL 4 MONTH),INTERVAL -DAY(DATE_SUB(#{ endDate,jdbcType=DATE},INTERVAL 4 MONTH))+1 DAY)
+					AND LAST_DAY(DATE_SUB(#{ endDate,jdbcType=DATE},INTERVAL 4 MONTH))
+					AND T0.DELIVERY_DATE BETWEEN DATE_ADD(DATE(DATE_ADD(DATE_SUB(#{ endDate,jdbcType=DATE},INTERVAL 4 MONTH),INTERVAL -DAY(DATE_SUB(#{ endDate,jdbcType=DATE},INTERVAL 4 MONTH))+1 DAY)),INTERVAL T5.PREGNANCY_DAYS - T5.ERROR_LIMIT DAY)
+					AND DATE_ADD(DATE(LAST_DAY(DATE_SUB(#{ endDate,jdbcType=DATE},INTERVAL 4 MONTH))),INTERVAL T5.PREGNANCY_DAYS + T5.ERROR_LIMIT DAY)
+					AND (T6.COMPANY_MARK = #{companyMark} OR T6.COMPANY_MARK LIKE #{companyMark}",%")
+					GROUP BY T0.FARM_ID
+				)T1 ON T0.FARM_ID=T1.FARM_ID
+			INNER JOIN (
+			<!-- 未分娩，在产房 -->
+					SELECT IFNULL(SUM(IF(N0.PIG_CLASS = 9 AND N0.HOUSE_TYPE = 6,1,0 )),0) BREED_NUM,N0.FARM_ID
+					FROM (
+					SELECT 
+					MAX(T0.BREED_DATE_FIRST) BREED_DATE_FIRST,T1.PIG_CLASS,T2.HOUSE_TYPE,T0.PIG_ID,T0.FARM_ID
+					FROM pp_l_bill_breed T0
+					INNER JOIN pp_l_pig T1
+					ON T0.FARM_ID = T1.FARM_ID AND T0.PIG_ID = T1.ROW_ID AND T1.PIG_TYPE = '2' AND T1.DELETED_FLAG = '0'
+					LEFT JOIN pp_o_house T2
+					ON T0.FARM_ID = T2.FARM_ID AND T1.HOUSE_ID = T2.ROW_ID AND T2.DELETED_FLAG = '0' 
+					INNER JOIN hr_m_company T3
+					ON T0.FARM_ID=T3.ROW_ID AND T3.DELETED_FLAG='0' AND T3.STATUS='1'
+					WHERE T0.DELETED_FLAG = '0'
+					AND (T3.COMPANY_MARK = #{companyMark} OR T3.COMPANY_MARK LIKE #{companyMark}",%")
+					GROUP BY T0.PIG_ID,T0.PARITY
+					) N0
+					WHERE N0.BREED_DATE_FIRST BETWEEN DATE_ADD(DATE_SUB(#{ endDate,jdbcType=DATE},INTERVAL 4 MONTH),INTERVAL -DAY(DATE_SUB(#{ endDate,jdbcType=DATE},INTERVAL 4 MONTH))+1 DAY)
+					AND LAST_DAY(DATE_SUB(#{ endDate,jdbcType=DATE},INTERVAL 4 MONTH)) 
+					GROUP BY N0.FARM_ID
+				)T2 ON T1.FARM_ID=T2.FARM_ID
+			) T0
+			 INNER JOIN hr_m_company T2 ON T0.FARM_ID=T2.ROW_ID AND T2.DELETED_FLAG='0'
+			 INNER JOIN HR_M_COMPANY T3 ON (T3.DELETED_FLAG = '0' AND (T2.COMPANY_MARK = T3.COMPANY_MARK OR T2.COMPANY_MARK LIKE CONCAT(T3.COMPANY_MARK, ',%'))) 
+			 WHERE 1=1
+			 <if test="isLike == 1">
+  		 		AND T3.COMPANY_MARK LIKE #{companyMark}",%"
+  			</if>
+  			<if test="isLike == 0">
+  				AND T3.COMPANY_MARK = #{companyMark}
+  			</if>
+  			<if test="isIn == 1">
+  				AND T3.ACCOUNT_COMPANY_CLASS IN (3,4)
+  			</if>
+			GROUP BY T3.ROW_ID
+			ORDER BY groupActual DESC
+	</select>
+	
+	<!--流程指标-流程指标-7030(总场)-->
+	<select id="searchProduceDataBy7030" parameterType="java.util.Map" resultType="java.util.Map" >
+			SELECT _getWeightByDayAge(T0.FARM_ID,'WCM_002',T0.AVG_AGE,T0.AVG_WEIGHT) groupActual,T0.PIG_QTY pigQty,T0.FARM_ID farmId
+			FROM 
+			(
+				SELECT 
+		 		(SUM((T0.AGE*T0.CHILD_QTY))/SUM(T0.CHILD_QTY)) AS AVG_AGE,
+				SUM(T0.TOTAL_WEIGHT)/SUM(T0.CHILD_QTY) AS AVG_WEIGHT,
+				SUM(T0.CHILD_QTY) PIG_QTY,
+				T0.FARM_ID
+				FROM 
+				(
+					SELECT 
+					T2.AGE,
+					T2.CHILD_QTY,
+					T2.TOTAL_WEIGHT,
+					T5.ROW_ID FARM_ID,
+					T5.SORT_NAME
+					FROM (
+						SELECT 
+						_getSwineryAge(T0.ROW_ID,T1.CHILD_DATE,0) AGE
+						,T1.CHILD_QTY ,T0.FARM_ID,T1.TOTAL_WEIGHT
+						FROM pp_m_swinery T0  
+						INNER JOIN ( 
+							SELECT T0.SWINERY_ID,T0.CHILD_DATE,COUNT(1) AS CHILD_QTY,SUM(T0.CHILD_WEIGHT) TOTAL_WEIGHT
+							FROM pp_l_bill_to_child T0
+							INNER JOIN hr_m_company T2 
+							ON T0.FARM_ID=T2.ROW_ID AND T2.DELETED_FLAG=0 AND T2.STATUS='1'
+							WHERE T0.DELETED_FLAG=0 AND T0.STATUS = 1 
+							AND (T2.COMPANY_MARK =  #{companyMark} OR T2.COMPANY_MARK LIKE  #{companyMark}",%")
+							AND T0.CHILD_DATE BETWEEN #{ startDate,jdbcType=DATE}
+							AND  #{ endDate,jdbcType=DATE}
+							AND T0.CHANGE_HOUSE_TYPE = 6
+							AND T0.PIG_TYPE = 3
+							GROUP BY T0.SWINERY_ID,T0.CHILD_DATE 
+							UNION ALL 
+							SELECT T5.SWINERY_ID,T5.LEAVE_DATE CHILD_DATE,COUNT(1) AS CHILD_QTY,SUM(T5.LEAVE_WEIGHT) TOTAL_WEIGHT
+							FROM pp_l_bill_pig_sale T0 
+							LEFT JOIN pp_l_bill_pig_sale_detail T3 
+							ON T0.FARM_ID = T3.FARM_ID 
+							AND T0.BILL_ID = T3.BILL_ID 
+							INNER JOIN pp_o_house T2
+							ON T3.FARM_ID = T2.FARM_ID AND T3.HOUSE_ID = T2.ROW_ID AND T2.DELETED_FLAG = '0'  AND T2.HOUSE_TYPE = 8
+							INNER JOIN hr_m_company T4 
+							ON T0.FARM_ID=T4.ROW_ID AND T4.DELETED_FLAG=0 AND T4.STATUS='1'
+							INNER JOIN pp_l_bill_leave T5
+							ON T5.SALE_ID = T3.ROW_ID AND T0.BILL_ID = T5.BILL_ID  AND T5.DELETED_FLAG=0
+							WHERE T0.DELETED_FLAG = '0' AND T0.SALE_TYPE=1
+							AND T3.SALE_DATE BETWEEN #{ startDate,jdbcType=DATE}
+							AND  #{ endDate,jdbcType=DATE}
+							AND (T4.COMPANY_MARK =  #{companyMark} OR T4.COMPANY_MARK LIKE  #{companyMark}",%")
+							GROUP BY T5.SWINERY_ID,T5.LEAVE_DATE
+						) T1 ON T0.ROW_ID=T1.SWINERY_ID
+					WHERE T0.DELETED_FLAG = '0' 
+					AND T0.STATUS = '2'  
+					AND T0.PIG_TYPE = '3' 
+					AND T0.HOUSE_TYPE = 8
+					AND T0.END_DATE BETWEEN #{ startDate,jdbcType=DATE} AND #{ endDate,jdbcType=DATE}
+					) T2	
+				INNER JOIN hr_m_company T4 ON T2.FARM_ID=T4.ROW_ID AND T4.DELETED_FLAG='0'
+				INNER JOIN hr_m_company T5 ON (T5.DELETED_FLAG = '0' AND (T4.COMPANY_MARK = T5.COMPANY_MARK OR T4.COMPANY_MARK LIKE CONCAT(T5.COMPANY_MARK, ',%')))
+		<![CDATA[WHERE T2.AGE <> 0 ]]>
+			<if test="isLike == 1">
+  		 		AND T5.COMPANY_MARK LIKE #{companyMark}",%"
+  			</if>
+  			<if test="isLike == 0">
+  				AND T5.COMPANY_MARK = #{companyMark}
+  			</if>
+  			<if test="isIn == 1">
+  				AND T5.ACCOUNT_COMPANY_CLASS IN (3,4)
+  			</if>
+		) T0
+		GROUP  BY T0.FARM_ID
+		)T0
+		ORDER BY groupActual DESC
+	</select>
+	<!--流程指标-110KG上市日龄-->
+	<select id="searchProduceDataByTotal110SSRL" parameterType="java.util.Map" resultType="java.util.Map" >
+	<![CDATA[	
+	   	SELECT 
+		IFNULL(SUM(_getWeightByDayAge(T0.FARM_ID,'WCM_003', _getSwineryAge(T0.ROW_ID,T1.SALE_DATE,0),T1.AVG_WEIGHT)  * T1.SALE_NUM)/SUM(T1.SALE_NUM),0) groupActual
+		,T1.ROW_ID farmId,IFNULL(SUM(T1.SALE_NUM),0) pigQty
+		FROM pp_m_swinery T0  
+		INNER JOIN ( 
+			SELECT T3.ROW_ID,t0.SWINERY_ID,t0.SALE_DATE,t0.SALE_NUM,t0.AVG_WEIGHT,t0.TOTAL_WEIGHT FROM
+			(
+				SELECT T0.FARM_ID,T0.SWINERY_ID,T0.SALE_DATE,T0.SALE_NUM,T0.TOTAL_WEIGHT/T0.SALE_NUM AVG_WEIGHT,T0.TOTAL_WEIGHT,t2.SORT_NAME
+				FROM PP_L_BILL_PIG_SALE_DETAIL T0
+				INNER JOIN hr_m_company T2 
+				ON T0.FARM_ID = T2.ROW_ID AND T2.DELETED_FLAG = '0' AND T2.STATUS = 1 
+				LEFT JOIN pp_l_bill_pig_sale T3 
+				ON T0.BILL_ID =T3.BILL_ID AND T3.DELETED_FLAG='0' AND T3.STATUS='1'
+				WHERE T0.DELETED_FLAG = '0' AND T0.SALE_DESCRIBE BETWEEN 3 AND 10 AND T0.SALE_DESCRIBE <> 6 AND T0.SALE_DESCRIBE <> 7
+				AND (T2.COMPANY_MARK = #{companyMark} OR T2.COMPANY_MARK LIKE #{companyMark}",%")
+				AND T0.SALE_DATE BETWEEN #{ startDate,jdbcType=DATE}
+				AND  #{ endDate,jdbcType=DATE}
+				AND T3.SALE_TYPE<>4
+				HAVING AVG_WEIGHT >= 85 
+			)T0
+			INNER JOIN hr_m_company T2 ON T0.FARM_ID=T2.ROW_ID AND T2.DELETED_FLAG='0'
+			INNER JOIN hr_m_company T3 ON (T3.DELETED_FLAG = '0' AND (T2.COMPANY_MARK = T3.COMPANY_MARK OR T2.COMPANY_MARK LIKE CONCAT(T3.COMPANY_MARK, ',%')))]]>
+			WHERE 1=1
+			<if test="isLike == 1">
+  		 		AND T3.COMPANY_MARK LIKE #{companyMark}",%"
+  			</if>
+  			<if test="isLike == 0">
+  				AND T3.COMPANY_MARK = #{companyMark}
+  			</if>
+  			<if test="isIn == 1">
+  				AND T3.ACCOUNT_COMPANY_CLASS IN (3,4)
+  			</if>
+		) T1
+		ON  T0.ROW_ID=T1.SWINERY_ID
+		WHERE T0.SWINERY_DAYAGE >0
+		GROUP BY T1.ROW_ID
+		ORDER BY groupActual ASC
+	</select>
+	
+	<!--流程指标-窝均断奶数(总场/分场)-->
+	<select id="searchProduceDataByTotalWeaningNumber" parameterType="java.util.Map" resultType="java.util.Map" >
+	<![CDATA[	
+	   SELECT 
+	   SUM(IFNULL(T0.PIG_QTY,0))/ IF(IFNULL(T1.SOW_QTY,0) <=0 ,1, T1.SOW_QTY) groupActual,T0.FARM_ID farmId,
+	   IFNULL(T0.PIG_QTY,0) pigQty,IFNULL(T1.SOW_QTY,0) totalNumberOfLitters
+	   FROM (
+				SELECT SUM(T0.PIG_QTY)PIG_QTY,T0.FARM_ID FROM (
+				SELECT T0.CHILD_QTY PIG_QTY,T0.FARM_ID
+				FROM pp_l_bill_to_child T0
+				LEFT JOIN pp_l_pig T1
+				ON T0.FARM_ID = T1.FARM_ID AND T0.PIG_ID = T1.ROW_ID AND T1.PIG_TYPE = '3' AND T1.DELETED_FLAG = '0'
+				INNER JOIN hr_m_company T2 
+				ON T0.FARM_ID=T2.ROW_ID AND T2.DELETED_FLAG='0' AND T2.STATUS='1'
+				WHERE T0.DELETED_FLAG = '0'
+				AND T0.CHILD_DATE BETWEEN #{ startDate,jdbcType=DATE}
+				AND  #{ endDate,jdbcType=DATE}
+				AND T0.CHANGE_HOUSE_TYPE =4
+				AND (T2.COMPANY_MARK = #{companyMark} OR T2.COMPANY_MARK LIKE #{companyMark}",%")
+				GROUP BY T0.BILL_ID,T0.HOUSE_ID,T0.LINE_NUMBER
+				UNION ALL 
+				SELECT IFNULL(T3.SALE_NUM,0) PIG_QTY,T0.FARM_ID
+				FROM pp_l_bill_pig_sale T0 
+				LEFT JOIN pp_l_bill_pig_sale_detail T3 
+				ON T0.FARM_ID = T3.FARM_ID 
+				AND T0.BILL_ID = T3.BILL_ID 
+				INNER JOIN pp_o_house T2
+				ON T3.FARM_ID = T2.FARM_ID AND T3.HOUSE_ID = T2.ROW_ID AND T2.DELETED_FLAG = '0'  AND T2.HOUSE_TYPE = 6
+				INNER JOIN hr_m_company T4 
+				ON T0.FARM_ID=T4.ROW_ID AND T4.DELETED_FLAG='0' AND T4.STATUS='1'
+				WHERE T0.DELETED_FLAG = '0' 
+				AND T3.SALE_DATE BETWEEN #{ startDate,jdbcType=DATE}
+				AND  #{ endDate,jdbcType=DATE}
+				AND (T4.COMPANY_MARK = #{companyMark} OR T4.COMPANY_MARK LIKE #{companyMark}",%")]]>
+				AND T0.SALE_TYPE=1
+			)T0 
+			<if test="isTotalField == 0">
+			GROUP BY T0.FARM_ID
+			</if>
+		) T0
+	<![CDATA[
+		LEFT JOIN(
+			SELECT COUNT(T0.PIG_ID) SOW_QTY,T0.FARM_ID FROM (
+			SELECT N0.PIG_ID PIG_ID,N0.FARM_ID
+			FROM pp_l_bill_delivery N0
+			INNER JOIN (
+			SELECT H1.BILL_ID,H1.SWINERY_ID,H1.LINE_NUMBER,H1.FARM_ID
+			FROM pp_l_bill_change_swinery H1
+			WHERE H1.DELETED_FLAG = '0'
+			AND H1.SWINERY_ID IS NOT NULL
+			GROUP BY H1.BILL_ID,H1.LINE_NUMBER
+			) N1 ON N0.BILL_ID = N1.BILL_ID  AND N0.FARM_ID=N1.FARM_ID AND N0.LINE_NUMBER = N1.LINE_NUMBER
+			INNER JOIN (
+				SELECT 
+				B0.SWINERY_ID,B0.pigQty
+				FROM
+				(
+				SELECT T0.SWINERY_ID ,(COUNT(T0.SWINERY_ID) - IFNULL(T1.out_num,0) - IFNULL(T2.leaveQty,0)) pigQty 
+				FROM pp_l_bill_change_swinery T0 
+				LEFT JOIN (
+					SELECT A0.SWINERY_ID,IFNULL(SUM(IF(A0.CHANGE_SWINERY_DATE_OUT IS NOT NULL,1,0)),0) out_num ,A0.FARM_ID
+					FROM pp_l_bill_change_swinery A0 
+					INNER JOIN hr_m_company A1 ON A0.FARM_ID=A1.ROW_ID AND A1.DELETED_FLAG='0' AND A1.STATUS='1'		
+					WHERE A0.DELETED_FLAG = '0' 
+					AND A0.CHANGE_SWINERY_DATE_OUT <= #{ endDate,jdbcType=DATE} 	
+					AND A0.SWINERY_ID IS NOT NULL
+					AND (A1.COMPANY_MARK = #{companyMark} OR A1.COMPANY_MARK LIKE #{companyMark}",%")		
+					GROUP BY A0.SWINERY_ID
+				)T1 ON T0.SWINERY_ID = T1.SWINERY_ID
+				LEFT JOIN (	
+				SELECT A0.SWINERY_ID,SUM(1) leaveQty ,A0.FARM_ID
+				FROM pp_l_pig A0
+				INNER JOIN hr_m_company A1 ON A0.FARM_ID=A1.ROW_ID AND A1.DELETED_FLAG='0' AND A1.STATUS='1'
+				WHERE A0.DELETED_FLAG = '0'
+				AND A0.PIG_CLASS > 18
+				AND (A1.COMPANY_MARK = #{companyMark} OR A1.COMPANY_MARK LIKE #{companyMark}",%")
+				GROUP BY A0.SWINERY_ID
+				) T2 ON T0.SWINERY_ID = T2.SWINERY_ID
+				INNER JOIN hr_m_company T3
+				ON T0.FARM_ID=T3.ROW_ID AND T3.DELETED_FLAG='0' AND T3.STATUS='1'
+				WHERE T0.DELETED_FLAG = '0' 
+				AND (T3.COMPANY_MARK = #{companyMark} OR T3.COMPANY_MARK LIKE #{companyMark}",%")
+				 AND T0.CHANGE_SWINERY_DATE <= #{ endDate,jdbcType=DATE}
+				AND T0.SWINERY_ID IS NOT NULL
+				AND T0.PIG_TYPE = '3'
+				
+				GROUP BY T0.SWINERY_ID	
+				) B0
+				WHERE B0.pigQty = 0
+			) N2 ON N2.SWINERY_ID = N1.SWINERY_ID
+			INNER JOIN (
+				SELECT 
+				 T0.HOUSE_ID,T0.SWINERY_ID,T0.FARM_ID
+				FROM pp_l_bill_to_child T0
+				WHERE T0.DELETED_FLAG = '0'
+				AND T0.STATUS = 1
+				AND T0.CHILD_DATE BETWEEN #{ startDate,jdbcType=DATE}
+				AND  #{ endDate,jdbcType=DATE}
+				AND T0.CHANGE_HOUSE_TYPE = 4
+				GROUP BY T0.SWINERY_ID
+				UNION ALL 
+				SELECT T5.HOUSE_ID,T5.SWINERY_ID,T0.FARM_ID
+				FROM pp_l_bill_pig_sale T0 
+				LEFT JOIN pp_l_bill_pig_sale_detail T3 
+				ON T0.FARM_ID = T3.FARM_ID 
+				AND T0.BILL_ID = T3.BILL_ID 
+				INNER JOIN pp_o_house T2
+				ON T3.FARM_ID = T2.FARM_ID AND T3.HOUSE_ID = T2.ROW_ID AND T2.DELETED_FLAG = '0'  AND T2.HOUSE_TYPE = 6
+				INNER JOIN hr_m_company T4 
+				ON T0.FARM_ID=T4.ROW_ID AND T4.DELETED_FLAG='0' AND T4.STATUS='1'
+				INNER JOIN pp_l_bill_leave T5
+				ON T5.SALE_ID = T3.ROW_ID AND T0.BILL_ID = T5.BILL_ID  AND T5.DELETED_FLAG='0'
+				WHERE T0.DELETED_FLAG = '0' 
+				AND T3.SALE_DATE BETWEEN #{ startDate,jdbcType=DATE}
+				AND  #{ endDate,jdbcType=DATE}
+				AND T0.SALE_TYPE=1
+				GROUP BY T5.SWINERY_ID
+			) N3 ON N3.SWINERY_ID = N1.SWINERY_ID AND N0.FARM_ID=N3.FARM_ID
+			INNER JOIN hr_m_company N4 
+			ON N0.FARM_ID=N4.ROW_ID AND N4.DELETED_FLAG='0' AND N4.STATUS='1'
+			INNER JOIN (
+				SELECT MIN(T0.MIN_BIRTH_DATE) MIN_BIRTH_DATE FROM
+				( 
+				SELECT MIN(T1.BIRTH_DATE) MIN_BIRTH_DATE
+				FROM pp_l_bill_to_child T0
+				INNER JOIN PP_L_PIG T1 
+				ON T0.PIG_ID=T1.ROW_ID AND T1.DELETED_FLAG = '0' AND T1.STATUS='1'
+				INNER JOIN hr_m_company T2
+				ON T0.FARM_ID=T2.ROW_ID AND T2.DELETED_FLAG = '0' AND T2.STATUS='1' 
+				WHERE T0.DELETED_FLAG = '0'
+				AND T0.STATUS = 1
+				AND T0.CHILD_DATE BETWEEN #{ startDate,jdbcType=DATE}
+				AND  #{ endDate,jdbcType=DATE}
+				AND (T2.COMPANY_MARK = #{companyMark} OR T2.COMPANY_MARK LIKE #{companyMark}",%")
+				AND T0.CHANGE_HOUSE_TYPE = 4
+				UNION ALL 
+				SELECT MIN(T6.BIRTH_DATE) MIN_BIRTH_DATE
+				FROM pp_l_bill_pig_sale T0 
+				LEFT JOIN pp_l_bill_pig_sale_detail T3 
+				ON T0.FARM_ID = T3.FARM_ID 
+				AND T0.BILL_ID = T3.BILL_ID 
+				INNER JOIN pp_o_house T2
+				ON T3.FARM_ID = T2.FARM_ID AND T3.HOUSE_ID = T2.ROW_ID AND T2.DELETED_FLAG = '0'  
+				AND T2.HOUSE_TYPE = 6
+				INNER JOIN pp_l_bill_leave T5
+				ON T5.SALE_ID = T3.ROW_ID AND T0.BILL_ID = T5.BILL_ID  AND T5.DELETED_FLAG = '0'
+				INNER JOIN PP_L_PIG T6 
+				ON T6.ROW_ID=T5.PIG_ID AND T6.DELETED_FLAG = '0' AND T6.STATUS='1'
+				INNER JOIN hr_m_company T7
+				ON T0.FARM_ID=T7.ROW_ID AND T7.DELETED_FLAG = '0' AND T7.STATUS='1' 
+				WHERE T0.DELETED_FLAG = '0' 
+				AND T0.SALE_TYPE=1
+				AND T3.SALE_DATE BETWEEN #{ startDate,jdbcType=DATE}
+				AND  #{ endDate,jdbcType=DATE}
+				AND (T7.COMPANY_MARK = #{companyMark} OR T7.COMPANY_MARK LIKE #{companyMark}",%")
+				) T0
+			)N5
+			WHERE N0.DELETED_FLAG = '0'
+			AND N2.SWINERY_ID IS NOT NULL
+			AND (N4.COMPANY_MARK = #{companyMark} OR N4.COMPANY_MARK LIKE #{companyMark}",%") ]]>
+			AND N0.DELIVERY_DATE BETWEEN N5.MIN_BIRTH_DATE
+			AND  #{ endDate,jdbcType=DATE}
+			AND N3.SWINERY_ID IS NOT NULL
+			GROUP BY N0.PIG_ID) T0 
+			<if test="isTotalField == 0">
+			GROUP BY T0.FARM_ID
+			</if>
+		) T1 
+		<if test="isTotalField == 1">
+		ON 1=1
+		</if>
+		<if test="isTotalField == 0">
+		ON T0.FARM_ID=T1.FARM_ID
+		</if>
+		<if test="isTotalField == 0">
+		GROUP BY T0.FARM_ID
+		</if>
+		ORDER BY groupActual DESC
+	</select>
+	
+	<!--流程指标-断奶窝重(总场)-->
+	<select id="searchProduceDataByTotalWeaningWeight" parameterType="java.util.Map" resultType="java.util.Map" >
+	<![CDATA[	
+			SELECT IFNULL(T0.groupActual,0) groupActual,IFNULL(T0.pigQty,0) pigQty,IFNULL(T0.weanAvgAge,0) weanAvgAge,IFNULL(T0.weanAvgWeight,0) weanAvgWeight,IFNULL(T0.weanWeight,0) weanWeight
+			FROM(
+		   			SELECT _getWeightByDayAge(#{selectFarm},'WCM_001',T0.AVG_AGE,T0.AVG_WEIGHT) * IFNULL(#{weanNumber},0) groupActual,T0.PIG_QTY pigQty,
+		   			T0.AVG_AGE weanAvgAge,T0.AVG_WEIGHT weanAvgWeight, T0.AVG_WEIGHT * IFNULL(#{weanNumber},0) weanWeight
+					FROM (	
+						SELECT T0.AVG_AGE,T1.AVG_WEIGHT,T0.PIG_QTY FROM 
+							(SELECT (SUM((T3.AGE*T3.CHILD_QTY))/SUM(T3.CHILD_QTY)) AVG_AGE,SUM(T3.CHILD_QTY) PIG_QTY 
+						FROM (
+							SELECT _getSwineryAge(T0.ROW_ID,T1.CHILD_DATE,1) AGE,T1.CHILD_QTY 
+							FROM pp_m_swinery T0  
+							INNER JOIN ( 
+								SELECT T0.SWINERY_ID,T0.CHILD_DATE,COUNT(1) AS CHILD_QTY FROM pp_l_bill_to_child T0
+								INNER JOIN hr_m_company T2 
+								ON T0.FARM_ID=T2.ROW_ID AND T2.DELETED_FLAG=0 AND T2.STATUS='1'
+								WHERE T0.DELETED_FLAG=0 AND T0.STATUS = 1 
+								AND (T2.COMPANY_MARK = #{companyMark} OR T2.COMPANY_MARK LIKE #{companyMark}",%")
+								AND T0.CHILD_DATE BETWEEN #{ startDate,jdbcType=DATE}
+								AND  #{ endDate,jdbcType=DATE}
+								AND T0.CHANGE_HOUSE_TYPE = 4
+								AND T0.PIG_TYPE = 3
+								GROUP BY T0.SWINERY_ID,T0.CHILD_DATE
+								UNION ALL 
+								SELECT T5.SWINERY_ID,T5.LEAVE_DATE CHILD_DATE,COUNT(1) AS CHILD_QTY
+								FROM pp_l_bill_pig_sale T0 
+								LEFT JOIN pp_l_bill_pig_sale_detail T3 
+								ON T0.FARM_ID = T3.FARM_ID 
+								AND T0.BILL_ID = T3.BILL_ID 
+								INNER JOIN pp_o_house T2
+								ON T3.FARM_ID = T2.FARM_ID AND T3.HOUSE_ID = T2.ROW_ID AND T2.DELETED_FLAG = '0'  AND T2.HOUSE_TYPE = 6
+								INNER JOIN hr_m_company T4 
+								ON T0.FARM_ID=T4.ROW_ID AND T4.DELETED_FLAG=0 AND T4.STATUS='1'
+								INNER JOIN pp_l_bill_leave T5
+								ON T5.SALE_ID = T3.ROW_ID AND T0.BILL_ID = T5.BILL_ID  AND T5.DELETED_FLAG=0
+								WHERE T0.DELETED_FLAG = '0' AND T0.SALE_TYPE=1
+								AND T3.SALE_DATE BETWEEN #{ startDate,jdbcType=DATE}
+								AND  #{ endDate,jdbcType=DATE}
+								AND (T4.COMPANY_MARK = #{companyMark} OR T4.COMPANY_MARK LIKE #{companyMark}",%")
+								GROUP BY T5.SWINERY_ID,T5.LEAVE_DATE
+								) T1 
+								ON T0.ROW_ID=T1.SWINERY_ID
+							INNER JOIN (
+								SELECT B0.SWINERY_ID,B0.pigQty
+								FROM
+								(
+									SELECT T0.SWINERY_ID ,(COUNT(T0.SWINERY_ID) - IFNULL(T1.out_num,0) - IFNULL(T2.leaveQty,0)) pigQty 
+									FROM pp_l_bill_change_swinery T0 
+									LEFT JOIN (
+									SELECT A0.SWINERY_ID,IFNULL(SUM(IF(A0.CHANGE_SWINERY_DATE_OUT IS NOT NULL,1,0)),0) out_num ,A0.FARM_ID
+									FROM pp_l_bill_change_swinery A0
+									INNER JOIN hr_m_company A1 ON A0.FARM_ID=A1.ROW_ID AND A1.DELETED_FLAG=0 AND A1.STATUS='1' 		
+									WHERE A0.DELETED_FLAG = '0' 
+									AND A0.CHANGE_SWINERY_DATE_OUT <= #{ endDate,jdbcType=DATE}
+									AND A0.SWINERY_ID IS NOT NULL
+									AND (A1.COMPANY_MARK = #{companyMark} OR A1.COMPANY_MARK LIKE #{companyMark}",%")		
+									GROUP BY A0.SWINERY_ID
+							)T1 ON T0.SWINERY_ID = T1.SWINERY_ID
+							LEFT JOIN (	
+								SELECT A0.SWINERY_ID,SUM(1) leaveQty ,A0.FARM_ID
+								FROM pp_l_pig A0
+								INNER JOIN hr_m_company A1 ON A0.FARM_ID=A1.ROW_ID AND A1.DELETED_FLAG=0 AND A1.STATUS='1'
+								WHERE A0.DELETED_FLAG = '0'
+								AND A0.PIG_CLASS > 18
+								AND (A1.COMPANY_MARK = #{companyMark} OR A1.COMPANY_MARK LIKE #{companyMark}",%")
+								GROUP BY A0.SWINERY_ID
+							) T2 ON T0.SWINERY_ID = T2.SWINERY_ID 
+							INNER JOIN hr_m_company T3
+							ON T0.FARM_ID=T3.ROW_ID AND T3.DELETED_FLAG=0 AND T3.STATUS='1'
+							WHERE T0.DELETED_FLAG = '0' 
+							AND (T3.COMPANY_MARK = #{companyMark} OR T3.COMPANY_MARK LIKE #{companyMark}",%")
+							AND T0.CHANGE_SWINERY_DATE <= #{ endDate,jdbcType=DATE} 
+							AND T0.SWINERY_ID IS NOT NULL
+							AND T0.PIG_TYPE = '3'
+							GROUP BY T0.SWINERY_ID	
+							) B0
+							WHERE B0.pigQty = 0
+						) T2 ON T0.ROW_ID = T2.SWINERY_ID
+					) T3
+					WHERE T3.AGE <> 0
+				)T0 
+				INNER JOIN (
+					SELECT SUM(T0.WEIGHT)/COUNT(1) AVG_WEIGHT FROM (
+						SELECT T0.WEIGHT,T0.SWINERY_ID 
+						FROM (
+							SELECT T0.CHILD_WEIGHT weight,T0.SWINERY_ID FROM pp_l_bill_to_child T0 
+							INNER JOIN hr_m_company T2 
+							ON T0.FARM_ID=T2.ROW_ID AND T2.DELETED_FLAG=0 AND T2.STATUS='1' 
+							WHERE T0.DELETED_FLAG=0 AND T0.STATUS='1' 
+							AND (T2.COMPANY_MARK = #{companyMark} OR T2.COMPANY_MARK LIKE #{companyMark}",%")
+							AND T0.CHILD_DATE BETWEEN #{ startDate,jdbcType=DATE}
+							AND  #{ endDate,jdbcType=DATE} 
+							AND T0.CHANGE_HOUSE_TYPE = 4
+							AND T0.PIG_TYPE = 3
+							UNION ALL 
+							SELECT T5.LEAVE_WEIGHT weight,T5.SWINERY_ID
+							FROM pp_l_bill_pig_sale T0 
+							LEFT JOIN pp_l_bill_pig_sale_detail T3 
+							ON T0.FARM_ID = T3.FARM_ID 
+							AND T0.BILL_ID = T3.BILL_ID 
+							INNER JOIN pp_o_house T2
+							ON T3.FARM_ID = T2.FARM_ID AND T3.HOUSE_ID = T2.ROW_ID AND T2.DELETED_FLAG = '0'  AND T2.HOUSE_TYPE = 6
+							INNER JOIN hr_m_company T4 
+							ON T0.FARM_ID=T4.ROW_ID AND T4.DELETED_FLAG=0 AND T4.STATUS='1'
+							INNER JOIN pp_l_bill_leave T5
+							ON T5.SALE_ID = T3.ROW_ID AND T0.BILL_ID = T5.BILL_ID  AND T5.DELETED_FLAG=0
+							WHERE T0.DELETED_FLAG = '0' 
+							AND T0.SALE_TYPE=1
+							AND (T4.COMPANY_MARK = #{companyMark} OR T4.COMPANY_MARK LIKE #{companyMark}",%")
+							AND T3.SALE_DATE BETWEEN #{ startDate,jdbcType=DATE}
+							AND  #{ endDate,jdbcType=DATE} 
+						) T0
+						INNER JOIN (
+							SELECT 
+							B0.SWINERY_ID,B0.pigQty
+							FROM
+							(
+							SELECT T0.SWINERY_ID ,(COUNT(T0.SWINERY_ID) - IFNULL(T1.out_num,0) - IFNULL(T2.leaveQty,0)) pigQty 
+							FROM pp_l_bill_change_swinery T0 
+							LEFT JOIN (
+								SELECT A0.SWINERY_ID,IFNULL(SUM(IF(A0.CHANGE_SWINERY_DATE_OUT IS NOT NULL,1,0)),0) out_num ,A0.FARM_ID
+								FROM pp_l_bill_change_swinery A0 
+								INNER JOIN hr_m_company A1 ON A0.FARM_ID=A1.ROW_ID AND A1.DELETED_FLAG=0 AND A1.STATUS='1'		
+								WHERE A0.DELETED_FLAG = '0' 
+								AND A0.CHANGE_SWINERY_DATE_OUT <=  #{ endDate,jdbcType=DATE}
+								AND A0.SWINERY_ID IS NOT NULL
+								AND (A1.COMPANY_MARK = #{companyMark} OR A1.COMPANY_MARK LIKE #{companyMark}",%")		
+								GROUP BY A0.SWINERY_ID
+							)T1 ON T0.SWINERY_ID = T1.SWINERY_ID 
+							LEFT JOIN (	
+							SELECT A0.SWINERY_ID,SUM(1) leaveQty ,A0.FARM_ID
+							FROM pp_l_pig A0
+							INNER JOIN hr_m_company A1 ON A0.FARM_ID=A1.ROW_ID AND A1.DELETED_FLAG=0 AND A1.STATUS='1'
+							WHERE A0.DELETED_FLAG = '0'
+							AND A0.PIG_CLASS > 18
+							AND (A1.COMPANY_MARK = #{companyMark} OR A1.COMPANY_MARK LIKE #{companyMark}",%")
+							GROUP BY A0.SWINERY_ID
+							) T2 ON T0.SWINERY_ID = T2.SWINERY_ID 
+							INNER JOIN hr_m_company T3
+							ON T0.FARM_ID=T3.ROW_ID AND T3.DELETED_FLAG=0 AND T3.STATUS='1'
+							WHERE T0.DELETED_FLAG = '0' 
+							AND (T3.COMPANY_MARK = #{companyMark} OR T3.COMPANY_MARK LIKE #{companyMark}",%")
+							AND T0.CHANGE_SWINERY_DATE <=  #{ endDate,jdbcType=DATE}
+							AND T0.SWINERY_ID IS NOT NULL
+							AND T0.PIG_TYPE = '3'
+							GROUP BY T0.SWINERY_ID	
+							) B0
+							WHERE B0.pigQty = 0
+						) T1 ON T0.SWINERY_ID = T1.SWINERY_ID
+					) T0
+				)T1 
+				) T0
+			)T0
+	]]>
+	</select>
+	
+	<!--流程指标-断奶窝重(分场)-->
+	<select id="searchProduceDataByWeaningWeight" parameterType="java.util.Map" resultType="java.util.Map" >
+	<![CDATA[	
+				SELECT IFNULL(T0.groupActual,0) groupActual,IFNULL(T0.farmId,0) farmId,IFNULL(T0.pigQty,0) pigQty,IFNULL(T0.weanAvgAge,0) weanAvgAge,IFNULL(T0.weanAvgWeight,0) weanAvgWeight,IFNULL(T0.weanWeight,0) weanWeight
+				FROM (
+		   			SELECT _getWeightByDayAge(#{selectFarm},'WCM_001',T0.AVG_AGE,T0.AVG_WEIGHT) groupActual,T0.FARM_ID farmId,T0.PIG_QTY pigQty, 
+		   			T0.AVG_AGE weanAvgAge,T0.AVG_WEIGHT weanAvgWeight, T0.AVG_WEIGHT weanWeight
+		   			FROM (	
+						SELECT T0.AVG_AGE,T1.AVG_WEIGHT,T0.PIG_QTY,T0.FARM_ID FROM (	
+							SELECT T3.AGE/T3.PIG_QTY  AVG_AGE,T3.PIG_QTY,T3.FARM_ID
+							FROM (
+								SELECT SUM(_getSwineryAge(T0.ROW_ID,T1.CHILD_DATE,1) * T1.CHILD_QTY) AGE
+								,SUM(T1.CHILD_QTY) PIG_QTY,T0.FARM_ID 
+								FROM pp_m_swinery T0  
+								INNER JOIN ( 
+									SELECT T0.SWINERY_ID,T0.CHILD_DATE,COUNT(1) AS CHILD_QTY ,T0.FARM_ID
+									FROM pp_l_bill_to_child T0
+									INNER JOIN hr_m_company T2 
+									ON T0.FARM_ID=T2.ROW_ID AND T2.DELETED_FLAG=0 AND T2.STATUS='1'
+									WHERE T0.DELETED_FLAG=0 AND T0.STATUS = 1 
+									AND (T2.COMPANY_MARK = #{companyMark} OR T2.COMPANY_MARK LIKE #{companyMark}",%")
+									AND T0.CHILD_DATE BETWEEN #{ startDate,jdbcType=DATE}
+									AND  #{ endDate,jdbcType=DATE}
+									AND T0.CHANGE_HOUSE_TYPE = 4
+									AND T0.PIG_TYPE = 3
+									GROUP BY T0.SWINERY_ID,T0.CHILD_DATE
+									UNION ALL 
+									SELECT T5.SWINERY_ID,T5.LEAVE_DATE CHILD_DATE,COUNT(1) AS CHILD_QTY,T0.FARM_ID
+									FROM pp_l_bill_pig_sale T0 
+									LEFT JOIN pp_l_bill_pig_sale_detail T3 
+									ON T0.FARM_ID = T3.FARM_ID 
+									AND T0.BILL_ID = T3.BILL_ID 
+									INNER JOIN pp_o_house T2
+									ON T3.FARM_ID = T2.FARM_ID AND T3.HOUSE_ID = T2.ROW_ID AND T2.DELETED_FLAG = '0'  AND T2.HOUSE_TYPE = 6
+									INNER JOIN hr_m_company T4 
+									ON T0.FARM_ID=T4.ROW_ID AND T4.DELETED_FLAG=0 AND T4.STATUS='1'
+									INNER JOIN pp_l_bill_leave T5
+									ON T5.SALE_ID = T3.ROW_ID AND T0.BILL_ID = T5.BILL_ID  AND T5.DELETED_FLAG=0
+									WHERE T0.DELETED_FLAG = '0' AND T0.SALE_TYPE=1
+									AND T3.SALE_DATE BETWEEN #{ startDate,jdbcType=DATE}
+									AND  #{ endDate,jdbcType=DATE}
+									AND (T4.COMPANY_MARK = #{companyMark} OR T4.COMPANY_MARK LIKE #{companyMark}",%")
+									GROUP BY T5.SWINERY_ID,T5.LEAVE_DATE
+								) T1 ON T0.ROW_ID=T1.SWINERY_ID
+								INNER JOIN (
+									SELECT B0.SWINERY_ID,B0.pigQty
+									FROM
+									(
+										SELECT T0.SWINERY_ID ,(COUNT(T0.SWINERY_ID) - IFNULL(T1.out_num,0) - IFNULL(T2.leaveQty,0)) pigQty 
+										FROM pp_l_bill_change_swinery T0 
+										LEFT JOIN (
+											SELECT A0.SWINERY_ID,IFNULL(SUM(IF(A0.CHANGE_SWINERY_DATE_OUT IS NOT NULL,1,0)),0) out_num ,A0.FARM_ID
+											FROM pp_l_bill_change_swinery A0
+											INNER JOIN hr_m_company A1 ON A0.FARM_ID=A1.ROW_ID AND A1.DELETED_FLAG=0 AND A1.STATUS='1' 		
+											WHERE A0.DELETED_FLAG = '0' 
+											AND A0.CHANGE_SWINERY_DATE_OUT <= #{ endDate,jdbcType=DATE}
+											AND A0.SWINERY_ID IS NOT NULL
+											AND (A1.COMPANY_MARK = #{companyMark} OR A1.COMPANY_MARK LIKE #{companyMark}",%")		
+											GROUP BY A0.SWINERY_ID
+										)T1 ON T0.SWINERY_ID = T1.SWINERY_ID
+									LEFT JOIN (	
+										SELECT A0.SWINERY_ID,SUM(1) leaveQty ,A0.FARM_ID
+										FROM pp_l_pig A0
+										INNER JOIN hr_m_company A1 ON A0.FARM_ID=A1.ROW_ID AND A1.DELETED_FLAG=0 AND A1.STATUS='1'
+										WHERE A0.DELETED_FLAG = '0'
+										AND A0.PIG_CLASS > 18
+										AND (A1.COMPANY_MARK = #{companyMark} OR A1.COMPANY_MARK LIKE #{companyMark}",%")
+										GROUP BY A0.SWINERY_ID
+									) T2 ON T0.SWINERY_ID = T2.SWINERY_ID 
+									INNER JOIN hr_m_company T3
+									ON T0.FARM_ID=T3.ROW_ID AND T3.DELETED_FLAG=0 AND T3.STATUS='1'
+									WHERE T0.DELETED_FLAG = '0' 
+									AND (T3.COMPANY_MARK = #{companyMark} OR T3.COMPANY_MARK LIKE #{companyMark}",%")
+									AND T0.CHANGE_SWINERY_DATE <= #{ endDate,jdbcType=DATE} 
+									AND T0.SWINERY_ID IS NOT NULL
+									AND T0.PIG_TYPE = '3'
+									GROUP BY T0.SWINERY_ID	
+								) B0
+								WHERE B0.pigQty = 0
+							) T2 ON T0.ROW_ID = T2.SWINERY_ID
+							GROUP BY T0.FARM_ID
+							) T3
+							WHERE T3.AGE <> 0
+					)T0 
+				INNER JOIN (
+					
+					SELECT T0.WEIGHT/T0.PIG_QTY AVG_WEIGHT ,T0.PIG_QTY,T0.FARM_ID FROM (
+						SELECT SUM(T0.WEIGHT) WEIGHT,COUNT(*) PIG_QTY,T0.FARM_ID 
+						FROM (
+							SELECT T0.CHILD_WEIGHT weight,T0.SWINERY_ID,T0.FARM_ID 
+							FROM pp_l_bill_to_child T0 
+							INNER JOIN hr_m_company T2 
+							ON T0.FARM_ID=T2.ROW_ID AND T2.DELETED_FLAG=0 AND T2.STATUS='1' 
+							WHERE T0.DELETED_FLAG=0 AND T0.STATUS='1' 
+							AND (T2.COMPANY_MARK = #{companyMark} OR T2.COMPANY_MARK LIKE #{companyMark}",%")
+							AND T0.CHILD_DATE BETWEEN #{ startDate,jdbcType=DATE}
+							AND  #{ endDate,jdbcType=DATE} 
+							AND T0.CHANGE_HOUSE_TYPE = 4
+							AND T0.PIG_TYPE = 3
+							UNION ALL 
+							SELECT T5.LEAVE_WEIGHT weight,T5.SWINERY_ID,T0.FARM_ID
+							FROM pp_l_bill_pig_sale T0 
+							LEFT JOIN pp_l_bill_pig_sale_detail T3 
+							ON T0.FARM_ID = T3.FARM_ID 
+							AND T0.BILL_ID = T3.BILL_ID 
+							INNER JOIN pp_o_house T2
+							ON T3.FARM_ID = T2.FARM_ID AND T3.HOUSE_ID = T2.ROW_ID AND T2.DELETED_FLAG = '0'  AND T2.HOUSE_TYPE = 6
+							INNER JOIN hr_m_company T4 
+							ON T0.FARM_ID=T4.ROW_ID AND T4.DELETED_FLAG=0 AND T4.STATUS='1'
+							INNER JOIN pp_l_bill_leave T5
+							ON T5.SALE_ID = T3.ROW_ID AND T0.BILL_ID = T5.BILL_ID  AND T5.DELETED_FLAG=0
+							WHERE T0.DELETED_FLAG = '0' 
+							AND T0.SALE_TYPE=1
+							AND (T4.COMPANY_MARK = #{companyMark} OR T4.COMPANY_MARK LIKE #{companyMark}",%")
+							AND T3.SALE_DATE BETWEEN #{ startDate,jdbcType=DATE}
+							AND  #{ endDate,jdbcType=DATE} 
+						) T0
+						INNER JOIN (
+							SELECT 
+							B0.SWINERY_ID,B0.pigQty
+							FROM
+							(
+							SELECT T0.SWINERY_ID ,(COUNT(T0.SWINERY_ID) - IFNULL(T1.out_num,0) - IFNULL(T2.leaveQty,0)) pigQty 
+							FROM pp_l_bill_change_swinery T0 
+							LEFT JOIN (
+								SELECT A0.SWINERY_ID,IFNULL(SUM(IF(A0.CHANGE_SWINERY_DATE_OUT IS NOT NULL,1,0)),0) out_num ,A0.FARM_ID
+								FROM pp_l_bill_change_swinery A0 
+								INNER JOIN hr_m_company A1 ON A0.FARM_ID=A1.ROW_ID AND A1.DELETED_FLAG=0 AND A1.STATUS='1'		
+								WHERE A0.DELETED_FLAG = '0' 
+								AND A0.CHANGE_SWINERY_DATE_OUT <=  #{ endDate,jdbcType=DATE}
+								AND A0.SWINERY_ID IS NOT NULL
+								AND (A1.COMPANY_MARK = #{companyMark} OR A1.COMPANY_MARK LIKE #{companyMark}",%")		
+								GROUP BY A0.SWINERY_ID
+							)T1 ON T0.SWINERY_ID = T1.SWINERY_ID 
+							LEFT JOIN (	
+							SELECT A0.SWINERY_ID,SUM(1) leaveQty ,A0.FARM_ID
+							FROM pp_l_pig A0
+							INNER JOIN hr_m_company A1 ON A0.FARM_ID=A1.ROW_ID AND A1.DELETED_FLAG=0 AND A1.STATUS='1'
+							WHERE A0.DELETED_FLAG = '0'
+							AND A0.PIG_CLASS > 18
+							AND (A1.COMPANY_MARK = #{companyMark} OR A1.COMPANY_MARK LIKE #{companyMark}",%")
+							GROUP BY A0.SWINERY_ID
+							) T2 ON T0.SWINERY_ID = T2.SWINERY_ID 
+							INNER JOIN hr_m_company T3
+							ON T0.FARM_ID=T3.ROW_ID AND T3.DELETED_FLAG=0 AND T3.STATUS='1'
+							WHERE T0.DELETED_FLAG = '0' 
+							AND (T3.COMPANY_MARK = #{companyMark} OR T3.COMPANY_MARK LIKE #{companyMark}",%")
+							AND T0.CHANGE_SWINERY_DATE <=  #{ endDate,jdbcType=DATE}
+							AND T0.SWINERY_ID IS NOT NULL
+							AND T0.PIG_TYPE = '3'
+							GROUP BY T0.SWINERY_ID	
+							) B0
+							WHERE B0.pigQty = 0
+						) T1 ON T0.SWINERY_ID = T1.SWINERY_ID
+						GROUP BY T0.FARM_ID
+					) T0
+				)T1 ON T0.FARM_ID=T1.FARM_ID
+				) T0
+			)T0
+	]]>
+	</select>
+	
+	<!--各场关键指标对标排名 母猪存栏数/商品猪存栏数-->
+	<select id="searchProduceDataBySowAndGoodPig" parameterType="java.util.Map" resultType="java.util.Map" >
+		SELECT 
+    		<if test="isTotalField == 1">
+			IFNULL(SUM(IF(T0.PIG_CLASS IN(5,6,7,8,9,10,11) OR (T0.PIG_CLASS=24 AND T7.PIG_CLASS IN(5,6,7,8,9,10,11)),1,0 )),0) pigQty,
+			</if>
+			<if test="isTotalField == 2">
+			IFNULL(SUM(IF(T0.PIG_CLASS IN(12,13,14,15,16) OR (T0.PIG_CLASS=24 AND T7.PIG_CLASS IN(12,13,14,15,16)) ,1,0 )),0) pigQty,
+			</if>
+	    	T6.ROW_ID farmId
+	  		FROM pp_l_bill_towork T0
+			LEFT JOIN pp_l_pig T3
+			ON T0.FARM_ID=T3.FARM_ID AND T3.DELETED_FLAG='0' AND T3.STATUS='1' AND T0.PIG_ID = T3.ROW_ID 
+			LEFT JOIN hr_m_company T4
+			ON T0.FARM_ID = T4.ROW_ID AND T4.DELETED_FLAG = '0'
+			INNER JOIN hr_m_company T5 ON T0.FARM_ID=T5.ROW_ID AND T5.DELETED_FLAG='0'
+			INNER JOIN hr_m_company T6 ON (T6.DELETED_FLAG = '0' AND (T5.COMPANY_MARK = T6.COMPANY_MARK OR T5.COMPANY_MARK LIKE CONCAT(T6.COMPANY_MARK, ',%')))
+			LEFT JOIN pp_l_bill_towork T7
+			ON T0.CHANGE_PIG_CLASS_ID=T7.ROW_ID AND T7.DELETED_FLAG='0' AND T7.STATUS='1'
+			WHERE  T0.DELETED_FLAG = '0' AND T0.STATUS = '1' 
+			<![CDATA[ AND DATE(T0.TOWORK_DATE) <= #{ endDate,jdbcType=DATE}  AND (T3.ORIGIN <> 3 OR T3.ORIGIN IS NULL) 
+			AND IFNULL(DATE(T0.TOWORK_DATE_OUT),IFNULL(DATE(T3.LEAVE_DATE),DATE(DATE_ADD(NOW(),INTERVAL 1 DAY)))) > #{ endDate,jdbcType=DATE} ]]>
+			<if test="isLike == 1">
+  		 		AND T6.COMPANY_MARK LIKE #{companyMark}",%"
+  			</if>
+  			<if test="isLike == 0">
+  				AND T6.COMPANY_MARK = #{companyMark}
+  			</if>
+  			<if test="isIn == 1">
+  				AND T6.ACCOUNT_COMPANY_CLASS IN (3,4)
+  			</if>
+			GROUP BY T6.ROW_ID
+	</select>
+	
+	<!--断奶数据 头均代乳粉使用量(G)/头均教槽王使用量(G)-->
+	<select id="searchProduceDataByDrfAndJcwPig" parameterType="java.util.Map" resultType="java.util.Map" >
+		 SELECT T0.FARM_ID farmId,IF(SUM(T0.PIG_QTY)>0,SUM(T0.OUTPUT_QTY)/SUM(T0.PIG_QTY) ,0) drfAndJcw
+		 FROM sc_m_bill_output_detail T0
+		 INNER JOIN cd_m_material T2
+		 ON  T0.MATERIAL_ID = T2.ROW_ID AND T2.DELETED_FLAG = '0' AND T2.MATERIAL_FIRST_CLASS BETWEEN 21 AND 22
+		 LEFT JOIN hr_m_company T3 ON T0.FARM_ID=T3.ROW_ID AND T3.DELETED_FLAG='0'
+		 WHERE T0.DELETED_FLAG = '0' AND T0.STATUS = 3 AND T0.EVENT_CODE = 'OUTPUT_USE' AND T0.OUTPUT_SWINERY_ID IS NOT NULL 
+		 AND (T3.COMPANY_MARK=#{companyMark} OR T3.COMPANY_MARK LIKE #{companyMark}",%")
+		 <if test="drfAndJcw == 1">
+		 AND T2.MATERIAL_CLASS_NUMBER IN (21000001,21000004,21000005,21000007)
+		 </if>
+		 <if test="drfAndJcw == 2">
+		 AND T2.MATERIAL_CLASS_NUMBER IN (21000002,21000003)
+		 </if>
+		 AND T0.OUTPUT_USE_DATE BETWEEN #{ startDate,jdbcType=DATE} AND #{ endDate,jdbcType=DATE}
+		 GROUP BY T0.FARM_ID
+	</select>
+	
+	<!--生产数据数据汇总目标 肥猪料肉比(月)-->
+	<select id="searchProduceDataByFZLRB" parameterType="java.util.Map" resultType="java.util.Map" >
+	<![CDATA[	
+		SELECT IF(T0.Dynamiting>0,IFNULL(T0.outPutQty,0)/T0.Dynamiting,0) groupActual,IF(T0.Dynamiting<=0,0,T0.Dynamiting) pigQty ]]>
+		FROM(
+			SELECT (IFNULL(T0.BY_TOTAL_WEIGHT,0)-IFNULL(T1.BY_IN_TOTAL_WEIGHT,0))+(IFNULL(T2.YF_TOTAL_WEIGHT,0)-IFNULL(T3.YF_IN_TOTAL_WEIGHT,0)) Dynamiting 
+			,T4.OUTPUT_QTY outPutQty
+			FROM (
+				SELECT SUM(N0.WEIGHT) BY_TOTAL_WEIGHT
+				FROM (
+				<!-- 本月库存 -->
+					SELECT IFNULL(SUM(T0.TOTAL_WEIGHT),0) WEIGHT
+					FROM PP_L_BILL_PORK_CHECK T0
+					LEFT JOIN pp_o_house T1
+					ON T0.HOUSE_ID=T1.ROW_ID AND T1.DELETED_FLAG='0'
+					LEFT JOIN hr_m_company T2 ON T0.FARM_ID=T2.ROW_ID AND T2.DELETED_FLAG='0'
+					WHERE T0.DELETED_FLAG = '0' AND T0.STATUS = 1
+					AND (T2.COMPANY_MARK=#{companyMark} OR T2.COMPANY_MARK LIKE #{companyMark}",%")
+					AND T0.CHECK_DATE = #{ endDate,jdbcType=DATE}
+					AND T1.HOUSE_TYPE =8
+					UNION ALL 
+					<!--  销售 -->
+					SELECT IFNULL(SUM(T2.TOTAL_WEIGHT),0) WEIGHT
+					FROM pp_l_bill_pig_sale T0
+					INNER JOIN hr_m_company T1 ON T0.FARM_ID=T1.ROW_ID AND T1.DELETED_FLAG='0' AND T1.STATUS='1'
+					LEFT JOIN pp_l_bill_pig_sale_detail T2 ON T0.FARM_ID = T2.FARM_ID AND T0.BILL_ID = T2.BILL_ID AND T2.DELETED_FLAG='0' AND T2.STATUS='1'
+					LEFT JOIN pp_o_house T3 ON T2.HOUSE_ID=T3.ROW_ID AND T3.DELETED_FLAG='0'
+					WHERE T0.DELETED_FLAG = '0' 
+					AND T2.SALE_DATE BETWEEN #{ startDate,jdbcType=DATE} AND #{ endDate,jdbcType=DATE}
+					AND T3.HOUSE_TYPE =8
+					AND (T1.COMPANY_MARK=#{companyMark} OR T1.COMPANY_MARK LIKE #{companyMark}",%")
+					UNION ALL 
+					<!-- 转育肥-->
+					SELECT IFNULL(SUM(T0.CHILD_WEIGHT),0)  WEIGHT
+					FROM pp_l_bill_to_child T0
+					LEFT JOIN hr_m_company T1 ON T0.FARM_ID=T1.ROW_ID AND T1.DELETED_FLAG='0'
+					WHERE  T0.DELETED_FLAG='0'
+					AND T0.CHILD_DATE BETWEEN #{ startDate,jdbcType=DATE} AND #{ endDate,jdbcType=DATE}
+					AND (T1.COMPANY_MARK=#{companyMark} OR T1.COMPANY_MARK LIKE #{companyMark}",%")
+					AND T0.CHANGE_HOUSE_TYPE =6
+					) N0
+				) T0
+				LEFT JOIN (
+					SELECT SUM(N0.IN_WEIGHT) BY_IN_TOTAL_WEIGHT
+					FROM (
+						<!-- 上月库存-->
+						SELECT IFNULL(SUM(T0.TOTAL_WEIGHT),0) IN_WEIGHT
+						FROM PP_L_BILL_PORK_CHECK T0
+						LEFT JOIN pp_o_house T1 ON T0.HOUSE_ID=T1.ROW_ID AND T1.DELETED_FLAG='0'
+						LEFT JOIN hr_m_company T2 ON T0.FARM_ID=T2.ROW_ID AND T2.DELETED_FLAG='0'
+						WHERE T0.DELETED_FLAG = '0' AND T0.STATUS = 1
+						AND (T2.COMPANY_MARK=#{companyMark} OR T2.COMPANY_MARK LIKE #{companyMark}",%")
+						AND T0.CHECK_DATE = #{ lastMonthDate,jdbcType=DATE}
+						AND T1.HOUSE_TYPE =8
+						UNION ALL 
+						<!-- 产房转保育-->
+						SELECT SUM(T0.CHILD_WEIGHT)  IN_WEIGHT
+						FROM pp_l_bill_to_child T0
+						LEFT JOIN hr_m_company T1 ON T0.FARM_ID=T1.ROW_ID AND T1.DELETED_FLAG='0'
+						WHERE  T0.DELETED_FLAG='0'
+						AND T0.CHILD_DATE BETWEEN #{ startDate,jdbcType=DATE} AND #{ endDate,jdbcType=DATE}
+						AND (T1.COMPANY_MARK=#{companyMark} OR T1.COMPANY_MARK LIKE #{companyMark}",%")
+						AND T0.CHANGE_HOUSE_TYPE =4
+						UNION ALL 
+						<!-- 销售入场-->
+						SELECT SUM(T0.ENTER_WEIGHT) IN_WEIGHT
+						FROM pp_l_pig T0
+						LEFT JOIN hr_m_company T1 ON T0.FARM_ID=T1.ROW_ID AND T1.DELETED_FLAG='0'
+						WHERE T0.DELETED_FLAG='0' 
+						AND T0.RELATION_PIG_ID IS NOT NULL 
+						AND T0.ENTER_DATE BETWEEN #{ startDate,jdbcType=DATE} AND #{ endDate,jdbcType=DATE}
+						AND (T1.COMPANY_MARK =#{companyMark} OR T1.COMPANY_MARK LIKE #{companyMark}",%")
+						AND T0.PIG_CLASS =15 
+					)N0
+				)T1 ON 1=1
+				LEFT JOIN (
+					SELECT SUM(N0.WEIGHT) YF_TOTAL_WEIGHT
+					FROM (
+						<!-- 本月库存-->
+						SELECT IFNULL(SUM(T0.TOTAL_WEIGHT),0) WEIGHT
+						FROM PP_L_BILL_PORK_CHECK T0
+						LEFT JOIN pp_o_house T1 ON T0.HOUSE_ID=T1.ROW_ID AND T1.DELETED_FLAG='0'
+						LEFT JOIN hr_m_company T2 ON T0.FARM_ID=T2.ROW_ID AND T2.DELETED_FLAG='0'
+						WHERE T0.DELETED_FLAG = '0' AND T0.STATUS = 1
+						AND (T2.COMPANY_MARK=#{companyMark} OR T2.COMPANY_MARK LIKE #{companyMark}",%")
+						AND T0.CHECK_DATE = #{ endDate,jdbcType=DATE}
+						AND T1.HOUSE_TYPE =9
+						UNION ALL 
+						<!-- 销售（残次猪，自宰）-->
+						SELECT IFNULL(SUM(T2.TOTAL_WEIGHT),0) WEIGHT
+						FROM pp_l_bill_pig_sale T0
+						INNER JOIN hr_m_company T1 ON T0.FARM_ID=T1.ROW_ID AND T1.DELETED_FLAG='0' AND T1.STATUS='1'
+						LEFT JOIN pp_l_bill_pig_sale_detail T2 ON T0.FARM_ID = T2.FARM_ID AND T0.BILL_ID = T2.BILL_ID AND T2.DELETED_FLAG='0' AND T2.STATUS='1'
+						LEFT JOIN pp_o_house T3 ON T2.HOUSE_ID=T3.ROW_ID AND T3.DELETED_FLAG='0'
+						WHERE T0.DELETED_FLAG = '0' 
+						AND T2.SALE_DATE BETWEEN #{ startDate,jdbcType=DATE} AND #{ endDate,jdbcType=DATE}
+						AND ((T0.SALE_TYPE =1 AND T2.SALE_DESCRIBE IN (3,4,5)) OR T0.SALE_TYPE=4)
+						AND T3.HOUSE_TYPE =9
+						AND (T1.COMPANY_MARK=#{companyMark} OR T1.COMPANY_MARK LIKE #{companyMark}",%")
+						UNION ALL 
+						<!-- 转后备-->
+						SELECT IFNULL(SUM(T0.WEIGHT),0)  WEIGHT
+						FROM pp_l_bill_select_breed T0
+						LEFT JOIN hr_m_company T1 ON T0.FARM_ID=T1.ROW_ID AND T1.DELETED_FLAG='0'
+						LEFT JOIN pp_o_house T2 ON T0.HOUSE_ID=T2.ROW_ID AND T2.DELETED_FLAG='0'
+						WHERE  T0.DELETED_FLAG='0'
+						AND T0.SELETC_DATE BETWEEN #{ startDate,jdbcType=DATE} AND #{ endDate,jdbcType=DATE}
+						AND (T1.COMPANY_MARK=#{companyMark} OR T1.COMPANY_MARK LIKE #{companyMark}",%")
+						AND T2.HOUSE_TYPE =9
+						) N0
+					)T2 ON 1=1
+					LEFT JOIN (
+					SELECT SUM(N0.IN_WEIGHT) YF_IN_TOTAL_WEIGHT
+					FROM (
+						<!-- 上月库存-->
+						SELECT IFNULL(SUM(T0.TOTAL_WEIGHT),0) IN_WEIGHT
+						FROM PP_L_BILL_PORK_CHECK T0
+						LEFT JOIN pp_o_house T1 ON T0.HOUSE_ID=T1.ROW_ID AND T1.DELETED_FLAG='0'
+						LEFT JOIN hr_m_company T2 ON T0.FARM_ID=T2.ROW_ID AND T2.DELETED_FLAG='0'
+						WHERE T0.DELETED_FLAG = '0' AND T0.STATUS = 1
+						AND (T2.COMPANY_MARK=#{companyMark} OR T2.COMPANY_MARK LIKE #{companyMark}",%")
+						AND T0.CHECK_DATE = #{ lastMonthDate,jdbcType=DATE}
+						AND T1.HOUSE_TYPE =9
+						UNION ALL 
+						<!-- 保育转育肥-->
+						SELECT SUM(T0.CHILD_WEIGHT)  IN_WEIGHT
+						FROM pp_l_bill_to_child T0
+						LEFT JOIN hr_m_company T1 ON T0.FARM_ID=T1.ROW_ID AND T1.DELETED_FLAG='0'
+						WHERE  T0.DELETED_FLAG='0'
+						AND T0.CHILD_DATE BETWEEN #{ startDate,jdbcType=DATE} AND #{ endDate,jdbcType=DATE}
+						AND (T1.COMPANY_MARK=#{companyMark} OR T1.COMPANY_MARK LIKE #{companyMark}",%")
+						AND T0.CHANGE_HOUSE_TYPE =6
+						UNION ALL 
+						<!-- 猪只入场-->
+						SELECT SUM(T0.ENTER_WEIGHT) IN_WEIGHT
+						FROM pp_l_pig T0
+						LEFT JOIN hr_m_company T1 ON T0.FARM_ID=T1.ROW_ID AND T1.DELETED_FLAG='0'
+						WHERE T0.DELETED_FLAG='0' 
+						AND T0.RELATION_PIG_ID IS NOT NULL 
+						AND T0.ENTER_DATE BETWEEN #{ startDate,jdbcType=DATE} AND #{ endDate,jdbcType=DATE}
+						AND (T1.COMPANY_MARK =#{companyMark} OR T1.COMPANY_MARK LIKE #{companyMark}",%")
+						AND T0.PIG_CLASS =16
+						)N0
+					)T3 ON 1=1
+					LEFT JOIN (
+						SELECT SUM(T0.OUTPUT_QTY) OUTPUT_QTY
+						FROM sc_m_bill_output_detail T0
+						INNER JOIN cd_m_material T2
+						ON  T0.MATERIAL_ID = T2.ROW_ID AND T2.DELETED_FLAG = '0' AND T2.MATERIAL_FIRST_CLASS BETWEEN 21 AND 22
+						LEFT JOIN hr_m_company T3 ON T0.FARM_ID=T3.ROW_ID AND T3.DELETED_FLAG='0'
+						LEFT JOIN pp_o_house T4 ON T0.OUTPUT_HOUSE_ID=T4.ROW_ID AND T4.DELETED_FLAG='0'
+						WHERE T0.DELETED_FLAG = '0' AND T0.STATUS = 3 AND T0.EVENT_CODE = 'OUTPUT_USE' AND T0.OUTPUT_SWINERY_ID IS NOT NULL 
+						AND (T3.COMPANY_MARK=#{companyMark} OR T3.COMPANY_MARK LIKE #{companyMark}",%")
+						AND T0.PIG_TYPE=3
+						AND T4.HOUSE_TYPE IN (8,9)
+					)T4 ON 1=1
+				) T0
+	</select>
+	
+	<!--生产数据数据汇总目标 分场肥猪料肉比(月)-->
+	<select id="searchProduceDataByFCFZLRB" parameterType="java.util.Map" resultType="java.util.Map" >
+			SELECT A.FARM_ID AS farmId
+			,(IFNULL(A.BY_TOTAL_WEIGHT,0)+IFNULL(A.YF_TOTAL_WEIGHT,0)-IFNULL(A.BY_IN_TOTAL_WEIGHT,0)-IFNULL(A.YF_IN_TOTAL_WEIGHT,0)) AS pigQty
+			,IF((IFNULL(A.BY_TOTAL_WEIGHT,0)+IFNULL(A.YF_TOTAL_WEIGHT,0)-IFNULL(A.BY_IN_TOTAL_WEIGHT,0)-IFNULL(A.YF_IN_TOTAL_WEIGHT,0)) >0,
+			(IFNULL(A.OUTPUT_QTY,0)/(IFNULL(A.BY_TOTAL_WEIGHT,0)+IFNULL(A.YF_TOTAL_WEIGHT,0)-IFNULL(A.BY_IN_TOTAL_WEIGHT,0)-IFNULL(A.YF_IN_TOTAL_WEIGHT,0))),
+			0
+			 )AS groupActual
+			FROM (
+				SELECT SUM(T0.BY_TOTAL_WEIGHT) BY_TOTAL_WEIGHT,SUM(T0.BY_IN_TOTAL_WEIGHT) BY_IN_TOTAL_WEIGHT,SUM(T0.YF_TOTAL_WEIGHT) YF_TOTAL_WEIGHT,
+				SUM(T0.YF_IN_TOTAL_WEIGHT) YF_IN_TOTAL_WEIGHT,SUM(T0.OUTPUT_QTY) OUTPUT_QTY ,T2.ROW_ID FARM_ID FROM 
+			(
+				SELECT T0.BY_TOTAL_WEIGHT,T1.BY_IN_TOTAL_WEIGHT,T2.YF_TOTAL_WEIGHT,T3.YF_IN_TOTAL_WEIGHT,T4.OUTPUT_QTY,T4.FARM_ID
+				FROM  HR_M_COMPANY T
+				LEFT JOIN (
+					SELECT SUM(N0.WEIGHT) BY_TOTAL_WEIGHT,N0.FARM_ID
+					FROM (
+						<!-- 本月库存 -->
+						SELECT IFNULL(SUM(T0.TOTAL_WEIGHT),0) WEIGHT,T0.FARM_ID
+						FROM PP_L_BILL_PORK_CHECK T0
+						LEFT JOIN pp_o_house T1
+						ON T0.HOUSE_ID=T1.ROW_ID AND T1.DELETED_FLAG='0'
+						LEFT JOIN hr_m_company T2 ON T0.FARM_ID=T2.ROW_ID AND T2.DELETED_FLAG='0'
+						WHERE T0.DELETED_FLAG = '0' AND T0.STATUS = 1
+						AND (T2.COMPANY_MARK=#{companyMark} OR T2.COMPANY_MARK LIKE #{companyMark}",%")
+						AND T0.CHECK_DATE = #{ endDate,jdbcType=DATE}
+						AND T1.HOUSE_TYPE =8
+						GROUP BY T0.FARM_ID
+						UNION ALL 
+						<!--  销售 -->
+						SELECT IFNULL(SUM(T2.TOTAL_WEIGHT),0) WEIGHT,T0.FARM_ID
+						FROM pp_l_bill_pig_sale T0
+						INNER JOIN hr_m_company T1 ON T0.FARM_ID=T1.ROW_ID AND T1.DELETED_FLAG='0' AND T1.STATUS='1'
+						LEFT JOIN pp_l_bill_pig_sale_detail T2 ON T0.FARM_ID = T2.FARM_ID AND T0.BILL_ID = T2.BILL_ID AND T2.DELETED_FLAG='0' AND T2.STATUS='1'
+						LEFT JOIN pp_o_house T3 ON T2.HOUSE_ID=T3.ROW_ID AND T3.DELETED_FLAG='0'
+						WHERE T0.DELETED_FLAG = '0' 
+						AND T2.SALE_DATE BETWEEN #{ startDate,jdbcType=DATE} AND #{ endDate,jdbcType=DATE}
+						AND T3.HOUSE_TYPE = 8
+						AND (T1.COMPANY_MARK=#{companyMark} OR T1.COMPANY_MARK LIKE #{companyMark}",%")
+						GROUP BY T0.FARM_ID
+						UNION ALL 
+						<!-- 转育肥-->
+						SELECT SUM(IFNULL(T0.CHILD_WEIGHT,0))  WEIGHT,T0.FARM_ID
+						FROM pp_l_bill_to_child T0
+						LEFT JOIN hr_m_company T1 ON T0.FARM_ID=T1.ROW_ID AND T1.DELETED_FLAG='0'
+						WHERE  T0.DELETED_FLAG='0'
+						AND T0.CHILD_DATE BETWEEN #{ startDate,jdbcType=DATE} AND #{ endDate,jdbcType=DATE}
+						AND (T1.COMPANY_MARK=#{companyMark} OR T1.COMPANY_MARK LIKE #{companyMark}",%")
+						AND T0.CHANGE_HOUSE_TYPE =6
+						GROUP BY T0.FARM_ID
+						) N0
+						GROUP BY N0.FARM_ID
+					) T0 ON (T.ROW_ID = T0.FARM_ID)
+				LEFT JOIN (
+					SELECT SUM(N0.IN_WEIGHT) BY_IN_TOTAL_WEIGHT,N0.FARM_ID
+					FROM (
+						<!-- 上月库存-->
+						SELECT IFNULL(SUM(T0.TOTAL_WEIGHT),0) IN_WEIGHT,T0.FARM_ID
+						FROM PP_L_BILL_PORK_CHECK T0
+						LEFT JOIN pp_o_house T1 ON T0.HOUSE_ID=T1.ROW_ID AND T1.DELETED_FLAG='0'
+						LEFT JOIN hr_m_company T2 ON T0.FARM_ID=T2.ROW_ID AND T2.DELETED_FLAG='0'
+						WHERE T0.DELETED_FLAG = '0' AND T0.STATUS = 1
+						AND (T2.COMPANY_MARK=#{companyMark} OR T2.COMPANY_MARK LIKE #{companyMark}",%")
+						AND T0.CHECK_DATE = #{ lastMonthDate,jdbcType=DATE}
+						AND T1.HOUSE_TYPE =8
+						GROUP BY T0.FARM_ID
+						UNION ALL 
+						<!-- 产房转保育-->
+						SELECT SUM(T0.CHILD_WEIGHT)  IN_WEIGHT,T0.FARM_ID
+						FROM pp_l_bill_to_child T0
+						LEFT JOIN hr_m_company T1 ON T0.FARM_ID=T1.ROW_ID AND T1.DELETED_FLAG='0'
+						WHERE  T0.DELETED_FLAG='0'
+						AND T0.CHILD_DATE BETWEEN #{ startDate,jdbcType=DATE} AND #{ endDate,jdbcType=DATE}
+						AND (T1.COMPANY_MARK=#{companyMark} OR T1.COMPANY_MARK LIKE #{companyMark}",%")
+						AND T0.CHANGE_HOUSE_TYPE =4
+						GROUP BY T0.FARM_ID
+						UNION ALL 
+						<!-- 销售入场-->
+						SELECT SUM(T0.ENTER_WEIGHT) IN_WEIGHT,T0.FARM_ID
+						FROM pp_l_pig T0
+						LEFT JOIN hr_m_company T1 ON T0.FARM_ID=T1.ROW_ID AND T1.DELETED_FLAG='0'
+						WHERE T0.DELETED_FLAG='0' 
+						AND T0.RELATION_PIG_ID IS NOT NULL 
+						AND T0.ENTER_DATE BETWEEN #{ startDate,jdbcType=DATE} AND #{ endDate,jdbcType=DATE}
+						AND (T1.COMPANY_MARK =#{companyMark} OR T1.COMPANY_MARK LIKE #{companyMark}",%")
+						AND T0.PIG_CLASS =15 
+						GROUP BY T0.FARM_ID
+					)N0
+					GROUP BY N0.FARM_ID
+				)T1 ON T.ROW_ID=T1.FARM_ID
+				LEFT JOIN (
+					SELECT SUM(N0.WEIGHT) YF_TOTAL_WEIGHT,N0.FARM_ID
+					FROM (
+						<!-- 本月库存-->
+						SELECT IFNULL(SUM(T0.TOTAL_WEIGHT),0) WEIGHT,T0.FARM_ID
+						FROM PP_L_BILL_PORK_CHECK T0
+						LEFT JOIN pp_o_house T1 ON T0.HOUSE_ID=T1.ROW_ID AND T1.DELETED_FLAG='0'
+						LEFT JOIN hr_m_company T2 ON T0.FARM_ID=T2.ROW_ID AND T2.DELETED_FLAG='0'
+						WHERE T0.DELETED_FLAG = '0' AND T0.STATUS = 1
+						AND (T2.COMPANY_MARK=#{companyMark} OR T2.COMPANY_MARK LIKE #{companyMark}",%")
+						AND T0.CHECK_DATE = #{ endDate,jdbcType=DATE}
+						AND T1.HOUSE_TYPE =9
+						GROUP BY T0.FARM_ID
+						UNION ALL 
+						<!-- 销售（残次猪，自宰）-->
+						SELECT IFNULL(SUM(T2.TOTAL_WEIGHT),0) WEIGHT,T0.FARM_ID
+						FROM pp_l_bill_pig_sale T0
+						INNER JOIN hr_m_company T1 ON T0.FARM_ID=T1.ROW_ID AND T1.DELETED_FLAG='0' AND T1.STATUS='1'
+						LEFT JOIN pp_l_bill_pig_sale_detail T2 ON T0.FARM_ID = T2.FARM_ID AND T0.BILL_ID = T2.BILL_ID AND T2.DELETED_FLAG='0' AND T2.STATUS='1'
+						LEFT JOIN pp_o_house T3 ON T2.HOUSE_ID=T3.ROW_ID AND T3.DELETED_FLAG='0'
+						WHERE T0.DELETED_FLAG = '0' 
+						AND T2.SALE_DATE BETWEEN #{ startDate,jdbcType=DATE} AND #{ endDate,jdbcType=DATE}
+						AND ((T0.SALE_TYPE =1 AND T2.SALE_DESCRIBE IN (3,4,5)) OR T0.SALE_TYPE=4)
+						AND T3.HOUSE_TYPE =9
+						AND (T1.COMPANY_MARK=#{companyMark} OR T1.COMPANY_MARK LIKE #{companyMark}",%")
+						GROUP BY T0.FARM_ID
+						UNION ALL 
+						<!-- 转后备-->
+						SELECT IFNULL(SUM(T0.WEIGHT),0)  WEIGHT,T0.FARM_ID
+						FROM pp_l_bill_select_breed T0
+						LEFT JOIN hr_m_company T1 ON T0.FARM_ID=T1.ROW_ID AND T1.DELETED_FLAG='0'
+						LEFT JOIN pp_o_house T2 ON T0.HOUSE_ID=T2.ROW_ID AND T2.DELETED_FLAG='0'
+						WHERE  T0.DELETED_FLAG='0'
+						AND T0.SELETC_DATE BETWEEN #{ startDate,jdbcType=DATE} AND #{ endDate,jdbcType=DATE}
+						AND (T1.COMPANY_MARK=#{companyMark} OR T1.COMPANY_MARK LIKE #{companyMark}",%")
+						AND T2.HOUSE_TYPE =9
+						GROUP BY T0.FARM_ID
+						) N0
+						GROUP BY N0.FARM_ID
+					)T2 ON T.ROW_ID=T2.FARM_ID 
+					LEFT JOIN (
+					SELECT SUM(N0.IN_WEIGHT) YF_IN_TOTAL_WEIGHT,N0.FARM_ID
+					FROM (
+						<!-- 上月库存-->
+						SELECT IFNULL(SUM(T0.TOTAL_WEIGHT),0) IN_WEIGHT,T0.FARM_ID
+						FROM PP_L_BILL_PORK_CHECK T0
+						LEFT JOIN pp_o_house T1 ON T0.HOUSE_ID=T1.ROW_ID AND T1.DELETED_FLAG='0'
+						LEFT JOIN hr_m_company T2 ON T0.FARM_ID=T2.ROW_ID AND T2.DELETED_FLAG='0'
+						WHERE T0.DELETED_FLAG = '0' AND T0.STATUS = 1
+						AND (T2.COMPANY_MARK=#{companyMark} OR T2.COMPANY_MARK LIKE #{companyMark}",%")
+						AND T0.CHECK_DATE = #{ lastMonthDate,jdbcType=DATE}
+						AND T1.HOUSE_TYPE =9
+						GROUP BY T0.FARM_ID
+						UNION ALL 
+						<!-- 保育转育肥-->
+						SELECT SUM(T0.CHILD_WEIGHT)  IN_WEIGHT,T0.FARM_ID
+						FROM pp_l_bill_to_child T0
+						LEFT JOIN hr_m_company T1 ON T0.FARM_ID=T1.ROW_ID AND T1.DELETED_FLAG='0'
+						WHERE  T0.DELETED_FLAG='0'
+						AND T0.CHILD_DATE BETWEEN #{ startDate,jdbcType=DATE} AND #{ endDate,jdbcType=DATE}
+						AND (T1.COMPANY_MARK=#{companyMark} OR T1.COMPANY_MARK LIKE #{companyMark}",%")
+						AND T0.CHANGE_HOUSE_TYPE =6
+						GROUP BY T0.FARM_ID
+						UNION ALL 
+						<!-- 猪只入场-->
+						SELECT SUM(T0.ENTER_WEIGHT) IN_WEIGHT,T0.FARM_ID
+						FROM pp_l_pig T0
+						LEFT JOIN hr_m_company T1 ON T0.FARM_ID=T1.ROW_ID AND T1.DELETED_FLAG='0'
+						WHERE T0.DELETED_FLAG='0' 
+						AND T0.RELATION_PIG_ID IS NOT NULL 
+						AND T0.ENTER_DATE BETWEEN #{ startDate,jdbcType=DATE} AND #{ endDate,jdbcType=DATE}
+						AND (T1.COMPANY_MARK =#{companyMark} OR T1.COMPANY_MARK LIKE #{companyMark}",%")
+						AND T0.PIG_CLASS =16
+						GROUP BY T0.FARM_ID
+						)N0
+						GROUP BY N0.FARM_ID
+					)T3 ON T.ROW_ID=T3.FARM_ID
+					LEFT JOIN (
+						SELECT SUM(T0.OUTPUT_QTY) OUTPUT_QTY,T0.FARM_ID
+						FROM sc_m_bill_output_detail T0
+						INNER JOIN cd_m_material T2
+						ON  T0.MATERIAL_ID = T2.ROW_ID AND T2.DELETED_FLAG = '0' AND T2.MATERIAL_FIRST_CLASS BETWEEN 21 AND 22
+						LEFT JOIN hr_m_company T3 ON T0.FARM_ID=T3.ROW_ID AND T3.DELETED_FLAG='0'
+						LEFT JOIN pp_o_house T4 ON T0.OUTPUT_HOUSE_ID=T4.ROW_ID AND T4.DELETED_FLAG='0'
+						WHERE T0.DELETED_FLAG = '0' AND T0.STATUS = 3 AND T0.EVENT_CODE = 'OUTPUT_USE' AND T0.OUTPUT_SWINERY_ID IS NOT NULL 
+						AND (T3.COMPANY_MARK=#{companyMark} OR T3.COMPANY_MARK LIKE #{companyMark}",%")
+						AND T0.PIG_TYPE=3
+						AND T4.HOUSE_TYPE IN (8,9)
+						GROUP BY T0.FARM_ID
+					)T4 ON  T.ROW_ID=T4.FARM_ID
+					WHERE (T.COMPANY_MARK =#{companyMark} OR T.COMPANY_MARK LIKE #{companyMark}",%") AND T.DELETED_FLAG='0'
+					AND T4.OUTPUT_QTY>0
+		) T0 
+		INNER JOIN hr_m_company T1 ON T0.FARM_ID=T1.ROW_ID AND T1.DELETED_FLAG='0'
+		INNER JOIN HR_M_COMPANY T2 ON (T2.DELETED_FLAG = '0' AND (T1.COMPANY_MARK = T2.COMPANY_MARK OR T1.COMPANY_MARK LIKE CONCAT(T2.COMPANY_MARK, ',%')))
+		<if test="isLike == 1">
+	 		AND T2.COMPANY_MARK LIKE #{companyMark}",%"
+		</if>
+		<if test="isLike == 0">
+			AND T2.COMPANY_MARK = #{companyMark}
+		</if>
+		<if test="isIn == 1">
+			AND T2.ACCOUNT_COMPANY_CLASS IN (3,4)
+		</if>
+		GROUP BY T2.ROW_ID	
+			)A ORDER BY groupActual ASC
+	</select>
+	
+	<!--生产数据数据汇总目标 全场料肉比(月)-->
+	<select id="searchProduceDataByQCLRB" parameterType="java.util.Map" resultType="java.util.Map" >
+		SELECT IF(T0.TOTAL_WEIGHT>0,T0.OUTPUT_QTY/T0.TOTAL_WEIGHT,0) groupActual, IFNULL(T0.TOTAL_WEIGHT,0) pigQty
+		FROM(
+		SELECT  IF(T2.COMPANY_TYPE=2,SUM(T0.TOTAL_WEIGHT)*3,SUM(T0.TOTAL_WEIGHT) *4 )+#{fatPigDynamiting} TOTAL_WEIGHT,T3.OUTPUT_QTY
+		FROM PP_L_BILL_PORK_CHECK T0
+		LEFT JOIN pp_o_house T1 ON T0.HOUSE_ID=T1.ROW_ID AND T1.DELETED_FLAG='0'
+		LEFT JOIN hr_m_company T2 ON T0.FARM_ID=T2.ROW_ID AND T2.DELETED_FLAG='0'
+		LEFT JOIN (
+			SELECT SUM(T0.OUTPUT_QTY) OUTPUT_QTY
+			FROM sc_m_bill_output_detail T0
+			INNER JOIN cd_m_material T2
+			ON  T0.MATERIAL_ID = T2.ROW_ID AND T2.DELETED_FLAG = '0' AND T2.MATERIAL_FIRST_CLASS BETWEEN 21 AND 22
+			LEFT JOIN hr_m_company T3 ON T0.FARM_ID=T3.ROW_ID AND T3.DELETED_FLAG='0'
+			LEFT JOIN pp_o_house T4 ON T0.OUTPUT_HOUSE_ID=T4.ROW_ID AND T4.DELETED_FLAG='0'
+			WHERE T0.DELETED_FLAG = '0' AND T0.STATUS = 3 AND T0.EVENT_CODE = 'OUTPUT_USE' AND T0.OUTPUT_SWINERY_ID IS NOT NULL 
+			AND (T3.COMPANY_MARK=#{companyMark} OR T3.COMPANY_MARK LIKE #{companyMark}",%")
+			AND T0.PIG_TYPE=3
+			AND T4.HOUSE_TYPE IN (6,8,9)
+		)T3 ON 1=1
+		WHERE T0.DELETED_FLAG = '0' AND T0.STATUS = 1 
+		AND (T2.COMPANY_MARK=#{companyMark} OR T2.COMPANY_MARK LIKE #{companyMark}",%")
+		AND T0.CHECK_DATE = #{ endDate,jdbcType=DATE}
+		AND T1.HOUSE_TYPE=6
+		)T0
+	</select>
+	
+	<!--生产数据数据汇总目标 (分场)全场料肉比(月)-->
+	<select id="searchProduceDataByFCQCLRB" parameterType="java.util.Map" resultType="java.util.Map" >
+		SELECT IFNULL(SUM(T1.TOTAL_WEIGHT),0) totalWeight,T4.ROW_ID farmId,SUM(T2.OUTPUT_QTY) outputQty
+		FROM hr_m_company T0
+		LEFT JOIN (
+			SELECT  IF(T2.COMPANY_TYPE=2,SUM(T0.TOTAL_WEIGHT)*3,SUM(T0.TOTAL_WEIGHT) *4 ) TOTAL_WEIGHT,T0.FARM_ID
+			FROM PP_L_BILL_PORK_CHECK T0
+			LEFT JOIN pp_o_house T1 ON T0.HOUSE_ID=T1.ROW_ID AND T1.DELETED_FLAG='0'
+			LEFT JOIN hr_m_company T2 ON T0.FARM_ID=T2.ROW_ID AND T2.DELETED_FLAG='0'
+			WHERE T0.DELETED_FLAG = '0' AND T0.STATUS = 1 
+			AND (T2.COMPANY_MARK=#{companyMark} OR T2.COMPANY_MARK LIKE #{companyMark}",%")
+			AND T0.CHECK_DATE = #{ endDate,jdbcType=DATE}
+			AND T1.HOUSE_TYPE=6
+			GROUP BY T0.FARM_ID	
+		)T1 ON T0.ROW_ID=T1.FARM_ID
+		LEFT JOIN (
+			SELECT SUM(T0.OUTPUT_QTY) OUTPUT_QTY,T0.FARM_ID
+			FROM sc_m_bill_output_detail T0
+			INNER JOIN cd_m_material T2
+			ON  T0.MATERIAL_ID = T2.ROW_ID AND T2.DELETED_FLAG = '0' AND T2.MATERIAL_FIRST_CLASS BETWEEN 21 AND 22
+			LEFT JOIN hr_m_company T3 ON T0.FARM_ID=T3.ROW_ID AND T3.DELETED_FLAG='0'
+			LEFT JOIN pp_o_house T4 ON T0.OUTPUT_HOUSE_ID=T4.ROW_ID AND T4.DELETED_FLAG='0'
+			WHERE T0.DELETED_FLAG = '0' AND T0.STATUS = 3 AND T0.EVENT_CODE = 'OUTPUT_USE' 
+			AND T0.OUTPUT_SWINERY_ID IS NOT NULL 
+			AND (T3.COMPANY_MARK=#{companyMark} OR T3.COMPANY_MARK LIKE #{companyMark}",%")
+			AND T0.PIG_TYPE=3
+			AND T4.HOUSE_TYPE IN (6,8,9)
+			GROUP BY T0.FARM_ID
+		)T2 ON T0.ROW_ID=T2.FARM_ID
+		INNER JOIN hr_m_company T3 ON T0.ROW_ID=T3.ROW_ID AND T3.DELETED_FLAG='0'
+		INNER JOIN hr_m_company T4 ON (T4.DELETED_FLAG = '0' AND (T3.COMPANY_MARK = T4.COMPANY_MARK OR T3.COMPANY_MARK LIKE CONCAT(T4.COMPANY_MARK, ',%')))
+		WHERE T0.DELETED_FLAG='0'
+		<if test="isLike == 1">
+	 		AND T4.COMPANY_MARK LIKE #{companyMark}",%"
+		</if>
+		<if test="isLike == 0">
+			AND T4.COMPANY_MARK = #{companyMark}
+		</if>
+		<if test="isIn == 1">
+			AND T4.ACCOUNT_COMPANY_CLASS IN (3,4)
+		</if>
+		AND T2.OUTPUT_QTY>0
+		GROUP BY T4.ROW_ID
+	</select>
+	
+	<!--生产数据数据汇总目标 窝均断奶数-->
+	<select id="searchProduceDataByWJHZS" parameterType="java.util.Map" resultType="java.util.Map" >
+		<![CDATA[
+		SELECT T2.ROW_ID AS farmId,
+		CONVERT(SUBSTRING_INDEX(T2.birthChildPigQty,"-",1) ,SIGNED)  pigQty,
+		CONVERT(SUBSTRING_INDEX(T2.birthChildPigQty,"-",-1) ,SIGNED )  nests,
+		IF(SUBSTRING_INDEX(T2.birthChildPigQty,"-",-1)>0,SUBSTRING_INDEX(T2.birthChildPigQty,"-",1)/SUBSTRING_INDEX(T2.birthChildPigQty,"-",-1),0) groupActual
+		FROM (
+			SELECT T1.ROW_ID, T1.SORT_NAME, T1.COMPANY_MARK, (
+			SELECT  CONCAT(SUM(IF(_getSettingValueByCode(A.FARM_ID,'RZBSCL') = 'ON',A.HEALTHY_NUM,A.HEALTHY_NUM + A.WEAK_NUM)),'-',COUNT(1))
+					
+			FROM PP_L_BILL_DELIVERY A INNER JOIN HR_M_COMPANY B ON B.DELETED_FLAG = '0'
+			AND B.ROW_ID = A.FARM_ID
+			WHERE A.DELETED_FLAG = '0'
+				AND A.DELIVERY_DATE >= #{ startDate,jdbcType=DATE}
+				AND A.DELIVERY_DATE <= #{ endDate,jdbcType=DATE}
+				AND (T1.ACCOUNT_COMPANY_CLASS = 5
+					AND (B.COMPANY_MARK = T2.COMPANY_MARK
+						OR B.COMPANY_MARK LIKE CONCAT(T2.COMPANY_MARK, ',%'))
+					OR T1.ACCOUNT_COMPANY_CLASS <> 5
+					AND (B.COMPANY_MARK = T1.COMPANY_MARK
+						OR B.COMPANY_MARK LIKE CONCAT(T1.COMPANY_MARK, ',%')))
+			) AS birthChildPigQty
+		FROM HR_M_COMPANY T1 INNER JOIN HR_M_COMPANY T2 ON T2.DELETED_FLAG = '0'
+		AND T1.SUP_COMPANY_ID = T2.ROW_ID
+		WHERE T1.DELETED_FLAG = '0']]>
+		<if test="isLike == 1">
+	 		AND T1.COMPANY_MARK LIKE #{companyMark}",%"
+		</if>
+		<if test="isLike == 0">
+			AND T1.COMPANY_MARK = #{companyMark}
+		</if>
+		<if test="isIn == 1">
+			AND T1.ACCOUNT_COMPANY_CLASS IN (3,4)
+		</if>
+		) T2
+		WHERE  birthChildPigQty>0 
+		ORDER BY groupActual DESC
+	</select>
+	
+	<!--生产数据数据汇总目标 销售猪只均重-->
+	<select id="searchProduceDataByXSZZJZ" parameterType="java.util.Map" resultType="java.util.Map" >
+		SELECT T3.ROW_ID farmId,IF(SUM(T0.SALE_NUM)>0,IFNULL(SUM(T0.TOTAL_WEIGHT),0)/IFNULL(SUM(T0.SALE_NUM),0),0) groupActual,
+		IFNULL(SUM(T0.SALE_NUM),0) saleNum,IFNULL(SUM(T0.TOTAL_WEIGHT),0) totalWeight
+		FROM pp_l_bill_pig_sale_detail T0
+		LEFT JOIN hr_m_company T1 ON T0.FARM_ID=T1.ROW_ID AND T1.DELETED_FLAG='0'
+		INNER JOIN hr_m_company T2 ON T0.FARM_ID=T2.ROW_ID AND T2.DELETED_FLAG='0'
+		INNER JOIN hr_m_company T3 ON (T3.DELETED_FLAG = '0' AND (T2.COMPANY_MARK = T3.COMPANY_MARK OR T2.COMPANY_MARK LIKE CONCAT(T3.COMPANY_MARK, ',%')))
+		WHERE T0.SALE_DATE BETWEEN #{ startDate,jdbcType=DATE} AND #{ endDate,jdbcType=DATE} AND T0.DELETED_FLAG='0'
+		<if test="isLike == 1">
+	 		AND T3.COMPANY_MARK LIKE #{companyMark}",%"
+		</if>
+		<if test="isLike == 0">
+			AND T3.COMPANY_MARK = #{companyMark}
+		</if>
+		<if test="isIn == 1">
+			AND T3.ACCOUNT_COMPANY_CLASS IN (3,4)
+		</if>
+		GROUP BY T3.ROW_ID
+		ORDER BY groupActual DESC
+	</select>
+	
+	<!--生产数据数据汇总目标 库存猪只均重-->
+	<select id="searchProduceDataByKCZZJZ" parameterType="java.util.Map" resultType="java.util.Map" >
+		SELECT IF(SUM(T0.ACCOUNT_QTY)>0,IFNULL(SUM(T0.TOTAL_WEIGHT),0)/IFNULL(SUM(T0.ACCOUNT_QTY),0),0) groupActual,
+		IFNULL(SUM(T0.ACCOUNT_QTY),0) pigQty,T3.ROW_ID farmId,IFNULL(SUM(T0.TOTAL_WEIGHT),0) totalWeight
+		FROM pp_l_bill_pork_check T0
+		LEFT JOIN hr_m_company T1 ON T0.FARM_ID=T1.ROW_ID AND T1.DELETED_FLAG='0'
+		INNER JOIN hr_m_company T2 ON T0.FARM_ID=T2.ROW_ID AND T2.DELETED_FLAG='0'
+		INNER JOIN hr_m_company T3 ON (T3.DELETED_FLAG = '0' AND (T2.COMPANY_MARK = T3.COMPANY_MARK OR T2.COMPANY_MARK LIKE CONCAT(T3.COMPANY_MARK, ',%')))
+		WHERE T0.CHECK_DATE=#{ endDate,jdbcType=DATE} AND T0.DELETED_FLAG='0' 
+		<if test="isLike == 1">
+	 		AND T3.COMPANY_MARK LIKE #{companyMark}",%"
+		</if>
+		<if test="isLike == 0">
+			AND T3.COMPANY_MARK = #{companyMark}
+		</if>
+		<if test="isIn == 1">
+			AND T3.ACCOUNT_COMPANY_CLASS IN (3,4)
+		</if>
+		GROUP BY T3.ROW_ID
+		ORDER BY groupActual DESC
+	</select>
+	
+</mapper>
+

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.core.mapper.base.IParamMapper">
+	
+	<select id="isExist" resultType="long">
+	<![CDATA[ 
+		SELECT count(*)
+		FROM ${tableName} as p
+		WHERE p.DELETED_FLAG=0
+		]]>
+		<foreach collection="paramModel" item="item" index="index" >  
+		<![CDATA[ AND p.${item.columnName} = TRIM(BOTH ' ' FROM '${item.field}')]]>
+    	</foreach>  
+    
+		<if test="rowId != null ">
+			<![CDATA[ AND p.ROW_ID <> '${rowId}']]>
+		</if>
+	</select>
+	
+	<update id="getBCode" statementType="CALLABLE">
+		CALL P_CreateBcodeFactory(
+			#{pmsMap.typeCode,jdbcType=VARCHAR},
+			#{pmsMap.companyId,jdbcType=INTEGER},
+			#{pmsMap.farmId,jdbcType=INTEGER},
+			#{pmsMap.createId,jdbcType=INTEGER},
+			#{pmsMap.bcode,mode=OUT,jdbcType=VARCHAR},
+			#{pmsMap.errorCode,mode=OUT,jdbcType=VARCHAR},
+			#{pmsMap.errorMessage,mode=OUT,jdbcType=VARCHAR}
+		);
+	</update>
+	<select id="getSettingValueByCode" resultType="String">
+		SELECT _getSettingValueByCode(#{farmId},#{settingCode})
+	</select>
+	
+	<select id="getInfos" resultType="java.util.HashMap">
+		${sql}
+	</select>
+	
+	<select id="getInfosByList" resultType="java.util.HashMap">
+		<foreach collection="list" item="item" index="index" separator="UNION ALL" >  
+			${item}
+		</foreach>
+	</select>
+	
+	<select id="getObjectInfos" resultType="java.util.HashMap">
+		${sql}
+	</select>
+	
+	<select id="getObjectInfosByList" resultType="java.util.HashMap">
+		<foreach collection="list" item="item" index="index" separator="UNION ALL" >  
+			${item}
+		</foreach>
+	</select>
+	
+</mapper>
+

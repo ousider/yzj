@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.core.mapper.system.IpAddressesMapper">
+
+	<resultMap id="IpAddressesResult"  type="IpAddressesModel" >
+		<result property="ip" column="IP" jdbcType="VARCHAR" />
+		<result property="sortNbr" column="SORT_NBR" jdbcType="INTEGER" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="ipCountry" column="IP_COUNTRY" jdbcType="VARCHAR" />
+		<result property="ipArea" column="IP_AREA" jdbcType="VARCHAR" />
+		<result property="ipProvince" column="IP_PROVINCE" jdbcType="VARCHAR" />
+		<result property="ipCity" column="IP_CITY" jdbcType="VARCHAR" />
+		<result property="ipCounty" column="IP_COUNTY" jdbcType="VARCHAR" />
+		<result property="ipIsp" column="IP_ISP" jdbcType="VARCHAR" />
+		<result property="createId" column="CREATE_ID" jdbcType="INTEGER" />
+		<result property="createTime" column="CREATE_TIME" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="IpAddressesModel_Column_List">
+		IP,SORT_NBR,IP_COUNTRY,IP_AREA,IP_PROVINCE,IP_CITY,IP_COUNTY,IP_ISP,CREATE_ID,CREATE_TIME
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true"   parameterType="IpAddressesModel">
+		INSERT INTO SYS_L_IP_ADDRESSES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			IP,
+			SORT_NBR,
+			STATUS,
+			DELETED_FLAG,
+			IP_COUNTRY,
+			IP_AREA,
+			IP_PROVINCE,
+			IP_CITY,
+			IP_COUNTY,
+			IP_ISP,
+			CREATE_ID,
+			CREATE_TIME
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ ip,jdbcType=VARCHAR},
+			#{ sortNbr,jdbcType=INTEGER},
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ ipCountry,jdbcType=VARCHAR},
+			#{ ipArea,jdbcType=VARCHAR},
+			#{ ipProvince,jdbcType=VARCHAR},
+			#{ ipCity,jdbcType=VARCHAR},
+			#{ ipCounty,jdbcType=VARCHAR},
+			#{ ipIsp,jdbcType=VARCHAR},
+			#{ createId,jdbcType=INTEGER},
+			#{ createTime,jdbcType=TIMESTAMP}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO SYS_L_IP_ADDRESSES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			IP ,
+			SORT_NBR ,
+			STATUS ,
+			DELETED_FLAG ,
+			IP_COUNTRY ,
+			IP_AREA ,
+			IP_PROVINCE ,
+			IP_CITY ,
+			IP_COUNTY ,
+			IP_ISP ,
+			CREATE_ID ,
+			CREATE_TIME 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.ip,jdbcType=VARCHAR},
+				#{item.sortNbr,jdbcType=INTEGER},
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.ipCountry,jdbcType=VARCHAR},
+				#{item.ipArea,jdbcType=VARCHAR},
+				#{item.ipProvince,jdbcType=VARCHAR},
+				#{item.ipCity,jdbcType=VARCHAR},
+				#{item.ipCounty,jdbcType=VARCHAR},
+				#{item.ipIsp,jdbcType=VARCHAR},
+				#{item.createId,jdbcType=INTEGER},
+				#{item.createTime,jdbcType=TIMESTAMP}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="IpAddressesModel" >
+		UPDATE SYS_L_IP_ADDRESSES 
+		<set>
+		<if test="sortNbr != null">SORT_NBR = #{ sortNbr,jdbcType=INTEGER},</if>
+		<if test="status != null">STATUS = #{ status,jdbcType=CHAR},</if>
+		<if test="ipCountry != null">IP_COUNTRY = #{ ipCountry,jdbcType=VARCHAR},</if>
+		<if test="ipArea != null">IP_AREA = #{ ipArea,jdbcType=VARCHAR},</if>
+		<if test="ipProvince != null">IP_PROVINCE = #{ ipProvince,jdbcType=VARCHAR},</if>
+		<if test="ipCity != null">IP_CITY = #{ ipCity,jdbcType=VARCHAR},</if>
+		<if test="ipCounty != null">IP_COUNTY = #{ ipCounty,jdbcType=VARCHAR},</if>
+		<if test="ipIsp != null">IP_ISP = #{ ipIsp,jdbcType=VARCHAR},</if>
+		<if test="createId != null">CREATE_ID = #{ createId,jdbcType=INTEGER},</if>
+		<if test="createTime != null">CREATE_TIME = #{ createTime,jdbcType=TIMESTAMP}</if>
+		</set>
+		WHERE
+		IP = #{ ip,jdbcType=VARCHAR}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE SYS_L_IP_ADDRESSES 
+			<set>
+			<if test="item.sortNbr != null">SORT_NBR = #{item.sortNbr,jdbcType=INTEGER},</if>
+			<if test="item.status != null">STATUS = #{item.status,jdbcType=CHAR},</if>
+			<if test="item.ipCountry != null">IP_COUNTRY = #{item.ipCountry,jdbcType=VARCHAR},</if>
+			<if test="item.ipArea != null">IP_AREA = #{item.ipArea,jdbcType=VARCHAR},</if>
+			<if test="item.ipProvince != null">IP_PROVINCE = #{item.ipProvince,jdbcType=VARCHAR},</if>
+			<if test="item.ipCity != null">IP_CITY = #{item.ipCity,jdbcType=VARCHAR},</if>
+			<if test="item.ipCounty != null">IP_COUNTY = #{item.ipCounty,jdbcType=VARCHAR},</if>
+			<if test="item.ipIsp != null">IP_ISP = #{item.ipIsp,jdbcType=VARCHAR},</if>
+			<if test="item.createId != null">CREATE_ID = #{item.createId,jdbcType=INTEGER},</if>
+			<if test="item.createTime != null">CREATE_TIME = #{item.createTime,jdbcType=TIMESTAMP}</if>
+			</set>
+			WHERE
+			IP = #{item.ip,jdbcType=VARCHAR}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  SYS_L_IP_ADDRESSES
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		IP = #{ ip,jdbcType=VARCHAR}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  SYS_L_IP_ADDRESSES
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE 
+		 IP =#{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  SYS_L_IP_ADDRESSES
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' 
+		 
+		 AND ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCons" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  SYS_L_IP_ADDRESSES
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' ${item}
+		</foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="IpAddressesResult">
+		SELECT 
+		<include refid="IpAddressesModel_Column_List" />
+		FROM SYS_L_IP_ADDRESSES WHERE DELETED_FLAG='0' 
+		
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="IpAddressesResult" >
+		SELECT 
+		<include refid="IpAddressesModel_Column_List" />
+		FROM SYS_L_IP_ADDRESSES WHERE DELETED_FLAG='0'  AND
+		IP = #{ ip,jdbcType=VARCHAR}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="IpAddressesResult" >
+		SELECT 
+		<include refid="IpAddressesModel_Column_List" />
+		FROM SYS_L_IP_ADDRESSES
+		WHERE DELETED_FLAG='0'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="IpAddressesResult" >
+		SELECT 
+		<include refid="IpAddressesModel_Column_List" />
+		FROM SYS_L_IP_ADDRESSES
+		WHERE ${condition}
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAll" resultMap="IpAddressesResult" >
+		SELECT *
+		FROM SYS_L_IP_ADDRESSES
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="IpAddressesResult"> ${sql} </select>
+
+</mapper>
+

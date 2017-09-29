@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.backend.PigClassMapper">
+
+	<resultMap id="PigClassResult"  type="PigClassModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="sortNbr" column="SORT_NBR" jdbcType="INTEGER" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="originFlag" column="ORIGIN_FLAG" jdbcType="CHAR" />
+		<result property="originApp" column="ORIGIN_APP" jdbcType="VARCHAR" />
+		<result property="businessCode" column="BUSINESS_CODE" jdbcType="VARCHAR" />
+		<result property="pigClassName" column="PIG_CLASS_NAME" jdbcType="VARCHAR" />
+		<result property="pigType" column="PIG_TYPE" jdbcType="VARCHAR" />
+		<result property="beginAgeDay" column="BEGIN_AGE_DAY" jdbcType="DECIMAL" />
+		<result property="endAgeDay" column="END_AGE_DAY" jdbcType="DECIMAL" />
+		<result property="minWeight" column="MIN_WEIGHT" jdbcType="DECIMAL" />
+		<result property="maxWeight" column="MAX_WEIGHT" jdbcType="DECIMAL" />
+		<result property="description" column="DESCRIPTION" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="PigClassModel_Column_List">
+		ROW_ID,NOTES,SORT_NBR,STATUS,DELETED_FLAG,ORIGIN_FLAG,ORIGIN_APP,BUSINESS_CODE,PIG_CLASS_NAME,PIG_TYPE,BEGIN_AGE_DAY,END_AGE_DAY,MIN_WEIGHT,MAX_WEIGHT,DESCRIPTION
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="rowId" parameterType="PigClassModel">
+		INSERT INTO CD_L_PIG_CLASS
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			NOTES,
+			SORT_NBR,
+			STATUS,
+			DELETED_FLAG,
+			ORIGIN_FLAG,
+			ORIGIN_APP,
+			BUSINESS_CODE,
+			PIG_CLASS_NAME,
+			PIG_TYPE,
+			BEGIN_AGE_DAY,
+			END_AGE_DAY,
+			MIN_WEIGHT,
+			MAX_WEIGHT,
+			DESCRIPTION
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ notes,jdbcType=VARCHAR},
+			#{ sortNbr,jdbcType=INTEGER},
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ originFlag,jdbcType=CHAR},
+			#{ originApp,jdbcType=VARCHAR},
+			#{ businessCode,jdbcType=VARCHAR},
+			#{ pigClassName,jdbcType=VARCHAR},
+			#{ pigType,jdbcType=VARCHAR},
+			#{ beginAgeDay,jdbcType=DECIMAL},
+			#{ endAgeDay,jdbcType=DECIMAL},
+			#{ minWeight,jdbcType=DECIMAL},
+			#{ maxWeight,jdbcType=DECIMAL},
+			#{ description,jdbcType=VARCHAR}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO CD_L_PIG_CLASS
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			NOTES ,
+			SORT_NBR ,
+			STATUS ,
+			DELETED_FLAG ,
+			ORIGIN_FLAG ,
+			ORIGIN_APP ,
+			BUSINESS_CODE ,
+			PIG_CLASS_NAME ,
+			PIG_TYPE ,
+			BEGIN_AGE_DAY ,
+			END_AGE_DAY ,
+			MIN_WEIGHT ,
+			MAX_WEIGHT ,
+			DESCRIPTION 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.sortNbr,jdbcType=INTEGER},
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.originFlag,jdbcType=CHAR},
+				#{item.originApp,jdbcType=VARCHAR},
+				#{item.businessCode,jdbcType=VARCHAR},
+				#{item.pigClassName,jdbcType=VARCHAR},
+				#{item.pigType,jdbcType=VARCHAR},
+				#{item.beginAgeDay,jdbcType=DECIMAL},
+				#{item.endAgeDay,jdbcType=DECIMAL},
+				#{item.minWeight,jdbcType=DECIMAL},
+				#{item.maxWeight,jdbcType=DECIMAL},
+				#{item.description,jdbcType=VARCHAR}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="PigClassModel" >
+		UPDATE CD_L_PIG_CLASS 
+		<set>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="sortNbr != null">SORT_NBR = #{ sortNbr,jdbcType=INTEGER},</if>
+		<if test="originFlag != null">ORIGIN_FLAG = #{ originFlag,jdbcType=CHAR},</if>
+		<if test="originApp != null">ORIGIN_APP = #{ originApp,jdbcType=VARCHAR},</if>
+		<if test="businessCode != null">BUSINESS_CODE = #{ businessCode,jdbcType=VARCHAR},</if>
+		<if test="pigClassName != null">PIG_CLASS_NAME = #{ pigClassName,jdbcType=VARCHAR},</if>
+		<if test="pigType != null">PIG_TYPE = #{ pigType,jdbcType=VARCHAR},</if>
+		<if test="beginAgeDay != null">BEGIN_AGE_DAY = #{ beginAgeDay,jdbcType=DECIMAL},</if>
+		<if test="endAgeDay != null">END_AGE_DAY = #{ endAgeDay,jdbcType=DECIMAL},</if>
+		<if test="minWeight != null">MIN_WEIGHT = #{ minWeight,jdbcType=DECIMAL},</if>
+		<if test="maxWeight != null">MAX_WEIGHT = #{ maxWeight,jdbcType=DECIMAL},</if>
+		<if test="description != null">DESCRIPTION = #{ description,jdbcType=VARCHAR}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE CD_L_PIG_CLASS 
+			<set>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.sortNbr != null">SORT_NBR = #{item.sortNbr,jdbcType=INTEGER},</if>
+			<if test="item.originFlag != null">ORIGIN_FLAG = #{item.originFlag,jdbcType=CHAR},</if>
+			<if test="item.originApp != null">ORIGIN_APP = #{item.originApp,jdbcType=VARCHAR},</if>
+			<if test="item.businessCode != null">BUSINESS_CODE = #{item.businessCode,jdbcType=VARCHAR},</if>
+			<if test="item.pigClassName != null">PIG_CLASS_NAME = #{item.pigClassName,jdbcType=VARCHAR},</if>
+			<if test="item.pigType != null">PIG_TYPE = #{item.pigType,jdbcType=VARCHAR},</if>
+			<if test="item.beginAgeDay != null">BEGIN_AGE_DAY = #{item.beginAgeDay,jdbcType=DECIMAL},</if>
+			<if test="item.endAgeDay != null">END_AGE_DAY = #{item.endAgeDay,jdbcType=DECIMAL},</if>
+			<if test="item.minWeight != null">MIN_WEIGHT = #{item.minWeight,jdbcType=DECIMAL},</if>
+			<if test="item.maxWeight != null">MAX_WEIGHT = #{item.maxWeight,jdbcType=DECIMAL},</if>
+			<if test="item.description != null">DESCRIPTION = #{item.description,jdbcType=VARCHAR}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  CD_L_PIG_CLASS
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  CD_L_PIG_CLASS
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE ROW_ID = #{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  CD_L_PIG_CLASS
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="PigClassResult">
+		SELECT *
+		FROM CD_L_PIG_CLASS WHERE DELETED_FLAG='0' AND STATUS = '1' 
+		
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="PigClassResult" >
+		SELECT *
+		FROM CD_L_PIG_CLASS WHERE DELETED_FLAG='0' AND STATUS = '1'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="PigClassResult" >
+		SELECT *
+		FROM CD_L_PIG_CLASS
+		WHERE DELETED_FLAG='0' AND STATUS = '1'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="PigClassResult" >
+		SELECT *
+		FROM CD_L_PIG_CLASS
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="PigClassResult"> ${sql} </select>
+
+</mapper>
+

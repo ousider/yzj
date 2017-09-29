@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="xn.core.mapper.portal.CoreUserMapper">
+
+	<resultMap id="HrMCompanyResult" type="CoreCompanyModel"   >
+		<id column="T1_ROW_ID" property="rowId" jdbcType="INTEGER" />
+		<result column="T1_NOTES" property="notes" jdbcType="VARCHAR" />
+		<result column="T1_SORT_NBR" property="sortNbr" jdbcType="INTEGER" />
+		<result column="T1_STATUS" property="status" jdbcType="CHAR" />
+		<result column="T1_DELETED_FLAG" property="deletedFlag" jdbcType="CHAR" />
+		<result column="T1_ORIGIN_FLAG" property="originFlag" jdbcType="CHAR" />
+		<result column="T1_ORIGIN_APP" property="originApp" jdbcType="VARCHAR" />
+		<result column="COMPANY_CODE" property="companyCode" jdbcType="VARCHAR" />
+		<result column="COMPANY_NAME" property="companyName" jdbcType="VARCHAR" />
+		<result column="SORT_NAME" property="sortName" jdbcType="VARCHAR" />
+		<result column="COMPANY_NAME_EN" property="companyNameEn" jdbcType="VARCHAR" />
+		<result column="SUP_COMPANY_ID" property="supCompanyId" jdbcType="INTEGER" />
+		<result column="IS_BLOC" property="isBloc" jdbcType="VARCHAR" />
+		<result column="COMPANY_CLASS" property="companyClass" jdbcType="VARCHAR" />
+		<result column="COMPANY_TYPE" property="companyType" jdbcType="VARCHAR" />
+		<result column="COMPANY_SCALE" property="companyScale" jdbcType="VARCHAR" />
+		<result column="TRACE_SOURCE" property="traceSource" jdbcType="VARCHAR" />
+		<result column="TRACE_PEOPLE" property="tracePeople" jdbcType="VARCHAR" />
+		<result column="TP_CELL" property="tpCell" jdbcType="VARCHAR" />
+		<result column="PROVINCE" property="province" jdbcType="VARCHAR" />
+		<result column="CITY" property="city" jdbcType="VARCHAR" />
+		<result column="COUNTY" property="county" jdbcType="VARCHAR" />
+		<result column="COMPANY_ADDRESS" property="companyAddress" jdbcType="VARCHAR" />
+		<result column="ID_CARD" property="idCard" jdbcType="VARCHAR" />
+		<result column="LONGITUDE" property="longitude" jdbcType="DECIMAL" />
+		<result column="LATITUDE" property="latitude" jdbcType="DECIMAL" />
+		<result column="AREA" property="area" jdbcType="DECIMAL" />
+		<result column="REGISTER_TIME" property="registerTime" jdbcType="TIMESTAMP" />
+		<result column="REGISTER_IP" property="registerIp" jdbcType="VARCHAR" />
+		<result column="OPEN_TIME" property="openTime" jdbcType="TIMESTAMP" />
+		<result column="COMPANY_MARK" property="companyMark" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<resultMap id="BaseResultMap" type="CoreUserModel" extends="BaseMapper.BaseModelMap">
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="companyCode" column="COMPANY_CODE" jdbcType="VARCHAR" />
+		<result property="userName" column="USER_NAME" jdbcType="VARCHAR" />
+		<result property="nickName" column="NICK_NAME" jdbcType="VARCHAR" />
+		<result property="password" column="PASSWORD" jdbcType="VARCHAR" />
+		<result property="resetKey" column="RESET_KEY" jdbcType="VARCHAR" />
+		<result property="userType" column="USER_TYPE" jdbcType="VARCHAR" />
+		<result property="employeeId" column="EMPLOYEE_ID" jdbcType="INTEGER" />
+		<result property="isInitPw" column="IS_INIT_PW" jdbcType="VARCHAR" />
+		<result property="oaUsername" column="OA_USERNAME" jdbcType="VARCHAR" />
+		<result property="qqOpenId" column="QQ_OPEN_ID" jdbcType="VARCHAR" />
+		<result property="wechatOpenId" column="WECHAT_OPEN_ID" jdbcType="VARCHAR" />
+		<result property="qyOpenId" column="QY_OPEN_ID" jdbcType="VARCHAR" />
+		<collection property="hrCompany" javaType="CoreCompanyModel" resultMap="HrMCompanyResult" />
+	</resultMap>
+	
+	
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="Base_Column_List">
+		ROW_ID,COMPANY_CODE,USER_NAME,NICK_NAME,PASSWORD,RESET_KEY,USER_TYPE,EMPLOYEE_ID,NOTES,SORT_NBR,STATUS,DELETED_FLAG,ORIGIN_FLAG,ORIGIN_APP
+	</sql>
+
+	<!--根据用户名和公司编码登录  -->
+	<select id="userLogin" parameterType="CoreUserModel" resultMap="BaseResultMap">
+		SELECT
+		T0.ROW_ID ,
+		T0.COMPANY_CODE,
+		T0.NICK_NAME,
+		T1.COMPANY_NAME,
+		T1.SUP_COMPANY_ID,
+		T0.USER_NAME,
+		T0.`PASSWORD`,
+		T0.RESET_KEY,
+		T0.USER_TYPE,
+		T0.EMPLOYEE_ID,
+		T0.NOTES,
+		T0.SORT_NBR,
+		T0.`STATUS`,
+		T0.DELETED_FLAG,
+		T0.ORIGIN_FLAG,
+		T0.ORIGIN_APP,
+		T0.IS_INIT_PW,
+		T0.OA_USERNAME,
+		T1.ROW_ID AS T1_ROW_ID,
+		T1.NOTES AS T1_NOTES,
+		T1.SORT_NBR AS T1_SORT_NBR,
+		T1.`STATUS` AS T1_STATUS ,
+		T1.DELETED_FLAG AS T1_DELETED_FLAG,
+		T1.ORIGIN_FLAG AS T1_ORIGIN_FLAG ,
+		T1.ORIGIN_APP AS T1_ORIGIN_APP,
+		T1.COMPANY_CODE,
+		T1.SORT_NAME,
+		T1.COMPANY_NAME_EN,
+		T1.IS_BLOC,
+		T1.COMPANY_CLASS,
+		T1.COMPANY_TYPE,
+		T1.COMPANY_SCALE,
+		T1.TRACE_SOURCE,
+		T1.TRACE_PEOPLE,
+		T1.TP_CELL,
+		T1.LOGO,
+		T1.PROVINCE,
+		T1.CITY,
+		T1.COUNTY,
+		T1.COMPANY_ADDRESS,
+		T1.ID_CARD,
+		T1.COMPANY_PHOTO,
+		T1.LONGITUDE,
+		T1.LATITUDE,
+		T1.AREA,
+		T1.REGISTER_TIME,
+		T1.REGISTER_IP,
+		T1.OPEN_TIME,
+		T1.COMPANY_MARK
+		FROM
+		hr_m_user T0
+		INNER JOIN hr_m_company T1 
+		ON T0.`COMPANY_CODE` = T1.`COMPANY_CODE` 
+		AND T1.DELETED_FLAG = '0' AND T1.STATUS = '1'	
+		WHERE T1.COMPANY_CODE = #{companyCode,jdbcType=VARCHAR} 
+		AND T0.USER_NAME = #{userName,jdbcType=VARCHAR} 
+<!-- 		AND T0.PASSWORD = #{password,jdbcType=VARCHAR}  -->
+		AND T0.DELETED_FLAG = 0 AND T0.STATUS = 1
+	</select>
+	
+	<!-- 修改密码 -->
+	<update id="editPassword" >
+		UPDATE hr_m_user SET PASSWORD=#{password},IS_INIT_PW='N' where ROW_ID=#{rowId} 
+	</update>
+	
+	<!-- 更新用户表QQOpenId -->
+	<update id="updateQQOpenId" >
+		UPDATE hr_m_user SET QQ_OPEN_ID=#{oppenId} where ROW_ID=#{rowId} 
+	</update>
+	
+	<!-- 更新用户表WechatOpenId -->
+	<update id="updateWechatOpenId" >
+		UPDATE hr_m_user SET WECHAT_OPEN_ID=#{oppenId} where ROW_ID=#{rowId} 
+	</update>
+	<!-- 更新用户表qyOpenId -->
+	<update id="updateQYWechatOpenId" >
+		UPDATE hr_m_user SET QY_OPEN_ID=#{oppenId} where ROW_ID=#{rowId} 
+	</update>
+	<!--根据用户名查询所在公司  -->
+	<select id="searchUserByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+		 SELECT 
+			u.`ROW_ID`,
+			u.`COMPANY_CODE`,
+			u.`USER_NAME`,
+			u.`NICK_NAME`,
+			u.`PASSWORD`,
+			u.`RESET_KEY`,
+			u.`USER_TYPE`,
+			u.`EMPLOYEE_ID`,
+			u.`NOTES`,
+			u.`SORT_NBR`,
+			u.`STATUS`,
+			u.`DELETED_FLAG`,
+			u.`ORIGIN_FLAG`,
+			u.`ORIGIN_APP`,
+		  	c.ROW_ID AS T1_ROW_ID,
+			c.NOTES AS T1_NOTES,
+			c.SORT_NBR AS T1_SORT_NBR,
+			c.`STATUS` AS T1_STATUS ,
+			c.DELETED_FLAG AS T1_DELETED_FLAG,
+			c.ORIGIN_FLAG AS T1_ORIGIN_FLAG ,
+			c.ORIGIN_APP AS T1_ORIGIN_APP,
+			c.COMPANY_CODE,
+			c.SORT_NAME,
+			c.COMPANY_NAME_EN,
+			c.IS_BLOC,
+			c.COMPANY_CLASS,
+			c.COMPANY_TYPE,
+			c.COMPANY_SCALE,
+			c.TRACE_SOURCE,
+			c.TRACE_PEOPLE,
+			c.TP_CELL,
+			c.LOGO,
+			c.PROVINCE,
+			c.CITY,
+			c.COUNTY,
+			c.COMPANY_ADDRESS,
+			c.ID_CARD,
+			c.COMPANY_PHOTO,
+			c.LONGITUDE,
+			c.LATITUDE,
+			c.AREA,
+			c.REGISTER_TIME,
+			c.REGISTER_IP,
+			c.OPEN_TIME,
+			c.SUP_COMPANY_ID
+		 FROM  `hr_m_user` u INNER JOIN `hr_m_company` c  ON u.`COMPANY_CODE`= c.`COMPANY_CODE` AND u.`USER_NAME`=#{userName,jdbcType=VARCHAR} 
+	</select>
+	
+</mapper>
+

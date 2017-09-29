@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.production.PigEventRelatesMapper">
+
+	<resultMap id="PigEventRelatesResult"  type="PigEventRelatesModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="farmId" column="FARM_ID" jdbcType="INTEGER" />
+		<result property="companyId" column="COMPANY_ID" jdbcType="INTEGER" />
+		<result property="swineryId" column="SWINERY_ID" jdbcType="INTEGER" />
+		<result property="pigId" column="PIG_ID" jdbcType="INTEGER" />
+		<result property="lineId" column="LINE_ID" jdbcType="INTEGER" />
+		<result property="houseId" column="HOUSE_ID" jdbcType="INTEGER" />
+		<result property="pigpenId" column="PIGPEN_ID" jdbcType="INTEGER" />
+		<result property="earBrand" column="EAR_BRAND" jdbcType="VARCHAR" />
+		<result property="pigType" column="PIG_TYPE" jdbcType="VARCHAR" />
+		<result property="sex" column="SEX" jdbcType="VARCHAR" />
+		<result property="pigClass" column="PIG_CLASS" jdbcType="INTEGER" />
+		<result property="parity" column="PARITY" jdbcType="INTEGER" />
+		<result property="billId" column="BILL_ID" jdbcType="INTEGER" />
+		<result property="eventDate" column="EVENT_DATE" jdbcType="TIMESTAMP" />
+		<result property="lastBillId" column="LAST_BILL_ID" jdbcType="INTEGER" />
+		<result property="lastEventDate" column="LAST_EVENT_DATE" jdbcType="TIMESTAMP" />
+		<result property="deletedBillId" column="DELETED_BILL_ID" jdbcType="INTEGER" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="PigEventRelatesModel_Column_List">
+		ROW_ID,STATUS,DELETED_FLAG,FARM_ID,COMPANY_ID,SWINERY_ID,PIG_ID,LINE_ID,HOUSE_ID,PIGPEN_ID,EAR_BRAND,PIG_TYPE,SEX,PIG_CLASS,PARITY,BILL_ID,EVENT_DATE,LAST_BILL_ID,LAST_EVENT_DATE,DELETED_BILL_ID
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="rowId" parameterType="PigEventRelatesModel">
+		INSERT INTO PP_L_PIG_EVENT_RELATES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			STATUS,
+			DELETED_FLAG,
+			FARM_ID,
+			COMPANY_ID,
+			SWINERY_ID,
+			PIG_ID,
+			LINE_ID,
+			HOUSE_ID,
+			PIGPEN_ID,
+			EAR_BRAND,
+			PIG_TYPE,
+			SEX,
+			PIG_CLASS,
+			PARITY,
+			BILL_ID,
+			EVENT_DATE,
+			LAST_BILL_ID,
+			LAST_EVENT_DATE,
+			DELETED_BILL_ID
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ farmId,jdbcType=INTEGER},
+			#{ companyId,jdbcType=INTEGER},
+			#{ swineryId,jdbcType=INTEGER},
+			#{ pigId,jdbcType=INTEGER},
+			#{ lineId,jdbcType=INTEGER},
+			#{ houseId,jdbcType=INTEGER},
+			#{ pigpenId,jdbcType=INTEGER},
+			#{ earBrand,jdbcType=VARCHAR},
+			#{ pigType,jdbcType=VARCHAR},
+			#{ sex,jdbcType=VARCHAR},
+			#{ pigClass,jdbcType=INTEGER},
+			#{ parity,jdbcType=INTEGER},
+			#{ billId,jdbcType=INTEGER},
+			#{ eventDate,jdbcType=TIMESTAMP},
+			#{ lastBillId,jdbcType=INTEGER},
+			#{ lastEventDate,jdbcType=TIMESTAMP},
+			#{ deletedBillId,jdbcType=INTEGER}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO PP_L_PIG_EVENT_RELATES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			STATUS ,
+			DELETED_FLAG ,
+			FARM_ID ,
+			COMPANY_ID ,
+			SWINERY_ID ,
+			PIG_ID ,
+			LINE_ID ,
+			HOUSE_ID ,
+			PIGPEN_ID ,
+			EAR_BRAND ,
+			PIG_TYPE ,
+			SEX ,
+			PIG_CLASS ,
+			PARITY ,
+			BILL_ID ,
+			EVENT_DATE ,
+			LAST_BILL_ID ,
+			LAST_EVENT_DATE ,
+			DELETED_BILL_ID 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.farmId,jdbcType=INTEGER},
+				#{item.companyId,jdbcType=INTEGER},
+				#{item.swineryId,jdbcType=INTEGER},
+				#{item.pigId,jdbcType=INTEGER},
+				#{item.lineId,jdbcType=INTEGER},
+				#{item.houseId,jdbcType=INTEGER},
+				#{item.pigpenId,jdbcType=INTEGER},
+				#{item.earBrand,jdbcType=VARCHAR},
+				#{item.pigType,jdbcType=VARCHAR},
+				#{item.sex,jdbcType=VARCHAR},
+				#{item.pigClass,jdbcType=INTEGER},
+				#{item.parity,jdbcType=INTEGER},
+				#{item.billId,jdbcType=INTEGER},
+				#{item.eventDate,jdbcType=TIMESTAMP},
+				#{item.lastBillId,jdbcType=INTEGER},
+				#{item.lastEventDate,jdbcType=TIMESTAMP},
+				#{item.deletedBillId,jdbcType=INTEGER}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="PigEventRelatesModel" >
+		UPDATE PP_L_PIG_EVENT_RELATES 
+		<set>
+		<if test="swineryId != null">SWINERY_ID = #{ swineryId,jdbcType=INTEGER},</if>
+		<if test="pigId != null">PIG_ID = #{ pigId,jdbcType=INTEGER},</if>
+		<if test="lineId != null">LINE_ID = #{ lineId,jdbcType=INTEGER},</if>
+		<if test="houseId != null">HOUSE_ID = #{ houseId,jdbcType=INTEGER},</if>
+		<if test="pigpenId != null">PIGPEN_ID = #{ pigpenId,jdbcType=INTEGER},</if>
+		<if test="earBrand != null">EAR_BRAND = #{ earBrand,jdbcType=VARCHAR},</if>
+		<if test="pigType != null">PIG_TYPE = #{ pigType,jdbcType=VARCHAR},</if>
+		<if test="sex != null">SEX = #{ sex,jdbcType=VARCHAR},</if>
+		<if test="pigClass != null">PIG_CLASS = #{ pigClass,jdbcType=INTEGER},</if>
+		<if test="parity != null">PARITY = #{ parity,jdbcType=INTEGER},</if>
+		<if test="billId != null">BILL_ID = #{ billId,jdbcType=INTEGER},</if>
+		<if test="eventDate != null">EVENT_DATE = #{ eventDate,jdbcType=TIMESTAMP},</if>
+		<if test="lastBillId != null">LAST_BILL_ID = #{ lastBillId,jdbcType=INTEGER},</if>
+		<if test="lastEventDate != null">LAST_EVENT_DATE = #{ lastEventDate,jdbcType=TIMESTAMP},</if>
+		<if test="deletedBillId != null">DELETED_BILL_ID = #{ deletedBillId,jdbcType=INTEGER}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE PP_L_PIG_EVENT_RELATES 
+			<set>
+			<if test="item.swineryId != null">SWINERY_ID = #{item.swineryId,jdbcType=INTEGER},</if>
+			<if test="item.pigId != null">PIG_ID = #{item.pigId,jdbcType=INTEGER},</if>
+			<if test="item.lineId != null">LINE_ID = #{item.lineId,jdbcType=INTEGER},</if>
+			<if test="item.houseId != null">HOUSE_ID = #{item.houseId,jdbcType=INTEGER},</if>
+			<if test="item.pigpenId != null">PIGPEN_ID = #{item.pigpenId,jdbcType=INTEGER},</if>
+			<if test="item.earBrand != null">EAR_BRAND = #{item.earBrand,jdbcType=VARCHAR},</if>
+			<if test="item.pigType != null">PIG_TYPE = #{item.pigType,jdbcType=VARCHAR},</if>
+			<if test="item.sex != null">SEX = #{item.sex,jdbcType=VARCHAR},</if>
+			<if test="item.pigClass != null">PIG_CLASS = #{item.pigClass,jdbcType=INTEGER},</if>
+			<if test="item.parity != null">PARITY = #{item.parity,jdbcType=INTEGER},</if>
+			<if test="item.billId != null">BILL_ID = #{item.billId,jdbcType=INTEGER},</if>
+			<if test="item.eventDate != null">EVENT_DATE = #{item.eventDate,jdbcType=TIMESTAMP},</if>
+			<if test="item.lastBillId != null">LAST_BILL_ID = #{item.lastBillId,jdbcType=INTEGER},</if>
+			<if test="item.lastEventDate != null">LAST_EVENT_DATE = #{item.lastEventDate,jdbcType=TIMESTAMP},</if>
+			<if test="item.deletedBillId != null">DELETED_BILL_ID = #{item.deletedBillId,jdbcType=INTEGER}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  PP_L_PIG_EVENT_RELATES
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  PP_L_PIG_EVENT_RELATES
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE ROW_ID = #{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  PP_L_PIG_EVENT_RELATES
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon2" parameterType="java.util.Map" >
+	<![CDATA[ 
+		 UPDATE  PP_L_PIG_EVENT_RELATES
+		 SET
+		 DELETED_FLAG = '2', DELETED_BILL_ID = ${cancelEventBillId} WHERE DELETED_FLAG <> '2' ${condition}
+	]]>
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="PigEventRelatesResult">
+		SELECT *
+		FROM PP_L_PIG_EVENT_RELATES WHERE DELETED_FLAG='0' AND STATUS = '1' 
+		AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="PigEventRelatesResult" >
+		SELECT *
+		FROM PP_L_PIG_EVENT_RELATES WHERE DELETED_FLAG='0' AND STATUS = '1'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="PigEventRelatesResult" >
+		SELECT *
+		FROM PP_L_PIG_EVENT_RELATES
+		WHERE DELETED_FLAG='0' AND STATUS = '1'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="PigEventRelatesResult" >
+		SELECT *
+		FROM PP_L_PIG_EVENT_RELATES
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="PigEventRelatesResult"> ${sql} </select>
+
+</mapper>
+

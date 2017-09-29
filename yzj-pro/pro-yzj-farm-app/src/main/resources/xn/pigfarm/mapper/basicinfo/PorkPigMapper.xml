@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.basicinfo.PorkPigMapper">
+
+	<resultMap id="PorkPigResult"  type="PorkPigModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="sortNbr" column="SORT_NBR" jdbcType="INTEGER" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="originFlag" column="ORIGIN_FLAG" jdbcType="CHAR" />
+		<result property="originApp" column="ORIGIN_APP" jdbcType="VARCHAR" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="farmId" column="FARM_ID" jdbcType="INTEGER" />
+		<result property="companyId" column="COMPANY_ID" jdbcType="INTEGER" />
+		<result property="materialId" column="MATERIAL_ID" jdbcType="INTEGER" />
+		<result property="breedId" column="BREED_ID" jdbcType="INTEGER" />
+		<result property="strain" column="STRAIN" jdbcType="VARCHAR" />
+		<result property="bodyCondition" column="BODY_CONDITION" jdbcType="VARCHAR" />
+		<result property="color" column="COLOR" jdbcType="VARCHAR" />
+		<result property="rightTeatNum" column="RIGHT_TEAT_NUM" jdbcType="INTEGER" />
+		<result property="leftTeatNum" column="LEFT_TEAT_NUM" jdbcType="INTEGER" />
+		<result property="birthWeight" column="BIRTH_WEIGHT" jdbcType="DECIMAL" />
+		<result property="enterDayAge" column="ENTER_DAY_AGE" jdbcType="INTEGER" />
+		<result property="enterWeight" column="ENTER_WEIGHT" jdbcType="DECIMAL" />
+		<result property="mewDayAge" column="MEW_DAY_AGE" jdbcType="INTEGER" />
+		<result property="mewWeight" column="MEW_WEIGHT" jdbcType="DECIMAL" />
+		<result property="childCareDayAge" column="CHILD_CARE_DAY_AGE" jdbcType="INTEGER" />
+		<result property="childCareWeight" column="CHILD_CARE_WEIGHT" jdbcType="DECIMAL" />
+		<result property="fattenDayAge" column="FATTEN_DAY_AGE" jdbcType="INTEGER" />
+		<result property="fattenWeight" column="FATTEN_WEIGHT" jdbcType="DECIMAL" />
+		<result property="sellDayAge" column="SELL_DAY_AGE" jdbcType="INTEGER" />
+		<result property="sellWeight" column="SELL_WEIGHT" jdbcType="DECIMAL" />
+		<result property="frc" column="FRC" jdbcType="DECIMAL" />
+		<result property="boarId" column="BOAR_ID" jdbcType="INTEGER" />
+		<result property="sowId" column="SOW_ID" jdbcType="INTEGER" />
+		<result property="stockBoarId" column="STOCK_BOAR_ID" jdbcType="INTEGER" />
+		<result property="broodSowId" column="BROOD_SOW_ID" jdbcType="INTEGER" />
+		<result property="isSelect" column="IS_SELECT" jdbcType="CHAR" />
+		<result property="isDifSex" column="IS_DIF_SEX" jdbcType="CHAR" />
+		<result property="isSeed" column="IS_SEED" jdbcType="CHAR" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="PorkPigModel_Column_List">
+		ROW_ID,SORT_NBR,NOTES,MATERIAL_ID,BREED_ID,STRAIN,BODY_CONDITION,COLOR,RIGHT_TEAT_NUM,LEFT_TEAT_NUM,BIRTH_WEIGHT,ENTER_DAY_AGE,ENTER_WEIGHT,MEW_DAY_AGE,MEW_WEIGHT,CHILD_CARE_DAY_AGE,CHILD_CARE_WEIGHT,FATTEN_DAY_AGE,FATTEN_WEIGHT,SELL_DAY_AGE,SELL_WEIGHT,FRC,BOAR_ID,SOW_ID,STOCK_BOAR_ID,BROOD_SOW_ID,IS_SELECT,IS_DIF_SEX,IS_SEED
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true"   keyProperty="rowId" parameterType="PorkPigModel">
+		INSERT INTO CD_O_PORK_PIG
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR,
+			STATUS,
+			DELETED_FLAG,
+			ORIGIN_FLAG,
+			ORIGIN_APP,
+			NOTES,
+			FARM_ID,
+			COMPANY_ID,
+			MATERIAL_ID,
+			BREED_ID,
+			STRAIN,
+			BODY_CONDITION,
+			COLOR,
+			RIGHT_TEAT_NUM,
+			LEFT_TEAT_NUM,
+			BIRTH_WEIGHT,
+			ENTER_DAY_AGE,
+			ENTER_WEIGHT,
+			MEW_DAY_AGE,
+			MEW_WEIGHT,
+			CHILD_CARE_DAY_AGE,
+			CHILD_CARE_WEIGHT,
+			FATTEN_DAY_AGE,
+			FATTEN_WEIGHT,
+			SELL_DAY_AGE,
+			SELL_WEIGHT,
+			FRC,
+			BOAR_ID,
+			SOW_ID,
+			STOCK_BOAR_ID,
+			BROOD_SOW_ID,
+			IS_SELECT,
+			IS_DIF_SEX,
+			IS_SEED
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ sortNbr,jdbcType=INTEGER},
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ originFlag,jdbcType=CHAR},
+			#{ originApp,jdbcType=VARCHAR},
+			#{ notes,jdbcType=VARCHAR},
+			#{ farmId,jdbcType=INTEGER},
+			#{ companyId,jdbcType=INTEGER},
+			#{ materialId,jdbcType=INTEGER},
+			#{ breedId,jdbcType=INTEGER},
+			#{ strain,jdbcType=VARCHAR},
+			#{ bodyCondition,jdbcType=VARCHAR},
+			#{ color,jdbcType=VARCHAR},
+			#{ rightTeatNum,jdbcType=INTEGER},
+			#{ leftTeatNum,jdbcType=INTEGER},
+			#{ birthWeight,jdbcType=DECIMAL},
+			#{ enterDayAge,jdbcType=INTEGER},
+			#{ enterWeight,jdbcType=DECIMAL},
+			#{ mewDayAge,jdbcType=INTEGER},
+			#{ mewWeight,jdbcType=DECIMAL},
+			#{ childCareDayAge,jdbcType=INTEGER},
+			#{ childCareWeight,jdbcType=DECIMAL},
+			#{ fattenDayAge,jdbcType=INTEGER},
+			#{ fattenWeight,jdbcType=DECIMAL},
+			#{ sellDayAge,jdbcType=INTEGER},
+			#{ sellWeight,jdbcType=DECIMAL},
+			#{ frc,jdbcType=DECIMAL},
+			#{ boarId,jdbcType=INTEGER},
+			#{ sowId,jdbcType=INTEGER},
+			#{ stockBoarId,jdbcType=INTEGER},
+			#{ broodSowId,jdbcType=INTEGER},
+			#{ isSelect,jdbcType=CHAR},
+			#{ isDifSex,jdbcType=CHAR},
+			#{ isSeed,jdbcType=CHAR}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO CD_O_PORK_PIG
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR ,
+			STATUS ,
+			DELETED_FLAG ,
+			ORIGIN_FLAG ,
+			ORIGIN_APP ,
+			NOTES ,
+			FARM_ID ,
+			COMPANY_ID ,
+			MATERIAL_ID ,
+			BREED_ID ,
+			STRAIN ,
+			BODY_CONDITION ,
+			COLOR ,
+			RIGHT_TEAT_NUM ,
+			LEFT_TEAT_NUM ,
+			BIRTH_WEIGHT ,
+			ENTER_DAY_AGE ,
+			ENTER_WEIGHT ,
+			MEW_DAY_AGE ,
+			MEW_WEIGHT ,
+			CHILD_CARE_DAY_AGE ,
+			CHILD_CARE_WEIGHT ,
+			FATTEN_DAY_AGE ,
+			FATTEN_WEIGHT ,
+			SELL_DAY_AGE ,
+			SELL_WEIGHT ,
+			FRC ,
+			BOAR_ID ,
+			SOW_ID ,
+			STOCK_BOAR_ID ,
+			BROOD_SOW_ID ,
+			IS_SELECT ,
+			IS_DIF_SEX ,
+			IS_SEED 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.sortNbr,jdbcType=INTEGER},
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.originFlag,jdbcType=CHAR},
+				#{item.originApp,jdbcType=VARCHAR},
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.farmId,jdbcType=INTEGER},
+				#{item.companyId,jdbcType=INTEGER},
+				#{item.materialId,jdbcType=INTEGER},
+				#{item.breedId,jdbcType=INTEGER},
+				#{item.strain,jdbcType=VARCHAR},
+				#{item.bodyCondition,jdbcType=VARCHAR},
+				#{item.color,jdbcType=VARCHAR},
+				#{item.rightTeatNum,jdbcType=INTEGER},
+				#{item.leftTeatNum,jdbcType=INTEGER},
+				#{item.birthWeight,jdbcType=DECIMAL},
+				#{item.enterDayAge,jdbcType=INTEGER},
+				#{item.enterWeight,jdbcType=DECIMAL},
+				#{item.mewDayAge,jdbcType=INTEGER},
+				#{item.mewWeight,jdbcType=DECIMAL},
+				#{item.childCareDayAge,jdbcType=INTEGER},
+				#{item.childCareWeight,jdbcType=DECIMAL},
+				#{item.fattenDayAge,jdbcType=INTEGER},
+				#{item.fattenWeight,jdbcType=DECIMAL},
+				#{item.sellDayAge,jdbcType=INTEGER},
+				#{item.sellWeight,jdbcType=DECIMAL},
+				#{item.frc,jdbcType=DECIMAL},
+				#{item.boarId,jdbcType=INTEGER},
+				#{item.sowId,jdbcType=INTEGER},
+				#{item.stockBoarId,jdbcType=INTEGER},
+				#{item.broodSowId,jdbcType=INTEGER},
+				#{item.isSelect,jdbcType=CHAR},
+				#{item.isDifSex,jdbcType=CHAR},
+				#{item.isSeed,jdbcType=CHAR}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="PorkPigModel" >
+		UPDATE CD_O_PORK_PIG 
+		<set>
+		<if test="sortNbr != null">SORT_NBR = #{ sortNbr,jdbcType=INTEGER},</if>
+		<if test="status != null">STATUS = #{ status,jdbcType=CHAR},</if>
+		<if test="originFlag != null">ORIGIN_FLAG = #{ originFlag,jdbcType=CHAR},</if>
+		<if test="originApp != null">ORIGIN_APP = #{ originApp,jdbcType=VARCHAR},</if>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="materialId != null">MATERIAL_ID = #{ materialId,jdbcType=INTEGER},</if>
+		<if test="breedId != null">BREED_ID = #{ breedId,jdbcType=INTEGER},</if>
+		<if test="strain != null">STRAIN = #{ strain,jdbcType=VARCHAR},</if>
+		<if test="bodyCondition != null">BODY_CONDITION = #{ bodyCondition,jdbcType=VARCHAR},</if>
+		<if test="color != null">COLOR = #{ color,jdbcType=VARCHAR},</if>
+		<if test="rightTeatNum != null">RIGHT_TEAT_NUM = #{ rightTeatNum,jdbcType=INTEGER},</if>
+		<if test="leftTeatNum != null">LEFT_TEAT_NUM = #{ leftTeatNum,jdbcType=INTEGER},</if>
+		<if test="birthWeight != null">BIRTH_WEIGHT = #{ birthWeight,jdbcType=DECIMAL},</if>
+		<if test="enterDayAge != null">ENTER_DAY_AGE = #{ enterDayAge,jdbcType=INTEGER},</if>
+		<if test="enterWeight != null">ENTER_WEIGHT = #{ enterWeight,jdbcType=DECIMAL},</if>
+		<if test="mewDayAge != null">MEW_DAY_AGE = #{ mewDayAge,jdbcType=INTEGER},</if>
+		<if test="mewWeight != null">MEW_WEIGHT = #{ mewWeight,jdbcType=DECIMAL},</if>
+		<if test="childCareDayAge != null">CHILD_CARE_DAY_AGE = #{ childCareDayAge,jdbcType=INTEGER},</if>
+		<if test="childCareWeight != null">CHILD_CARE_WEIGHT = #{ childCareWeight,jdbcType=DECIMAL},</if>
+		<if test="fattenDayAge != null">FATTEN_DAY_AGE = #{ fattenDayAge,jdbcType=INTEGER},</if>
+		<if test="fattenWeight != null">FATTEN_WEIGHT = #{ fattenWeight,jdbcType=DECIMAL},</if>
+		<if test="sellDayAge != null">SELL_DAY_AGE = #{ sellDayAge,jdbcType=INTEGER},</if>
+		<if test="sellWeight != null">SELL_WEIGHT = #{ sellWeight,jdbcType=DECIMAL},</if>
+		<if test="frc != null">FRC = #{ frc,jdbcType=DECIMAL},</if>
+		<if test="boarId != null">BOAR_ID = #{ boarId,jdbcType=INTEGER},</if>
+		<if test="sowId != null">SOW_ID = #{ sowId,jdbcType=INTEGER},</if>
+		<if test="stockBoarId != null">STOCK_BOAR_ID = #{ stockBoarId,jdbcType=INTEGER},</if>
+		<if test="broodSowId != null">BROOD_SOW_ID = #{ broodSowId,jdbcType=INTEGER},</if>
+		<if test="isSelect != null">IS_SELECT = #{ isSelect,jdbcType=CHAR},</if>
+		<if test="isDifSex != null">IS_DIF_SEX = #{ isDifSex,jdbcType=CHAR},</if>
+		<if test="isSeed != null">IS_SEED = #{ isSeed,jdbcType=CHAR}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE CD_O_PORK_PIG 
+			<set>
+			<if test="item.sortNbr != null">SORT_NBR = #{item.sortNbr,jdbcType=INTEGER},</if>
+			<if test="item.status != null">STATUS = #{item.status,jdbcType=CHAR},</if>
+			<if test="item.originFlag != null">ORIGIN_FLAG = #{item.originFlag,jdbcType=CHAR},</if>
+			<if test="item.originApp != null">ORIGIN_APP = #{item.originApp,jdbcType=VARCHAR},</if>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.materialId != null">MATERIAL_ID = #{item.materialId,jdbcType=INTEGER},</if>
+			<if test="item.breedId != null">BREED_ID = #{item.breedId,jdbcType=INTEGER},</if>
+			<if test="item.strain != null">STRAIN = #{item.strain,jdbcType=VARCHAR},</if>
+			<if test="item.bodyCondition != null">BODY_CONDITION = #{item.bodyCondition,jdbcType=VARCHAR},</if>
+			<if test="item.color != null">COLOR = #{item.color,jdbcType=VARCHAR},</if>
+			<if test="item.rightTeatNum != null">RIGHT_TEAT_NUM = #{item.rightTeatNum,jdbcType=INTEGER},</if>
+			<if test="item.leftTeatNum != null">LEFT_TEAT_NUM = #{item.leftTeatNum,jdbcType=INTEGER},</if>
+			<if test="item.birthWeight != null">BIRTH_WEIGHT = #{item.birthWeight,jdbcType=DECIMAL},</if>
+			<if test="item.enterDayAge != null">ENTER_DAY_AGE = #{item.enterDayAge,jdbcType=INTEGER},</if>
+			<if test="item.enterWeight != null">ENTER_WEIGHT = #{item.enterWeight,jdbcType=DECIMAL},</if>
+			<if test="item.mewDayAge != null">MEW_DAY_AGE = #{item.mewDayAge,jdbcType=INTEGER},</if>
+			<if test="item.mewWeight != null">MEW_WEIGHT = #{item.mewWeight,jdbcType=DECIMAL},</if>
+			<if test="item.childCareDayAge != null">CHILD_CARE_DAY_AGE = #{item.childCareDayAge,jdbcType=INTEGER},</if>
+			<if test="item.childCareWeight != null">CHILD_CARE_WEIGHT = #{item.childCareWeight,jdbcType=DECIMAL},</if>
+			<if test="item.fattenDayAge != null">FATTEN_DAY_AGE = #{item.fattenDayAge,jdbcType=INTEGER},</if>
+			<if test="item.fattenWeight != null">FATTEN_WEIGHT = #{item.fattenWeight,jdbcType=DECIMAL},</if>
+			<if test="item.sellDayAge != null">SELL_DAY_AGE = #{item.sellDayAge,jdbcType=INTEGER},</if>
+			<if test="item.sellWeight != null">SELL_WEIGHT = #{item.sellWeight,jdbcType=DECIMAL},</if>
+			<if test="item.frc != null">FRC = #{item.frc,jdbcType=DECIMAL},</if>
+			<if test="item.boarId != null">BOAR_ID = #{item.boarId,jdbcType=INTEGER},</if>
+			<if test="item.sowId != null">SOW_ID = #{item.sowId,jdbcType=INTEGER},</if>
+			<if test="item.stockBoarId != null">STOCK_BOAR_ID = #{item.stockBoarId,jdbcType=INTEGER},</if>
+			<if test="item.broodSowId != null">BROOD_SOW_ID = #{item.broodSowId,jdbcType=INTEGER},</if>
+			<if test="item.isSelect != null">IS_SELECT = #{item.isSelect,jdbcType=CHAR},</if>
+			<if test="item.isDifSex != null">IS_DIF_SEX = #{item.isDifSex,jdbcType=CHAR},</if>
+			<if test="item.isSeed != null">IS_SEED = #{item.isSeed,jdbcType=CHAR}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  CD_O_PORK_PIG
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  CD_O_PORK_PIG
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE 
+		 ROW_ID =#{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  CD_O_PORK_PIG
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' 
+		 AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+		 AND ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCons" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  CD_O_PORK_PIG
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' ${item}
+		</foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="PorkPigResult">
+		SELECT 
+		<include refid="PorkPigModel_Column_List" />
+		FROM CD_O_PORK_PIG WHERE DELETED_FLAG='0' 
+		AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="PorkPigResult" >
+		SELECT 
+		<include refid="PorkPigModel_Column_List" />
+		FROM CD_O_PORK_PIG WHERE DELETED_FLAG='0'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="PorkPigResult" >
+		SELECT 
+		<include refid="PorkPigModel_Column_List" />
+		FROM CD_O_PORK_PIG
+		WHERE DELETED_FLAG='0'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="PorkPigResult" >
+		SELECT 
+		<include refid="PorkPigModel_Column_List" />
+		FROM CD_O_PORK_PIG
+		WHERE ${condition}
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAll" resultMap="PorkPigResult" >
+		SELECT *
+		FROM CD_O_PORK_PIG
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="PorkPigResult"> ${sql} </select>
+
+</mapper>
+

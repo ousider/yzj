@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.basicinfo.HouseStatusMapper">
+
+	<resultMap id="HouseStatusResult"  type="HouseStatusModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="sortNbr" column="SORT_NBR" jdbcType="INTEGER" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="originFlag" column="ORIGIN_FLAG" jdbcType="CHAR" />
+		<result property="originApp" column="ORIGIN_APP" jdbcType="VARCHAR" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="farmId" column="FARM_ID" jdbcType="INTEGER" />
+		<result property="companyId" column="COMPANY_ID" jdbcType="INTEGER" />
+		<result property="houseId" column="HOUSE_ID" jdbcType="INTEGER" />
+		<result property="collectDate" column="COLLECT_DATE" jdbcType="DATE" />
+		<result property="pigNum" column="PIG_NUM" jdbcType="INTEGER" />
+		<result property="houseSatus" column="HOUSE_SATUS" jdbcType="INTEGER" />
+		<result property="feedDose" column="FEED_DOSE" jdbcType="VARCHAR" />
+		<result property="useDrug" column="USE_DRUG" jdbcType="VARCHAR" />
+		<result property="immune" column="IMMUNE" jdbcType="VARCHAR" />
+		<result property="minTemp" column="MIN_TEMP" jdbcType="DECIMAL" />
+		<result property="maxTemp" column="MAX_TEMP" jdbcType="DECIMAL" />
+		<result property="dayage" column="DAYAGE" jdbcType="INTEGER" />
+		<result property="swineryHealth" column="SWINERY_HEALTH" jdbcType="INTEGER" />
+		<result property="sowDieObsolete" column="SOW_DIE_OBSOLETE" jdbcType="INTEGER" />
+		<result property="dieNum" column="DIE_NUM" jdbcType="INTEGER" />
+		<result property="collectId" column="COLLECT_ID" jdbcType="INTEGER" />
+		<result property="createTime" column="CREATE_TIME" jdbcType="TIMESTAMP" />
+		<result property="diarrheaNum" column="DIARRHEA_NUM" jdbcType="INTEGER" />
+		<result property="gaspRate" column="GASP_RATE" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="HouseStatusModel_Column_List">
+		ROW_ID,SORT_NBR,NOTES,HOUSE_ID,COLLECT_DATE,PIG_NUM,HOUSE_SATUS,FEED_DOSE,USE_DRUG,IMMUNE,MIN_TEMP,MAX_TEMP,DAYAGE,SWINERY_HEALTH,SOW_DIE_OBSOLETE,DIE_NUM,COLLECT_ID,CREATE_TIME,DIARRHEA_NUM,GASP_RATE
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true"   parameterType="HouseStatusModel">
+		INSERT INTO CD_M_HOUSE_STATUS
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ROW_ID,
+			SORT_NBR,
+			STATUS,
+			DELETED_FLAG,
+			ORIGIN_FLAG,
+			ORIGIN_APP,
+			NOTES,
+			FARM_ID,
+			COMPANY_ID,
+			HOUSE_ID,
+			COLLECT_DATE,
+			PIG_NUM,
+			HOUSE_SATUS,
+			FEED_DOSE,
+			USE_DRUG,
+			IMMUNE,
+			MIN_TEMP,
+			MAX_TEMP,
+			DAYAGE,
+			SWINERY_HEALTH,
+			SOW_DIE_OBSOLETE,
+			DIE_NUM,
+			COLLECT_ID,
+			CREATE_TIME,
+			DIARRHEA_NUM,
+			GASP_RATE
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ rowId,jdbcType=INTEGER},
+			#{ sortNbr,jdbcType=INTEGER},
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ originFlag,jdbcType=CHAR},
+			#{ originApp,jdbcType=VARCHAR},
+			#{ notes,jdbcType=VARCHAR},
+			#{ farmId,jdbcType=INTEGER},
+			#{ companyId,jdbcType=INTEGER},
+			#{ houseId,jdbcType=INTEGER},
+			#{ collectDate,jdbcType=DATE},
+			#{ pigNum,jdbcType=INTEGER},
+			#{ houseSatus,jdbcType=INTEGER},
+			#{ feedDose,jdbcType=VARCHAR},
+			#{ useDrug,jdbcType=VARCHAR},
+			#{ immune,jdbcType=VARCHAR},
+			#{ minTemp,jdbcType=DECIMAL},
+			#{ maxTemp,jdbcType=DECIMAL},
+			#{ dayage,jdbcType=INTEGER},
+			#{ swineryHealth,jdbcType=INTEGER},
+			#{ sowDieObsolete,jdbcType=INTEGER},
+			#{ dieNum,jdbcType=INTEGER},
+			#{ collectId,jdbcType=INTEGER},
+			#{ createTime,jdbcType=TIMESTAMP},
+			#{ diarrheaNum,jdbcType=INTEGER},
+			#{ gaspRate,jdbcType=VARCHAR}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO CD_M_HOUSE_STATUS
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ROW_ID ,
+			SORT_NBR ,
+			STATUS ,
+			DELETED_FLAG ,
+			ORIGIN_FLAG ,
+			ORIGIN_APP ,
+			NOTES ,
+			FARM_ID ,
+			COMPANY_ID ,
+			HOUSE_ID ,
+			COLLECT_DATE ,
+			PIG_NUM ,
+			HOUSE_SATUS ,
+			FEED_DOSE ,
+			USE_DRUG ,
+			IMMUNE ,
+			MIN_TEMP ,
+			MAX_TEMP ,
+			DAYAGE ,
+			SWINERY_HEALTH ,
+			SOW_DIE_OBSOLETE ,
+			DIE_NUM ,
+			COLLECT_ID ,
+			CREATE_TIME ,
+			DIARRHEA_NUM ,
+			GASP_RATE 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.rowId,jdbcType=INTEGER},
+				#{item.sortNbr,jdbcType=INTEGER},
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.originFlag,jdbcType=CHAR},
+				#{item.originApp,jdbcType=VARCHAR},
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.farmId,jdbcType=INTEGER},
+				#{item.companyId,jdbcType=INTEGER},
+				#{item.houseId,jdbcType=INTEGER},
+				#{item.collectDate,jdbcType=DATE},
+				#{item.pigNum,jdbcType=INTEGER},
+				#{item.houseSatus,jdbcType=INTEGER},
+				#{item.feedDose,jdbcType=VARCHAR},
+				#{item.useDrug,jdbcType=VARCHAR},
+				#{item.immune,jdbcType=VARCHAR},
+				#{item.minTemp,jdbcType=DECIMAL},
+				#{item.maxTemp,jdbcType=DECIMAL},
+				#{item.dayage,jdbcType=INTEGER},
+				#{item.swineryHealth,jdbcType=INTEGER},
+				#{item.sowDieObsolete,jdbcType=INTEGER},
+				#{item.dieNum,jdbcType=INTEGER},
+				#{item.collectId,jdbcType=INTEGER},
+				#{item.createTime,jdbcType=TIMESTAMP},
+				#{item.diarrheaNum,jdbcType=INTEGER},
+				#{item.gaspRate,jdbcType=VARCHAR}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="HouseStatusModel" >
+		UPDATE CD_M_HOUSE_STATUS 
+		<set>
+		<if test="sortNbr != null">SORT_NBR = #{ sortNbr,jdbcType=INTEGER},</if>
+		<if test="status != null">STATUS = #{ status,jdbcType=CHAR},</if>
+		<if test="originFlag != null">ORIGIN_FLAG = #{ originFlag,jdbcType=CHAR},</if>
+		<if test="originApp != null">ORIGIN_APP = #{ originApp,jdbcType=VARCHAR},</if>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="houseId != null">HOUSE_ID = #{ houseId,jdbcType=INTEGER},</if>
+		<if test="collectDate != null">COLLECT_DATE = #{ collectDate,jdbcType=DATE},</if>
+		<if test="pigNum != null">PIG_NUM = #{ pigNum,jdbcType=INTEGER},</if>
+		<if test="houseSatus != null">HOUSE_SATUS = #{ houseSatus,jdbcType=INTEGER},</if>
+		<if test="feedDose != null">FEED_DOSE = #{ feedDose,jdbcType=VARCHAR},</if>
+		<if test="useDrug != null">USE_DRUG = #{ useDrug,jdbcType=VARCHAR},</if>
+		<if test="immune != null">IMMUNE = #{ immune,jdbcType=VARCHAR},</if>
+		<if test="minTemp != null">MIN_TEMP = #{ minTemp,jdbcType=DECIMAL},</if>
+		<if test="maxTemp != null">MAX_TEMP = #{ maxTemp,jdbcType=DECIMAL},</if>
+		<if test="dayage != null">DAYAGE = #{ dayage,jdbcType=INTEGER},</if>
+		<if test="swineryHealth != null">SWINERY_HEALTH = #{ swineryHealth,jdbcType=INTEGER},</if>
+		<if test="sowDieObsolete != null">SOW_DIE_OBSOLETE = #{ sowDieObsolete,jdbcType=INTEGER},</if>
+		<if test="dieNum != null">DIE_NUM = #{ dieNum,jdbcType=INTEGER},</if>
+		<if test="collectId != null">COLLECT_ID = #{ collectId,jdbcType=INTEGER},</if>
+		<if test="createTime != null">CREATE_TIME = #{ createTime,jdbcType=TIMESTAMP},</if>
+		<if test="diarrheaNum != null">DIARRHEA_NUM = #{ diarrheaNum,jdbcType=INTEGER},</if>
+		<if test="gaspRate != null">GASP_RATE = #{ gaspRate,jdbcType=VARCHAR}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE CD_M_HOUSE_STATUS 
+			<set>
+			<if test="item.sortNbr != null">SORT_NBR = #{item.sortNbr,jdbcType=INTEGER},</if>
+			<if test="item.status != null">STATUS = #{item.status,jdbcType=CHAR},</if>
+			<if test="item.originFlag != null">ORIGIN_FLAG = #{item.originFlag,jdbcType=CHAR},</if>
+			<if test="item.originApp != null">ORIGIN_APP = #{item.originApp,jdbcType=VARCHAR},</if>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.houseId != null">HOUSE_ID = #{item.houseId,jdbcType=INTEGER},</if>
+			<if test="item.collectDate != null">COLLECT_DATE = #{item.collectDate,jdbcType=DATE},</if>
+			<if test="item.pigNum != null">PIG_NUM = #{item.pigNum,jdbcType=INTEGER},</if>
+			<if test="item.houseSatus != null">HOUSE_SATUS = #{item.houseSatus,jdbcType=INTEGER},</if>
+			<if test="item.feedDose != null">FEED_DOSE = #{item.feedDose,jdbcType=VARCHAR},</if>
+			<if test="item.useDrug != null">USE_DRUG = #{item.useDrug,jdbcType=VARCHAR},</if>
+			<if test="item.immune != null">IMMUNE = #{item.immune,jdbcType=VARCHAR},</if>
+			<if test="item.minTemp != null">MIN_TEMP = #{item.minTemp,jdbcType=DECIMAL},</if>
+			<if test="item.maxTemp != null">MAX_TEMP = #{item.maxTemp,jdbcType=DECIMAL},</if>
+			<if test="item.dayage != null">DAYAGE = #{item.dayage,jdbcType=INTEGER},</if>
+			<if test="item.swineryHealth != null">SWINERY_HEALTH = #{item.swineryHealth,jdbcType=INTEGER},</if>
+			<if test="item.sowDieObsolete != null">SOW_DIE_OBSOLETE = #{item.sowDieObsolete,jdbcType=INTEGER},</if>
+			<if test="item.dieNum != null">DIE_NUM = #{item.dieNum,jdbcType=INTEGER},</if>
+			<if test="item.collectId != null">COLLECT_ID = #{item.collectId,jdbcType=INTEGER},</if>
+			<if test="item.createTime != null">CREATE_TIME = #{item.createTime,jdbcType=TIMESTAMP},</if>
+			<if test="item.diarrheaNum != null">DIARRHEA_NUM = #{item.diarrheaNum,jdbcType=INTEGER},</if>
+			<if test="item.gaspRate != null">GASP_RATE = #{item.gaspRate,jdbcType=VARCHAR}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  CD_M_HOUSE_STATUS
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  CD_M_HOUSE_STATUS
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE 
+		 ROW_ID =#{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  CD_M_HOUSE_STATUS
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' 
+		 AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+		 AND ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCons" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  CD_M_HOUSE_STATUS
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' ${item}
+		</foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="HouseStatusResult">
+		SELECT 
+		<include refid="HouseStatusModel_Column_List" />
+		FROM CD_M_HOUSE_STATUS WHERE DELETED_FLAG='0' 
+		AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="HouseStatusResult" >
+		SELECT 
+		<include refid="HouseStatusModel_Column_List" />
+		FROM CD_M_HOUSE_STATUS WHERE DELETED_FLAG='0'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="HouseStatusResult" >
+		SELECT 
+		<include refid="HouseStatusModel_Column_List" />
+		FROM CD_M_HOUSE_STATUS
+		WHERE DELETED_FLAG='0'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="HouseStatusResult" >
+		SELECT 
+		<include refid="HouseStatusModel_Column_List" />
+		FROM CD_M_HOUSE_STATUS
+		WHERE ${condition}
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAll" resultMap="HouseStatusResult" >
+		SELECT *
+		FROM CD_M_HOUSE_STATUS
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="HouseStatusResult"> ${sql} </select>
+
+</mapper>
+

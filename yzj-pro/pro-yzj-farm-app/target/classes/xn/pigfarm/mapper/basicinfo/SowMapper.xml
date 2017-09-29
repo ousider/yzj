@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.basicinfo.SowMapper">
+
+	<resultMap id="SowResult"  type="SowModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="sortNbr" column="SORT_NBR" jdbcType="INTEGER" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="originFlag" column="ORIGIN_FLAG" jdbcType="CHAR" />
+		<result property="originApp" column="ORIGIN_APP" jdbcType="VARCHAR" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="farmId" column="FARM_ID" jdbcType="INTEGER" />
+		<result property="companyId" column="COMPANY_ID" jdbcType="INTEGER" />
+		<result property="materialId" column="MATERIAL_ID" jdbcType="INTEGER" />
+		<result property="breedId" column="BREED_ID" jdbcType="INTEGER" />
+		<result property="strain" column="STRAIN" jdbcType="VARCHAR" />
+		<result property="bodyCondition" column="BODY_CONDITION" jdbcType="VARCHAR" />
+		<result property="color" column="COLOR" jdbcType="VARCHAR" />
+		<result property="rightTeatNum" column="RIGHT_TEAT_NUM" jdbcType="INTEGER" />
+		<result property="leftTeatNum" column="LEFT_TEAT_NUM" jdbcType="INTEGER" />
+		<result property="birthWeight" column="BIRTH_WEIGHT" jdbcType="DECIMAL" />
+		<result property="enterDayAge" column="ENTER_DAY_AGE" jdbcType="INTEGER" />
+		<result property="enterWeight" column="ENTER_WEIGHT" jdbcType="DECIMAL" />
+		<result property="pubertyDayAge" column="PUBERTY_DAY_AGE" jdbcType="INTEGER" />
+		<result property="pubertyWeight" column="PUBERTY_WEIGHT" jdbcType="DECIMAL" />
+		<result property="sexDayAge" column="SEX_DAY_AGE" jdbcType="INTEGER" />
+		<result property="sexWeight" column="SEX_WEIGHT" jdbcType="DECIMAL" />
+		<result property="useYear" column="USE_YEAR" jdbcType="INTEGER" />
+		<result property="useParity" column="USE_PARITY" jdbcType="INTEGER" />
+		<result property="heatCycle" column="HEAT_CYCLE" jdbcType="INTEGER" />
+		<result property="changeLabor" column="CHANGE_LABOR" jdbcType="INTEGER" />
+		<result property="errorLabor" column="ERROR_LABOR" jdbcType="INTEGER" />
+		<result property="pregnancyDays" column="PREGNANCY_DAYS" jdbcType="INTEGER" />
+		<result property="errorLimit" column="ERROR_LIMIT" jdbcType="INTEGER" />
+		<result property="pregnancyCheckDays" column="PREGNANCY_CHECK_DAYS" jdbcType="INTEGER" />
+		<result property="lacationDays" column="LACATION_DAYS" jdbcType="INTEGER" />
+		<result property="dnhfqDays" column="DNHFQ_DAYS" jdbcType="INTEGER" />
+		<result property="yearBabys" column="YEAR_BABYS" jdbcType="INTEGER" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="SowModel_Column_List">
+		ROW_ID,SORT_NBR,NOTES,MATERIAL_ID,BREED_ID,STRAIN,BODY_CONDITION,COLOR,RIGHT_TEAT_NUM,LEFT_TEAT_NUM,BIRTH_WEIGHT,ENTER_DAY_AGE,ENTER_WEIGHT,PUBERTY_DAY_AGE,PUBERTY_WEIGHT,SEX_DAY_AGE,SEX_WEIGHT,USE_YEAR,USE_PARITY,HEAT_CYCLE,CHANGE_LABOR,ERROR_LABOR,PREGNANCY_DAYS,ERROR_LIMIT,PREGNANCY_CHECK_DAYS,LACATION_DAYS,DNHFQ_DAYS,YEAR_BABYS
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="rowId" parameterType="SowModel">
+		INSERT INTO CD_O_SOW
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR,
+			STATUS,
+			DELETED_FLAG,
+			ORIGIN_FLAG,
+			ORIGIN_APP,
+			NOTES,
+			FARM_ID,
+			COMPANY_ID,
+			MATERIAL_ID,
+			BREED_ID,
+			STRAIN,
+			BODY_CONDITION,
+			COLOR,
+			RIGHT_TEAT_NUM,
+			LEFT_TEAT_NUM,
+			BIRTH_WEIGHT,
+			ENTER_DAY_AGE,
+			ENTER_WEIGHT,
+			PUBERTY_DAY_AGE,
+			PUBERTY_WEIGHT,
+			SEX_DAY_AGE,
+			SEX_WEIGHT,
+			USE_YEAR,
+			USE_PARITY,
+			HEAT_CYCLE,
+			CHANGE_LABOR,
+			ERROR_LABOR,
+			PREGNANCY_DAYS,
+			ERROR_LIMIT,
+			PREGNANCY_CHECK_DAYS,
+			LACATION_DAYS,
+			DNHFQ_DAYS,
+			YEAR_BABYS
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ sortNbr,jdbcType=INTEGER},
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ originFlag,jdbcType=CHAR},
+			#{ originApp,jdbcType=VARCHAR},
+			#{ notes,jdbcType=VARCHAR},
+			#{ farmId,jdbcType=INTEGER},
+			#{ companyId,jdbcType=INTEGER},
+			#{ materialId,jdbcType=INTEGER},
+			#{ breedId,jdbcType=INTEGER},
+			#{ strain,jdbcType=VARCHAR},
+			#{ bodyCondition,jdbcType=VARCHAR},
+			#{ color,jdbcType=VARCHAR},
+			#{ rightTeatNum,jdbcType=INTEGER},
+			#{ leftTeatNum,jdbcType=INTEGER},
+			#{ birthWeight,jdbcType=DECIMAL},
+			#{ enterDayAge,jdbcType=INTEGER},
+			#{ enterWeight,jdbcType=DECIMAL},
+			#{ pubertyDayAge,jdbcType=INTEGER},
+			#{ pubertyWeight,jdbcType=DECIMAL},
+			#{ sexDayAge,jdbcType=INTEGER},
+			#{ sexWeight,jdbcType=DECIMAL},
+			#{ useYear,jdbcType=INTEGER},
+			#{ useParity,jdbcType=INTEGER},
+			#{ heatCycle,jdbcType=INTEGER},
+			#{ changeLabor,jdbcType=INTEGER},
+			#{ errorLabor,jdbcType=INTEGER},
+			#{ pregnancyDays,jdbcType=INTEGER},
+			#{ errorLimit,jdbcType=INTEGER},
+			#{ pregnancyCheckDays,jdbcType=INTEGER},
+			#{ lacationDays,jdbcType=INTEGER},
+			#{ dnhfqDays,jdbcType=INTEGER},
+			#{ yearBabys,jdbcType=INTEGER}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO CD_O_SOW
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR ,
+			STATUS ,
+			DELETED_FLAG ,
+			ORIGIN_FLAG ,
+			ORIGIN_APP ,
+			NOTES ,
+			FARM_ID ,
+			COMPANY_ID ,
+			MATERIAL_ID ,
+			BREED_ID ,
+			STRAIN ,
+			BODY_CONDITION ,
+			COLOR ,
+			RIGHT_TEAT_NUM ,
+			LEFT_TEAT_NUM ,
+			BIRTH_WEIGHT ,
+			ENTER_DAY_AGE ,
+			ENTER_WEIGHT ,
+			PUBERTY_DAY_AGE ,
+			PUBERTY_WEIGHT ,
+			SEX_DAY_AGE ,
+			SEX_WEIGHT ,
+			USE_YEAR ,
+			USE_PARITY ,
+			HEAT_CYCLE ,
+			CHANGE_LABOR ,
+			ERROR_LABOR ,
+			PREGNANCY_DAYS ,
+			ERROR_LIMIT ,
+			PREGNANCY_CHECK_DAYS ,
+			LACATION_DAYS ,
+			DNHFQ_DAYS ,
+			YEAR_BABYS 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.sortNbr,jdbcType=INTEGER},
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.originFlag,jdbcType=CHAR},
+				#{item.originApp,jdbcType=VARCHAR},
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.farmId,jdbcType=INTEGER},
+				#{item.companyId,jdbcType=INTEGER},
+				#{item.materialId,jdbcType=INTEGER},
+				#{item.breedId,jdbcType=INTEGER},
+				#{item.strain,jdbcType=VARCHAR},
+				#{item.bodyCondition,jdbcType=VARCHAR},
+				#{item.color,jdbcType=VARCHAR},
+				#{item.rightTeatNum,jdbcType=INTEGER},
+				#{item.leftTeatNum,jdbcType=INTEGER},
+				#{item.birthWeight,jdbcType=DECIMAL},
+				#{item.enterDayAge,jdbcType=INTEGER},
+				#{item.enterWeight,jdbcType=DECIMAL},
+				#{item.pubertyDayAge,jdbcType=INTEGER},
+				#{item.pubertyWeight,jdbcType=DECIMAL},
+				#{item.sexDayAge,jdbcType=INTEGER},
+				#{item.sexWeight,jdbcType=DECIMAL},
+				#{item.useYear,jdbcType=INTEGER},
+				#{item.useParity,jdbcType=INTEGER},
+				#{item.heatCycle,jdbcType=INTEGER},
+				#{item.changeLabor,jdbcType=INTEGER},
+				#{item.errorLabor,jdbcType=INTEGER},
+				#{item.pregnancyDays,jdbcType=INTEGER},
+				#{item.errorLimit,jdbcType=INTEGER},
+				#{item.pregnancyCheckDays,jdbcType=INTEGER},
+				#{item.lacationDays,jdbcType=INTEGER},
+				#{item.dnhfqDays,jdbcType=INTEGER},
+				#{item.yearBabys,jdbcType=INTEGER}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="SowModel" >
+		UPDATE CD_O_SOW 
+		<set>
+		<if test="sortNbr != null">SORT_NBR = #{ sortNbr,jdbcType=INTEGER},</if>
+		<if test="status != null">STATUS = #{ status,jdbcType=CHAR},</if>
+		<if test="originFlag != null">ORIGIN_FLAG = #{ originFlag,jdbcType=CHAR},</if>
+		<if test="originApp != null">ORIGIN_APP = #{ originApp,jdbcType=VARCHAR},</if>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="materialId != null">MATERIAL_ID = #{ materialId,jdbcType=INTEGER},</if>
+		<if test="breedId != null">BREED_ID = #{ breedId,jdbcType=INTEGER},</if>
+		<if test="strain != null">STRAIN = #{ strain,jdbcType=VARCHAR},</if>
+		<if test="bodyCondition != null">BODY_CONDITION = #{ bodyCondition,jdbcType=VARCHAR},</if>
+		<if test="color != null">COLOR = #{ color,jdbcType=VARCHAR},</if>
+		<if test="rightTeatNum != null">RIGHT_TEAT_NUM = #{ rightTeatNum,jdbcType=INTEGER},</if>
+		<if test="leftTeatNum != null">LEFT_TEAT_NUM = #{ leftTeatNum,jdbcType=INTEGER},</if>
+		<if test="birthWeight != null">BIRTH_WEIGHT = #{ birthWeight,jdbcType=DECIMAL},</if>
+		<if test="enterDayAge != null">ENTER_DAY_AGE = #{ enterDayAge,jdbcType=INTEGER},</if>
+		<if test="enterWeight != null">ENTER_WEIGHT = #{ enterWeight,jdbcType=DECIMAL},</if>
+		<if test="pubertyDayAge != null">PUBERTY_DAY_AGE = #{ pubertyDayAge,jdbcType=INTEGER},</if>
+		<if test="pubertyWeight != null">PUBERTY_WEIGHT = #{ pubertyWeight,jdbcType=DECIMAL},</if>
+		<if test="sexDayAge != null">SEX_DAY_AGE = #{ sexDayAge,jdbcType=INTEGER},</if>
+		<if test="sexWeight != null">SEX_WEIGHT = #{ sexWeight,jdbcType=DECIMAL},</if>
+		<if test="useYear != null">USE_YEAR = #{ useYear,jdbcType=INTEGER},</if>
+		<if test="useParity != null">USE_PARITY = #{ useParity,jdbcType=INTEGER},</if>
+		<if test="heatCycle != null">HEAT_CYCLE = #{ heatCycle,jdbcType=INTEGER},</if>
+		<if test="changeLabor != null">CHANGE_LABOR = #{ changeLabor,jdbcType=INTEGER},</if>
+		<if test="errorLabor != null">ERROR_LABOR = #{ errorLabor,jdbcType=INTEGER},</if>
+		<if test="pregnancyDays != null">PREGNANCY_DAYS = #{ pregnancyDays,jdbcType=INTEGER},</if>
+		<if test="errorLimit != null">ERROR_LIMIT = #{ errorLimit,jdbcType=INTEGER},</if>
+		<if test="pregnancyCheckDays != null">PREGNANCY_CHECK_DAYS = #{ pregnancyCheckDays,jdbcType=INTEGER},</if>
+		<if test="lacationDays != null">LACATION_DAYS = #{ lacationDays,jdbcType=INTEGER},</if>
+		<if test="dnhfqDays != null">DNHFQ_DAYS = #{ dnhfqDays,jdbcType=INTEGER},</if>
+		<if test="yearBabys != null">YEAR_BABYS = #{ yearBabys,jdbcType=INTEGER}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE CD_O_SOW 
+			<set>
+			<if test="item.sortNbr != null">SORT_NBR = #{item.sortNbr,jdbcType=INTEGER},</if>
+			<if test="item.status != null">STATUS = #{item.status,jdbcType=CHAR},</if>
+			<if test="item.originFlag != null">ORIGIN_FLAG = #{item.originFlag,jdbcType=CHAR},</if>
+			<if test="item.originApp != null">ORIGIN_APP = #{item.originApp,jdbcType=VARCHAR},</if>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.materialId != null">MATERIAL_ID = #{item.materialId,jdbcType=INTEGER},</if>
+			<if test="item.breedId != null">BREED_ID = #{item.breedId,jdbcType=INTEGER},</if>
+			<if test="item.strain != null">STRAIN = #{item.strain,jdbcType=VARCHAR},</if>
+			<if test="item.bodyCondition != null">BODY_CONDITION = #{item.bodyCondition,jdbcType=VARCHAR},</if>
+			<if test="item.color != null">COLOR = #{item.color,jdbcType=VARCHAR},</if>
+			<if test="item.rightTeatNum != null">RIGHT_TEAT_NUM = #{item.rightTeatNum,jdbcType=INTEGER},</if>
+			<if test="item.leftTeatNum != null">LEFT_TEAT_NUM = #{item.leftTeatNum,jdbcType=INTEGER},</if>
+			<if test="item.birthWeight != null">BIRTH_WEIGHT = #{item.birthWeight,jdbcType=DECIMAL},</if>
+			<if test="item.enterDayAge != null">ENTER_DAY_AGE = #{item.enterDayAge,jdbcType=INTEGER},</if>
+			<if test="item.enterWeight != null">ENTER_WEIGHT = #{item.enterWeight,jdbcType=DECIMAL},</if>
+			<if test="item.pubertyDayAge != null">PUBERTY_DAY_AGE = #{item.pubertyDayAge,jdbcType=INTEGER},</if>
+			<if test="item.pubertyWeight != null">PUBERTY_WEIGHT = #{item.pubertyWeight,jdbcType=DECIMAL},</if>
+			<if test="item.sexDayAge != null">SEX_DAY_AGE = #{item.sexDayAge,jdbcType=INTEGER},</if>
+			<if test="item.sexWeight != null">SEX_WEIGHT = #{item.sexWeight,jdbcType=DECIMAL},</if>
+			<if test="item.useYear != null">USE_YEAR = #{item.useYear,jdbcType=INTEGER},</if>
+			<if test="item.useParity != null">USE_PARITY = #{item.useParity,jdbcType=INTEGER},</if>
+			<if test="item.heatCycle != null">HEAT_CYCLE = #{item.heatCycle,jdbcType=INTEGER},</if>
+			<if test="item.changeLabor != null">CHANGE_LABOR = #{item.changeLabor,jdbcType=INTEGER},</if>
+			<if test="item.errorLabor != null">ERROR_LABOR = #{item.errorLabor,jdbcType=INTEGER},</if>
+			<if test="item.pregnancyDays != null">PREGNANCY_DAYS = #{item.pregnancyDays,jdbcType=INTEGER},</if>
+			<if test="item.errorLimit != null">ERROR_LIMIT = #{item.errorLimit,jdbcType=INTEGER},</if>
+			<if test="item.pregnancyCheckDays != null">PREGNANCY_CHECK_DAYS = #{item.pregnancyCheckDays,jdbcType=INTEGER},</if>
+			<if test="item.lacationDays != null">LACATION_DAYS = #{item.lacationDays,jdbcType=INTEGER},</if>
+			<if test="item.dnhfqDays != null">DNHFQ_DAYS = #{item.dnhfqDays,jdbcType=INTEGER},</if>
+			<if test="item.yearBabys != null">YEAR_BABYS = #{item.yearBabys,jdbcType=INTEGER}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  CD_O_SOW
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  CD_O_SOW
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE ROW_ID = #{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  CD_O_SOW
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' 
+		 AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+		 AND ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCons" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  CD_O_SOW
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' ${item}
+		</foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="SowResult">
+		SELECT 
+		<include refid="SowModel_Column_List" />
+		FROM CD_O_SOW WHERE DELETED_FLAG='0' 
+		AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="SowResult" >
+		SELECT 
+		<include refid="SowModel_Column_List" />
+		FROM CD_O_SOW WHERE DELETED_FLAG='0'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="SowResult" >
+		SELECT 
+		<include refid="SowModel_Column_List" />
+		FROM CD_O_SOW
+		WHERE DELETED_FLAG='0'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="SowResult" >
+		SELECT 
+		<include refid="SowModel_Column_List" />
+		FROM CD_O_SOW
+		WHERE ${condition}
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAll" resultMap="SowResult" >
+		SELECT *
+		FROM CD_O_SOW
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="SowResult"> ${sql} </select>
+
+</mapper>
+

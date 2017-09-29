@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.basicinfo.SaleAccountItemMapper">
+
+	<resultMap id="SaleAccountItemResult"  type="SaleAccountItemModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="sortNbr" column="SORT_NBR" jdbcType="INTEGER" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="originFlag" column="ORIGIN_FLAG" jdbcType="CHAR" />
+		<result property="originApp" column="ORIGIN_APP" jdbcType="VARCHAR" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="customerId" column="CUSTOMER_ID" jdbcType="INTEGER" />
+		<result property="itemType" column="ITEM_TYPE" jdbcType="VARCHAR" />
+		<result property="itemStage" column="ITEM_STAGE" jdbcType="VARCHAR" />
+		<result property="itemName" column="ITEM_NAME" jdbcType="VARCHAR" />
+		<result property="itemCode" column="ITEM_CODE" jdbcType="VARCHAR" />
+		<result property="isRequire" column="IS_REQUIRE" jdbcType="CHAR" />
+		<result property="isAvailable" column="IS_AVAILABLE" jdbcType="CHAR" />
+		<result property="disabledDate" column="DISABLED_DATE" jdbcType="DATE" />
+		<result property="rewardPunishStandard" column="REWARD_PUNISH_STANDARD" jdbcType="DECIMAL" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="SaleAccountItemModel_Column_List">
+		ROW_ID,SORT_NBR,NOTES,CUSTOMER_ID,ITEM_TYPE,ITEM_STAGE,ITEM_NAME,ITEM_CODE,IS_REQUIRE,IS_AVAILABLE,DISABLED_DATE,REWARD_PUNISH_STANDARD
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true"   parameterType="SaleAccountItemModel">
+		INSERT INTO CD_O_SALE_ACCOUNT_ITEM
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ROW_ID,
+			SORT_NBR,
+			STATUS,
+			DELETED_FLAG,
+			ORIGIN_FLAG,
+			ORIGIN_APP,
+			NOTES,
+			CUSTOMER_ID,
+			ITEM_TYPE,
+			ITEM_STAGE,
+			ITEM_NAME,
+			ITEM_CODE,
+			IS_REQUIRE,
+			IS_AVAILABLE,
+			DISABLED_DATE,
+			REWARD_PUNISH_STANDARD
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ rowId,jdbcType=INTEGER},
+			#{ sortNbr,jdbcType=INTEGER},
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ originFlag,jdbcType=CHAR},
+			#{ originApp,jdbcType=VARCHAR},
+			#{ notes,jdbcType=VARCHAR},
+			#{ customerId,jdbcType=INTEGER},
+			#{ itemType,jdbcType=VARCHAR},
+			#{ itemStage,jdbcType=VARCHAR},
+			#{ itemName,jdbcType=VARCHAR},
+			#{ itemCode,jdbcType=VARCHAR},
+			#{ isRequire,jdbcType=CHAR},
+			#{ isAvailable,jdbcType=CHAR},
+			#{ disabledDate,jdbcType=DATE},
+			#{ rewardPunishStandard,jdbcType=DECIMAL}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO CD_O_SALE_ACCOUNT_ITEM
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ROW_ID ,
+			SORT_NBR ,
+			STATUS ,
+			DELETED_FLAG ,
+			ORIGIN_FLAG ,
+			ORIGIN_APP ,
+			NOTES ,
+			CUSTOMER_ID ,
+			ITEM_TYPE ,
+			ITEM_STAGE ,
+			ITEM_NAME ,
+			ITEM_CODE ,
+			IS_REQUIRE ,
+			IS_AVAILABLE ,
+			DISABLED_DATE ,
+			REWARD_PUNISH_STANDARD 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.rowId,jdbcType=INTEGER},
+				#{item.sortNbr,jdbcType=INTEGER},
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.originFlag,jdbcType=CHAR},
+				#{item.originApp,jdbcType=VARCHAR},
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.customerId,jdbcType=INTEGER},
+				#{item.itemType,jdbcType=VARCHAR},
+				#{item.itemStage,jdbcType=VARCHAR},
+				#{item.itemName,jdbcType=VARCHAR},
+				#{item.itemCode,jdbcType=VARCHAR},
+				#{item.isRequire,jdbcType=CHAR},
+				#{item.isAvailable,jdbcType=CHAR},
+				#{item.disabledDate,jdbcType=DATE},
+				#{item.rewardPunishStandard,jdbcType=DECIMAL}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="SaleAccountItemModel" >
+		UPDATE CD_O_SALE_ACCOUNT_ITEM 
+		<set>
+		<if test="sortNbr != null">SORT_NBR = #{ sortNbr,jdbcType=INTEGER},</if>
+		<if test="status != null">STATUS = #{ status,jdbcType=CHAR},</if>
+		<if test="originFlag != null">ORIGIN_FLAG = #{ originFlag,jdbcType=CHAR},</if>
+		<if test="originApp != null">ORIGIN_APP = #{ originApp,jdbcType=VARCHAR},</if>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="customerId != null">CUSTOMER_ID = #{ customerId,jdbcType=INTEGER},</if>
+		<if test="itemType != null">ITEM_TYPE = #{ itemType,jdbcType=VARCHAR},</if>
+		<if test="itemStage != null">ITEM_STAGE = #{ itemStage,jdbcType=VARCHAR},</if>
+		<if test="itemName != null">ITEM_NAME = #{ itemName,jdbcType=VARCHAR},</if>
+		<if test="itemCode != null">ITEM_CODE = #{ itemCode,jdbcType=VARCHAR},</if>
+		<if test="isRequire != null">IS_REQUIRE = #{ isRequire,jdbcType=CHAR},</if>
+		<if test="isAvailable != null">IS_AVAILABLE = #{ isAvailable,jdbcType=CHAR},</if>
+		<if test="disabledDate != null">DISABLED_DATE = #{ disabledDate,jdbcType=DATE},</if>
+		<if test="rewardPunishStandard != null">REWARD_PUNISH_STANDARD = #{ rewardPunishStandard,jdbcType=DECIMAL}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE CD_O_SALE_ACCOUNT_ITEM 
+			<set>
+			<if test="item.sortNbr != null">SORT_NBR = #{item.sortNbr,jdbcType=INTEGER},</if>
+			<if test="item.status != null">STATUS = #{item.status,jdbcType=CHAR},</if>
+			<if test="item.originFlag != null">ORIGIN_FLAG = #{item.originFlag,jdbcType=CHAR},</if>
+			<if test="item.originApp != null">ORIGIN_APP = #{item.originApp,jdbcType=VARCHAR},</if>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.customerId != null">CUSTOMER_ID = #{item.customerId,jdbcType=INTEGER},</if>
+			<if test="item.itemType != null">ITEM_TYPE = #{item.itemType,jdbcType=VARCHAR},</if>
+			<if test="item.itemStage != null">ITEM_STAGE = #{item.itemStage,jdbcType=VARCHAR},</if>
+			<if test="item.itemName != null">ITEM_NAME = #{item.itemName,jdbcType=VARCHAR},</if>
+			<if test="item.itemCode != null">ITEM_CODE = #{item.itemCode,jdbcType=VARCHAR},</if>
+			<if test="item.isRequire != null">IS_REQUIRE = #{item.isRequire,jdbcType=CHAR},</if>
+			<if test="item.isAvailable != null">IS_AVAILABLE = #{item.isAvailable,jdbcType=CHAR},</if>
+			<if test="item.disabledDate != null">DISABLED_DATE = #{item.disabledDate,jdbcType=DATE},</if>
+			<if test="item.rewardPunishStandard != null">REWARD_PUNISH_STANDARD = #{item.rewardPunishStandard,jdbcType=DECIMAL}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  CD_O_SALE_ACCOUNT_ITEM
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  CD_O_SALE_ACCOUNT_ITEM
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE 
+		 ROW_ID =#{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  CD_O_SALE_ACCOUNT_ITEM
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' 
+		 
+		 AND ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCons" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  CD_O_SALE_ACCOUNT_ITEM
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' ${item}
+		</foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="SaleAccountItemResult">
+		SELECT 
+		<include refid="SaleAccountItemModel_Column_List" />
+		FROM CD_O_SALE_ACCOUNT_ITEM WHERE DELETED_FLAG='0' 
+		
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="SaleAccountItemResult" >
+		SELECT 
+		<include refid="SaleAccountItemModel_Column_List" />
+		FROM CD_O_SALE_ACCOUNT_ITEM WHERE DELETED_FLAG='0'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="SaleAccountItemResult" >
+		SELECT 
+		<include refid="SaleAccountItemModel_Column_List" />
+		FROM CD_O_SALE_ACCOUNT_ITEM
+		WHERE DELETED_FLAG='0'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="SaleAccountItemResult" >
+		SELECT 
+		<include refid="SaleAccountItemModel_Column_List" />
+		FROM CD_O_SALE_ACCOUNT_ITEM
+		WHERE ${condition}
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAll" resultMap="SaleAccountItemResult" >
+		SELECT *
+		FROM CD_O_SALE_ACCOUNT_ITEM
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="SaleAccountItemResult"> ${sql} </select>
+
+</mapper>
+

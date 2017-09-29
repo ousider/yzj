@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.hana.SysHanaDbPropertiesMapper">
+
+	<resultMap id="SysHanaDbPropertiesResult"  type="SysHanaDbPropertiesModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="beanName" column="BEAN_NAME" jdbcType="VARCHAR" />
+		<result property="ipAndPort" column="IP_AND_PORT" jdbcType="VARCHAR" />
+		<result property="dbName" column="DB_NAME" jdbcType="VARCHAR" />
+		<result property="dbUserName" column="DB_USER_NAME" jdbcType="VARCHAR" />
+		<result property="dbPassword" column="DB_PASSWORD" jdbcType="VARCHAR" />
+		<result property="createId" column="CREATE_ID" jdbcType="INTEGER" />
+		<result property="createDate" column="CREATE_DATE" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="SysHanaDbPropertiesModel_Column_List">
+		ROW_ID,NOTES,BEAN_NAME,IP_AND_PORT,DB_NAME,DB_USER_NAME,DB_PASSWORD,CREATE_ID,CREATE_DATE
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true"   keyProperty="rowId" parameterType="SysHanaDbPropertiesModel">
+		INSERT INTO SYS_HANA_DB_PROPERTIES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			STATUS,
+			DELETED_FLAG,
+			NOTES,
+			BEAN_NAME,
+			IP_AND_PORT,
+			DB_NAME,
+			DB_USER_NAME,
+			DB_PASSWORD,
+			CREATE_ID,
+			CREATE_DATE
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ notes,jdbcType=VARCHAR},
+			#{ beanName,jdbcType=VARCHAR},
+			#{ ipAndPort,jdbcType=VARCHAR},
+			#{ dbName,jdbcType=VARCHAR},
+			#{ dbUserName,jdbcType=VARCHAR},
+			#{ dbPassword,jdbcType=VARCHAR},
+			#{ createId,jdbcType=INTEGER},
+			#{ createDate,jdbcType=TIMESTAMP}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO SYS_HANA_DB_PROPERTIES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			STATUS ,
+			DELETED_FLAG ,
+			NOTES ,
+			BEAN_NAME ,
+			IP_AND_PORT ,
+			DB_NAME ,
+			DB_USER_NAME ,
+			DB_PASSWORD ,
+			CREATE_ID ,
+			CREATE_DATE 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.beanName,jdbcType=VARCHAR},
+				#{item.ipAndPort,jdbcType=VARCHAR},
+				#{item.dbName,jdbcType=VARCHAR},
+				#{item.dbUserName,jdbcType=VARCHAR},
+				#{item.dbPassword,jdbcType=VARCHAR},
+				#{item.createId,jdbcType=INTEGER},
+				#{item.createDate,jdbcType=TIMESTAMP}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="SysHanaDbPropertiesModel" >
+		UPDATE SYS_HANA_DB_PROPERTIES 
+		<set>
+		<if test="status != null">STATUS = #{ status,jdbcType=CHAR},</if>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="beanName != null">BEAN_NAME = #{ beanName,jdbcType=VARCHAR},</if>
+		<if test="ipAndPort != null">IP_AND_PORT = #{ ipAndPort,jdbcType=VARCHAR},</if>
+		<if test="dbName != null">DB_NAME = #{ dbName,jdbcType=VARCHAR},</if>
+		<if test="dbUserName != null">DB_USER_NAME = #{ dbUserName,jdbcType=VARCHAR},</if>
+		<if test="dbPassword != null">DB_PASSWORD = #{ dbPassword,jdbcType=VARCHAR},</if>
+		<if test="createId != null">CREATE_ID = #{ createId,jdbcType=INTEGER},</if>
+		<if test="createDate != null">CREATE_DATE = #{ createDate,jdbcType=TIMESTAMP}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE SYS_HANA_DB_PROPERTIES 
+			<set>
+			<if test="item.status != null">STATUS = #{item.status,jdbcType=CHAR},</if>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.beanName != null">BEAN_NAME = #{item.beanName,jdbcType=VARCHAR},</if>
+			<if test="item.ipAndPort != null">IP_AND_PORT = #{item.ipAndPort,jdbcType=VARCHAR},</if>
+			<if test="item.dbName != null">DB_NAME = #{item.dbName,jdbcType=VARCHAR},</if>
+			<if test="item.dbUserName != null">DB_USER_NAME = #{item.dbUserName,jdbcType=VARCHAR},</if>
+			<if test="item.dbPassword != null">DB_PASSWORD = #{item.dbPassword,jdbcType=VARCHAR},</if>
+			<if test="item.createId != null">CREATE_ID = #{item.createId,jdbcType=INTEGER},</if>
+			<if test="item.createDate != null">CREATE_DATE = #{item.createDate,jdbcType=TIMESTAMP}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  SYS_HANA_DB_PROPERTIES
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  SYS_HANA_DB_PROPERTIES
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE 
+		 ROW_ID =#{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  SYS_HANA_DB_PROPERTIES
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' 
+		 
+		 AND ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCons" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  SYS_HANA_DB_PROPERTIES
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' ${item}
+		</foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="SysHanaDbPropertiesResult">
+		SELECT 
+		<include refid="SysHanaDbPropertiesModel_Column_List" />
+		FROM SYS_HANA_DB_PROPERTIES WHERE DELETED_FLAG='0' 
+		
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="SysHanaDbPropertiesResult" >
+		SELECT 
+		<include refid="SysHanaDbPropertiesModel_Column_List" />
+		FROM SYS_HANA_DB_PROPERTIES WHERE DELETED_FLAG='0'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="SysHanaDbPropertiesResult" >
+		SELECT 
+		<include refid="SysHanaDbPropertiesModel_Column_List" />
+		FROM SYS_HANA_DB_PROPERTIES
+		WHERE DELETED_FLAG='0'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="SysHanaDbPropertiesResult" >
+		SELECT 
+		<include refid="SysHanaDbPropertiesModel_Column_List" />
+		FROM SYS_HANA_DB_PROPERTIES
+		WHERE ${condition}
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAll" resultMap="SysHanaDbPropertiesResult" >
+		SELECT *
+		FROM SYS_HANA_DB_PROPERTIES
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="SysHanaDbPropertiesResult"> ${sql} </select>
+
+</mapper>
+

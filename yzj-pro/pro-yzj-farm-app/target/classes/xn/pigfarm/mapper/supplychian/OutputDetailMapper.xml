@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.supplychian.OutputDetailMapper">
+
+	<resultMap id="OutputDetailResult"  type="OutputDetailModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="farmId" column="FARM_ID" jdbcType="INTEGER" />
+		<result property="companyId" column="COMPANY_ID" jdbcType="INTEGER" />
+		<result property="outputId" column="OUTPUT_ID" jdbcType="INTEGER" />
+		<result property="outputLn" column="OUTPUT_LN" jdbcType="INTEGER" />
+		<result property="inputId" column="INPUT_ID" jdbcType="INTEGER" />
+		<result property="inputLn" column="INPUT_LN" jdbcType="INTEGER" />
+		<result property="inputQty" column="INPUT_QTY" jdbcType="DECIMAL" />
+		<result property="materialId" column="MATERIAL_ID" jdbcType="INTEGER" />
+		<result property="materialOnly" column="MATERIAL_ONLY" jdbcType="VARCHAR" />
+		<result property="materialBatch" column="MATERIAL_BATCH" jdbcType="VARCHAR" />
+		<result property="planQty" column="PLAN_QTY" jdbcType="DECIMAL" />
+		<result property="outputQty" column="OUTPUT_QTY" jdbcType="DECIMAL" />
+		<result property="outputWarehouseId" column="OUTPUT_WAREHOUSE_ID" jdbcType="INTEGER" />
+		<result property="outputerId" column="OUTPUTER_ID" jdbcType="INTEGER" />
+		<result property="outputDestination" column="OUTPUT_DESTINATION" jdbcType="CHAR" />
+		<result property="outputFarmId" column="OUTPUT_FARM_ID" jdbcType="INTEGER" />
+		<result property="outputSwineryId" column="OUTPUT_SWINERY_ID" jdbcType="INTEGER" />
+		<result property="outputHouseId" column="OUTPUT_HOUSE_ID" jdbcType="INTEGER" />
+		<result property="outputDeptId" column="OUTPUT_DEPT_ID" jdbcType="INTEGER" />
+		<result property="pigType" column="PIG_TYPE" jdbcType="VARCHAR" />
+		<result property="pigQty" column="PIG_QTY" jdbcType="INTEGER" />
+		<result property="returnOrgin" column="RETURN_ORGIN" jdbcType="CHAR" />
+		<result property="allotDestination" column="ALLOT_DESTINATION" jdbcType="CHAR" />
+		<result property="outputToFarmId" column="OUTPUT_TO_FARM_ID" jdbcType="INTEGER" />
+		<result property="outputToWarehouseId" column="OUTPUT_TO_WAREHOUSE_ID" jdbcType="INTEGER" />
+		<result property="scrapType" column="SCRAP_TYPE" jdbcType="VARCHAR" />
+		<result property="scrapReason" column="SCRAP_REASON" jdbcType="VARCHAR" />
+		<result property="outputUseDate" column="OUTPUT_USE_DATE" jdbcType="TIMESTAMP" />
+		<result property="userId" column="USER_ID" jdbcType="INTEGER" />
+		<result property="billCode" column="BILL_CODE" jdbcType="VARCHAR" />
+		<result property="billDate" column="BILL_DATE" jdbcType="DATE" />
+		<result property="eventCode" column="EVENT_CODE" jdbcType="VARCHAR" />
+		<result property="createId" column="CREATE_ID" jdbcType="INTEGER" />
+		<result property="createDate" column="CREATE_DATE" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="OutputDetailModel_Column_List">
+		ROW_ID,STATUS,NOTES,FARM_ID,COMPANY_ID,OUTPUT_ID,OUTPUT_LN,INPUT_ID,INPUT_LN,INPUT_QTY,MATERIAL_ID,MATERIAL_ONLY,MATERIAL_BATCH,PLAN_QTY,OUTPUT_QTY,OUTPUT_WAREHOUSE_ID,OUTPUTER_ID,OUTPUT_DESTINATION,OUTPUT_FARM_ID,OUTPUT_SWINERY_ID,OUTPUT_HOUSE_ID,OUTPUT_DEPT_ID,PIG_TYPE,PIG_QTY,RETURN_ORGIN,ALLOT_DESTINATION,OUTPUT_TO_FARM_ID,OUTPUT_TO_WAREHOUSE_ID,SCRAP_TYPE,SCRAP_REASON,OUTPUT_USE_DATE,USER_ID,BILL_CODE,BILL_DATE,EVENT_CODE,CREATE_ID,CREATE_DATE
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true"   keyProperty="rowId" parameterType="OutputDetailModel">
+		INSERT INTO SC_M_BILL_OUTPUT_DETAIL
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			STATUS,
+			DELETED_FLAG,
+			NOTES,
+			FARM_ID,
+			COMPANY_ID,
+			OUTPUT_ID,
+			OUTPUT_LN,
+			INPUT_ID,
+			INPUT_LN,
+			INPUT_QTY,
+			MATERIAL_ID,
+			MATERIAL_ONLY,
+			MATERIAL_BATCH,
+			PLAN_QTY,
+			OUTPUT_QTY,
+			OUTPUT_WAREHOUSE_ID,
+			OUTPUTER_ID,
+			OUTPUT_DESTINATION,
+			OUTPUT_FARM_ID,
+			OUTPUT_SWINERY_ID,
+			OUTPUT_HOUSE_ID,
+			OUTPUT_DEPT_ID,
+			PIG_TYPE,
+			PIG_QTY,
+			RETURN_ORGIN,
+			ALLOT_DESTINATION,
+			OUTPUT_TO_FARM_ID,
+			OUTPUT_TO_WAREHOUSE_ID,
+			SCRAP_TYPE,
+			SCRAP_REASON,
+			OUTPUT_USE_DATE,
+			USER_ID,
+			BILL_CODE,
+			BILL_DATE,
+			EVENT_CODE,
+			CREATE_ID,
+			CREATE_DATE
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ notes,jdbcType=VARCHAR},
+			#{ farmId,jdbcType=INTEGER},
+			#{ companyId,jdbcType=INTEGER},
+			#{ outputId,jdbcType=INTEGER},
+			#{ outputLn,jdbcType=INTEGER},
+			#{ inputId,jdbcType=INTEGER},
+			#{ inputLn,jdbcType=INTEGER},
+			#{ inputQty,jdbcType=DECIMAL},
+			#{ materialId,jdbcType=INTEGER},
+			#{ materialOnly,jdbcType=VARCHAR},
+			#{ materialBatch,jdbcType=VARCHAR},
+			#{ planQty,jdbcType=DECIMAL},
+			#{ outputQty,jdbcType=DECIMAL},
+			#{ outputWarehouseId,jdbcType=INTEGER},
+			#{ outputerId,jdbcType=INTEGER},
+			#{ outputDestination,jdbcType=CHAR},
+			#{ outputFarmId,jdbcType=INTEGER},
+			#{ outputSwineryId,jdbcType=INTEGER},
+			#{ outputHouseId,jdbcType=INTEGER},
+			#{ outputDeptId,jdbcType=INTEGER},
+			#{ pigType,jdbcType=VARCHAR},
+			#{ pigQty,jdbcType=INTEGER},
+			#{ returnOrgin,jdbcType=CHAR},
+			#{ allotDestination,jdbcType=CHAR},
+			#{ outputToFarmId,jdbcType=INTEGER},
+			#{ outputToWarehouseId,jdbcType=INTEGER},
+			#{ scrapType,jdbcType=VARCHAR},
+			#{ scrapReason,jdbcType=VARCHAR},
+			#{ outputUseDate,jdbcType=TIMESTAMP},
+			#{ userId,jdbcType=INTEGER},
+			#{ billCode,jdbcType=VARCHAR},
+			#{ billDate,jdbcType=DATE},
+			#{ eventCode,jdbcType=VARCHAR},
+			#{ createId,jdbcType=INTEGER},
+			#{ createDate,jdbcType=TIMESTAMP}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO SC_M_BILL_OUTPUT_DETAIL
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			STATUS ,
+			DELETED_FLAG ,
+			NOTES ,
+			FARM_ID ,
+			COMPANY_ID ,
+			OUTPUT_ID ,
+			OUTPUT_LN ,
+			INPUT_ID ,
+			INPUT_LN ,
+			INPUT_QTY ,
+			MATERIAL_ID ,
+			MATERIAL_ONLY ,
+			MATERIAL_BATCH ,
+			PLAN_QTY ,
+			OUTPUT_QTY ,
+			OUTPUT_WAREHOUSE_ID ,
+			OUTPUTER_ID ,
+			OUTPUT_DESTINATION ,
+			OUTPUT_FARM_ID ,
+			OUTPUT_SWINERY_ID ,
+			OUTPUT_HOUSE_ID ,
+			OUTPUT_DEPT_ID ,
+			PIG_TYPE ,
+			PIG_QTY ,
+			RETURN_ORGIN ,
+			ALLOT_DESTINATION ,
+			OUTPUT_TO_FARM_ID ,
+			OUTPUT_TO_WAREHOUSE_ID ,
+			SCRAP_TYPE ,
+			SCRAP_REASON ,
+			OUTPUT_USE_DATE ,
+			USER_ID ,
+			BILL_CODE ,
+			BILL_DATE ,
+			EVENT_CODE ,
+			CREATE_ID ,
+			CREATE_DATE 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.farmId,jdbcType=INTEGER},
+				#{item.companyId,jdbcType=INTEGER},
+				#{item.outputId,jdbcType=INTEGER},
+				#{item.outputLn,jdbcType=INTEGER},
+				#{item.inputId,jdbcType=INTEGER},
+				#{item.inputLn,jdbcType=INTEGER},
+				#{item.inputQty,jdbcType=DECIMAL},
+				#{item.materialId,jdbcType=INTEGER},
+				#{item.materialOnly,jdbcType=VARCHAR},
+				#{item.materialBatch,jdbcType=VARCHAR},
+				#{item.planQty,jdbcType=DECIMAL},
+				#{item.outputQty,jdbcType=DECIMAL},
+				#{item.outputWarehouseId,jdbcType=INTEGER},
+				#{item.outputerId,jdbcType=INTEGER},
+				#{item.outputDestination,jdbcType=CHAR},
+				#{item.outputFarmId,jdbcType=INTEGER},
+				#{item.outputSwineryId,jdbcType=INTEGER},
+				#{item.outputHouseId,jdbcType=INTEGER},
+				#{item.outputDeptId,jdbcType=INTEGER},
+				#{item.pigType,jdbcType=VARCHAR},
+				#{item.pigQty,jdbcType=INTEGER},
+				#{item.returnOrgin,jdbcType=CHAR},
+				#{item.allotDestination,jdbcType=CHAR},
+				#{item.outputToFarmId,jdbcType=INTEGER},
+				#{item.outputToWarehouseId,jdbcType=INTEGER},
+				#{item.scrapType,jdbcType=VARCHAR},
+				#{item.scrapReason,jdbcType=VARCHAR},
+				#{item.outputUseDate,jdbcType=TIMESTAMP},
+				#{item.userId,jdbcType=INTEGER},
+				#{item.billCode,jdbcType=VARCHAR},
+				#{item.billDate,jdbcType=DATE},
+				#{item.eventCode,jdbcType=VARCHAR},
+				#{item.createId,jdbcType=INTEGER},
+				#{item.createDate,jdbcType=TIMESTAMP}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="OutputDetailModel" >
+		UPDATE SC_M_BILL_OUTPUT_DETAIL 
+		<set>
+		<if test="status != null">STATUS = #{ status,jdbcType=CHAR},</if>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="outputId != null">OUTPUT_ID = #{ outputId,jdbcType=INTEGER},</if>
+		<if test="outputLn != null">OUTPUT_LN = #{ outputLn,jdbcType=INTEGER},</if>
+		<if test="inputId != null">INPUT_ID = #{ inputId,jdbcType=INTEGER},</if>
+		<if test="inputLn != null">INPUT_LN = #{ inputLn,jdbcType=INTEGER},</if>
+		<if test="inputQty != null">INPUT_QTY = #{ inputQty,jdbcType=DECIMAL},</if>
+		<if test="materialId != null">MATERIAL_ID = #{ materialId,jdbcType=INTEGER},</if>
+		<if test="materialOnly != null">MATERIAL_ONLY = #{ materialOnly,jdbcType=VARCHAR},</if>
+		<if test="materialBatch != null">MATERIAL_BATCH = #{ materialBatch,jdbcType=VARCHAR},</if>
+		<if test="planQty != null">PLAN_QTY = #{ planQty,jdbcType=DECIMAL},</if>
+		<if test="outputQty != null">OUTPUT_QTY = #{ outputQty,jdbcType=DECIMAL},</if>
+		<if test="outputWarehouseId != null">OUTPUT_WAREHOUSE_ID = #{ outputWarehouseId,jdbcType=INTEGER},</if>
+		<if test="outputerId != null">OUTPUTER_ID = #{ outputerId,jdbcType=INTEGER},</if>
+		<if test="outputDestination != null">OUTPUT_DESTINATION = #{ outputDestination,jdbcType=CHAR},</if>
+		<if test="outputFarmId != null">OUTPUT_FARM_ID = #{ outputFarmId,jdbcType=INTEGER},</if>
+		<if test="outputSwineryId != null">OUTPUT_SWINERY_ID = #{ outputSwineryId,jdbcType=INTEGER},</if>
+		<if test="outputHouseId != null">OUTPUT_HOUSE_ID = #{ outputHouseId,jdbcType=INTEGER},</if>
+		<if test="outputDeptId != null">OUTPUT_DEPT_ID = #{ outputDeptId,jdbcType=INTEGER},</if>
+		<if test="pigType != null">PIG_TYPE = #{ pigType,jdbcType=VARCHAR},</if>
+		<if test="pigQty != null">PIG_QTY = #{ pigQty,jdbcType=INTEGER},</if>
+		<if test="returnOrgin != null">RETURN_ORGIN = #{ returnOrgin,jdbcType=CHAR},</if>
+		<if test="allotDestination != null">ALLOT_DESTINATION = #{ allotDestination,jdbcType=CHAR},</if>
+		<if test="outputToFarmId != null">OUTPUT_TO_FARM_ID = #{ outputToFarmId,jdbcType=INTEGER},</if>
+		<if test="outputToWarehouseId != null">OUTPUT_TO_WAREHOUSE_ID = #{ outputToWarehouseId,jdbcType=INTEGER},</if>
+		<if test="scrapType != null">SCRAP_TYPE = #{ scrapType,jdbcType=VARCHAR},</if>
+		<if test="scrapReason != null">SCRAP_REASON = #{ scrapReason,jdbcType=VARCHAR},</if>
+		<if test="outputUseDate != null">OUTPUT_USE_DATE = #{ outputUseDate,jdbcType=TIMESTAMP},</if>
+		<if test="userId != null">USER_ID = #{ userId,jdbcType=INTEGER},</if>
+		<if test="billCode != null">BILL_CODE = #{ billCode,jdbcType=VARCHAR},</if>
+		<if test="billDate != null">BILL_DATE = #{ billDate,jdbcType=DATE},</if>
+		<if test="eventCode != null">EVENT_CODE = #{ eventCode,jdbcType=VARCHAR},</if>
+		<if test="createId != null">CREATE_ID = #{ createId,jdbcType=INTEGER},</if>
+		<if test="createDate != null">CREATE_DATE = #{ createDate,jdbcType=TIMESTAMP}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE SC_M_BILL_OUTPUT_DETAIL 
+			<set>
+			<if test="item.status != null">STATUS = #{item.status,jdbcType=CHAR},</if>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.outputId != null">OUTPUT_ID = #{item.outputId,jdbcType=INTEGER},</if>
+			<if test="item.outputLn != null">OUTPUT_LN = #{item.outputLn,jdbcType=INTEGER},</if>
+			<if test="item.inputId != null">INPUT_ID = #{item.inputId,jdbcType=INTEGER},</if>
+			<if test="item.inputLn != null">INPUT_LN = #{item.inputLn,jdbcType=INTEGER},</if>
+			<if test="item.inputQty != null">INPUT_QTY = #{item.inputQty,jdbcType=DECIMAL},</if>
+			<if test="item.materialId != null">MATERIAL_ID = #{item.materialId,jdbcType=INTEGER},</if>
+			<if test="item.materialOnly != null">MATERIAL_ONLY = #{item.materialOnly,jdbcType=VARCHAR},</if>
+			<if test="item.materialBatch != null">MATERIAL_BATCH = #{item.materialBatch,jdbcType=VARCHAR},</if>
+			<if test="item.planQty != null">PLAN_QTY = #{item.planQty,jdbcType=DECIMAL},</if>
+			<if test="item.outputQty != null">OUTPUT_QTY = #{item.outputQty,jdbcType=DECIMAL},</if>
+			<if test="item.outputWarehouseId != null">OUTPUT_WAREHOUSE_ID = #{item.outputWarehouseId,jdbcType=INTEGER},</if>
+			<if test="item.outputerId != null">OUTPUTER_ID = #{item.outputerId,jdbcType=INTEGER},</if>
+			<if test="item.outputDestination != null">OUTPUT_DESTINATION = #{item.outputDestination,jdbcType=CHAR},</if>
+			<if test="item.outputFarmId != null">OUTPUT_FARM_ID = #{item.outputFarmId,jdbcType=INTEGER},</if>
+			<if test="item.outputSwineryId != null">OUTPUT_SWINERY_ID = #{item.outputSwineryId,jdbcType=INTEGER},</if>
+			<if test="item.outputHouseId != null">OUTPUT_HOUSE_ID = #{item.outputHouseId,jdbcType=INTEGER},</if>
+			<if test="item.outputDeptId != null">OUTPUT_DEPT_ID = #{item.outputDeptId,jdbcType=INTEGER},</if>
+			<if test="item.pigType != null">PIG_TYPE = #{item.pigType,jdbcType=VARCHAR},</if>
+			<if test="item.pigQty != null">PIG_QTY = #{item.pigQty,jdbcType=INTEGER},</if>
+			<if test="item.returnOrgin != null">RETURN_ORGIN = #{item.returnOrgin,jdbcType=CHAR},</if>
+			<if test="item.allotDestination != null">ALLOT_DESTINATION = #{item.allotDestination,jdbcType=CHAR},</if>
+			<if test="item.outputToFarmId != null">OUTPUT_TO_FARM_ID = #{item.outputToFarmId,jdbcType=INTEGER},</if>
+			<if test="item.outputToWarehouseId != null">OUTPUT_TO_WAREHOUSE_ID = #{item.outputToWarehouseId,jdbcType=INTEGER},</if>
+			<if test="item.scrapType != null">SCRAP_TYPE = #{item.scrapType,jdbcType=VARCHAR},</if>
+			<if test="item.scrapReason != null">SCRAP_REASON = #{item.scrapReason,jdbcType=VARCHAR},</if>
+			<if test="item.outputUseDate != null">OUTPUT_USE_DATE = #{item.outputUseDate,jdbcType=TIMESTAMP},</if>
+			<if test="item.userId != null">USER_ID = #{item.userId,jdbcType=INTEGER},</if>
+			<if test="item.billCode != null">BILL_CODE = #{item.billCode,jdbcType=VARCHAR},</if>
+			<if test="item.billDate != null">BILL_DATE = #{item.billDate,jdbcType=DATE},</if>
+			<if test="item.eventCode != null">EVENT_CODE = #{item.eventCode,jdbcType=VARCHAR},</if>
+			<if test="item.createId != null">CREATE_ID = #{item.createId,jdbcType=INTEGER},</if>
+			<if test="item.createDate != null">CREATE_DATE = #{item.createDate,jdbcType=TIMESTAMP}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  SC_M_BILL_OUTPUT_DETAIL
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  SC_M_BILL_OUTPUT_DETAIL
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE 
+		 ROW_ID =#{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  SC_M_BILL_OUTPUT_DETAIL
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' 
+		 AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+		 AND ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCons" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  SC_M_BILL_OUTPUT_DETAIL
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' ${item}
+		</foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="OutputDetailResult">
+		SELECT 
+		<include refid="OutputDetailModel_Column_List" />
+		FROM SC_M_BILL_OUTPUT_DETAIL WHERE DELETED_FLAG='0' 
+		AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="OutputDetailResult" >
+		SELECT 
+		<include refid="OutputDetailModel_Column_List" />
+		FROM SC_M_BILL_OUTPUT_DETAIL WHERE DELETED_FLAG='0'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="OutputDetailResult" >
+		SELECT 
+		<include refid="OutputDetailModel_Column_List" />
+		FROM SC_M_BILL_OUTPUT_DETAIL
+		WHERE DELETED_FLAG='0'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="OutputDetailResult" >
+		SELECT 
+		<include refid="OutputDetailModel_Column_List" />
+		FROM SC_M_BILL_OUTPUT_DETAIL
+		WHERE ${condition}
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAll" resultMap="OutputDetailResult" >
+		SELECT *
+		FROM SC_M_BILL_OUTPUT_DETAIL
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="OutputDetailResult"> ${sql} </select>
+
+</mapper>
+

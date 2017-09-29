@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.supplychian.RequireMapper">
+
+	<resultMap id="RequireResult"  type="RequireModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="farmId" column="FARM_ID" jdbcType="INTEGER" />
+		<result property="companyId" column="COMPANY_ID" jdbcType="INTEGER" />
+		<result property="billCode" column="BILL_CODE" jdbcType="VARCHAR" />
+		<result property="billDate" column="BILL_DATE" jdbcType="DATE" />
+		<result property="eventCode" column="EVENT_CODE" jdbcType="VARCHAR" />
+		<result property="applyId" column="APPLY_ID" jdbcType="INTEGER" />
+		<result property="applyUnitId" column="APPLY_UNIT_ID" jdbcType="INTEGER" />
+		<result property="accountsUnitId" column="ACCOUNTS_UNIT_ID" jdbcType="INTEGER" />
+		<result property="applyType" column="APPLY_TYPE" jdbcType="CHAR" />
+		<result property="emergencyType" column="EMERGENCY_TYPE" jdbcType="CHAR" />
+		<result property="copyId" column="COPY_ID" jdbcType="INTEGER" />
+		<result property="requireType" column="REQUIRE_TYPE" jdbcType="CHAR" />
+		<result property="createId" column="CREATE_ID" jdbcType="INTEGER" />
+		<result property="createDate" column="CREATE_DATE" jdbcType="TIMESTAMP" />
+		<result property="oaUsername" column="OA_USERNAME" jdbcType="VARCHAR" />
+		<result property="reviewFailReason" column="REVIEW_FAIL_REASON" jdbcType="VARCHAR" />
+		<result property="ftriggerFlag" column="FtriggerFlag" jdbcType="INTEGER" />
+		<result property="requestid" column="requestid" jdbcType="INTEGER" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="RequireModel_Column_List">
+		ROW_ID,NOTES,BILL_CODE,BILL_DATE,EVENT_CODE,APPLY_ID,APPLY_UNIT_ID,ACCOUNTS_UNIT_ID,APPLY_TYPE,EMERGENCY_TYPE,COPY_ID,REQUIRE_TYPE,CREATE_ID,CREATE_DATE,OA_USERNAME,REVIEW_FAIL_REASON,FtriggerFlag,requestid
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true"   keyProperty="rowId" parameterType="RequireModel">
+		INSERT INTO SC_M_BILL_REQUIRE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			STATUS,
+			DELETED_FLAG,
+			NOTES,
+			FARM_ID,
+			COMPANY_ID,
+			BILL_CODE,
+			BILL_DATE,
+			EVENT_CODE,
+			APPLY_ID,
+			APPLY_UNIT_ID,
+			ACCOUNTS_UNIT_ID,
+			APPLY_TYPE,
+			EMERGENCY_TYPE,
+			COPY_ID,
+			REQUIRE_TYPE,
+			CREATE_ID,
+			CREATE_DATE,
+			OA_USERNAME,
+			REVIEW_FAIL_REASON,
+			FtriggerFlag,
+			requestid
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ notes,jdbcType=VARCHAR},
+			#{ farmId,jdbcType=INTEGER},
+			#{ companyId,jdbcType=INTEGER},
+			#{ billCode,jdbcType=VARCHAR},
+			#{ billDate,jdbcType=DATE},
+			#{ eventCode,jdbcType=VARCHAR},
+			#{ applyId,jdbcType=INTEGER},
+			#{ applyUnitId,jdbcType=INTEGER},
+			#{ accountsUnitId,jdbcType=INTEGER},
+			#{ applyType,jdbcType=CHAR},
+			#{ emergencyType,jdbcType=CHAR},
+			#{ copyId,jdbcType=INTEGER},
+			#{ requireType,jdbcType=CHAR},
+			#{ createId,jdbcType=INTEGER},
+			#{ createDate,jdbcType=TIMESTAMP},
+			#{ oaUsername,jdbcType=VARCHAR},
+			#{ reviewFailReason,jdbcType=VARCHAR},
+			#{ ftriggerFlag,jdbcType=INTEGER},
+			#{ requestid,jdbcType=INTEGER}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO SC_M_BILL_REQUIRE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			STATUS ,
+			DELETED_FLAG ,
+			NOTES ,
+			FARM_ID ,
+			COMPANY_ID ,
+			BILL_CODE ,
+			BILL_DATE ,
+			EVENT_CODE ,
+			APPLY_ID ,
+			APPLY_UNIT_ID ,
+			ACCOUNTS_UNIT_ID ,
+			APPLY_TYPE ,
+			EMERGENCY_TYPE ,
+			COPY_ID ,
+			REQUIRE_TYPE ,
+			CREATE_ID ,
+			CREATE_DATE ,
+			OA_USERNAME ,
+			REVIEW_FAIL_REASON ,
+			FtriggerFlag ,
+			requestid 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.farmId,jdbcType=INTEGER},
+				#{item.companyId,jdbcType=INTEGER},
+				#{item.billCode,jdbcType=VARCHAR},
+				#{item.billDate,jdbcType=DATE},
+				#{item.eventCode,jdbcType=VARCHAR},
+				#{item.applyId,jdbcType=INTEGER},
+				#{item.applyUnitId,jdbcType=INTEGER},
+				#{item.accountsUnitId,jdbcType=INTEGER},
+				#{item.applyType,jdbcType=CHAR},
+				#{item.emergencyType,jdbcType=CHAR},
+				#{item.copyId,jdbcType=INTEGER},
+				#{item.requireType,jdbcType=CHAR},
+				#{item.createId,jdbcType=INTEGER},
+				#{item.createDate,jdbcType=TIMESTAMP},
+				#{item.oaUsername,jdbcType=VARCHAR},
+				#{item.reviewFailReason,jdbcType=VARCHAR},
+				#{item.ftriggerFlag,jdbcType=INTEGER},
+				#{item.requestid,jdbcType=INTEGER}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="RequireModel" >
+		UPDATE SC_M_BILL_REQUIRE 
+		<set>
+		<if test="status != null">STATUS = #{ status,jdbcType=CHAR},</if>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="billCode != null">BILL_CODE = #{ billCode,jdbcType=VARCHAR},</if>
+		<if test="billDate != null">BILL_DATE = #{ billDate,jdbcType=DATE},</if>
+		<if test="eventCode != null">EVENT_CODE = #{ eventCode,jdbcType=VARCHAR},</if>
+		<if test="applyId != null">APPLY_ID = #{ applyId,jdbcType=INTEGER},</if>
+		<if test="applyUnitId != null">APPLY_UNIT_ID = #{ applyUnitId,jdbcType=INTEGER},</if>
+		<if test="accountsUnitId != null">ACCOUNTS_UNIT_ID = #{ accountsUnitId,jdbcType=INTEGER},</if>
+		<if test="applyType != null">APPLY_TYPE = #{ applyType,jdbcType=CHAR},</if>
+		<if test="emergencyType != null">EMERGENCY_TYPE = #{ emergencyType,jdbcType=CHAR},</if>
+		<if test="copyId != null">COPY_ID = #{ copyId,jdbcType=INTEGER},</if>
+		<if test="requireType != null">REQUIRE_TYPE = #{ requireType,jdbcType=CHAR},</if>
+		<if test="createId != null">CREATE_ID = #{ createId,jdbcType=INTEGER},</if>
+		<if test="createDate != null">CREATE_DATE = #{ createDate,jdbcType=TIMESTAMP},</if>
+		<if test="oaUsername != null">OA_USERNAME = #{ oaUsername,jdbcType=VARCHAR},</if>
+		<if test="reviewFailReason != null">REVIEW_FAIL_REASON = #{ reviewFailReason,jdbcType=VARCHAR},</if>
+		<if test="ftriggerFlag != null">FtriggerFlag = #{ ftriggerFlag,jdbcType=INTEGER},</if>
+		<if test="requestid != null">requestid = #{ requestid,jdbcType=INTEGER}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE SC_M_BILL_REQUIRE 
+			<set>
+			<if test="item.status != null">STATUS = #{item.status,jdbcType=CHAR},</if>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.billCode != null">BILL_CODE = #{item.billCode,jdbcType=VARCHAR},</if>
+			<if test="item.billDate != null">BILL_DATE = #{item.billDate,jdbcType=DATE},</if>
+			<if test="item.eventCode != null">EVENT_CODE = #{item.eventCode,jdbcType=VARCHAR},</if>
+			<if test="item.applyId != null">APPLY_ID = #{item.applyId,jdbcType=INTEGER},</if>
+			<if test="item.applyUnitId != null">APPLY_UNIT_ID = #{item.applyUnitId,jdbcType=INTEGER},</if>
+			<if test="item.accountsUnitId != null">ACCOUNTS_UNIT_ID = #{item.accountsUnitId,jdbcType=INTEGER},</if>
+			<if test="item.applyType != null">APPLY_TYPE = #{item.applyType,jdbcType=CHAR},</if>
+			<if test="item.emergencyType != null">EMERGENCY_TYPE = #{item.emergencyType,jdbcType=CHAR},</if>
+			<if test="item.copyId != null">COPY_ID = #{item.copyId,jdbcType=INTEGER},</if>
+			<if test="item.requireType != null">REQUIRE_TYPE = #{item.requireType,jdbcType=CHAR},</if>
+			<if test="item.createId != null">CREATE_ID = #{item.createId,jdbcType=INTEGER},</if>
+			<if test="item.createDate != null">CREATE_DATE = #{item.createDate,jdbcType=TIMESTAMP},</if>
+			<if test="item.oaUsername != null">OA_USERNAME = #{item.oaUsername,jdbcType=VARCHAR},</if>
+			<if test="item.reviewFailReason != null">REVIEW_FAIL_REASON = #{item.reviewFailReason,jdbcType=VARCHAR},</if>
+			<if test="item.ftriggerFlag != null">FtriggerFlag = #{item.ftriggerFlag,jdbcType=INTEGER},</if>
+			<if test="item.requestid != null">requestid = #{item.requestid,jdbcType=INTEGER}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  SC_M_BILL_REQUIRE
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  SC_M_BILL_REQUIRE
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE 
+		 ROW_ID =#{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  SC_M_BILL_REQUIRE
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' 
+		 AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+		 AND ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCons" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  SC_M_BILL_REQUIRE
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' ${item}
+		</foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="RequireResult">
+		SELECT 
+		<include refid="RequireModel_Column_List" />
+		FROM SC_M_BILL_REQUIRE WHERE DELETED_FLAG='0' 
+		AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="RequireResult" >
+		SELECT 
+		<include refid="RequireModel_Column_List" />
+		FROM SC_M_BILL_REQUIRE WHERE DELETED_FLAG='0'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="RequireResult" >
+		SELECT 
+		<include refid="RequireModel_Column_List" />
+		FROM SC_M_BILL_REQUIRE
+		WHERE DELETED_FLAG='0'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="RequireResult" >
+		SELECT 
+		<include refid="RequireModel_Column_List" />
+		FROM SC_M_BILL_REQUIRE
+		WHERE ${condition}
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAll" resultMap="RequireResult" >
+		SELECT *
+		FROM SC_M_BILL_REQUIRE
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="RequireResult"> ${sql} </select>
+
+	<!--批量作废，填写作废原因 -->
+	<update id="updatesForScrap" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE SC_M_BILL_REQUIRE 
+			<set>
+			<if test="item.status != null">STATUS = #{item.status,jdbcType=CHAR},</if>
+			<if test="item.notes != null">NOTES = CONCAT(IFNULL(NOTES,''),#{item.notes,jdbcType=VARCHAR}),</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+</mapper>
+

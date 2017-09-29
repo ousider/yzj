@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.backend.WeMpushMessageMapper">
+
+	<resultMap id="WeMpushMessageResult"  type="WeMpushMessageModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="messageCode" column="MESSAGE_CODE" jdbcType="VARCHAR" />
+		<result property="messageTitle" column="MESSAGE_TITLE" jdbcType="VARCHAR" />
+		<result property="messageType" column="MESSAGE_TYPE" jdbcType="VARCHAR" />
+		<result property="description" column="DESCRIPTION" jdbcType="VARCHAR" />
+		<result property="picUrl" column="PIC_URL" jdbcType="VARCHAR" />
+		<result property="contentUrl" column="CONTENT_URL" jdbcType="VARCHAR" />
+		<result property="content" column="CONTENT" jdbcType="LONGVARCHAR" />
+		<result property="createId" column="CREATE_ID" jdbcType="INTEGER" />
+		<result property="createDate" column="CREATE_DATE" jdbcType="TIMESTAMP" />
+		<result property="useFlag" column="USE_FLAG" jdbcType="VARCHAR" />
+		<result property="closedDate" column="CLOSED_DATE" jdbcType="DATE" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="WeMpushMessageModel_Column_List">
+		ROW_ID,MESSAGE_CODE,MESSAGE_TITLE,MESSAGE_TYPE,DESCRIPTION,PIC_URL,CONTENT_URL,CONTENT,CREATE_ID,CREATE_DATE,USE_FLAG,CLOSED_DATE
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true"   keyProperty="rowId" parameterType="WeMpushMessageModel">
+		INSERT INTO WE_M_PUSH_MESSAGE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			STATUS,
+			DELETED_FLAG,
+			MESSAGE_CODE,
+			MESSAGE_TITLE,
+			MESSAGE_TYPE,
+			DESCRIPTION,
+			PIC_URL,
+			CONTENT_URL,
+			CONTENT,
+			CREATE_ID,
+			CREATE_DATE,
+			USE_FLAG,
+			CLOSED_DATE
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ messageCode,jdbcType=VARCHAR},
+			#{ messageTitle,jdbcType=VARCHAR},
+			#{ messageType,jdbcType=VARCHAR},
+			#{ description,jdbcType=VARCHAR},
+			#{ picUrl,jdbcType=VARCHAR},
+			#{ contentUrl,jdbcType=VARCHAR},
+			#{ content,jdbcType=LONGVARCHAR},
+			#{ createId,jdbcType=INTEGER},
+			#{ createDate,jdbcType=TIMESTAMP},
+			#{ useFlag,jdbcType=VARCHAR},
+			#{ closedDate,jdbcType=DATE}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO WE_M_PUSH_MESSAGE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			STATUS ,
+			DELETED_FLAG ,
+			MESSAGE_CODE ,
+			MESSAGE_TITLE ,
+			MESSAGE_TYPE ,
+			DESCRIPTION ,
+			PIC_URL ,
+			CONTENT_URL ,
+			CONTENT ,
+			CREATE_ID ,
+			CREATE_DATE ,
+			USE_FLAG ,
+			CLOSED_DATE 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.messageCode,jdbcType=VARCHAR},
+				#{item.messageTitle,jdbcType=VARCHAR},
+				#{item.messageType,jdbcType=VARCHAR},
+				#{item.description,jdbcType=VARCHAR},
+				#{item.picUrl,jdbcType=VARCHAR},
+				#{item.contentUrl,jdbcType=VARCHAR},
+				#{item.content,jdbcType=LONGVARCHAR},
+				#{item.createId,jdbcType=INTEGER},
+				#{item.createDate,jdbcType=TIMESTAMP},
+				#{item.useFlag,jdbcType=VARCHAR},
+				#{item.closedDate,jdbcType=DATE}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="WeMpushMessageModel" >
+		UPDATE WE_M_PUSH_MESSAGE 
+		<set>
+		<if test="status != null">STATUS = #{ status,jdbcType=CHAR},</if>
+		<if test="messageCode != null">MESSAGE_CODE = #{ messageCode,jdbcType=VARCHAR},</if>
+		<if test="messageTitle != null">MESSAGE_TITLE = #{ messageTitle,jdbcType=VARCHAR},</if>
+		<if test="messageType != null">MESSAGE_TYPE = #{ messageType,jdbcType=VARCHAR},</if>
+		<if test="description != null">DESCRIPTION = #{ description,jdbcType=VARCHAR},</if>
+		<if test="picUrl != null">PIC_URL = #{ picUrl,jdbcType=VARCHAR},</if>
+		<if test="contentUrl != null">CONTENT_URL = #{ contentUrl,jdbcType=VARCHAR},</if>
+		<if test="content != null">CONTENT = #{ content,jdbcType=LONGVARCHAR},</if>
+		<if test="createId != null">CREATE_ID = #{ createId,jdbcType=INTEGER},</if>
+		<if test="createDate != null">CREATE_DATE = #{ createDate,jdbcType=TIMESTAMP},</if>
+		<if test="useFlag != null">USE_FLAG = #{ useFlag,jdbcType=VARCHAR},</if>
+		<if test="closedDate != null">CLOSED_DATE = #{ closedDate,jdbcType=DATE}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE WE_M_PUSH_MESSAGE 
+			<set>
+			<if test="item.status != null">STATUS = #{item.status,jdbcType=CHAR},</if>
+			<if test="item.messageCode != null">MESSAGE_CODE = #{item.messageCode,jdbcType=VARCHAR},</if>
+			<if test="item.messageTitle != null">MESSAGE_TITLE = #{item.messageTitle,jdbcType=VARCHAR},</if>
+			<if test="item.messageType != null">MESSAGE_TYPE = #{item.messageType,jdbcType=VARCHAR},</if>
+			<if test="item.description != null">DESCRIPTION = #{item.description,jdbcType=VARCHAR},</if>
+			<if test="item.picUrl != null">PIC_URL = #{item.picUrl,jdbcType=VARCHAR},</if>
+			<if test="item.contentUrl != null">CONTENT_URL = #{item.contentUrl,jdbcType=VARCHAR},</if>
+			<if test="item.content != null">CONTENT = #{item.content,jdbcType=LONGVARCHAR},</if>
+			<if test="item.createId != null">CREATE_ID = #{item.createId,jdbcType=INTEGER},</if>
+			<if test="item.createDate != null">CREATE_DATE = #{item.createDate,jdbcType=TIMESTAMP},</if>
+			<if test="item.useFlag != null">USE_FLAG = #{item.useFlag,jdbcType=VARCHAR},</if>
+			<if test="item.closedDate != null">CLOSED_DATE = #{item.closedDate,jdbcType=DATE}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  WE_M_PUSH_MESSAGE
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  WE_M_PUSH_MESSAGE
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE 
+		 ROW_ID =#{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  WE_M_PUSH_MESSAGE
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' 
+		 
+		 AND ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCons" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  WE_M_PUSH_MESSAGE
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' ${item}
+		</foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="WeMpushMessageResult">
+		SELECT 
+		<include refid="WeMpushMessageModel_Column_List" />
+		FROM WE_M_PUSH_MESSAGE WHERE DELETED_FLAG='0' 
+		
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="WeMpushMessageResult" >
+		SELECT 
+		<include refid="WeMpushMessageModel_Column_List" />
+		FROM WE_M_PUSH_MESSAGE WHERE DELETED_FLAG='0'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="WeMpushMessageResult" >
+		SELECT 
+		<include refid="WeMpushMessageModel_Column_List" />
+		FROM WE_M_PUSH_MESSAGE
+		WHERE DELETED_FLAG='0'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="WeMpushMessageResult" >
+		SELECT 
+		<include refid="WeMpushMessageModel_Column_List" />
+		FROM WE_M_PUSH_MESSAGE
+		WHERE ${condition}
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAll" resultMap="WeMpushMessageResult" >
+		SELECT *
+		FROM WE_M_PUSH_MESSAGE
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="WeMpushMessageResult"> ${sql} </select>
+
+</mapper>
+

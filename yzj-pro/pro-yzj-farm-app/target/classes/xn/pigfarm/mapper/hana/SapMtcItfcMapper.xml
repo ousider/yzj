@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.hana.SapMtcItfcMapper">
+
+	<resultMap id="SapMtcItfcResult"  type="SapMtcItfcModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="sortNbr" column="SORT_NBR" jdbcType="INTEGER" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="originFlag" column="ORIGIN_FLAG" jdbcType="CHAR" />
+		<result property="originApp" column="ORIGIN_APP" jdbcType="VARCHAR" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="companyId" column="COMPANY_ID" jdbcType="INTEGER" />
+		<result property="farmId" column="FARM_ID" jdbcType="INTEGER" />
+		<result property="hanaLogId" column="HANA_LOG_ID" jdbcType="INTEGER" />
+		<result property="mtcId" column="MTC_ID" jdbcType="INTEGER" />
+		<result property="mtcbranch" column="MTC_Branch" jdbcType="VARCHAR" />
+		<result property="mtcdocDate" column="MTC_DocDate" jdbcType="DATE" />
+		<result property="mtcobjCode" column="MTC_ObjCode" jdbcType="VARCHAR" />
+		<result property="mtcdocNum" column="MTC_DocNum" jdbcType="VARCHAR" />
+		<result property="mtcpriority" column="MTC_Priority" jdbcType="INTEGER" />
+		<result property="mtctransType" column="MTC_TransType" jdbcType="CHAR" />
+		<result property="mtcbaseEntry" column="MTC_BaseEntry" jdbcType="VARCHAR" />
+		<result property="mtcflag" column="MTC_Flag" jdbcType="VARCHAR" />
+		<result property="mtccreateTime" column="MTC_CreateTime" jdbcType="TIMESTAMP" />
+		<result property="mtcstatus" column="MTC_Status" jdbcType="CHAR" />
+		<result property="mtcupdateTime" column="MTC_UpdateTime" jdbcType="TIMESTAMP" />
+		<result property="mtcerrorMsg" column="MTC_ErrorMsg" jdbcType="VARCHAR" />
+		<result property="mtctimes" column="MTC_Times" jdbcType="INTEGER" />
+		<result property="mtcdataFile" column="MTC_DataFile" jdbcType="VARCHAR" />
+		<result property="mtcdataFileLen" column="MTC_DataFileLen" jdbcType="INTEGER" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="SapMtcItfcModel_Column_List">
+		ROW_ID,SORT_NBR,NOTES,HANA_LOG_ID,MTC_ID,MTC_Branch,MTC_DocDate,MTC_ObjCode,MTC_DocNum,MTC_Priority,MTC_TransType,MTC_BaseEntry,MTC_Flag,MTC_CreateTime,MTC_Status,MTC_UpdateTime,MTC_ErrorMsg,MTC_Times,MTC_DataFile,MTC_DataFileLen
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true"   keyProperty="rowId" parameterType="SapMtcItfcModel">
+		INSERT INTO SAP_MTC_ITFC
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR,
+			STATUS,
+			DELETED_FLAG,
+			ORIGIN_FLAG,
+			ORIGIN_APP,
+			NOTES,
+			COMPANY_ID,
+			FARM_ID,
+			HANA_LOG_ID,
+			MTC_ID,
+			MTC_Branch,
+			MTC_DocDate,
+			MTC_ObjCode,
+			MTC_DocNum,
+			MTC_Priority,
+			MTC_TransType,
+			MTC_BaseEntry,
+			MTC_Flag,
+			MTC_CreateTime,
+			MTC_Status,
+			MTC_UpdateTime,
+			MTC_ErrorMsg,
+			MTC_Times,
+			MTC_DataFile,
+			MTC_DataFileLen
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ sortNbr,jdbcType=INTEGER},
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ originFlag,jdbcType=CHAR},
+			#{ originApp,jdbcType=VARCHAR},
+			#{ notes,jdbcType=VARCHAR},
+			#{ companyId,jdbcType=INTEGER},
+			#{ farmId,jdbcType=INTEGER},
+			#{ hanaLogId,jdbcType=INTEGER},
+			#{ mtcId,jdbcType=INTEGER},
+			#{ mtcbranch,jdbcType=VARCHAR},
+			#{ mtcdocDate,jdbcType=DATE},
+			#{ mtcobjCode,jdbcType=VARCHAR},
+			#{ mtcdocNum,jdbcType=VARCHAR},
+			#{ mtcpriority,jdbcType=INTEGER},
+			#{ mtctransType,jdbcType=CHAR},
+			#{ mtcbaseEntry,jdbcType=VARCHAR},
+			#{ mtcflag,jdbcType=VARCHAR},
+			#{ mtccreateTime,jdbcType=TIMESTAMP},
+			#{ mtcstatus,jdbcType=CHAR},
+			#{ mtcupdateTime,jdbcType=TIMESTAMP},
+			#{ mtcerrorMsg,jdbcType=VARCHAR},
+			#{ mtctimes,jdbcType=INTEGER},
+			#{ mtcdataFile,jdbcType=VARCHAR},
+			#{ mtcdataFileLen,jdbcType=INTEGER}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO SAP_MTC_ITFC
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR ,
+			STATUS ,
+			DELETED_FLAG ,
+			ORIGIN_FLAG ,
+			ORIGIN_APP ,
+			NOTES ,
+			COMPANY_ID ,
+			FARM_ID ,
+			HANA_LOG_ID ,
+			MTC_ID ,
+			MTC_Branch ,
+			MTC_DocDate ,
+			MTC_ObjCode ,
+			MTC_DocNum ,
+			MTC_Priority ,
+			MTC_TransType ,
+			MTC_BaseEntry ,
+			MTC_Flag ,
+			MTC_CreateTime ,
+			MTC_Status ,
+			MTC_UpdateTime ,
+			MTC_ErrorMsg ,
+			MTC_Times ,
+			MTC_DataFile ,
+			MTC_DataFileLen 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.sortNbr,jdbcType=INTEGER},
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.originFlag,jdbcType=CHAR},
+				#{item.originApp,jdbcType=VARCHAR},
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.companyId,jdbcType=INTEGER},
+				#{item.farmId,jdbcType=INTEGER},
+				#{item.hanaLogId,jdbcType=INTEGER},
+				#{item.mtcId,jdbcType=INTEGER},
+				#{item.mtcbranch,jdbcType=VARCHAR},
+				#{item.mtcdocDate,jdbcType=DATE},
+				#{item.mtcobjCode,jdbcType=VARCHAR},
+				#{item.mtcdocNum,jdbcType=VARCHAR},
+				#{item.mtcpriority,jdbcType=INTEGER},
+				#{item.mtctransType,jdbcType=CHAR},
+				#{item.mtcbaseEntry,jdbcType=VARCHAR},
+				#{item.mtcflag,jdbcType=VARCHAR},
+				#{item.mtccreateTime,jdbcType=TIMESTAMP},
+				#{item.mtcstatus,jdbcType=CHAR},
+				#{item.mtcupdateTime,jdbcType=TIMESTAMP},
+				#{item.mtcerrorMsg,jdbcType=VARCHAR},
+				#{item.mtctimes,jdbcType=INTEGER},
+				#{item.mtcdataFile,jdbcType=VARCHAR},
+				#{item.mtcdataFileLen,jdbcType=INTEGER}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="SapMtcItfcModel" >
+		UPDATE SAP_MTC_ITFC 
+		<set>
+		<if test="sortNbr != null">SORT_NBR = #{ sortNbr,jdbcType=INTEGER},</if>
+		<if test="status != null">STATUS = #{ status,jdbcType=CHAR},</if>
+		<if test="originFlag != null">ORIGIN_FLAG = #{ originFlag,jdbcType=CHAR},</if>
+		<if test="originApp != null">ORIGIN_APP = #{ originApp,jdbcType=VARCHAR},</if>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="hanaLogId != null">HANA_LOG_ID = #{ hanaLogId,jdbcType=INTEGER},</if>
+		<if test="mtcId != null">MTC_ID = #{ mtcId,jdbcType=INTEGER},</if>
+		<if test="mtcbranch != null">MTC_Branch = #{ mtcbranch,jdbcType=VARCHAR},</if>
+		<if test="mtcdocDate != null">MTC_DocDate = #{ mtcdocDate,jdbcType=DATE},</if>
+		<if test="mtcobjCode != null">MTC_ObjCode = #{ mtcobjCode,jdbcType=VARCHAR},</if>
+		<if test="mtcdocNum != null">MTC_DocNum = #{ mtcdocNum,jdbcType=VARCHAR},</if>
+		<if test="mtcpriority != null">MTC_Priority = #{ mtcpriority,jdbcType=INTEGER},</if>
+		<if test="mtctransType != null">MTC_TransType = #{ mtctransType,jdbcType=CHAR},</if>
+		<if test="mtcbaseEntry != null">MTC_BaseEntry = #{ mtcbaseEntry,jdbcType=VARCHAR},</if>
+		<if test="mtcflag != null">MTC_Flag = #{ mtcflag,jdbcType=VARCHAR},</if>
+		<if test="mtccreateTime != null">MTC_CreateTime = #{ mtccreateTime,jdbcType=TIMESTAMP},</if>
+		<if test="mtcstatus != null">MTC_Status = #{ mtcstatus,jdbcType=CHAR},</if>
+		<if test="mtcupdateTime != null">MTC_UpdateTime = #{ mtcupdateTime,jdbcType=TIMESTAMP},</if>
+		<if test="mtcerrorMsg != null">MTC_ErrorMsg = #{ mtcerrorMsg,jdbcType=VARCHAR},</if>
+		<if test="mtctimes != null">MTC_Times = #{ mtctimes,jdbcType=INTEGER},</if>
+		<if test="mtcdataFile != null">MTC_DataFile = #{ mtcdataFile,jdbcType=VARCHAR},</if>
+		<if test="mtcdataFileLen != null">MTC_DataFileLen = #{ mtcdataFileLen,jdbcType=INTEGER}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE SAP_MTC_ITFC 
+			<set>
+			<if test="item.sortNbr != null">SORT_NBR = #{item.sortNbr,jdbcType=INTEGER},</if>
+			<if test="item.status != null">STATUS = #{item.status,jdbcType=CHAR},</if>
+			<if test="item.originFlag != null">ORIGIN_FLAG = #{item.originFlag,jdbcType=CHAR},</if>
+			<if test="item.originApp != null">ORIGIN_APP = #{item.originApp,jdbcType=VARCHAR},</if>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.hanaLogId != null">HANA_LOG_ID = #{item.hanaLogId,jdbcType=INTEGER},</if>
+			<if test="item.mtcId != null">MTC_ID = #{item.mtcId,jdbcType=INTEGER},</if>
+			<if test="item.mtcbranch != null">MTC_Branch = #{item.mtcbranch,jdbcType=VARCHAR},</if>
+			<if test="item.mtcdocDate != null">MTC_DocDate = #{item.mtcdocDate,jdbcType=DATE},</if>
+			<if test="item.mtcobjCode != null">MTC_ObjCode = #{item.mtcobjCode,jdbcType=VARCHAR},</if>
+			<if test="item.mtcdocNum != null">MTC_DocNum = #{item.mtcdocNum,jdbcType=VARCHAR},</if>
+			<if test="item.mtcpriority != null">MTC_Priority = #{item.mtcpriority,jdbcType=INTEGER},</if>
+			<if test="item.mtctransType != null">MTC_TransType = #{item.mtctransType,jdbcType=CHAR},</if>
+			<if test="item.mtcbaseEntry != null">MTC_BaseEntry = #{item.mtcbaseEntry,jdbcType=VARCHAR},</if>
+			<if test="item.mtcflag != null">MTC_Flag = #{item.mtcflag,jdbcType=VARCHAR},</if>
+			<if test="item.mtccreateTime != null">MTC_CreateTime = #{item.mtccreateTime,jdbcType=TIMESTAMP},</if>
+			<if test="item.mtcstatus != null">MTC_Status = #{item.mtcstatus,jdbcType=CHAR},</if>
+			<if test="item.mtcupdateTime != null">MTC_UpdateTime = #{item.mtcupdateTime,jdbcType=TIMESTAMP},</if>
+			<if test="item.mtcerrorMsg != null">MTC_ErrorMsg = #{item.mtcerrorMsg,jdbcType=VARCHAR},</if>
+			<if test="item.mtctimes != null">MTC_Times = #{item.mtctimes,jdbcType=INTEGER},</if>
+			<if test="item.mtcdataFile != null">MTC_DataFile = #{item.mtcdataFile,jdbcType=VARCHAR},</if>
+			<if test="item.mtcdataFileLen != null">MTC_DataFileLen = #{item.mtcdataFileLen,jdbcType=INTEGER}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  SAP_MTC_ITFC
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  SAP_MTC_ITFC
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE 
+		 ROW_ID =#{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  SAP_MTC_ITFC
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' 
+		 AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+		 AND ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCons" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  SAP_MTC_ITFC
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' ${item}
+		</foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="SapMtcItfcResult">
+		SELECT 
+		<include refid="SapMtcItfcModel_Column_List" />
+		FROM SAP_MTC_ITFC WHERE DELETED_FLAG='0' 
+		AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="SapMtcItfcResult" >
+		SELECT 
+		<include refid="SapMtcItfcModel_Column_List" />
+		FROM SAP_MTC_ITFC WHERE DELETED_FLAG='0'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="SapMtcItfcResult" >
+		SELECT 
+		<include refid="SapMtcItfcModel_Column_List" />
+		FROM SAP_MTC_ITFC
+		WHERE DELETED_FLAG='0'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="SapMtcItfcResult" >
+		SELECT 
+		<include refid="SapMtcItfcModel_Column_List" />
+		FROM SAP_MTC_ITFC
+		WHERE ${condition}
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAll" resultMap="SapMtcItfcResult" >
+		SELECT *
+		FROM SAP_MTC_ITFC
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="SapMtcItfcResult"> ${sql} </select>
+
+</mapper>
+

@@ -1,0 +1,41 @@
+﻿<?xml version = '1.0' encoding = 'UTF-8'?>
+
+<localcaches>
+
+    <cache className="xn.core.timedtask.prctimedtask.PrcTimedTask"  cronExpr="0 0/1 * * * ?"  init="false" />
+
+    <!-- 每个月第一天完结上个月的所有兽药订单，并自动生成未到货的订单 -->
+    <cache className="xn.pigfarm.timedtask.OverPurchaseBillTask"  cronExpr="5 0 0 1 * ?"  init="true" />
+
+    <!-- 每个月第一天完结上个月的所有饲料订单，并自动生成未到货最后一个星期的订单 -->
+    <cache className="xn.pigfarm.timedtask.OverFeedPurchaseBillTask"  cronExpr="5 10 0 1 * ?"  init="true" />
+
+    <!-- 新农:每一周星期一完结上个星期的的饲料订单 -->
+    <cache className="xn.pigfarm.timedtask.OverEveryWeekFeedPurchaseBillTask"  cronExpr="5 0 0 ? * MON"  init="false" />
+
+    <!-- 新农翔:自动将月前的订单重新生成一份月后的订单(上下半月单价不同) -->
+    <cache className="xn.pigfarm.timedtask.CreatePurchaseBillAfterMidMonthByBeforeMidMonthForXinNongXiangTask"  cronExpr="5 0 0 16 * ?"  init="true" />
+
+    <!-- 每个月第一天计算出月初的数量 -->
+    <cache className="xn.pigfarm.timedtask.MonthAccountTask"  cronExpr="5 0 0 1 * ?"  init="false" />
+
+    <!-- 每天报废过期的  -->
+    <cache className="xn.pigfarm.timedtask.ScrapSpermInfoTask"  cronExpr="30 03 0 * * ?"  init="true" />
+    
+     <!-- 每周日计算上一周生产数据汇总数据 移到微信端执行 -->
+     <!-- <cache className="xn.pigfarm.timedtask.ProductionReportTaskByWeek"  cronExpr="5 0 0 ? * SUN"  init="true" /> -->
+    
+     <!-- 每月生产数据汇总  移到微信端执行-->
+     <!-- <cache className="xn.pigfarm.timedtask.ProductionReportTaskByMonth"  cronExpr="0 30 0 1 * ?"  init="true" /> -->
+    
+     <!-- 每季度第一天计算上一季度生产数据汇总  -->
+    <cache className="xn.pigfarm.timedtask.ProductionReportTaskByQuarter"  cronExpr="0 0 1 1 1/3 ?"  init="true" />
+    
+     <!-- 每年一月一号计算去年生产数据汇总  -->
+     <cache className="xn.pigfarm.timedtask.ProductionReportTaskByYear"  cronExpr="0 30 1 1 1 ?"  init="true" />
+     
+      <!-- 每月26号计算上个月的绩效数据  -->
+      <cache className="xn.pigfarm.timedtask.PerformanceCalculateTask"  cronExpr="0 5 0 26 * ?"  init="true" />
+     <!-- <cache className="xn.pigfarm.timedtask.PerformanceCalculateTask"  cronExpr="0 21 22 24 * ?"  init="true" /> -->
+    
+</localcaches>

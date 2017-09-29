@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="xn.pigfarm.mapper.backend.CdCodeMapper">
+	
+	<resultMap id="cdCodeListResult" type="CdCodeListModel" extends = "BaseMapper.BaseModelMap">
+		<result property="typeId" column="TYPE_ID" jdbcType="INTEGER" />
+		<result property="codeValue" column="CODE_VALUE" jdbcType="VARCHAR" />
+		<result property="codeName" column="CODE_NAME" jdbcType="VARCHAR" />
+		<result property="linkValue" column="LINK_VALUE" jdbcType="VARCHAR" />
+		<result property="isDefault" column="IS_DEFAULT" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="Head_Column_List">
+		ct.ROW_ID,ct.NOTES,ct.SORT_NBR,ct.STATUS,ct.DELETED_FLAG,ct.ORIGIN_FLAG,ct.ORIGIN_APP,ct.TYPE_CODE,ct.TYPE_NAME,ct.SUP_TYPE
+	</sql>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="List_Column_List">
+		cl.ROW_ID,cl.NOTES,cl.SORT_NBR,cl.STATUS,cl.DELETED_FLAG,cl.ORIGIN_FLAG,cl.ORIGIN_APP,cl.TYPE_ID,cl.CODE_VALUE,cl.CODE_NAME,cl.LINK_VALUE,cl.IS_DEFAULT
+	</sql>
+
+	<!-- 带验证增 -->
+	<insert id="inserts" >
+		insert into cd_l_code_list
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			NOTES ,SORT_NBR ,STATUS ,DELETED_FLAG ,ORIGIN_FLAG ,ORIGIN_APP ,TYPE_ID,TYPE_CODE,CODE_VALUE ,CODE_NAME ,LINK_VALUE ,IS_DEFAULT 
+		</trim>
+		<foreach collection="records" item="item" index="index" separator="UNION ALL"> 
+			SELECT 
+			#{ item.notes,jdbcType=VARCHAR} ,
+			#{ item.sortNbr,jdbcType=INTEGER} ,
+			#{ item.status,jdbcType=CHAR} ,
+			#{ item.deletedFlag,jdbcType=CHAR} ,
+			#{ item.originFlag,jdbcType=CHAR} ,
+			#{ item.originApp,jdbcType=VARCHAR} ,
+			#{ item.typeId,jdbcType=INTEGER} ,
+			#{ item.typeCode,jdbcType=VARCHAR} ,
+			#{ item.codeValue,jdbcType=VARCHAR} ,
+			#{ item.codeName,jdbcType=VARCHAR} ,
+			#{ item.linkValue,jdbcType=VARCHAR} ,
+			#{ item.isDefault,jdbcType=CHAR} 
+		</foreach>
+	</insert>
+	
+	<!--带验证更新 -->
+	<update id="updates" parameterType="CdCodeListModel">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">
+			update cd_l_code_list
+			<set>
+				<if test="item.notes!= null">NOTES = #{ item.notes,jdbcType=VARCHAR} ,</if>	
+				<if test="item.sortNbr!= 0">SORT_NBR = #{ item.sortNbr,jdbcType=INTEGER} ,</if>	
+				<if test="item.status!= null">STATUS = #{ item.status,jdbcType=CHAR} ,</if>	
+				<if test="item.originFlag!= null">ORIGIN_FLAG = #{ item.originFlag,jdbcType=CHAR} ,</if>	
+				<if test="item.originApp!= null">ORIGIN_APP = #{ item.originApp,jdbcType=VARCHAR} ,</if>	
+				<if test="item.typeId!= 0">TYPE_ID = #{ item.typeId,jdbcType=INTEGER} ,</if>	
+				<if test="item.typeCode!= null">TYPE_CODE = #{ item.typeCode,jdbcType=VARCHAR} ,</if>	
+				<if test="item.codeValue!= null">CODE_VALUE = #{ item.codeValue,jdbcType=VARCHAR} ,</if>	
+				<if test="item.codeName!= null">CODE_NAME = #{ item.codeName,jdbcType=VARCHAR} ,</if>	
+				<if test="item.linkValue!= null">LINK_VALUE = #{ item.linkValue,jdbcType=VARCHAR} ,</if>	
+				<if test="item.isDefault!= null">IS_DEFAULT = #{ item.isDefault,jdbcType=CHAR} </if>	
+			</set>
+			where
+			ROW_ID = #{ item.rowId,jdbcType=INTEGER}
+		</foreach>
+	</update>
+	
+	<update id="deletes">
+		UPDATE
+		cd_l_code_list	SET
+		DELETED_FLAG = '1'	WHERE ROW_ID in
+		<foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</update>
+	
+	<update id="deleteCodeListByTypeId">
+		UPDATE
+		cd_l_code_list	SET
+		DELETED_FLAG = '1'	WHERE TYPE_ID in
+		<foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</update>
+	
+	<!--查询明细 -->
+	<select id="searchDetailToList" resultMap="cdCodeListResult" >
+		select
+		<include refid="List_Column_List" />
+		from cd_l_code_list cl
+		where
+		cl.STATUS = 1 AND cl.DELETED_FLAG = 0 AND cl.TYPE_ID = #{ typeId,jdbcType=INTEGER}
+	</select>
+	
+	<select id="searchByTypeCode" resultMap="cdCodeListResult">
+		select
+		<include refid="List_Column_List" />
+		from cd_l_code_list cl
+		left join cd_m_code_type ct on cl.TYPE_ID = ct.ROW_ID and ct.STATUS = 1 AND ct.DELETED_FLAG = 0
+		where 
+		cl.STATUS = 1 AND cl.DELETED_FLAG = 0
+		AND ct.TYPE_CODE = #{ typeCode,jdbcType=VARCHAR} 
+		<if test="linkValue != null and linkValue != ''">
+			AND cl.LINK_VALUE = #{linkValue,jdbcType=VARCHAR} 
+		</if>
+	</select>
+	
+	<select id="searchRoleType" resultMap="cdCodeListResult">
+		SELECT  
+			<include refid="List_Column_List" />
+		FROM  `cd_m_code_type` AS ct 
+		INNER JOIN  `cd_l_code_list` AS cl  ON cl.`TYPE_ID`= ct.`ROW_ID`  AND ct.`TYPE_CODE`= #{ typeCode,jdbcType=VARCHAR} 
+		INNER JOIN `cd_o_role` AS r ON r.`ROLE_TYPE` = cl.`CODE_VALUE` AND r.`COMPANY_ID`=#{ farmId,jdbcType=INTEGER} GROUP BY r.`ROLE_TYPE` 
+	</select>
+	
+</mapper>
+

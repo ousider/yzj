@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.basicinfo.PigObsoleteModuleMapper">
+
+	<resultMap id="PigObsoleteModuleResult"  type="PigObsoleteModuleModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="sortNbr" column="SORT_NBR" jdbcType="INTEGER" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="obsoleteCode" column="OBSOLETE_CODE" jdbcType="VARCHAR" />
+		<result property="obsoleteStandard" column="OBSOLETE_STANDARD" jdbcType="VARCHAR" />
+		<result property="param1" column="PARAM1" jdbcType="VARCHAR" />
+		<result property="param2" column="PARAM2" jdbcType="VARCHAR" />
+		<result property="param3" column="PARAM3" jdbcType="VARCHAR" />
+		<result property="createId" column="CREATE_ID" jdbcType="INTEGER" />
+		<result property="createDate" column="CREATE_DATE" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="PigObsoleteModuleModel_Column_List">
+		ROW_ID,SORT_NBR,NOTES,OBSOLETE_CODE,OBSOLETE_STANDARD,PARAM1,PARAM2,PARAM3,CREATE_ID,CREATE_DATE
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true"   keyProperty="rowId" parameterType="PigObsoleteModuleModel">
+		INSERT INTO CD_M_PIG_OBSOLETE_MODULE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR,
+			STATUS,
+			DELETED_FLAG,
+			NOTES,
+			OBSOLETE_CODE,
+			OBSOLETE_STANDARD,
+			PARAM1,
+			PARAM2,
+			PARAM3,
+			CREATE_ID,
+			CREATE_DATE
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ sortNbr,jdbcType=INTEGER},
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ notes,jdbcType=VARCHAR},
+			#{ obsoleteCode,jdbcType=VARCHAR},
+			#{ obsoleteStandard,jdbcType=VARCHAR},
+			#{ param1,jdbcType=VARCHAR},
+			#{ param2,jdbcType=VARCHAR},
+			#{ param3,jdbcType=VARCHAR},
+			#{ createId,jdbcType=INTEGER},
+			#{ createDate,jdbcType=TIMESTAMP}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO CD_M_PIG_OBSOLETE_MODULE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR ,
+			STATUS ,
+			DELETED_FLAG ,
+			NOTES ,
+			OBSOLETE_CODE ,
+			OBSOLETE_STANDARD ,
+			PARAM1 ,
+			PARAM2 ,
+			PARAM3 ,
+			CREATE_ID ,
+			CREATE_DATE 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.sortNbr,jdbcType=INTEGER},
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.obsoleteCode,jdbcType=VARCHAR},
+				#{item.obsoleteStandard,jdbcType=VARCHAR},
+				#{item.param1,jdbcType=VARCHAR},
+				#{item.param2,jdbcType=VARCHAR},
+				#{item.param3,jdbcType=VARCHAR},
+				#{item.createId,jdbcType=INTEGER},
+				#{item.createDate,jdbcType=TIMESTAMP}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="PigObsoleteModuleModel" >
+		UPDATE CD_M_PIG_OBSOLETE_MODULE 
+		<set>
+		<if test="sortNbr != null">SORT_NBR = #{ sortNbr,jdbcType=INTEGER},</if>
+		<if test="status != null">STATUS = #{ status,jdbcType=CHAR},</if>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="obsoleteCode != null">OBSOLETE_CODE = #{ obsoleteCode,jdbcType=VARCHAR},</if>
+		<if test="obsoleteStandard != null">OBSOLETE_STANDARD = #{ obsoleteStandard,jdbcType=VARCHAR},</if>
+		<if test="param1 != null">PARAM1 = #{ param1,jdbcType=VARCHAR},</if>
+		<if test="param2 != null">PARAM2 = #{ param2,jdbcType=VARCHAR},</if>
+		<if test="param3 != null">PARAM3 = #{ param3,jdbcType=VARCHAR},</if>
+		<if test="createId != null">CREATE_ID = #{ createId,jdbcType=INTEGER},</if>
+		<if test="createDate != null">CREATE_DATE = #{ createDate,jdbcType=TIMESTAMP}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE CD_M_PIG_OBSOLETE_MODULE 
+			<set>
+			<if test="item.sortNbr != null">SORT_NBR = #{item.sortNbr,jdbcType=INTEGER},</if>
+			<if test="item.status != null">STATUS = #{item.status,jdbcType=CHAR},</if>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.obsoleteCode != null">OBSOLETE_CODE = #{item.obsoleteCode,jdbcType=VARCHAR},</if>
+			<if test="item.obsoleteStandard != null">OBSOLETE_STANDARD = #{item.obsoleteStandard,jdbcType=VARCHAR},</if>
+			<if test="item.param1 != null">PARAM1 = #{item.param1,jdbcType=VARCHAR},</if>
+			<if test="item.param2 != null">PARAM2 = #{item.param2,jdbcType=VARCHAR},</if>
+			<if test="item.param3 != null">PARAM3 = #{item.param3,jdbcType=VARCHAR},</if>
+			<if test="item.createId != null">CREATE_ID = #{item.createId,jdbcType=INTEGER},</if>
+			<if test="item.createDate != null">CREATE_DATE = #{item.createDate,jdbcType=TIMESTAMP}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  CD_M_PIG_OBSOLETE_MODULE
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  CD_M_PIG_OBSOLETE_MODULE
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE 
+		 ROW_ID =#{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  CD_M_PIG_OBSOLETE_MODULE
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' 
+		 
+		 AND ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCons" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  CD_M_PIG_OBSOLETE_MODULE
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' ${item}
+		</foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="PigObsoleteModuleResult">
+		SELECT 
+		<include refid="PigObsoleteModuleModel_Column_List" />
+		FROM CD_M_PIG_OBSOLETE_MODULE WHERE DELETED_FLAG='0' 
+		
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="PigObsoleteModuleResult" >
+		SELECT 
+		<include refid="PigObsoleteModuleModel_Column_List" />
+		FROM CD_M_PIG_OBSOLETE_MODULE WHERE DELETED_FLAG='0'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="PigObsoleteModuleResult" >
+		SELECT 
+		<include refid="PigObsoleteModuleModel_Column_List" />
+		FROM CD_M_PIG_OBSOLETE_MODULE
+		WHERE DELETED_FLAG='0'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="PigObsoleteModuleResult" >
+		SELECT 
+		<include refid="PigObsoleteModuleModel_Column_List" />
+		FROM CD_M_PIG_OBSOLETE_MODULE
+		WHERE ${condition}
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAll" resultMap="PigObsoleteModuleResult" >
+		SELECT *
+		FROM CD_M_PIG_OBSOLETE_MODULE
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="PigObsoleteModuleResult"> ${sql} </select>
+
+</mapper>
+

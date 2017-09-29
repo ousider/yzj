@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.production.ChangeHouseMapper">
+
+	<resultMap id="ChangeHouseResult"  type="ChangeHouseModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="sortNbr" column="SORT_NBR" jdbcType="INTEGER" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="originFlag" column="ORIGIN_FLAG" jdbcType="CHAR" />
+		<result property="originApp" column="ORIGIN_APP" jdbcType="VARCHAR" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="farmId" column="FARM_ID" jdbcType="INTEGER" />
+		<result property="companyId" column="COMPANY_ID" jdbcType="INTEGER" />
+		<result property="lineNumber" column="LINE_NUMBER" jdbcType="INTEGER" />
+		<result property="swineryId" column="SWINERY_ID" jdbcType="INTEGER" />
+		<result property="pigId" column="PIG_ID" jdbcType="INTEGER" />
+		<result property="lineId" column="LINE_ID" jdbcType="INTEGER" />
+		<result property="houseId" column="HOUSE_ID" jdbcType="INTEGER" />
+		<result property="pigpenId" column="PIGPEN_ID" jdbcType="INTEGER" />
+		<result property="billId" column="BILL_ID" jdbcType="INTEGER" />
+		<result property="worker" column="WORKER" jdbcType="INTEGER" />
+		<result property="createId" column="CREATE_ID" jdbcType="INTEGER" />
+		<result property="createDate" column="CREATE_DATE" jdbcType="TIMESTAMP" />
+		<result property="pigType" column="PIG_TYPE" jdbcType="VARCHAR" />
+		<result property="changeType" column="CHANGE_TYPE" jdbcType="VARCHAR" />
+		<result property="changeHouseDate" column="CHANGE_HOUSE_DATE" jdbcType="TIMESTAMP" />
+		<result property="houseIdOut" column="HOUSE_ID_OUT" jdbcType="INTEGER" />
+		<result property="changeHouseDateOut" column="CHANGE_HOUSE_DATE_OUT" jdbcType="TIMESTAMP" />
+		<result property="pigpenIdOut" column="PIGPEN_ID_OUT" jdbcType="INTEGER" />
+		<result property="changeWeight" column="CHANGE_WEIGHT" jdbcType="DECIMAL" />
+		<result property="pigClass" column="PIG_CLASS" jdbcType="INTEGER" />
+		<result property="parity" column="PARITY" jdbcType="INTEGER" />
+		<result property="weighType" column="WEIGH_TYPE" jdbcType="VARCHAR" />
+		<result property="changeHouseId" column="CHANGE_HOUSE_ID" jdbcType="INTEGER" />
+		<result property="proNo" column="PRO_NO" jdbcType="INTEGER" />
+	</resultMap>
+
+	<resultMap id="ChangeHouseInfoResult" type="ChangeHouseInfoView">
+		<result property="pigId" column="PIG_ID" jdbcType="INTEGER" />
+		<result property="companyId" column="COMPANY_ID" jdbcType="INTEGER" />
+		<result property="farmId" column="FARM_ID" jdbcType="INTEGER" />
+		<result property="swineryId" column="SWINERY_ID" jdbcType="INTEGER" />
+		<result property="pigType" column="PIG_TYPE" jdbcType="VARCHAR" />
+		<result property="sex" column="SEX" jdbcType="VARCHAR" />
+		<result property="lineId" column="LINE_ID" jdbcType="INTEGER" />
+		<result property="houseId" column="HOUSE_ID" jdbcType="INTEGER" />
+		<result property="pigPenId" column="PIGPEN_ID" jdbcType="INTEGER" />
+		<result property="pigClass" column="PIG_CLASS" jdbcType="INTEGER" />
+		<result property="parity" column="PARITY" jdbcType="INTEGER" />
+		<result property="changeHouseId" column="CHANGE_HOUSE_ID" jdbcType="INTEGER" />
+		<result property="houseSortNbr" column="HOUSE_SORT_NBR" jdbcType="INTEGER" />
+		<result property="proNo" column="PRO_NO" jdbcType="INTEGER" />
+		<result property="hisSortNbr" column="HIS_SORT_NBR" jdbcType="INTEGER" /> 
+	</resultMap>
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="ChangeHouseModel_Column_List">
+		ROW_ID,SORT_NBR,NOTES,LINE_NUMBER,SWINERY_ID,PIG_ID,LINE_ID,HOUSE_ID,PIGPEN_ID,BILL_ID,WORKER,CREATE_ID,CREATE_DATE,PIG_TYPE,CHANGE_TYPE,CHANGE_HOUSE_DATE,HOUSE_ID_OUT,CHANGE_HOUSE_DATE_OUT,PIGPEN_ID_OUT,CHANGE_WEIGHT,PIG_CLASS,PARITY,WEIGH_TYPE,CHANGE_HOUSE_ID,PRO_NO
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true"   keyProperty="rowId" parameterType="ChangeHouseModel">
+		INSERT INTO PP_L_BILL_CHANGE_HOUSE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR,
+			STATUS,
+			DELETED_FLAG,
+			ORIGIN_FLAG,
+			ORIGIN_APP,
+			NOTES,
+			FARM_ID,
+			COMPANY_ID,
+			LINE_NUMBER,
+			SWINERY_ID,
+			PIG_ID,
+			LINE_ID,
+			HOUSE_ID,
+			PIGPEN_ID,
+			BILL_ID,
+			WORKER,
+			CREATE_ID,
+			CREATE_DATE,
+			PIG_TYPE,
+			CHANGE_TYPE,
+			CHANGE_HOUSE_DATE,
+			HOUSE_ID_OUT,
+			CHANGE_HOUSE_DATE_OUT,
+			PIGPEN_ID_OUT,
+			CHANGE_WEIGHT,
+			PIG_CLASS,
+			PARITY,
+			WEIGH_TYPE,
+			CHANGE_HOUSE_ID,
+			PRO_NO
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ sortNbr,jdbcType=INTEGER},
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ originFlag,jdbcType=CHAR},
+			#{ originApp,jdbcType=VARCHAR},
+			#{ notes,jdbcType=VARCHAR},
+			#{ farmId,jdbcType=INTEGER},
+			#{ companyId,jdbcType=INTEGER},
+			#{ lineNumber,jdbcType=INTEGER},
+			#{ swineryId,jdbcType=INTEGER},
+			#{ pigId,jdbcType=INTEGER},
+			#{ lineId,jdbcType=INTEGER},
+			#{ houseId,jdbcType=INTEGER},
+			#{ pigpenId,jdbcType=INTEGER},
+			#{ billId,jdbcType=INTEGER},
+			#{ worker,jdbcType=INTEGER},
+			#{ createId,jdbcType=INTEGER},
+			#{ createDate,jdbcType=TIMESTAMP},
+			#{ pigType,jdbcType=VARCHAR},
+			#{ changeType,jdbcType=VARCHAR},
+			#{ changeHouseDate,jdbcType=TIMESTAMP},
+			#{ houseIdOut,jdbcType=INTEGER},
+			#{ changeHouseDateOut,jdbcType=TIMESTAMP},
+			#{ pigpenIdOut,jdbcType=INTEGER},
+			#{ changeWeight,jdbcType=DECIMAL},
+			#{ pigClass,jdbcType=INTEGER},
+			#{ parity,jdbcType=INTEGER},
+			#{ weighType,jdbcType=VARCHAR},
+			#{ changeHouseId,jdbcType=INTEGER},
+			#{ proNo,jdbcType=INTEGER}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO PP_L_BILL_CHANGE_HOUSE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR ,
+			STATUS ,
+			DELETED_FLAG ,
+			ORIGIN_FLAG ,
+			ORIGIN_APP ,
+			NOTES ,
+			FARM_ID ,
+			COMPANY_ID ,
+			LINE_NUMBER ,
+			SWINERY_ID ,
+			PIG_ID ,
+			LINE_ID ,
+			HOUSE_ID ,
+			PIGPEN_ID ,
+			BILL_ID ,
+			WORKER ,
+			CREATE_ID ,
+			CREATE_DATE ,
+			PIG_TYPE ,
+			CHANGE_TYPE ,
+			CHANGE_HOUSE_DATE ,
+			HOUSE_ID_OUT ,
+			CHANGE_HOUSE_DATE_OUT ,
+			PIGPEN_ID_OUT ,
+			CHANGE_WEIGHT ,
+			PIG_CLASS ,
+			PARITY ,
+			WEIGH_TYPE ,
+			CHANGE_HOUSE_ID ,
+			PRO_NO 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.sortNbr,jdbcType=INTEGER},
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.originFlag,jdbcType=CHAR},
+				#{item.originApp,jdbcType=VARCHAR},
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.farmId,jdbcType=INTEGER},
+				#{item.companyId,jdbcType=INTEGER},
+				#{item.lineNumber,jdbcType=INTEGER},
+				#{item.swineryId,jdbcType=INTEGER},
+				#{item.pigId,jdbcType=INTEGER},
+				#{item.lineId,jdbcType=INTEGER},
+				#{item.houseId,jdbcType=INTEGER},
+				#{item.pigpenId,jdbcType=INTEGER},
+				#{item.billId,jdbcType=INTEGER},
+				#{item.worker,jdbcType=INTEGER},
+				#{item.createId,jdbcType=INTEGER},
+				#{item.createDate,jdbcType=TIMESTAMP},
+				#{item.pigType,jdbcType=VARCHAR},
+				#{item.changeType,jdbcType=VARCHAR},
+				#{item.changeHouseDate,jdbcType=TIMESTAMP},
+				#{item.houseIdOut,jdbcType=INTEGER},
+				#{item.changeHouseDateOut,jdbcType=TIMESTAMP},
+				#{item.pigpenIdOut,jdbcType=INTEGER},
+				#{item.changeWeight,jdbcType=DECIMAL},
+				#{item.pigClass,jdbcType=INTEGER},
+				#{item.parity,jdbcType=INTEGER},
+				#{item.weighType,jdbcType=VARCHAR},
+				#{item.changeHouseId,jdbcType=INTEGER},
+				#{item.proNo,jdbcType=INTEGER}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="ChangeHouseModel" >
+		UPDATE PP_L_BILL_CHANGE_HOUSE 
+		<set>
+		<if test="sortNbr != null">SORT_NBR = #{ sortNbr,jdbcType=INTEGER},</if>
+		<if test="status != null">STATUS = #{ status,jdbcType=CHAR},</if>
+		<if test="originFlag != null">ORIGIN_FLAG = #{ originFlag,jdbcType=CHAR},</if>
+		<if test="originApp != null">ORIGIN_APP = #{ originApp,jdbcType=VARCHAR},</if>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="lineNumber != null">LINE_NUMBER = #{ lineNumber,jdbcType=INTEGER},</if>
+		<if test="swineryId != null">SWINERY_ID = #{ swineryId,jdbcType=INTEGER},</if>
+		<if test="pigId != null">PIG_ID = #{ pigId,jdbcType=INTEGER},</if>
+		<if test="lineId != null">LINE_ID = #{ lineId,jdbcType=INTEGER},</if>
+		<if test="houseId != null">HOUSE_ID = #{ houseId,jdbcType=INTEGER},</if>
+		<if test="pigpenId != null">PIGPEN_ID = #{ pigpenId,jdbcType=INTEGER},</if>
+		<if test="billId != null">BILL_ID = #{ billId,jdbcType=INTEGER},</if>
+		<if test="worker != null">WORKER = #{ worker,jdbcType=INTEGER},</if>
+		<if test="createId != null">CREATE_ID = #{ createId,jdbcType=INTEGER},</if>
+		<if test="createDate != null">CREATE_DATE = #{ createDate,jdbcType=TIMESTAMP},</if>
+		<if test="pigType != null">PIG_TYPE = #{ pigType,jdbcType=VARCHAR},</if>
+		<if test="changeType != null">CHANGE_TYPE = #{ changeType,jdbcType=VARCHAR},</if>
+		<if test="changeHouseDate != null">CHANGE_HOUSE_DATE = #{ changeHouseDate,jdbcType=TIMESTAMP},</if>
+		<if test="houseIdOut != null">HOUSE_ID_OUT = #{ houseIdOut,jdbcType=INTEGER},</if>
+		<if test="changeHouseDateOut != null">CHANGE_HOUSE_DATE_OUT = #{ changeHouseDateOut,jdbcType=TIMESTAMP},</if>
+		<if test="pigpenIdOut != null">PIGPEN_ID_OUT = #{ pigpenIdOut,jdbcType=INTEGER},</if>
+		<if test="changeWeight != null">CHANGE_WEIGHT = #{ changeWeight,jdbcType=DECIMAL},</if>
+		<if test="pigClass != null">PIG_CLASS = #{ pigClass,jdbcType=INTEGER},</if>
+		<if test="parity != null">PARITY = #{ parity,jdbcType=INTEGER},</if>
+		<if test="weighType != null">WEIGH_TYPE = #{ weighType,jdbcType=VARCHAR},</if>
+		<if test="changeHouseId != null">CHANGE_HOUSE_ID = #{ changeHouseId,jdbcType=INTEGER},</if>
+		<if test="proNo != null">PRO_NO = #{ proNo,jdbcType=INTEGER}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE PP_L_BILL_CHANGE_HOUSE 
+			<set>
+			<if test="item.sortNbr != null">SORT_NBR = #{item.sortNbr,jdbcType=INTEGER},</if>
+			<if test="item.status != null">STATUS = #{item.status,jdbcType=CHAR},</if>
+			<if test="item.originFlag != null">ORIGIN_FLAG = #{item.originFlag,jdbcType=CHAR},</if>
+			<if test="item.originApp != null">ORIGIN_APP = #{item.originApp,jdbcType=VARCHAR},</if>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.lineNumber != null">LINE_NUMBER = #{item.lineNumber,jdbcType=INTEGER},</if>
+			<if test="item.swineryId != null">SWINERY_ID = #{item.swineryId,jdbcType=INTEGER},</if>
+			<if test="item.pigId != null">PIG_ID = #{item.pigId,jdbcType=INTEGER},</if>
+			<if test="item.lineId != null">LINE_ID = #{item.lineId,jdbcType=INTEGER},</if>
+			<if test="item.houseId != null">HOUSE_ID = #{item.houseId,jdbcType=INTEGER},</if>
+			<if test="item.pigpenId != null">PIGPEN_ID = #{item.pigpenId,jdbcType=INTEGER},</if>
+			<if test="item.billId != null">BILL_ID = #{item.billId,jdbcType=INTEGER},</if>
+			<if test="item.worker != null">WORKER = #{item.worker,jdbcType=INTEGER},</if>
+			<if test="item.createId != null">CREATE_ID = #{item.createId,jdbcType=INTEGER},</if>
+			<if test="item.createDate != null">CREATE_DATE = #{item.createDate,jdbcType=TIMESTAMP},</if>
+			<if test="item.pigType != null">PIG_TYPE = #{item.pigType,jdbcType=VARCHAR},</if>
+			<if test="item.changeType != null">CHANGE_TYPE = #{item.changeType,jdbcType=VARCHAR},</if>
+			<if test="item.changeHouseDate != null">CHANGE_HOUSE_DATE = #{item.changeHouseDate,jdbcType=TIMESTAMP},</if>
+			<if test="item.houseIdOut != null">HOUSE_ID_OUT = #{item.houseIdOut,jdbcType=INTEGER},</if>
+			<if test="item.changeHouseDateOut != null">CHANGE_HOUSE_DATE_OUT = #{item.changeHouseDateOut,jdbcType=TIMESTAMP},</if>
+			<if test="item.pigpenIdOut != null">PIGPEN_ID_OUT = #{item.pigpenIdOut,jdbcType=INTEGER},</if>
+			<if test="item.changeWeight != null">CHANGE_WEIGHT = #{item.changeWeight,jdbcType=DECIMAL},</if>
+			<if test="item.pigClass != null">PIG_CLASS = #{item.pigClass,jdbcType=INTEGER},</if>
+			<if test="item.parity != null">PARITY = #{item.parity,jdbcType=INTEGER},</if>
+			<if test="item.weighType != null">WEIGH_TYPE = #{item.weighType,jdbcType=VARCHAR},</if>
+			<if test="item.changeHouseId != null">CHANGE_HOUSE_ID = #{item.changeHouseId,jdbcType=INTEGER},</if>
+			<if test="item.proNo != null">PRO_NO = #{item.proNo,jdbcType=INTEGER}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  PP_L_BILL_CHANGE_HOUSE
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  PP_L_BILL_CHANGE_HOUSE
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE 
+		 ROW_ID =#{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  PP_L_BILL_CHANGE_HOUSE
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' 
+		 AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+		 AND ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon2" parameterType="java.util.Map" >
+	<![CDATA[ 
+		 UPDATE  PP_L_BILL_CHANGE_HOUSE
+		 SET
+		 DELETED_FLAG = '2' WHERE DELETED_FLAG <> '2' ${condition}
+	]]>
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCons" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  PP_L_BILL_CHANGE_HOUSE
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' ${item}
+		</foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="ChangeHouseResult">
+		SELECT 
+		<include refid="ChangeHouseModel_Column_List" />
+		FROM PP_L_BILL_CHANGE_HOUSE WHERE DELETED_FLAG='0' 
+		AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="ChangeHouseResult" >
+		SELECT 
+		<include refid="ChangeHouseModel_Column_List" />
+		FROM PP_L_BILL_CHANGE_HOUSE WHERE DELETED_FLAG='0'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="ChangeHouseResult" >
+		SELECT 
+		<include refid="ChangeHouseModel_Column_List" />
+		FROM PP_L_BILL_CHANGE_HOUSE
+		WHERE DELETED_FLAG='0'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="ChangeHouseResult" >
+		SELECT 
+		<include refid="ChangeHouseModel_Column_List" />
+		FROM PP_L_BILL_CHANGE_HOUSE
+		WHERE ${condition}
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAll" resultMap="ChangeHouseResult" >
+		SELECT *
+		FROM PP_L_BILL_CHANGE_HOUSE
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="ChangeHouseResult"> ${sql} </select>
+
+	<!-- 查询所有信息 -->
+	<select id="searchChangeHouseInfo" resultMap="ChangeHouseInfoResult">
+	   	 SELECT P.ROW_ID PIG_ID,P.COMPANY_ID COMPANY_ID,P.FARM_ID FARM_ID,P.SWINERY_ID SWINERY_ID,P.PIG_TYPE PIG_TYPE,P.SEX SEX,
+	   	 P.LINE_ID LINE_ID,P.HOUSE_ID HOUSE_ID,P.PIGPEN_ID PIGPEN_ID,P.PIG_CLASS PIG_CLASS,P.PARITY PARITY,
+	   	 MAX(H.ROW_ID) CHANGE_HOUSE_ID,IFNULL(MAX(H.SORT_NBR),0)+1 HOUSE_SORT_NBR,MAX(B.PRO_NO) PRO_NO,
+	   	 IFNULL(MAX(E.SORT_NBR),0)+1 HIS_SORT_NBR
+	     FROM PP_L_PIG P 
+		 LEFT JOIN PP_L_BILL_CHANGE_HOUSE H ON P.ROW_ID = H.PIG_ID AND H.STATUS = 1 AND H.DELETED_FLAG = 0
+         LEFT JOIN PP_L_BILL_BREED B ON P.ROW_ID = B.PIG_ID AND P.PARITY = B.PARITY AND B.STATUS = 1 AND B.DELETED_FLAG = 0
+         LEFT JOIN PP_L_PIG_EVENT_HIS E ON P.ROW_ID = E.PIG_ID AND E.STATUS = 1 AND E.DELETED_FLAG = 0
+		 WHERE P.STATUS = 1 AND P.DELETED_FLAG = 0 AND P.ROW_ID IN 
+        <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+                #{item}
+        </foreach> 
+                GROUP BY P.ROW_ID ORDER BY FIELD(P.ROW_ID,
+        <foreach item="item" index="index" collection="ids" separator="," close=")">
+                #{item}
+        </foreach> 
+	</select>
+	
+	<!--批量更新上一条记录的HOUSE_ID_OUT和CHANGE_HOUSE_DATE_OUT和PIGPEN_ID_OUT为NULL -->
+	<update id="updatesOutFieldToNULL" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE PP_L_BILL_CHANGE_HOUSE A
+			SET A.HOUSE_ID_OUT = NULL, A.CHANGE_HOUSE_DATE_OUT = NULL, A.PIGPEN_ID_OUT = NULL
+			WHERE
+			A.DELETED_FLAG = '0'
+			AND A.PIG_ID = #{item.pigId,jdbcType=INTEGER}
+			AND EXISTS ( SELECT 1 FROM (
+			SELECT CHANGE_HOUSE_ID AS rowId FROM PP_L_BILL_CHANGE_HOUSE
+			WHERE
+			DELETED_FLAG = '2'
+			AND PIG_ID = #{item.pigId,jdbcType=INTEGER}
+			AND BILL_ID = #{item.billId,jdbcType=INTEGER}
+			)B
+			WHERE A.ROW_ID = B.rowId
+			)
+		</foreach>
+	</update>
+</mapper>
+

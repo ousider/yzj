@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.supplychian.ReceiptInputMapper">
+
+	<resultMap id="ReceiptInputResult"  type="ReceiptInputModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="farmId" column="FARM_ID" jdbcType="INTEGER" />
+		<result property="receiptId" column="RECEIPT_ID" jdbcType="INTEGER" />
+		<result property="materialInfoLn" column="MATERIAL_INFO_LN" jdbcType="INTEGER" />
+		<result property="inputId" column="INPUT_ID" jdbcType="INTEGER" />
+		<result property="inputLn" column="INPUT_LN" jdbcType="INTEGER" />
+		<result property="materialId" column="MATERIAL_ID" jdbcType="INTEGER" />
+		<result property="materialOnly" column="MATERIAL_ONLY" jdbcType="VARCHAR" />
+		<result property="materialBatch" column="MATERIAL_BATCH" jdbcType="VARCHAR" />
+		<result property="receiptPrice" column="RECEIPT_PRICE" jdbcType="DECIMAL" />
+		<result property="receiptQty" column="RECEIPT_QTY" jdbcType="DECIMAL" />
+		<result property="totalPrice" column="TOTAL_PRICE" jdbcType="DECIMAL" />
+		<result property="createId" column="CREATE_ID" jdbcType="INTEGER" />
+		<result property="createDate" column="CREATE_DATE" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="ReceiptInputModel_Column_List">
+		ROW_ID,NOTES,FARM_ID,RECEIPT_ID,MATERIAL_INFO_LN,INPUT_ID,INPUT_LN,MATERIAL_ID,MATERIAL_ONLY,MATERIAL_BATCH,RECEIPT_PRICE,RECEIPT_QTY,TOTAL_PRICE,CREATE_ID,CREATE_DATE
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true"   keyProperty="rowId" parameterType="ReceiptInputModel">
+		INSERT INTO SC_R_RECEIPT_INPUT
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			STATUS,
+			DELETED_FLAG,
+			NOTES,
+			FARM_ID,
+			RECEIPT_ID,
+			MATERIAL_INFO_LN,
+			INPUT_ID,
+			INPUT_LN,
+			MATERIAL_ID,
+			MATERIAL_ONLY,
+			MATERIAL_BATCH,
+			RECEIPT_PRICE,
+			RECEIPT_QTY,
+			TOTAL_PRICE,
+			CREATE_ID,
+			CREATE_DATE
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ notes,jdbcType=VARCHAR},
+			#{ farmId,jdbcType=INTEGER},
+			#{ receiptId,jdbcType=INTEGER},
+			#{ materialInfoLn,jdbcType=INTEGER},
+			#{ inputId,jdbcType=INTEGER},
+			#{ inputLn,jdbcType=INTEGER},
+			#{ materialId,jdbcType=INTEGER},
+			#{ materialOnly,jdbcType=VARCHAR},
+			#{ materialBatch,jdbcType=VARCHAR},
+			#{ receiptPrice,jdbcType=DECIMAL},
+			#{ receiptQty,jdbcType=DECIMAL},
+			#{ totalPrice,jdbcType=DECIMAL},
+			#{ createId,jdbcType=INTEGER},
+			#{ createDate,jdbcType=TIMESTAMP}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO SC_R_RECEIPT_INPUT
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			STATUS ,
+			DELETED_FLAG ,
+			NOTES ,
+			FARM_ID ,
+			RECEIPT_ID ,
+			MATERIAL_INFO_LN ,
+			INPUT_ID ,
+			INPUT_LN ,
+			MATERIAL_ID ,
+			MATERIAL_ONLY ,
+			MATERIAL_BATCH ,
+			RECEIPT_PRICE ,
+			RECEIPT_QTY ,
+			TOTAL_PRICE ,
+			CREATE_ID ,
+			CREATE_DATE 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.farmId,jdbcType=INTEGER},
+				#{item.receiptId,jdbcType=INTEGER},
+				#{item.materialInfoLn,jdbcType=INTEGER},
+				#{item.inputId,jdbcType=INTEGER},
+				#{item.inputLn,jdbcType=INTEGER},
+				#{item.materialId,jdbcType=INTEGER},
+				#{item.materialOnly,jdbcType=VARCHAR},
+				#{item.materialBatch,jdbcType=VARCHAR},
+				#{item.receiptPrice,jdbcType=DECIMAL},
+				#{item.receiptQty,jdbcType=DECIMAL},
+				#{item.totalPrice,jdbcType=DECIMAL},
+				#{item.createId,jdbcType=INTEGER},
+				#{item.createDate,jdbcType=TIMESTAMP}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="ReceiptInputModel" >
+		UPDATE SC_R_RECEIPT_INPUT 
+		<set>
+		<if test="status != null">STATUS = #{ status,jdbcType=CHAR},</if>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="receiptId != null">RECEIPT_ID = #{ receiptId,jdbcType=INTEGER},</if>
+		<if test="materialInfoLn != null">MATERIAL_INFO_LN = #{ materialInfoLn,jdbcType=INTEGER},</if>
+		<if test="inputId != null">INPUT_ID = #{ inputId,jdbcType=INTEGER},</if>
+		<if test="inputLn != null">INPUT_LN = #{ inputLn,jdbcType=INTEGER},</if>
+		<if test="materialId != null">MATERIAL_ID = #{ materialId,jdbcType=INTEGER},</if>
+		<if test="materialOnly != null">MATERIAL_ONLY = #{ materialOnly,jdbcType=VARCHAR},</if>
+		<if test="materialBatch != null">MATERIAL_BATCH = #{ materialBatch,jdbcType=VARCHAR},</if>
+		<if test="receiptPrice != null">RECEIPT_PRICE = #{ receiptPrice,jdbcType=DECIMAL},</if>
+		<if test="receiptQty != null">RECEIPT_QTY = #{ receiptQty,jdbcType=DECIMAL},</if>
+		<if test="totalPrice != null">TOTAL_PRICE = #{ totalPrice,jdbcType=DECIMAL},</if>
+		<if test="createId != null">CREATE_ID = #{ createId,jdbcType=INTEGER},</if>
+		<if test="createDate != null">CREATE_DATE = #{ createDate,jdbcType=TIMESTAMP}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE SC_R_RECEIPT_INPUT 
+			<set>
+			<if test="item.status != null">STATUS = #{item.status,jdbcType=CHAR},</if>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.receiptId != null">RECEIPT_ID = #{item.receiptId,jdbcType=INTEGER},</if>
+			<if test="item.materialInfoLn != null">MATERIAL_INFO_LN = #{item.materialInfoLn,jdbcType=INTEGER},</if>
+			<if test="item.inputId != null">INPUT_ID = #{item.inputId,jdbcType=INTEGER},</if>
+			<if test="item.inputLn != null">INPUT_LN = #{item.inputLn,jdbcType=INTEGER},</if>
+			<if test="item.materialId != null">MATERIAL_ID = #{item.materialId,jdbcType=INTEGER},</if>
+			<if test="item.materialOnly != null">MATERIAL_ONLY = #{item.materialOnly,jdbcType=VARCHAR},</if>
+			<if test="item.materialBatch != null">MATERIAL_BATCH = #{item.materialBatch,jdbcType=VARCHAR},</if>
+			<if test="item.receiptPrice != null">RECEIPT_PRICE = #{item.receiptPrice,jdbcType=DECIMAL},</if>
+			<if test="item.receiptQty != null">RECEIPT_QTY = #{item.receiptQty,jdbcType=DECIMAL},</if>
+			<if test="item.totalPrice != null">TOTAL_PRICE = #{item.totalPrice,jdbcType=DECIMAL},</if>
+			<if test="item.createId != null">CREATE_ID = #{item.createId,jdbcType=INTEGER},</if>
+			<if test="item.createDate != null">CREATE_DATE = #{item.createDate,jdbcType=TIMESTAMP}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  SC_R_RECEIPT_INPUT
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  SC_R_RECEIPT_INPUT
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE 
+		 ROW_ID =#{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  SC_R_RECEIPT_INPUT
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' 
+		 AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+		 AND ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCons" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  SC_R_RECEIPT_INPUT
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' ${item}
+		</foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="ReceiptInputResult">
+		SELECT 
+		<include refid="ReceiptInputModel_Column_List" />
+		FROM SC_R_RECEIPT_INPUT WHERE DELETED_FLAG='0' 
+		AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="ReceiptInputResult" >
+		SELECT 
+		<include refid="ReceiptInputModel_Column_List" />
+		FROM SC_R_RECEIPT_INPUT WHERE DELETED_FLAG='0'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="ReceiptInputResult" >
+		SELECT 
+		<include refid="ReceiptInputModel_Column_List" />
+		FROM SC_R_RECEIPT_INPUT
+		WHERE DELETED_FLAG='0'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="ReceiptInputResult" >
+		SELECT 
+		<include refid="ReceiptInputModel_Column_List" />
+		FROM SC_R_RECEIPT_INPUT
+		WHERE ${condition}
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAll" resultMap="ReceiptInputResult" >
+		SELECT *
+		FROM SC_R_RECEIPT_INPUT
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="ReceiptInputResult"> ${sql} </select>
+
+</mapper>
+

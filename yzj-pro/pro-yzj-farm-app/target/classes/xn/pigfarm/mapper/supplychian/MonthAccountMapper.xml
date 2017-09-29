@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.supplychian.MonthAccountMapper">
+
+	<resultMap id="MonthAccountResult"  type="MonthAccountModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="farmId" column="FARM_ID" jdbcType="INTEGER" />
+		<result property="companyId" column="COMPANY_ID" jdbcType="INTEGER" />
+		<result property="materialId" column="MATERIAL_ID" jdbcType="INTEGER" />
+		<result property="materialOnly" column="MATERIAL_ONLY" jdbcType="VARCHAR" />
+		<result property="materialBatch" column="MATERIAL_BATCH" jdbcType="VARCHAR" />
+		<result property="warehouseId" column="WAREHOUSE_ID" jdbcType="INTEGER" />
+		<result property="startQty" column="START_QTY" jdbcType="DECIMAL" />
+		<result property="endQty" column="END_QTY" jdbcType="DECIMAL" />
+		<result property="startDate" column="START_DATE" jdbcType="DATE" />
+		<result property="lockFlag" column="LOCK_FLAG" jdbcType="CHAR" />
+		<result property="countUser" column="COUNT_USER" jdbcType="INTEGER" />
+		<result property="countDate" column="COUNT_DATE" jdbcType="DATE" />
+		<result property="eventCode" column="EVENT_CODE" jdbcType="VARCHAR" />
+		<result property="createId" column="CREATE_ID" jdbcType="INTEGER" />
+		<result property="createDate" column="CREATE_DATE" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="MonthAccountModel_Column_List">
+		ROW_ID,MATERIAL_ID,MATERIAL_ONLY,MATERIAL_BATCH,WAREHOUSE_ID,START_QTY,END_QTY,START_DATE,LOCK_FLAG,COUNT_USER,COUNT_DATE,EVENT_CODE,CREATE_ID,CREATE_DATE
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true"   keyProperty="rowId" parameterType="MonthAccountModel">
+		INSERT INTO SC_M_MONTH_ACCOUNT
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			DELETED_FLAG,
+			FARM_ID,
+			COMPANY_ID,
+			MATERIAL_ID,
+			MATERIAL_ONLY,
+			MATERIAL_BATCH,
+			WAREHOUSE_ID,
+			START_QTY,
+			END_QTY,
+			START_DATE,
+			LOCK_FLAG,
+			COUNT_USER,
+			COUNT_DATE,
+			EVENT_CODE,
+			CREATE_ID,
+			CREATE_DATE
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ farmId,jdbcType=INTEGER},
+			#{ companyId,jdbcType=INTEGER},
+			#{ materialId,jdbcType=INTEGER},
+			#{ materialOnly,jdbcType=VARCHAR},
+			#{ materialBatch,jdbcType=VARCHAR},
+			#{ warehouseId,jdbcType=INTEGER},
+			#{ startQty,jdbcType=DECIMAL},
+			#{ endQty,jdbcType=DECIMAL},
+			#{ startDate,jdbcType=DATE},
+			#{ lockFlag,jdbcType=CHAR},
+			#{ countUser,jdbcType=INTEGER},
+			#{ countDate,jdbcType=DATE},
+			#{ eventCode,jdbcType=VARCHAR},
+			#{ createId,jdbcType=INTEGER},
+			#{ createDate,jdbcType=TIMESTAMP}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO SC_M_MONTH_ACCOUNT
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			DELETED_FLAG ,
+			FARM_ID ,
+			COMPANY_ID ,
+			MATERIAL_ID ,
+			MATERIAL_ONLY ,
+			MATERIAL_BATCH ,
+			WAREHOUSE_ID ,
+			START_QTY ,
+			END_QTY ,
+			START_DATE ,
+			LOCK_FLAG ,
+			COUNT_USER ,
+			COUNT_DATE ,
+			EVENT_CODE ,
+			CREATE_ID ,
+			CREATE_DATE 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.farmId,jdbcType=INTEGER},
+				#{item.companyId,jdbcType=INTEGER},
+				#{item.materialId,jdbcType=INTEGER},
+				#{item.materialOnly,jdbcType=VARCHAR},
+				#{item.materialBatch,jdbcType=VARCHAR},
+				#{item.warehouseId,jdbcType=INTEGER},
+				#{item.startQty,jdbcType=DECIMAL},
+				#{item.endQty,jdbcType=DECIMAL},
+				#{item.startDate,jdbcType=DATE},
+				#{item.lockFlag,jdbcType=CHAR},
+				#{item.countUser,jdbcType=INTEGER},
+				#{item.countDate,jdbcType=DATE},
+				#{item.eventCode,jdbcType=VARCHAR},
+				#{item.createId,jdbcType=INTEGER},
+				#{item.createDate,jdbcType=TIMESTAMP}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="MonthAccountModel" >
+		UPDATE SC_M_MONTH_ACCOUNT 
+		<set>
+		<if test="materialId != null">MATERIAL_ID = #{ materialId,jdbcType=INTEGER},</if>
+		<if test="materialOnly != null">MATERIAL_ONLY = #{ materialOnly,jdbcType=VARCHAR},</if>
+		<if test="materialBatch != null">MATERIAL_BATCH = #{ materialBatch,jdbcType=VARCHAR},</if>
+		<if test="warehouseId != null">WAREHOUSE_ID = #{ warehouseId,jdbcType=INTEGER},</if>
+		<if test="startQty != null">START_QTY = #{ startQty,jdbcType=DECIMAL},</if>
+		<if test="endQty != null">END_QTY = #{ endQty,jdbcType=DECIMAL},</if>
+		<if test="startDate != null">START_DATE = #{ startDate,jdbcType=DATE},</if>
+		<if test="lockFlag != null">LOCK_FLAG = #{ lockFlag,jdbcType=CHAR},</if>
+		<if test="countUser != null">COUNT_USER = #{ countUser,jdbcType=INTEGER},</if>
+		<if test="countDate != null">COUNT_DATE = #{ countDate,jdbcType=DATE},</if>
+		<if test="eventCode != null">EVENT_CODE = #{ eventCode,jdbcType=VARCHAR},</if>
+		<if test="createId != null">CREATE_ID = #{ createId,jdbcType=INTEGER},</if>
+		<if test="createDate != null">CREATE_DATE = #{ createDate,jdbcType=TIMESTAMP}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE SC_M_MONTH_ACCOUNT 
+			<set>
+			<if test="item.materialId != null">MATERIAL_ID = #{item.materialId,jdbcType=INTEGER},</if>
+			<if test="item.materialOnly != null">MATERIAL_ONLY = #{item.materialOnly,jdbcType=VARCHAR},</if>
+			<if test="item.materialBatch != null">MATERIAL_BATCH = #{item.materialBatch,jdbcType=VARCHAR},</if>
+			<if test="item.warehouseId != null">WAREHOUSE_ID = #{item.warehouseId,jdbcType=INTEGER},</if>
+			<if test="item.startQty != null">START_QTY = #{item.startQty,jdbcType=DECIMAL},</if>
+			<if test="item.endQty != null">END_QTY = #{item.endQty,jdbcType=DECIMAL},</if>
+			<if test="item.startDate != null">START_DATE = #{item.startDate,jdbcType=DATE},</if>
+			<if test="item.lockFlag != null">LOCK_FLAG = #{item.lockFlag,jdbcType=CHAR},</if>
+			<if test="item.countUser != null">COUNT_USER = #{item.countUser,jdbcType=INTEGER},</if>
+			<if test="item.countDate != null">COUNT_DATE = #{item.countDate,jdbcType=DATE},</if>
+			<if test="item.eventCode != null">EVENT_CODE = #{item.eventCode,jdbcType=VARCHAR},</if>
+			<if test="item.createId != null">CREATE_ID = #{item.createId,jdbcType=INTEGER},</if>
+			<if test="item.createDate != null">CREATE_DATE = #{item.createDate,jdbcType=TIMESTAMP}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  SC_M_MONTH_ACCOUNT
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  SC_M_MONTH_ACCOUNT
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE 
+		 ROW_ID =#{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  SC_M_MONTH_ACCOUNT
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' 
+		 AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+		 AND ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCons" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  SC_M_MONTH_ACCOUNT
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' ${item}
+		</foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="MonthAccountResult">
+		SELECT 
+		<include refid="MonthAccountModel_Column_List" />
+		FROM SC_M_MONTH_ACCOUNT WHERE DELETED_FLAG='0' 
+		AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="MonthAccountResult" >
+		SELECT 
+		<include refid="MonthAccountModel_Column_List" />
+		FROM SC_M_MONTH_ACCOUNT WHERE DELETED_FLAG='0'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="MonthAccountResult" >
+		SELECT 
+		<include refid="MonthAccountModel_Column_List" />
+		FROM SC_M_MONTH_ACCOUNT
+		WHERE DELETED_FLAG='0'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="MonthAccountResult" >
+		SELECT 
+		<include refid="MonthAccountModel_Column_List" />
+		FROM SC_M_MONTH_ACCOUNT
+		WHERE ${condition}
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAll" resultMap="MonthAccountResult" >
+		SELECT *
+		FROM SC_M_MONTH_ACCOUNT
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="MonthAccountResult"> ${sql} </select>
+	
+	<!-- 搜索这个月需要盘点物料 -->
+	<select id="searchMonthAccountList" parameterType="java.util.Map" resultType="java.util.Map" >
+	<![CDATA[
+		SELECT
+			CONCAT('[',GROUP_CONCAT(CONCAT('{\"rowId\":',''+B.rowId,','),CONCAT('\"endQty\":',''+B.existsQty,'}')),']') AS endQtyInfos
+			,B.materialId
+			,B.purchaseOrFree
+			,MIN(B.effectiveDate) AS minEffectiveDate
+			,MIN(B.productionDate) AS minProductionDate
+			,_clearEndZero(SUM(B.existsQty)) AS existsQty
+		 FROM 
+			(SELECT
+				A.rowId
+				,A.materialOnly
+				,A.materialBatch
+				,A.materialId
+				,A.materialName
+				,A.purchaseOrFree
+				,A.effectiveDate
+				,A.productionDate
+				,ROUND((A.START_QTY+A.INPUT_ARRIVE_QTY+A.ALLOT_IN_QTY-A.USE_QTY-A.ALLOT_OUT_QTY-A.SCRAP_QTY+A.INPUT_OUTPUT_QTY),3) AS existsQty
+			FROM
+				(SELECT
+					T1.ROW_ID AS rowId
+					,T1.MATERIAL_ONLY AS materialOnly
+					,T1.MATERIAL_BATCH AS materialBatch
+					,T2.ROW_ID AS materialId
+					,T2.MATERIAL_NAME AS materialName
+					,(CASE WHEN T4.FREE_LN = 0 THEN '购料' ELSE '赠料' END) AS purchaseOrFree
+					,ROUND(T1.START_QTY,3) AS START_QTY
+					,ROUND(IFNULL(T5.INPUT_ARRIVE_QTY,0)-IFNULL(T10.RETURN_QTY,0),3) AS INPUT_ARRIVE_QTY
+					,ROUND(IFNULL(T6.ALLOT_IN_QTY,0),3) AS ALLOT_IN_QTY
+					,ROUND(IFNULL(T7.USE_QTY,0),3) AS USE_QTY
+					,ROUND(IFNULL(T8.ALLOT_OUT_QTY,0),3) AS ALLOT_OUT_QTY
+					,ROUND(IFNULL(T9.SCRAP_QTY,0),3) AS SCRAP_QTY
+					,ROUND(IFNULL(T11.INPUT_OUTPUT_QTY,0),3) AS INPUT_OUTPUT_QTY
+					,T3.EFFECTIVE_DATE AS effectiveDate
+					,T3.PRODUCTION_DATE AS productionDate
+				FROM
+					SC_M_MONTH_ACCOUNT T1
+				INNER JOIN
+					CD_M_MATERIAL T2
+					ON(T2.DELETED_FLAG = '0'
+						AND T1.MATERIAL_ID = T2.ROW_ID
+					)
+				INNER JOIN
+					SC_M_STORE_MATERIAL T3
+					ON (T3.DELETED_FLAG = '0'
+						AND T1.FARM_ID = T3.FARM_ID
+						AND T1.MATERIAL_ONLY = T3.MATERIAL_ONLY
+						AND T1.MATERIAL_BATCH = T3.MATERIAL_BATCH
+						AND T3.WAREHOUSE_ID = #{warehouseId,jdbcType=INTEGER})
+				LEFT OUTER JOIN
+					(SELECT MAX(FREE_LN) AS FREE_LN,MAX(ACTUAL_PRICE) AS ACTUAL_PRICE,MATERIAL_ONLY
+						FROM SC_M_BILL_PURCHASE_DETAIL
+						WHERE DELETED_FLAG = '0'
+						AND STATUS <> '6'
+						GROUP BY MATERIAL_ONLY
+					) T4
+					ON (T1.MATERIAL_ONLY = T4.MATERIAL_ONLY)
+				LEFT OUTER JOIN
+					(SELECT SUM(INPUT_QTY) AS INPUT_ARRIVE_QTY,MATERIAL_ONLY,MATERIAL_BATCH,INPUT_WAREHOUSE_ID
+						FROM SC_M_BILL_INPUT_DETAIL
+						WHERE DELETED_FLAG = '0'
+						AND (EVENT_CODE = 'INPUT_ARRIVE'
+						OR EVENT_CODE = 'MATERIAL_INPUT_ARRIVE'
+						OR EVENT_CODE = 'FEED_INPUT_ARRIVE'
+						OR EVENT_CODE = 'INPUT_NOT_BILL'
+						OR EVENT_CODE = 'INPUT_SALE')
+						AND BILL_DATE >= #{startDate,jdbcType=VARCHAR}
+						AND BILL_DATE <= #{endDate,jdbcType=VARCHAR}
+						AND INPUT_WAREHOUSE_ID = #{warehouseId,jdbcType=INTEGER}
+						GROUP BY MATERIAL_ONLY,MATERIAL_BATCH,INPUT_WAREHOUSE_ID
+					) T5
+					ON (T1.MATERIAL_ONLY = T5.MATERIAL_ONLY
+					AND T1.MATERIAL_BATCH = T5.MATERIAL_BATCH
+					AND T1.WAREHOUSE_ID = T5.INPUT_WAREHOUSE_ID)
+				LEFT OUTER JOIN
+					(SELECT SUM(INPUT_QTY) AS ALLOT_IN_QTY,MATERIAL_ONLY,MATERIAL_BATCH,INPUT_WAREHOUSE_ID
+						FROM SC_M_BILL_INPUT_DETAIL
+						WHERE DELETED_FLAG = '0'
+						AND EVENT_CODE = 'INPUT_ALLOT'
+						AND BILL_DATE >= #{startDate,jdbcType=VARCHAR}
+						AND BILL_DATE <= #{endDate,jdbcType=VARCHAR}
+						AND INPUT_WAREHOUSE_ID = #{warehouseId,jdbcType=INTEGER}
+						GROUP BY MATERIAL_ONLY,MATERIAL_BATCH,INPUT_WAREHOUSE_ID
+					) T6
+					ON (T1.MATERIAL_ONLY = T6.MATERIAL_ONLY
+					AND T1.MATERIAL_BATCH = T6.MATERIAL_BATCH
+					AND T1.WAREHOUSE_ID = T6.INPUT_WAREHOUSE_ID)
+				LEFT OUTER JOIN
+					(SELECT SUM(OUTPUT_QTY) AS USE_QTY,MATERIAL_ONLY,MATERIAL_BATCH,OUTPUT_WAREHOUSE_ID
+						FROM SC_M_BILL_OUTPUT_DETAIL
+						WHERE DELETED_FLAG = '0'
+						AND ((STATUS = '3'
+						AND EVENT_CODE = 'OUTPUT_USE')
+						OR (STATUS = '1'
+						AND EVENT_CODE = 'OUTPUT_SALE'))
+						AND BILL_DATE >= #{startDate,jdbcType=VARCHAR}
+						AND BILL_DATE <= #{endDate,jdbcType=VARCHAR}
+						AND OUTPUTER_ID IS NOT NULL
+						AND OUTPUT_WAREHOUSE_ID = #{warehouseId,jdbcType=INTEGER}
+						GROUP BY MATERIAL_ONLY,MATERIAL_BATCH,OUTPUT_WAREHOUSE_ID
+					) T7
+					ON (T1.MATERIAL_ONLY = T7.MATERIAL_ONLY
+					AND T1.MATERIAL_BATCH = T7.MATERIAL_BATCH
+					AND T1.WAREHOUSE_ID = T7.OUTPUT_WAREHOUSE_ID)
+				LEFT OUTER JOIN
+					(SELECT SUM(OUTPUT_QTY) AS ALLOT_OUT_QTY,MATERIAL_ONLY,MATERIAL_BATCH,OUTPUT_WAREHOUSE_ID
+						FROM SC_M_BILL_OUTPUT_DETAIL
+						WHERE DELETED_FLAG = '0'
+						AND EVENT_CODE = 'OUTPUT_ALLOT'
+						AND BILL_DATE >= #{startDate,jdbcType=VARCHAR}
+						AND BILL_DATE <= #{endDate,jdbcType=VARCHAR}
+						AND OUTPUT_WAREHOUSE_ID = #{warehouseId,jdbcType=INTEGER}
+						GROUP BY MATERIAL_ONLY,MATERIAL_BATCH,OUTPUT_WAREHOUSE_ID
+					) T8
+					ON (T1.MATERIAL_ONLY = T8.MATERIAL_ONLY
+					AND T1.MATERIAL_BATCH = T8.MATERIAL_BATCH
+					AND T1.WAREHOUSE_ID = T8.OUTPUT_WAREHOUSE_ID)
+				LEFT OUTER JOIN
+					(SELECT SUM(OUTPUT_QTY) AS SCRAP_QTY,MATERIAL_ONLY,MATERIAL_BATCH,OUTPUT_WAREHOUSE_ID
+						FROM SC_M_BILL_OUTPUT_DETAIL
+						WHERE DELETED_FLAG = '0'
+						AND INPUT_ID IS NULL
+						AND EVENT_CODE = 'OUTPUT_SCRAP'
+						AND BILL_DATE >= #{startDate,jdbcType=VARCHAR}
+						AND BILL_DATE <= #{endDate,jdbcType=VARCHAR}
+						AND OUTPUT_WAREHOUSE_ID = #{warehouseId,jdbcType=INTEGER}
+						GROUP BY MATERIAL_ONLY,MATERIAL_BATCH,OUTPUT_WAREHOUSE_ID
+					) T9
+					ON (T1.MATERIAL_ONLY = T9.MATERIAL_ONLY
+					AND T1.MATERIAL_BATCH = T9.MATERIAL_BATCH
+					AND T1.WAREHOUSE_ID = T9.OUTPUT_WAREHOUSE_ID)
+				LEFT OUTER JOIN
+					(SELECT MATERIAL_ID,SUM(OUTPUT_QTY) AS RETURN_QTY,MATERIAL_ONLY,MATERIAL_BATCH,OUTPUT_WAREHOUSE_ID
+						FROM SC_M_BILL_OUTPUT_DETAIL
+						WHERE DELETED_FLAG = '0'
+						AND EVENT_CODE = 'OUTPUT_PURCHASE'
+						AND BILL_DATE >= #{startDate,jdbcType=VARCHAR}
+						AND BILL_DATE <= #{endDate,jdbcType=VARCHAR}
+						AND OUTPUT_WAREHOUSE_ID = #{warehouseId,jdbcType=INTEGER}
+						GROUP BY MATERIAL_ID,MATERIAL_ONLY,MATERIAL_BATCH,OUTPUT_WAREHOUSE_ID
+					) T10
+					ON (T1.MATERIAL_ID = T10.MATERIAL_ID
+						AND T1.MATERIAL_ONLY = T10.MATERIAL_ONLY
+						AND T1.MATERIAL_BATCH = T10.MATERIAL_BATCH
+						AND T1.WAREHOUSE_ID = T10.OUTPUT_WAREHOUSE_ID)
+				LEFT OUTER JOIN
+					(SELECT MATERIAL_ID,SUM(INPUT_QTY) AS INPUT_OUTPUT_QTY,MATERIAL_ONLY,MATERIAL_BATCH,INPUT_WAREHOUSE_ID
+						FROM SC_M_BILL_INPUT_DETAIL
+						WHERE DELETED_FLAG = '0'
+						AND EVENT_CODE = 'INPUT_OUTPUT'
+						AND BILL_DATE >= #{startDate,jdbcType=VARCHAR}
+						AND BILL_DATE <= #{endDate,jdbcType=VARCHAR}
+						AND INPUT_WAREHOUSE_ID = #{warehouseId,jdbcType=INTEGER}
+						GROUP BY MATERIAL_ID,MATERIAL_ONLY,MATERIAL_BATCH,INPUT_WAREHOUSE_ID
+					) T11
+					ON (T1.MATERIAL_ID = T11.MATERIAL_ID
+						AND T1.MATERIAL_ONLY = T11.MATERIAL_ONLY
+						AND T1.MATERIAL_BATCH = T11.MATERIAL_BATCH
+						AND T1.WAREHOUSE_ID = T11.INPUT_WAREHOUSE_ID)
+				WHERE T1.DELETED_FLAG = '0' 
+					AND EXISTS(
+						SELECT 1 FROM(
+							SELECT MIN(ROW_ID) AS ROW_ID FROM SC_M_MONTH_ACCOUNT WHERE
+							DELETED_FLAG = '0'
+							AND WAREHOUSE_ID = #{warehouseId,jdbcType=INTEGER}
+							AND START_DATE >= DATE_ADD(DATE(#{startDate,jdbcType=VARCHAR}),INTERVAL -DAY(DATE(#{startDate,jdbcType=VARCHAR}))+1 DAY)
+							AND START_DATE <= #{endDate,jdbcType=VARCHAR}
+							GROUP BY MATERIAL_ID,MATERIAL_ONLY,MATERIAL_BATCH
+						) D1 WHERE D1.ROW_ID = T1.ROW_ID)
+					AND T1.LOCK_FLAG = 'N'
+				) A
+			) B
+		WHERE B.existsQty <> 0
+		GROUP BY B.materialId,B.purchaseOrFree
+		ORDER BY B.materialName
+		]]>
+	</select>
+
+	<!--默认将盘点月份的期末数量设置为0 -->
+	<update id="updateCurrentStartDateEndQtyToZero" parameterType="java.util.Map" >
+		 UPDATE SC_M_MONTH_ACCOUNT
+		 SET END_QTY = 0
+		 ,COUNT_USER = #{countUser,jdbcType=INTEGER}
+		 ,COUNT_DATE = #{countDate,jdbcType=TIMESTAMP}
+		 WHERE DELETED_FLAG  =  '0' 
+		 AND WAREHOUSE_ID = #{warehouseId,jdbcType=VARCHAR}
+		 AND START_DATE = #{currentStartDate,jdbcType=VARCHAR}
+	</update>
+
+	<!--将下个月的期初数据删除并且重新插入(并排除下个月非盘点生成的数据EVENT_CODE) -->
+	<update id="deleteNextMonthRecord" parameterType="java.util.Map">
+		UPDATE  SC_M_MONTH_ACCOUNT
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		DELETED_FLAG =  '0'
+		AND WAREHOUSE_ID = #{warehouseId,jdbcType=VARCHAR}
+		AND START_DATE = #{nextStartDate,jdbcType=VARCHAR}
+		AND EVENT_CODE = #{eventCode,jdbcType=VARCHAR}
+	</update>
+	
+</mapper>
+

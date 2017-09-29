@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.portal.ParityDistributionMapper">
+
+	<resultMap id="ParityDistributionResult"  type="ParityDistributionModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="sortNbr" column="SORT_NBR" jdbcType="TINYINT" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="parity" column="PARITY" jdbcType="TINYINT" />
+		<result property="percent" column="PERCENT" jdbcType="DECIMAL" />
+		<result property="version" column="VERSION" jdbcType="INTEGER" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="ParityDistributionModel_Column_List">
+		ROW_ID,SORT_NBR,STATUS,DELETED_FLAG,PARITY,PERCENT,VERSION
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="rowId" parameterType="ParityDistributionModel">
+		INSERT INTO PT_O_PARITY_DISTRIBUTION
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR,
+			STATUS,
+			DELETED_FLAG,
+			PARITY,
+			PERCENT,
+			VERSION
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ sortNbr,jdbcType=TINYINT},
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ parity,jdbcType=TINYINT},
+			#{ percent,jdbcType=DECIMAL},
+			#{ version,jdbcType=INTEGER}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO PT_O_PARITY_DISTRIBUTION
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR ,
+			STATUS ,
+			DELETED_FLAG ,
+			PARITY ,
+			PERCENT ,
+			VERSION 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.sortNbr,jdbcType=TINYINT},
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.parity,jdbcType=TINYINT},
+				#{item.percent,jdbcType=DECIMAL},
+				#{item.version,jdbcType=INTEGER}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="ParityDistributionModel" >
+		UPDATE PT_O_PARITY_DISTRIBUTION 
+		<set>
+		<if test="sortNbr != null">SORT_NBR = #{ sortNbr,jdbcType=TINYINT},</if>
+		<if test="parity != null">PARITY = #{ parity,jdbcType=TINYINT},</if>
+		<if test="percent != null">PERCENT = #{ percent,jdbcType=DECIMAL},</if>
+		<if test="version != null">VERSION = #{ version,jdbcType=INTEGER}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE PT_O_PARITY_DISTRIBUTION 
+			<set>
+			<if test="item.sortNbr != null">SORT_NBR = #{item.sortNbr,jdbcType=TINYINT},</if>
+			<if test="item.parity != null">PARITY = #{item.parity,jdbcType=TINYINT},</if>
+			<if test="item.percent != null">PERCENT = #{item.percent,jdbcType=DECIMAL},</if>
+			<if test="item.version != null">VERSION = #{item.version,jdbcType=INTEGER}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  PT_O_PARITY_DISTRIBUTION
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  PT_O_PARITY_DISTRIBUTION
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE ROW_ID = #{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  PT_O_PARITY_DISTRIBUTION
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="ParityDistributionResult">
+		SELECT *
+		FROM PT_O_PARITY_DISTRIBUTION WHERE DELETED_FLAG='0' AND STATUS = '1' ORDER BY PARITY
+		
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="ParityDistributionResult" >
+		SELECT *
+		FROM PT_O_PARITY_DISTRIBUTION WHERE DELETED_FLAG='0' AND STATUS = '1'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="ParityDistributionResult" >
+		SELECT *
+		FROM PT_O_PARITY_DISTRIBUTION
+		WHERE DELETED_FLAG='0' AND STATUS = '1'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="ParityDistributionResult" >
+		SELECT *
+		FROM PT_O_PARITY_DISTRIBUTION
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="ParityDistributionResult"> ${sql} </select>
+
+	<select id="getMaxVersion" resultType="java.lang.Long">
+		SELECT MAX(VERSION) FROM PT_O_PARITY_DISTRIBUTION 
+	</select>
+	
+	<update id="upStatus" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  PT_O_PARITY_DISTRIBUTION
+		 SET
+		 STATUS  =  '2'  WHERE ROW_ID = #{item} 
+        </foreach>	
+	</update>
+</mapper>
+

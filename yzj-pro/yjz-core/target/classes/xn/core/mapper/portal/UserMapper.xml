@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.core.mapper.portal.UserMapper">
+
+	<resultMap id="UserResult"  type="UserModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="sortNbr" column="SORT_NBR" jdbcType="INTEGER" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="originFlag" column="ORIGIN_FLAG" jdbcType="CHAR" />
+		<result property="originApp" column="ORIGIN_APP" jdbcType="VARCHAR" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="companyCode" column="COMPANY_CODE" jdbcType="VARCHAR" />
+		<result property="userName" column="USER_NAME" jdbcType="VARCHAR" />
+		<result property="nickName" column="NICK_NAME" jdbcType="VARCHAR" />
+		<result property="password" column="PASSWORD" jdbcType="VARCHAR" />
+		<result property="resetKey" column="RESET_KEY" jdbcType="VARCHAR" />
+		<result property="userType" column="USER_TYPE" jdbcType="VARCHAR" />
+		<result property="employeeId" column="EMPLOYEE_ID" jdbcType="INTEGER" />
+		<result property="moduleId" column="MODULE_ID" jdbcType="INTEGER" />
+		<result property="wechatModuleId" column="WECHAT_MODULE_ID" jdbcType="INTEGER" />
+		<result property="isInitPw" column="IS_INIT_PW" jdbcType="CHAR" />
+		<result property="oaUsername" column="OA_USERNAME" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="UserModel_Column_List">
+		ROW_ID,SORT_NBR,NOTES,COMPANY_CODE,USER_NAME,NICK_NAME,PASSWORD,RESET_KEY,USER_TYPE,EMPLOYEE_ID,MODULE_ID,WECHAT_MODULE_ID,IS_INIT_PW,OA_USERNAME
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true"   keyProperty="rowId" parameterType="UserModel">
+		INSERT INTO HR_M_USER
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR,
+			STATUS,
+			DELETED_FLAG,
+			ORIGIN_FLAG,
+			ORIGIN_APP,
+			NOTES,
+			COMPANY_CODE,
+			USER_NAME,
+			NICK_NAME,
+			PASSWORD,
+			RESET_KEY,
+			USER_TYPE,
+			EMPLOYEE_ID,
+			MODULE_ID,
+			WECHAT_MODULE_ID,
+			IS_INIT_PW,
+			OA_USERNAME
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ sortNbr,jdbcType=INTEGER},
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ originFlag,jdbcType=CHAR},
+			#{ originApp,jdbcType=VARCHAR},
+			#{ notes,jdbcType=VARCHAR},
+			#{ companyCode,jdbcType=VARCHAR},
+			#{ userName,jdbcType=VARCHAR},
+			#{ nickName,jdbcType=VARCHAR},
+			#{ password,jdbcType=VARCHAR},
+			#{ resetKey,jdbcType=VARCHAR},
+			#{ userType,jdbcType=VARCHAR},
+			#{ employeeId,jdbcType=INTEGER},
+			#{ moduleId,jdbcType=INTEGER},
+			#{ wechatModuleId,jdbcType=INTEGER},
+			#{ isInitPw,jdbcType=CHAR},
+			#{ oaUsername,jdbcType=VARCHAR}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO HR_M_USER
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR ,
+			STATUS ,
+			DELETED_FLAG ,
+			ORIGIN_FLAG ,
+			ORIGIN_APP ,
+			NOTES ,
+			COMPANY_CODE ,
+			USER_NAME ,
+			NICK_NAME ,
+			PASSWORD ,
+			RESET_KEY ,
+			USER_TYPE ,
+			EMPLOYEE_ID ,
+			MODULE_ID ,
+			WECHAT_MODULE_ID,
+			IS_INIT_PW ,
+			OA_USERNAME 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.sortNbr,jdbcType=INTEGER},
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.originFlag,jdbcType=CHAR},
+				#{item.originApp,jdbcType=VARCHAR},
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.companyCode,jdbcType=VARCHAR},
+				#{item.userName,jdbcType=VARCHAR},
+				#{item.nickName,jdbcType=VARCHAR},
+				#{item.password,jdbcType=VARCHAR},
+				#{item.resetKey,jdbcType=VARCHAR},
+				#{item.userType,jdbcType=VARCHAR},
+				#{item.employeeId,jdbcType=INTEGER},
+				#{item.moduleId,jdbcType=INTEGER},
+				#{item.wechatModuleId,jdbcType=INTEGER},
+				#{item.isInitPw,jdbcType=CHAR},
+				#{item.oaUsername,jdbcType=VARCHAR}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="UserModel" >
+		UPDATE HR_M_USER 
+		<set>
+		<if test="sortNbr != null">SORT_NBR = #{ sortNbr,jdbcType=INTEGER},</if>
+		<if test="status != null">STATUS = #{ status,jdbcType=CHAR},</if>
+		<if test="originFlag != null">ORIGIN_FLAG = #{ originFlag,jdbcType=CHAR},</if>
+		<if test="originApp != null">ORIGIN_APP = #{ originApp,jdbcType=VARCHAR},</if>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="companyCode != null">COMPANY_CODE = #{ companyCode,jdbcType=VARCHAR},</if>
+		<if test="userName != null">USER_NAME = #{ userName,jdbcType=VARCHAR},</if>
+		<if test="nickName != null">NICK_NAME = #{ nickName,jdbcType=VARCHAR},</if>
+		<if test="password != null">PASSWORD = #{ password,jdbcType=VARCHAR},</if>
+		<if test="resetKey != null">RESET_KEY = #{ resetKey,jdbcType=VARCHAR},</if>
+		<if test="userType != null">USER_TYPE = #{ userType,jdbcType=VARCHAR},</if>
+		<if test="employeeId != null">EMPLOYEE_ID = #{ employeeId,jdbcType=INTEGER},</if>
+		<if test="moduleId != null">MODULE_ID = #{ moduleId,jdbcType=INTEGER},</if>
+		<if test="wechatModuleId != null">WECHAT_MODULE_ID = #{ wechatModuleId,jdbcType=INTEGER},</if>
+		<if test="isInitPw != null">IS_INIT_PW = #{ isInitPw,jdbcType=CHAR},</if>
+		<if test="oaUsername != null">OA_USERNAME = #{ oaUsername,jdbcType=VARCHAR}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE HR_M_USER 
+			<set>
+			<if test="item.sortNbr != null">SORT_NBR = #{item.sortNbr,jdbcType=INTEGER},</if>
+			<if test="item.status != null">STATUS = #{item.status,jdbcType=CHAR},</if>
+			<if test="item.originFlag != null">ORIGIN_FLAG = #{item.originFlag,jdbcType=CHAR},</if>
+			<if test="item.originApp != null">ORIGIN_APP = #{item.originApp,jdbcType=VARCHAR},</if>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.companyCode != null">COMPANY_CODE = #{item.companyCode,jdbcType=VARCHAR},</if>
+			<if test="item.userName != null">USER_NAME = #{item.userName,jdbcType=VARCHAR},</if>
+			<if test="item.nickName != null">NICK_NAME = #{item.nickName,jdbcType=VARCHAR},</if>
+			<if test="item.password != null">PASSWORD = #{item.password,jdbcType=VARCHAR},</if>
+			<if test="item.resetKey != null">RESET_KEY = #{item.resetKey,jdbcType=VARCHAR},</if>
+			<if test="item.userType != null">USER_TYPE = #{item.userType,jdbcType=VARCHAR},</if>
+			<if test="item.employeeId != null">EMPLOYEE_ID = #{item.employeeId,jdbcType=INTEGER},</if>
+			<if test="item.moduleId != null">MODULE_ID = #{item.moduleId,jdbcType=INTEGER},</if>
+			<if test="item.wechatModuleId != null">WECHAT_MODULE_ID = #{item.wechatModuleId,jdbcType=INTEGER},</if>
+			<if test="item.isInitPw != null">IS_INIT_PW = #{item.isInitPw,jdbcType=CHAR},</if>
+			<if test="item.oaUsername != null">OA_USERNAME = #{item.oaUsername,jdbcType=VARCHAR}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  HR_M_USER
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  HR_M_USER
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE 
+		 ROW_ID =#{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  HR_M_USER
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' 
+		 
+		 AND ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCons" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  HR_M_USER
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' ${item}
+		</foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="UserResult">
+		SELECT 
+		<include refid="UserModel_Column_List" />
+		FROM HR_M_USER WHERE DELETED_FLAG='0' 
+		
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="UserResult" >
+		SELECT 
+		<include refid="UserModel_Column_List" />
+		FROM HR_M_USER WHERE DELETED_FLAG='0'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="UserResult" >
+		SELECT 
+		<include refid="UserModel_Column_List" />
+		FROM HR_M_USER
+		WHERE DELETED_FLAG='0'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="UserResult" >
+		SELECT 
+		<include refid="UserModel_Column_List" />
+		FROM HR_M_USER
+		WHERE ${condition}
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAll" resultMap="UserResult" >
+		SELECT *
+		FROM HR_M_USER
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="UserResult"> ${sql} </select>
+
+</mapper>
+

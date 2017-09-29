@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.production.ChangeEarbrandMapper">
+
+	<resultMap id="ChangeEarbrandResult"  type="ChangeEarbrandModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="sortNbr" column="SORT_NBR" jdbcType="INTEGER" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="originFlag" column="ORIGIN_FLAG" jdbcType="CHAR" />
+		<result property="originApp" column="ORIGIN_APP" jdbcType="VARCHAR" />
+		<result property="lineNumber" column="LINE_NUMBER" jdbcType="INTEGER" />
+		<result property="companyId" column="COMPANY_ID" jdbcType="INTEGER" />
+		<result property="farmId" column="FARM_ID" jdbcType="INTEGER" />
+		<result property="swineryId" column="SWINERY_ID" jdbcType="INTEGER" />
+		<result property="pigId" column="PIG_ID" jdbcType="INTEGER" />
+		<result property="earBrand" column="EAR_BRAND" jdbcType="VARCHAR" />
+		<result property="earShort" column="EAR_SHORT" jdbcType="VARCHAR" />
+		<result property="earThorn" column="EAR_THORN" jdbcType="VARCHAR" />
+		<result property="electronicEarNo" column="ELECTRONIC_EAR_NO" jdbcType="VARCHAR" />
+		<result property="changeEarbrandDate" column="CHANGE_EARBRAND_DATE" jdbcType="DATE" />
+		<result property="worker" column="WORKER" jdbcType="INTEGER" />
+		<result property="billId" column="BILL_ID" jdbcType="INTEGER" />
+		<result property="changeEarbrandId" column="CHANGE_EARBRAND_ID" jdbcType="INTEGER" />
+		<result property="createId" column="CREATE_ID" jdbcType="INTEGER" />
+		<result property="createDate" column="CREATE_DATE" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="ChangeEarbrandModel_Column_List">
+		ROW_ID,NOTES,SORT_NBR,STATUS,DELETED_FLAG,ORIGIN_FLAG,ORIGIN_APP,LINE_NUMBER,COMPANY_ID,FARM_ID,SWINERY_ID,PIG_ID,EAR_BRAND,EAR_SHORT,EAR_THORN,ELECTRONIC_EAR_NO,CHANGE_EARBRAND_DATE,WORKER,BILL_ID,CHANGE_EARBRAND_ID,CREATE_ID,CREATE_DATE
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="rowId" parameterType="ChangeEarbrandModel">
+		INSERT INTO PP_L_BILL_CHANGE_EARBRAND
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			NOTES,
+			SORT_NBR,
+			STATUS,
+			DELETED_FLAG,
+			ORIGIN_FLAG,
+			ORIGIN_APP,
+			LINE_NUMBER,
+			COMPANY_ID,
+			FARM_ID,
+			SWINERY_ID,
+			PIG_ID,
+			EAR_BRAND,
+			EAR_SHORT,
+			EAR_THORN,
+			ELECTRONIC_EAR_NO,
+			CHANGE_EARBRAND_DATE,
+			WORKER,
+			BILL_ID,
+			CHANGE_EARBRAND_ID,
+			CREATE_ID,
+			CREATE_DATE
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ notes,jdbcType=VARCHAR},
+			#{ sortNbr,jdbcType=INTEGER},
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ originFlag,jdbcType=CHAR},
+			#{ originApp,jdbcType=VARCHAR},
+			#{ lineNumber,jdbcType=INTEGER},
+			#{ companyId,jdbcType=INTEGER},
+			#{ farmId,jdbcType=INTEGER},
+			#{ swineryId,jdbcType=INTEGER},
+			#{ pigId,jdbcType=INTEGER},
+			#{ earBrand,jdbcType=VARCHAR},
+			#{ earShort,jdbcType=VARCHAR},
+			#{ earThorn,jdbcType=VARCHAR},
+			#{ electronicEarNo,jdbcType=VARCHAR},
+			#{ changeEarbrandDate,jdbcType=DATE},
+			#{ worker,jdbcType=INTEGER},
+			#{ billId,jdbcType=INTEGER},
+			#{ changeEarbrandId,jdbcType=INTEGER},
+			#{ createId,jdbcType=INTEGER},
+			#{ createDate,jdbcType=TIMESTAMP}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO PP_L_BILL_CHANGE_EARBRAND
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			NOTES ,
+			SORT_NBR ,
+			STATUS ,
+			DELETED_FLAG ,
+			ORIGIN_FLAG ,
+			ORIGIN_APP ,
+			LINE_NUMBER ,
+			COMPANY_ID ,
+			FARM_ID ,
+			SWINERY_ID ,
+			PIG_ID ,
+			EAR_BRAND ,
+			EAR_SHORT ,
+			EAR_THORN ,
+			ELECTRONIC_EAR_NO ,
+			CHANGE_EARBRAND_DATE ,
+			WORKER ,
+			BILL_ID ,
+			CHANGE_EARBRAND_ID ,
+			CREATE_ID ,
+			CREATE_DATE 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.sortNbr,jdbcType=INTEGER},
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.originFlag,jdbcType=CHAR},
+				#{item.originApp,jdbcType=VARCHAR},
+				#{item.lineNumber,jdbcType=INTEGER},
+				#{item.companyId,jdbcType=INTEGER},
+				#{item.farmId,jdbcType=INTEGER},
+				#{item.swineryId,jdbcType=INTEGER},
+				#{item.pigId,jdbcType=INTEGER},
+				#{item.earBrand,jdbcType=VARCHAR},
+				#{item.earShort,jdbcType=VARCHAR},
+				#{item.earThorn,jdbcType=VARCHAR},
+				#{item.electronicEarNo,jdbcType=VARCHAR},
+				#{item.changeEarbrandDate,jdbcType=DATE},
+				#{item.worker,jdbcType=INTEGER},
+				#{item.billId,jdbcType=INTEGER},
+				#{item.changeEarbrandId,jdbcType=INTEGER},
+				#{item.createId,jdbcType=INTEGER},
+				#{item.createDate,jdbcType=TIMESTAMP}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="ChangeEarbrandModel" >
+		UPDATE PP_L_BILL_CHANGE_EARBRAND 
+		<set>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="sortNbr != null">SORT_NBR = #{ sortNbr,jdbcType=INTEGER},</if>
+		<if test="originFlag != null">ORIGIN_FLAG = #{ originFlag,jdbcType=CHAR},</if>
+		<if test="originApp != null">ORIGIN_APP = #{ originApp,jdbcType=VARCHAR},</if>
+		<if test="lineNumber != null">LINE_NUMBER = #{ lineNumber,jdbcType=INTEGER},</if>
+		<if test="swineryId != null">SWINERY_ID = #{ swineryId,jdbcType=INTEGER},</if>
+		<if test="pigId != null">PIG_ID = #{ pigId,jdbcType=INTEGER},</if>
+		<if test="earBrand != null">EAR_BRAND = #{ earBrand,jdbcType=VARCHAR},</if>
+		<if test="earShort != null">EAR_SHORT = #{ earShort,jdbcType=VARCHAR},</if>
+		<if test="earThorn != null">EAR_THORN = #{ earThorn,jdbcType=VARCHAR},</if>
+		<if test="electronicEarNo != null">ELECTRONIC_EAR_NO = #{ electronicEarNo,jdbcType=VARCHAR},</if>
+		<if test="changeEarbrandDate != null">CHANGE_EARBRAND_DATE = #{ changeEarbrandDate,jdbcType=DATE},</if>
+		<if test="worker != null">WORKER = #{ worker,jdbcType=INTEGER},</if>
+		<if test="billId != null">BILL_ID = #{ billId,jdbcType=INTEGER},</if>
+		<if test="changeEarbrandId != null">CHANGE_EARBRAND_ID = #{ changeEarbrandId,jdbcType=INTEGER},</if>
+		<if test="createId != null">CREATE_ID = #{ createId,jdbcType=INTEGER},</if>
+		<if test="createDate != null">CREATE_DATE = #{ createDate,jdbcType=TIMESTAMP}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE PP_L_BILL_CHANGE_EARBRAND 
+			<set>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.sortNbr != null">SORT_NBR = #{item.sortNbr,jdbcType=INTEGER},</if>
+			<if test="item.originFlag != null">ORIGIN_FLAG = #{item.originFlag,jdbcType=CHAR},</if>
+			<if test="item.originApp != null">ORIGIN_APP = #{item.originApp,jdbcType=VARCHAR},</if>
+			<if test="item.lineNumber != null">LINE_NUMBER = #{item.lineNumber,jdbcType=INTEGER},</if>
+			<if test="item.swineryId != null">SWINERY_ID = #{item.swineryId,jdbcType=INTEGER},</if>
+			<if test="item.pigId != null">PIG_ID = #{item.pigId,jdbcType=INTEGER},</if>
+			<if test="item.earBrand != null">EAR_BRAND = #{item.earBrand,jdbcType=VARCHAR},</if>
+			<if test="item.earShort != null">EAR_SHORT = #{item.earShort,jdbcType=VARCHAR},</if>
+			<if test="item.earThorn != null">EAR_THORN = #{item.earThorn,jdbcType=VARCHAR},</if>
+			<if test="item.electronicEarNo != null">ELECTRONIC_EAR_NO = #{item.electronicEarNo,jdbcType=VARCHAR},</if>
+			<if test="item.changeEarbrandDate != null">CHANGE_EARBRAND_DATE = #{item.changeEarbrandDate,jdbcType=DATE},</if>
+			<if test="item.worker != null">WORKER = #{item.worker,jdbcType=INTEGER},</if>
+			<if test="item.billId != null">BILL_ID = #{item.billId,jdbcType=INTEGER},</if>
+			<if test="item.changeEarbrandId != null">CHANGE_EARBRAND_ID = #{item.changeEarbrandId,jdbcType=INTEGER},</if>
+			<if test="item.createId != null">CREATE_ID = #{item.createId,jdbcType=INTEGER},</if>
+			<if test="item.createDate != null">CREATE_DATE = #{item.createDate,jdbcType=TIMESTAMP}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  PP_L_BILL_CHANGE_EARBRAND
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  PP_L_BILL_CHANGE_EARBRAND
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE ROW_ID = #{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  PP_L_BILL_CHANGE_EARBRAND
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon2" parameterType="java.util.Map" >
+	<![CDATA[ 
+		 UPDATE  PP_L_BILL_CHANGE_EARBRAND
+		 SET
+		 DELETED_FLAG = '2' WHERE DELETED_FLAG <> '2' ${condition}
+	]]>
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="ChangeEarbrandResult">
+		SELECT *
+		FROM PP_L_BILL_CHANGE_EARBRAND WHERE DELETED_FLAG='0' AND STATUS = '1' 
+		AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="ChangeEarbrandResult" >
+		SELECT *
+		FROM PP_L_BILL_CHANGE_EARBRAND WHERE DELETED_FLAG='0' AND STATUS = '1'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="ChangeEarbrandResult" >
+		SELECT *
+		FROM PP_L_BILL_CHANGE_EARBRAND
+		WHERE DELETED_FLAG='0' AND STATUS = '1'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="ChangeEarbrandResult" >
+		SELECT *
+		FROM PP_L_BILL_CHANGE_EARBRAND
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="ChangeEarbrandResult"> ${sql} </select>
+
+</mapper>
+

@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.supplychian.ReceiptDetailMapper">
+
+	<resultMap id="ReceiptDetailResult"  type="ReceiptDetailModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="farmId" column="FARM_ID" jdbcType="INTEGER" />
+		<result property="companyId" column="COMPANY_ID" jdbcType="INTEGER" />
+		<result property="receiptId" column="RECEIPT_ID" jdbcType="INTEGER" />
+		<result property="receiptLn" column="RECEIPT_LN" jdbcType="INTEGER" />
+		<result property="receiptNumber" column="RECEIPT_NUMBER" jdbcType="VARCHAR" />
+		<result property="price" column="PRICE" jdbcType="DECIMAL" />
+		<result property="transportPrice" column="TRANSPORT_PRICE" jdbcType="DECIMAL" />
+		<result property="relativePath" column="RELATIVE_PATH" jdbcType="VARCHAR" />
+		<result property="absolutePath" column="ABSOLUTE_PATH" jdbcType="VARCHAR" />
+		<result property="fileOldName" column="FILE_OLD_NAME" jdbcType="VARCHAR" />
+		<result property="fileName" column="FILE_NAME" jdbcType="VARCHAR" />
+		<result property="fileSuffix" column="FILE_SUFFIX" jdbcType="VARCHAR" />
+		<result property="createId" column="CREATE_ID" jdbcType="INTEGER" />
+		<result property="createDate" column="CREATE_DATE" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="ReceiptDetailModel_Column_List">
+		ROW_ID,NOTES,RECEIPT_ID,RECEIPT_LN,RECEIPT_NUMBER,PRICE,TRANSPORT_PRICE,RELATIVE_PATH,ABSOLUTE_PATH,FILE_OLD_NAME,FILE_NAME,FILE_SUFFIX,CREATE_ID,CREATE_DATE
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true"   keyProperty="rowId" parameterType="ReceiptDetailModel">
+		INSERT INTO SC_M_BILL_RECEIPT_DETAIL
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			STATUS,
+			DELETED_FLAG,
+			NOTES,
+			FARM_ID,
+			COMPANY_ID,
+			RECEIPT_ID,
+			RECEIPT_LN,
+			RECEIPT_NUMBER,
+			PRICE,
+			TRANSPORT_PRICE,
+			RELATIVE_PATH,
+			ABSOLUTE_PATH,
+			FILE_OLD_NAME,
+			FILE_NAME,
+			FILE_SUFFIX,
+			CREATE_ID,
+			CREATE_DATE
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ notes,jdbcType=VARCHAR},
+			#{ farmId,jdbcType=INTEGER},
+			#{ companyId,jdbcType=INTEGER},
+			#{ receiptId,jdbcType=INTEGER},
+			#{ receiptLn,jdbcType=INTEGER},
+			#{ receiptNumber,jdbcType=VARCHAR},
+			#{ price,jdbcType=DECIMAL},
+			#{ transportPrice,jdbcType=DECIMAL},
+			#{ relativePath,jdbcType=VARCHAR},
+			#{ absolutePath,jdbcType=VARCHAR},
+			#{ fileOldName,jdbcType=VARCHAR},
+			#{ fileName,jdbcType=VARCHAR},
+			#{ fileSuffix,jdbcType=VARCHAR},
+			#{ createId,jdbcType=INTEGER},
+			#{ createDate,jdbcType=TIMESTAMP}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO SC_M_BILL_RECEIPT_DETAIL
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			STATUS ,
+			DELETED_FLAG ,
+			NOTES ,
+			FARM_ID ,
+			COMPANY_ID ,
+			RECEIPT_ID ,
+			RECEIPT_LN ,
+			RECEIPT_NUMBER ,
+			PRICE ,
+			TRANSPORT_PRICE ,
+			RELATIVE_PATH ,
+			ABSOLUTE_PATH ,
+			FILE_OLD_NAME ,
+			FILE_NAME ,
+			FILE_SUFFIX ,
+			CREATE_ID ,
+			CREATE_DATE 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.farmId,jdbcType=INTEGER},
+				#{item.companyId,jdbcType=INTEGER},
+				#{item.receiptId,jdbcType=INTEGER},
+				#{item.receiptLn,jdbcType=INTEGER},
+				#{item.receiptNumber,jdbcType=VARCHAR},
+				#{item.price,jdbcType=DECIMAL},
+				#{item.transportPrice,jdbcType=DECIMAL},
+				#{item.relativePath,jdbcType=VARCHAR},
+				#{item.absolutePath,jdbcType=VARCHAR},
+				#{item.fileOldName,jdbcType=VARCHAR},
+				#{item.fileName,jdbcType=VARCHAR},
+				#{item.fileSuffix,jdbcType=VARCHAR},
+				#{item.createId,jdbcType=INTEGER},
+				#{item.createDate,jdbcType=TIMESTAMP}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="ReceiptDetailModel" >
+		UPDATE SC_M_BILL_RECEIPT_DETAIL 
+		<set>
+		<if test="status != null">STATUS = #{ status,jdbcType=CHAR},</if>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="receiptId != null">RECEIPT_ID = #{ receiptId,jdbcType=INTEGER},</if>
+		<if test="receiptLn != null">RECEIPT_LN = #{ receiptLn,jdbcType=INTEGER},</if>
+		<if test="receiptNumber != null">RECEIPT_NUMBER = #{ receiptNumber,jdbcType=VARCHAR},</if>
+		<if test="price != null">PRICE = #{ price,jdbcType=DECIMAL},</if>
+		<if test="transportPrice != null">TRANSPORT_PRICE = #{ transportPrice,jdbcType=DECIMAL},</if>
+		<if test="relativePath != null">RELATIVE_PATH = #{ relativePath,jdbcType=VARCHAR},</if>
+		<if test="absolutePath != null">ABSOLUTE_PATH = #{ absolutePath,jdbcType=VARCHAR},</if>
+		<if test="fileOldName != null">FILE_OLD_NAME = #{ fileOldName,jdbcType=VARCHAR},</if>
+		<if test="fileName != null">FILE_NAME = #{ fileName,jdbcType=VARCHAR},</if>
+		<if test="fileSuffix != null">FILE_SUFFIX = #{ fileSuffix,jdbcType=VARCHAR},</if>
+		<if test="createId != null">CREATE_ID = #{ createId,jdbcType=INTEGER},</if>
+		<if test="createDate != null">CREATE_DATE = #{ createDate,jdbcType=TIMESTAMP}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE SC_M_BILL_RECEIPT_DETAIL 
+			<set>
+			<if test="item.status != null">STATUS = #{item.status,jdbcType=CHAR},</if>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.receiptId != null">RECEIPT_ID = #{item.receiptId,jdbcType=INTEGER},</if>
+			<if test="item.receiptLn != null">RECEIPT_LN = #{item.receiptLn,jdbcType=INTEGER},</if>
+			<if test="item.receiptNumber != null">RECEIPT_NUMBER = #{item.receiptNumber,jdbcType=VARCHAR},</if>
+			<if test="item.price != null">PRICE = #{item.price,jdbcType=DECIMAL},</if>
+			<if test="item.transportPrice != null">TRANSPORT_PRICE = #{item.transportPrice,jdbcType=DECIMAL},</if>
+			<if test="item.relativePath != null">RELATIVE_PATH = #{item.relativePath,jdbcType=VARCHAR},</if>
+			<if test="item.absolutePath != null">ABSOLUTE_PATH = #{item.absolutePath,jdbcType=VARCHAR},</if>
+			<if test="item.fileOldName != null">FILE_OLD_NAME = #{item.fileOldName,jdbcType=VARCHAR},</if>
+			<if test="item.fileName != null">FILE_NAME = #{item.fileName,jdbcType=VARCHAR},</if>
+			<if test="item.fileSuffix != null">FILE_SUFFIX = #{item.fileSuffix,jdbcType=VARCHAR},</if>
+			<if test="item.createId != null">CREATE_ID = #{item.createId,jdbcType=INTEGER},</if>
+			<if test="item.createDate != null">CREATE_DATE = #{item.createDate,jdbcType=TIMESTAMP}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  SC_M_BILL_RECEIPT_DETAIL
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  SC_M_BILL_RECEIPT_DETAIL
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE 
+		 ROW_ID =#{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  SC_M_BILL_RECEIPT_DETAIL
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' 
+		 AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+		 AND ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCons" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  SC_M_BILL_RECEIPT_DETAIL
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' ${item}
+		</foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="ReceiptDetailResult">
+		SELECT 
+		<include refid="ReceiptDetailModel_Column_List" />
+		FROM SC_M_BILL_RECEIPT_DETAIL WHERE DELETED_FLAG='0' 
+		AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="ReceiptDetailResult" >
+		SELECT 
+		<include refid="ReceiptDetailModel_Column_List" />
+		FROM SC_M_BILL_RECEIPT_DETAIL WHERE DELETED_FLAG='0'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="ReceiptDetailResult" >
+		SELECT 
+		<include refid="ReceiptDetailModel_Column_List" />
+		FROM SC_M_BILL_RECEIPT_DETAIL
+		WHERE DELETED_FLAG='0'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="ReceiptDetailResult" >
+		SELECT 
+		<include refid="ReceiptDetailModel_Column_List" />
+		FROM SC_M_BILL_RECEIPT_DETAIL
+		WHERE ${condition}
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAll" resultMap="ReceiptDetailResult" >
+		SELECT *
+		FROM SC_M_BILL_RECEIPT_DETAIL
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="ReceiptDetailResult"> ${sql} </select>
+
+</mapper>
+

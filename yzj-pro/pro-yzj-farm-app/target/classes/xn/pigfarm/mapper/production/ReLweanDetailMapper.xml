@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.production.ReLweanDetailMapper">
+
+	<resultMap id="ReLweanDetailResult"  type="ReLweanDetailModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="sortNbr" column="SORT_NBR" jdbcType="INTEGER" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="reportId" column="REPORT_ID" jdbcType="INTEGER" />
+		<result property="farmId" column="FARM_ID" jdbcType="INTEGER" />
+		<result property="weanTotalSize" column="WEAN_TOTAL_SIZE" jdbcType="INTEGER" />
+		<result property="liveNum" column="LIVE_NUM" jdbcType="INTEGER" />
+		<result property="birthAvgWeight" column="BIRTH_AVG_WEIGHT" jdbcType="DOUBLE" />
+		<result property="weanAvgDayage" column="WEAN_AVG_DAYAGE" jdbcType="DOUBLE" />
+		<result property="weanPigNum" column="WEAN_PIG_NUM" jdbcType="INTEGER" />
+		<result property="avgDeliveryNum" column="AVG_DELIVERY_NUM" jdbcType="DOUBLE" />
+		<result property="avgWeanNum" column="AVG_WEAN_NUM" jdbcType="DOUBLE" />
+		<result property="avgWeanWeight" column="AVG_WEAN_WEIGHT" jdbcType="DOUBLE" />
+		<result property="weanLitterWeight" column="WEAN_LITTER_WEIGHT" jdbcType="DOUBLE" />
+		<result property="weanDayLitterWeight" column="WEAN_DAY_LITTER_WEIGHT" jdbcType="DOUBLE" />
+		<result property="avgDrfUsedNum" column="AVG_DRF_USED_NUM" jdbcType="DOUBLE" />
+		<result property="avgJcwUsedNum" column="AVG_JCW_USED_NUM" jdbcType="DOUBLE" />
+		<result property="createId" column="CREATE_ID" jdbcType="INTEGER" />
+		<result property="createDate" column="CREATE_DATE" jdbcType="TIMESTAMP" />
+		<result property="isTotalfield" column="IS_TOTALFIELD" jdbcType="INTEGER" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="ReLweanDetailModel_Column_List">
+		ROW_ID,SORT_NBR,NOTES,REPORT_ID,WEAN_TOTAL_SIZE,LIVE_NUM,BIRTH_AVG_WEIGHT,WEAN_AVG_DAYAGE,WEAN_PIG_NUM,AVG_DELIVERY_NUM,AVG_WEAN_NUM,AVG_WEAN_WEIGHT,WEAN_LITTER_WEIGHT,WEAN_DAY_LITTER_WEIGHT,AVG_DRF_USED_NUM,AVG_JCW_USED_NUM,CREATE_ID,CREATE_DATE,IS_TOTALFIELD
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true"   keyProperty="rowId" parameterType="ReLweanDetailModel">
+		INSERT INTO RE_L_WEAN_DETAIL
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR,
+			STATUS,
+			DELETED_FLAG,
+			NOTES,
+			REPORT_ID,
+			FARM_ID,
+			WEAN_TOTAL_SIZE,
+			LIVE_NUM,
+			BIRTH_AVG_WEIGHT,
+			WEAN_AVG_DAYAGE,
+			WEAN_PIG_NUM,
+			AVG_DELIVERY_NUM,
+			AVG_WEAN_NUM,
+			AVG_WEAN_WEIGHT,
+			WEAN_LITTER_WEIGHT,
+			WEAN_DAY_LITTER_WEIGHT,
+			AVG_DRF_USED_NUM,
+			AVG_JCW_USED_NUM,
+			CREATE_ID,
+			CREATE_DATE,
+			IS_TOTALFIELD
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ sortNbr,jdbcType=INTEGER},
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ notes,jdbcType=VARCHAR},
+			#{ reportId,jdbcType=INTEGER},
+			#{ farmId,jdbcType=INTEGER},
+			#{ weanTotalSize,jdbcType=INTEGER},
+			#{ liveNum,jdbcType=INTEGER},
+			#{ birthAvgWeight,jdbcType=DOUBLE},
+			#{ weanAvgDayage,jdbcType=DOUBLE},
+			#{ weanPigNum,jdbcType=INTEGER},
+			#{ avgDeliveryNum,jdbcType=DOUBLE},
+			#{ avgWeanNum,jdbcType=DOUBLE},
+			#{ avgWeanWeight,jdbcType=DOUBLE},
+			#{ weanLitterWeight,jdbcType=DOUBLE},
+			#{ weanDayLitterWeight,jdbcType=DOUBLE},
+			#{ avgDrfUsedNum,jdbcType=DOUBLE},
+			#{ avgJcwUsedNum,jdbcType=DOUBLE},
+			#{ createId,jdbcType=INTEGER},
+			#{ createDate,jdbcType=TIMESTAMP},
+			#{ isTotalfield,jdbcType=INTEGER}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO RE_L_WEAN_DETAIL
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR ,
+			STATUS ,
+			DELETED_FLAG ,
+			NOTES ,
+			REPORT_ID ,
+			FARM_ID ,
+			WEAN_TOTAL_SIZE ,
+			LIVE_NUM ,
+			BIRTH_AVG_WEIGHT ,
+			WEAN_AVG_DAYAGE ,
+			WEAN_PIG_NUM ,
+			AVG_DELIVERY_NUM ,
+			AVG_WEAN_NUM ,
+			AVG_WEAN_WEIGHT ,
+			WEAN_LITTER_WEIGHT ,
+			WEAN_DAY_LITTER_WEIGHT ,
+			AVG_DRF_USED_NUM ,
+			AVG_JCW_USED_NUM ,
+			CREATE_ID ,
+			CREATE_DATE ,
+			IS_TOTALFIELD 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.sortNbr,jdbcType=INTEGER},
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.reportId,jdbcType=INTEGER},
+				#{item.farmId,jdbcType=INTEGER},
+				#{item.weanTotalSize,jdbcType=INTEGER},
+				#{item.liveNum,jdbcType=INTEGER},
+				#{item.birthAvgWeight,jdbcType=DOUBLE},
+				#{item.weanAvgDayage,jdbcType=DOUBLE},
+				#{item.weanPigNum,jdbcType=INTEGER},
+				#{item.avgDeliveryNum,jdbcType=DOUBLE},
+				#{item.avgWeanNum,jdbcType=DOUBLE},
+				#{item.avgWeanWeight,jdbcType=DOUBLE},
+				#{item.weanLitterWeight,jdbcType=DOUBLE},
+				#{item.weanDayLitterWeight,jdbcType=DOUBLE},
+				#{item.avgDrfUsedNum,jdbcType=DOUBLE},
+				#{item.avgJcwUsedNum,jdbcType=DOUBLE},
+				#{item.createId,jdbcType=INTEGER},
+				#{item.createDate,jdbcType=TIMESTAMP},
+				#{item.isTotalfield,jdbcType=INTEGER}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="ReLweanDetailModel" >
+		UPDATE RE_L_WEAN_DETAIL 
+		<set>
+		<if test="sortNbr != null">SORT_NBR = #{ sortNbr,jdbcType=INTEGER},</if>
+		<if test="status != null">STATUS = #{ status,jdbcType=CHAR},</if>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="reportId != null">REPORT_ID = #{ reportId,jdbcType=INTEGER},</if>
+		<if test="weanTotalSize != null">WEAN_TOTAL_SIZE = #{ weanTotalSize,jdbcType=INTEGER},</if>
+		<if test="liveNum != null">LIVE_NUM = #{ liveNum,jdbcType=INTEGER},</if>
+		<if test="birthAvgWeight != null">BIRTH_AVG_WEIGHT = #{ birthAvgWeight,jdbcType=DOUBLE},</if>
+		<if test="weanAvgDayage != null">WEAN_AVG_DAYAGE = #{ weanAvgDayage,jdbcType=DOUBLE},</if>
+		<if test="weanPigNum != null">WEAN_PIG_NUM = #{ weanPigNum,jdbcType=INTEGER},</if>
+		<if test="avgDeliveryNum != null">AVG_DELIVERY_NUM = #{ avgDeliveryNum,jdbcType=DOUBLE},</if>
+		<if test="avgWeanNum != null">AVG_WEAN_NUM = #{ avgWeanNum,jdbcType=DOUBLE},</if>
+		<if test="avgWeanWeight != null">AVG_WEAN_WEIGHT = #{ avgWeanWeight,jdbcType=DOUBLE},</if>
+		<if test="weanLitterWeight != null">WEAN_LITTER_WEIGHT = #{ weanLitterWeight,jdbcType=DOUBLE},</if>
+		<if test="weanDayLitterWeight != null">WEAN_DAY_LITTER_WEIGHT = #{ weanDayLitterWeight,jdbcType=DOUBLE},</if>
+		<if test="avgDrfUsedNum != null">AVG_DRF_USED_NUM = #{ avgDrfUsedNum,jdbcType=DOUBLE},</if>
+		<if test="avgJcwUsedNum != null">AVG_JCW_USED_NUM = #{ avgJcwUsedNum,jdbcType=DOUBLE},</if>
+		<if test="createId != null">CREATE_ID = #{ createId,jdbcType=INTEGER},</if>
+		<if test="createDate != null">CREATE_DATE = #{ createDate,jdbcType=TIMESTAMP},</if>
+		<if test="isTotalfield != null">IS_TOTALFIELD = #{ isTotalfield,jdbcType=INTEGER}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE RE_L_WEAN_DETAIL 
+			<set>
+			<if test="item.sortNbr != null">SORT_NBR = #{item.sortNbr,jdbcType=INTEGER},</if>
+			<if test="item.status != null">STATUS = #{item.status,jdbcType=CHAR},</if>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.reportId != null">REPORT_ID = #{item.reportId,jdbcType=INTEGER},</if>
+			<if test="item.weanTotalSize != null">WEAN_TOTAL_SIZE = #{item.weanTotalSize,jdbcType=INTEGER},</if>
+			<if test="item.liveNum != null">LIVE_NUM = #{item.liveNum,jdbcType=INTEGER},</if>
+			<if test="item.birthAvgWeight != null">BIRTH_AVG_WEIGHT = #{item.birthAvgWeight,jdbcType=DOUBLE},</if>
+			<if test="item.weanAvgDayage != null">WEAN_AVG_DAYAGE = #{item.weanAvgDayage,jdbcType=DOUBLE},</if>
+			<if test="item.weanPigNum != null">WEAN_PIG_NUM = #{item.weanPigNum,jdbcType=INTEGER},</if>
+			<if test="item.avgDeliveryNum != null">AVG_DELIVERY_NUM = #{item.avgDeliveryNum,jdbcType=DOUBLE},</if>
+			<if test="item.avgWeanNum != null">AVG_WEAN_NUM = #{item.avgWeanNum,jdbcType=DOUBLE},</if>
+			<if test="item.avgWeanWeight != null">AVG_WEAN_WEIGHT = #{item.avgWeanWeight,jdbcType=DOUBLE},</if>
+			<if test="item.weanLitterWeight != null">WEAN_LITTER_WEIGHT = #{item.weanLitterWeight,jdbcType=DOUBLE},</if>
+			<if test="item.weanDayLitterWeight != null">WEAN_DAY_LITTER_WEIGHT = #{item.weanDayLitterWeight,jdbcType=DOUBLE},</if>
+			<if test="item.avgDrfUsedNum != null">AVG_DRF_USED_NUM = #{item.avgDrfUsedNum,jdbcType=DOUBLE},</if>
+			<if test="item.avgJcwUsedNum != null">AVG_JCW_USED_NUM = #{item.avgJcwUsedNum,jdbcType=DOUBLE},</if>
+			<if test="item.createId != null">CREATE_ID = #{item.createId,jdbcType=INTEGER},</if>
+			<if test="item.createDate != null">CREATE_DATE = #{item.createDate,jdbcType=TIMESTAMP},</if>
+			<if test="item.isTotalfield != null">IS_TOTALFIELD = #{item.isTotalfield,jdbcType=INTEGER}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  RE_L_WEAN_DETAIL
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  RE_L_WEAN_DETAIL
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE 
+		 ROW_ID =#{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  RE_L_WEAN_DETAIL
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' 
+		 AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+		 AND ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCons" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  RE_L_WEAN_DETAIL
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' ${item}
+		</foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="ReLweanDetailResult">
+		SELECT 
+		<include refid="ReLweanDetailModel_Column_List" />
+		FROM RE_L_WEAN_DETAIL WHERE DELETED_FLAG='0' 
+		AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="ReLweanDetailResult" >
+		SELECT 
+		<include refid="ReLweanDetailModel_Column_List" />
+		FROM RE_L_WEAN_DETAIL WHERE DELETED_FLAG='0'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="ReLweanDetailResult" >
+		SELECT 
+		<include refid="ReLweanDetailModel_Column_List" />
+		FROM RE_L_WEAN_DETAIL
+		WHERE DELETED_FLAG='0'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="ReLweanDetailResult" >
+		SELECT 
+		<include refid="ReLweanDetailModel_Column_List" />
+		FROM RE_L_WEAN_DETAIL
+		WHERE ${condition}
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAll" resultMap="ReLweanDetailResult" >
+		SELECT *
+		FROM RE_L_WEAN_DETAIL
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="ReLweanDetailResult"> ${sql} </select>
+
+		<!--生产数据数据汇总目标 断奶汇总-->
+	<select id="searchProduceDataByWeanData" parameterType="java.util.Map" resultMap="ReLweanDetailResult" >
+		SELECT T0.FARM_ID,T0.SWINERY_ID,
+		SUM(T0.DELIVERY_TOTAL) LIVE_NUM,
+		SUM(T0.ALIVE_LITTER_WEIGHT) / SUM(T0.DELIVERY_TOTAL) BIRTH_AVG_WEIGHT,
+		COUNT(*) WEAN_TOTAL_SIZE,
+		SUM(T0.DN_PIG_QTY) WEAN_PIG_NUM,
+		SUM(T0.PIG_WEIGHT) / SUM(T0.DN_PIG_QTY) AVG_WEAN_WEIGHT,
+		SUM(T0.PIG_WEIGHT) / COUNT(*) WEAN_LITTER_WEIGHT,
+		SUM(T0.DN_PIG_QTY) / COUNT(*) AVG_WEAN_NUM,
+		SUM(T0.DELIVERY_TOTAL) / COUNT(*) AVG_DELIVERY_NUM,
+		SUM(_getSwineryAge(T0.SWINERY_ID,T0.OUT_DATE,1) * T0.DN_PIG_QTY) / SUM(T0.DN_PIG_QTY) WEAN_AVG_DAYAGE,
+		_getWeightByDayAge(T0.FARM_ID,'WCM_001',SUM(_getSwineryAge(T0.SWINERY_ID,T0.OUT_DATE,1) * T0.DN_PIG_QTY) / SUM(T0.DN_PIG_QTY),SUM(T0.PIG_WEIGHT) / SUM(T0.DN_PIG_QTY)) WEAN_DAY_LITTER_WEIGHT
+		,T1.AVG_DRF_USED_NUM,T2.AVG_JCW_USED_NUM
+		FROM(
+			SELECT T2.SORT_NAME,T0.ROW_ID,T2.ROW_ID FARM_ID,T0.SWINERY_ID,T0.DN_PIG_QTY, T0.OUT_DATE,T0.DELIVERY_DATE,
+			T0.DELIVERY_TOTAL,T0.ALIVE_LITTER_WEIGHT,T0.PIG_WEIGHT
+			FROM (
+				SELECT T3.ROW_ID,T2.FARM_ID,T0.SWINERY_ID,T0.SORT_NAME,SUM(PIG_QTY) DN_PIG_QTY, T0.OUT_DATE,T4.DELIVERY_DATE,
+				IF(_getSettingValueByCode(T0.FARM_ID,'RZBSCL')='ON',T4.HEALTHY_NUM,T4.HEALTHY_NUM + T4.WEAK_NUM) DELIVERY_TOTAL,T4.ALIVE_LITTER_WEIGHT,SUM(T0.PIG_WEIGHT ) PIG_WEIGHT
+				FROM(
+				<!-- 转保育 -->
+					SELECT T0.FARM_ID,T0.SWINERY_ID,T3.SORT_NAME,T0.PIG_ID,1 PIG_QTY,T0.CHILD_WEIGHT PIG_WEIGHT,DATE(T0.CHILD_DATE) OUT_DATE 
+					FROM pp_l_bill_to_child T0
+					INNER JOIN pp_m_swinery T2
+					ON T0.FARM_ID = T2.FARM_ID AND T0.SWINERY_ID = T2.ROW_ID AND T2.DELETED_FLAG = '0' AND T2.STATUS = '2'  AND T2.PIG_TYPE = '3' AND T2.HOUSE_TYPE = 6 AND T2.END_DATE BETWEEN #{ startDate,jdbcType=DATE} AND #{ endDate,jdbcType=DATE} 
+					INNER JOIN hr_m_company T3
+					ON T0.FARM_ID = T3.ROW_ID AND T3.DELETED_FLAG = '0'
+					WHERE T0.CHANGE_HOUSE_TYPE = '4' 
+					AND (T3.COMPANY_MARK = #{companyMark} OR T3.COMPANY_MARK LIKE #{companyMark}",%")	
+					GROUP BY T0.PIG_ID
+					UNION ALL
+					<!-- 销售-->
+					SELECT  T0.FARM_ID, T3.SWINERY_ID,T6.SORT_NAME, T3.PIG_ID, 1 PIG_QTY,T0.TOTAL_WEIGHT / T0.SALE_NUM PIG_WEIGHT,DATE(T0.SALE_DATE) OUT_DATE 
+					FROM pp_l_bill_pig_sale_detail T0
+					INNER JOIN pp_o_house T2
+					ON T0.FARM_ID = T2.FARM_ID AND T0.HOUSE_ID = T2.ROW_ID AND T2.HOUSE_TYPE = 6
+					INNER JOIN pp_l_bill_leave T3
+					ON T0.FARM_ID = T3.FARM_ID AND T0.BILL_ID = T3.BILL_ID AND T0.LINE_NUMBER = T3.LINE_NUMBER AND T3.DELETED_FLAG = '0'
+					INNER JOIN pp_l_bill_pig_sale T4
+					ON T0.FARM_ID = T4.FARM_ID AND T0.BILL_ID = T4.BILL_ID AND T4.DELETED_FLAG = '0'
+					INNER JOIN hr_m_company T6
+					ON T0.FARM_ID = T6.ROW_ID AND T6.DELETED_FLAG = '0'
+					INNER JOIN pp_m_swinery T7
+					ON T0.FARM_ID = T7.FARM_ID AND T3.SWINERY_ID = T7.ROW_ID AND T7.DELETED_FLAG = '0' AND T7.STATUS = '2'  AND T7.PIG_TYPE = '3' AND T7.HOUSE_TYPE = 6 AND T7.END_DATE BETWEEN #{ startDate,jdbcType=DATE} AND #{ endDate,jdbcType=DATE} 
+					WHERE T0.DELETED_FLAG = '0' 
+					AND (T6.COMPANY_MARK = #{companyMark} OR T6.COMPANY_MARK LIKE #{companyMark}",%")	
+					GROUP BY T3.PIG_ID
+					
+					UNION ALL
+					<!-- 死亡-->
+					SELECT T0.FARM_ID, T0.SWINERY_ID,T6.SORT_NAME, T0.PIG_ID, 0 PIG_QTY,0 PIG_WEIGHT,DATE(T0.LEAVE_DATE) OUT_DATE
+					FROM pp_l_bill_leave T0
+					INNER JOIN pp_o_house T2
+					ON T0.FARM_ID = T2.FARM_ID AND T0.HOUSE_ID = T2.ROW_ID AND T2.HOUSE_TYPE=6
+					INNER JOIN hr_m_company T6
+					ON T0.FARM_ID = T6.ROW_ID AND T6.DELETED_FLAG = '0'
+					INNER JOIN pp_m_swinery T7
+					ON T0.FARM_ID = T7.FARM_ID AND T0.SWINERY_ID = T7.ROW_ID AND T7.DELETED_FLAG = '0' AND T7.STATUS = '2'  AND T7.PIG_TYPE = '3' AND T7.HOUSE_TYPE = 6 AND T7.END_DATE BETWEEN #{ startDate,jdbcType=DATE} AND #{ endDate,jdbcType=DATE} 
+					WHERE T0.DELETED_FLAG = '0' 
+					AND (T6.COMPANY_MARK = #{companyMark} OR T6.COMPANY_MARK LIKE #{companyMark}",%")	
+					GROUP BY T0.PIG_ID
+				) T0
+				INNER JOIN pp_l_pig T1 <!-- 根据肉猪找到母亲耳号ID-->
+				ON T0.FARM_ID = T1.FARM_ID AND T0.PIG_ID = T1.ROW_ID AND T1.DELETED_FLAG = '0' AND T1.PIG_TYPE = '3'
+				INNER JOIN pp_l_ear_code T2
+				ON T1.FARM_ID = T2.FARM_ID AND T1.EAR_CODE_ID = T2.ROW_ID AND T2.DELETED_FLAG = '0'
+				INNER JOIN pp_l_pig T3 <!-- 找到母猪ID-->
+				ON T1.FARM_ID = T3.FARM_ID AND T2.MOTHER_EAR_ID = T3.EAR_CODE_ID AND T3.DELETED_FLAG = '0' AND T3.PIG_TYPE = '2'
+				INNER JOIN pp_l_bill_delivery T4
+				ON T1.FARM_ID = T4.FARM_ID AND T3.ROW_ID = T4.PIG_ID AND T1.ENTER_PARITY = T4.PARITY AND T4.DELETED_FLAG = '0'
+				GROUP BY T2.MOTHER_EAR_ID
+			) T0
+			INNER JOIN hr_m_company T1 ON T0.FARM_ID=T1.ROW_ID AND T1.DELETED_FLAG='0'
+			INNER JOIN HR_M_COMPANY T2 ON (T2.DELETED_FLAG = '0' AND (T1.COMPANY_MARK = T2.COMPANY_MARK OR T1.COMPANY_MARK LIKE CONCAT(T2.COMPANY_MARK, ',%')))
+			WHERE 1=1
+			<if test="isLike == 1">
+		 	AND T2.COMPANY_MARK LIKE #{companyMark}",%"
+			</if>
+			<if test="isLike == 0">
+			AND T2.COMPANY_MARK = #{companyMark}
+			</if>
+			<if test="isIn == 1">
+			AND T2.ACCOUNT_COMPANY_CLASS IN (3,4)
+			</if>
+			) T0
+			LEFT JOIN (
+				SELECT T2.ROW_ID,T2.SORT_NAME,IF(SUM(T0.PIG_QTY)>0,SUM(T0.OUTPUT_QTY)/SUM(T0.PIG_QTY) ,0) AVG_DRF_USED_NUM
+				FROM (
+					 SELECT T0.FARM_ID ,T0.PIG_QTY,T0.OUTPUT_QTY 
+					 FROM sc_m_bill_output_detail T0
+					 INNER JOIN cd_m_material T2
+					 ON  T0.MATERIAL_ID = T2.ROW_ID AND T2.DELETED_FLAG = '0' AND T2.MATERIAL_FIRST_CLASS BETWEEN 21 AND 22
+					 LEFT JOIN hr_m_company T3 ON T0.FARM_ID=T3.ROW_ID AND T3.DELETED_FLAG='0'
+					 WHERE T0.DELETED_FLAG = '0' AND T0.STATUS = 3 AND T0.EVENT_CODE = 'OUTPUT_USE' AND T0.OUTPUT_SWINERY_ID IS NOT NULL 
+					 AND (T3.COMPANY_MARK=#{companyMark} OR T3.COMPANY_MARK LIKE #{companyMark}",%")
+					 AND T2.MATERIAL_CLASS_NUMBER IN (21000001,21000004,21000005,21000007)
+					 AND T0.OUTPUT_USE_DATE BETWEEN #{ startDate,jdbcType=DATE} AND #{ endDate,jdbcType=DATE}
+				) T0
+				INNER JOIN hr_m_company T1 ON T0.FARM_ID=T1.ROW_ID AND T1.DELETED_FLAG='0'
+				INNER JOIN HR_M_COMPANY T2 ON (T2.DELETED_FLAG = '0' AND (T1.COMPANY_MARK = T2.COMPANY_MARK OR T1.COMPANY_MARK LIKE CONCAT(T2.COMPANY_MARK, ',%')))
+				WHERE 1=1
+				<if test="isLike == 1">
+			 	AND T2.COMPANY_MARK LIKE #{companyMark}",%"
+				</if>
+				<if test="isLike == 0">
+				AND T2.COMPANY_MARK = #{companyMark}
+				</if>
+				<if test="isIn == 1">
+				AND T2.ACCOUNT_COMPANY_CLASS IN (3,4)
+				</if>
+				 GROUP BY T2.ROW_ID
+			)T1 ON T0.FARM_ID=T1.ROW_ID
+			LEFT JOIN (
+				SELECT T2.ROW_ID,T2.SORT_NAME,IF(SUM(T0.PIG_QTY)>0,SUM(T0.OUTPUT_QTY)/SUM(T0.PIG_QTY) ,0) AVG_JCW_USED_NUM
+				FROM (
+					 SELECT T0.FARM_ID ,T0.PIG_QTY,T0.OUTPUT_QTY 
+					 FROM sc_m_bill_output_detail T0
+					 INNER JOIN cd_m_material T2
+					 ON  T0.MATERIAL_ID = T2.ROW_ID AND T2.DELETED_FLAG = '0' AND T2.MATERIAL_FIRST_CLASS BETWEEN 21 AND 22
+					 LEFT JOIN hr_m_company T3 ON T0.FARM_ID=T3.ROW_ID AND T3.DELETED_FLAG='0'
+					 WHERE T0.DELETED_FLAG = '0' AND T0.STATUS = 3 AND T0.EVENT_CODE = 'OUTPUT_USE' AND T0.OUTPUT_SWINERY_ID IS NOT NULL 
+					 AND (T3.COMPANY_MARK=#{companyMark} OR T3.COMPANY_MARK LIKE #{companyMark}",%")
+					 AND T2.MATERIAL_CLASS_NUMBER IN (21000002,21000003)
+					 AND T0.OUTPUT_USE_DATE BETWEEN #{ startDate,jdbcType=DATE} AND #{ endDate,jdbcType=DATE}
+				) T0
+			INNER JOIN hr_m_company T1 ON T0.FARM_ID=T1.ROW_ID AND T1.DELETED_FLAG='0'
+			INNER JOIN HR_M_COMPANY T2 ON (T2.DELETED_FLAG = '0' AND (T1.COMPANY_MARK = T2.COMPANY_MARK OR T1.COMPANY_MARK LIKE CONCAT(T2.COMPANY_MARK, ',%')))
+			WHERE 1=1
+			<if test="isLike == 1">
+		 	AND T2.COMPANY_MARK LIKE #{companyMark}",%"
+			</if>
+			<if test="isLike == 0">
+			AND T2.COMPANY_MARK = #{companyMark}
+			</if>
+			<if test="isIn == 1">
+			AND T2.ACCOUNT_COMPANY_CLASS IN (3,4)
+			</if>
+			 GROUP BY T2.ROW_ID
+			)T2 ON T0.FARM_ID=T2.ROW_ID
+			GROUP BY T0.FARM_ID 
+	</select>
+</mapper>
+

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.supplychian.PriceListMapper">
+
+	<resultMap id="PriceListResult"  type="PriceListModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="farmId" column="FARM_ID" jdbcType="INTEGER" />
+		<result property="companyId" column="COMPANY_ID" jdbcType="INTEGER" />
+		<result property="supplierId" column="SUPPLIER_ID" jdbcType="INTEGER" />
+		<result property="month" column="MONTH" jdbcType="INTEGER" />
+		<result property="dateRange" column="DATE_RANGE" jdbcType="CHAR" />
+		<result property="startDate" column="START_DATE" jdbcType="DATE" />
+		<result property="endDate" column="END_DATE" jdbcType="DATE" />
+		<result property="createId" column="CREATE_ID" jdbcType="INTEGER" />
+		<result property="createDate" column="CREATE_DATE" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="PriceListModel_Column_List">
+		ROW_ID,NOTES,SUPPLIER_ID,MONTH,DATE_RANGE,START_DATE,END_DATE,CREATE_ID,CREATE_DATE
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true"  keyProperty="rowId"
+	  parameterType="PriceListModel">
+		INSERT INTO SC_M_BILL_PRICE_LIST
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ROW_ID,
+			STATUS,
+			DELETED_FLAG,
+			NOTES,
+			FARM_ID,
+			COMPANY_ID,
+			SUPPLIER_ID,
+			MONTH,
+			DATE_RANGE,
+			START_DATE,
+			END_DATE,
+			CREATE_ID,
+			CREATE_DATE
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ rowId,jdbcType=INTEGER},
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ notes,jdbcType=VARCHAR},
+			#{ farmId,jdbcType=INTEGER},
+			#{ companyId,jdbcType=INTEGER},
+			#{ supplierId,jdbcType=INTEGER},
+			#{ month,jdbcType=INTEGER},
+			#{ dateRange,jdbcType=CHAR},
+			#{ startDate,jdbcType=DATE},
+			#{ endDate,jdbcType=DATE},
+			#{ createId,jdbcType=INTEGER},
+			#{ createDate,jdbcType=TIMESTAMP}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO SC_M_BILL_PRICE_LIST
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ROW_ID ,
+			STATUS ,
+			DELETED_FLAG ,
+			NOTES ,
+			FARM_ID ,
+			COMPANY_ID ,
+			SUPPLIER_ID ,
+			MONTH ,
+			DATE_RANGE ,
+			START_DATE ,
+			END_DATE ,
+			CREATE_ID ,
+			CREATE_DATE 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.rowId,jdbcType=INTEGER},
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.farmId,jdbcType=INTEGER},
+				#{item.companyId,jdbcType=INTEGER},
+				#{item.supplierId,jdbcType=INTEGER},
+				#{item.month,jdbcType=INTEGER},
+				#{item.dateRange,jdbcType=CHAR},
+				#{item.startDate,jdbcType=DATE},
+				#{item.endDate,jdbcType=DATE},
+				#{item.createId,jdbcType=INTEGER},
+				#{item.createDate,jdbcType=TIMESTAMP}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="PriceListModel" >
+		UPDATE SC_M_BILL_PRICE_LIST 
+		<set>
+		<if test="status != null">STATUS = #{ status,jdbcType=CHAR},</if>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="supplierId != null">SUPPLIER_ID = #{ supplierId,jdbcType=INTEGER},</if>
+		<if test="month != null">MONTH = #{ month,jdbcType=INTEGER},</if>
+		<if test="dateRange != null">DATE_RANGE = #{ dateRange,jdbcType=CHAR},</if>
+		<if test="startDate != null">START_DATE = #{ startDate,jdbcType=DATE},</if>
+		<if test="endDate != null">END_DATE = #{ endDate,jdbcType=DATE},</if>
+		<if test="createId != null">CREATE_ID = #{ createId,jdbcType=INTEGER},</if>
+		<if test="createDate != null">CREATE_DATE = #{ createDate,jdbcType=TIMESTAMP}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE SC_M_BILL_PRICE_LIST 
+			<set>
+			<if test="item.status != null">STATUS = #{item.status,jdbcType=CHAR},</if>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.supplierId != null">SUPPLIER_ID = #{item.supplierId,jdbcType=INTEGER},</if>
+			<if test="item.month != null">MONTH = #{item.month,jdbcType=INTEGER},</if>
+			<if test="item.dateRange != null">DATE_RANGE = #{item.dateRange,jdbcType=CHAR},</if>
+			<if test="item.startDate != null">START_DATE = #{item.startDate,jdbcType=DATE},</if>
+			<if test="item.endDate != null">END_DATE = #{item.endDate,jdbcType=DATE},</if>
+			<if test="item.createId != null">CREATE_ID = #{item.createId,jdbcType=INTEGER},</if>
+			<if test="item.createDate != null">CREATE_DATE = #{item.createDate,jdbcType=TIMESTAMP}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  SC_M_BILL_PRICE_LIST
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  SC_M_BILL_PRICE_LIST
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE 
+		 ROW_ID =#{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  SC_M_BILL_PRICE_LIST
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' 
+		 AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+		 AND ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCons" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  SC_M_BILL_PRICE_LIST
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' ${item}
+		</foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="PriceListResult">
+		SELECT 
+		<include refid="PriceListModel_Column_List" />
+		FROM SC_M_BILL_PRICE_LIST WHERE DELETED_FLAG='0' 
+		AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="PriceListResult" >
+		SELECT 
+		<include refid="PriceListModel_Column_List" />
+		FROM SC_M_BILL_PRICE_LIST WHERE DELETED_FLAG='0'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="PriceListResult" >
+		SELECT 
+		<include refid="PriceListModel_Column_List" />
+		FROM SC_M_BILL_PRICE_LIST
+		WHERE DELETED_FLAG='0'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="PriceListResult" >
+		SELECT 
+		<include refid="PriceListModel_Column_List" />
+		FROM SC_M_BILL_PRICE_LIST
+		WHERE ${condition}
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAll" resultMap="PriceListResult" >
+		SELECT *
+		FROM SC_M_BILL_PRICE_LIST
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="PriceListResult"> ${sql} </select>
+
+</mapper>
+

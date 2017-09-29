@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.production.PorkCheckMapper">
+
+	<resultMap id="PorkCheckResult"  type="PorkCheckModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="sortNbr" column="SORT_NBR" jdbcType="INTEGER" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="originFlag" column="ORIGIN_FLAG" jdbcType="CHAR" />
+		<result property="originApp" column="ORIGIN_APP" jdbcType="VARCHAR" />
+		<result property="billId" column="BILL_ID" jdbcType="INTEGER" />
+		<result property="lineNumber" column="LINE_NUMBER" jdbcType="INTEGER" />
+		<result property="farmId" column="FARM_ID" jdbcType="INTEGER" />
+		<result property="companyId" column="COMPANY_ID" jdbcType="INTEGER" />
+		<result property="houseId" column="HOUSE_ID" jdbcType="INTEGER" />
+		<result property="swineryId" column="SWINERY_ID" jdbcType="INTEGER" />
+		<result property="checkQty" column="CHECK_QTY" jdbcType="INTEGER" />
+		<result property="accountQty" column="ACCOUNT_QTY" jdbcType="INTEGER" />
+		<result property="avgWeight" column="AVG_WEIGHT" jdbcType="DECIMAL" />
+		<result property="totalWeight" column="TOTAL_WEIGHT" jdbcType="INTEGER" />
+		<result property="checkOrgan" column="CHECK_ORGAN" jdbcType="VARCHAR" />
+		<result property="accountUser" column="ACCOUNT_USER" jdbcType="INTEGER" />
+		<result property="worker" column="WORKER" jdbcType="INTEGER" />
+		<result property="createId" column="CREATE_ID" jdbcType="INTEGER" />
+		<result property="checkDate" column="CHECK_DATE" jdbcType="DATE" />
+		<result property="swineryAge" column="SWINERY_AGE" jdbcType="INTEGER" />
+		<result property="billDate" column="BILL_DATE" jdbcType="DATE" />
+		<result property="createDate" column="CREATE_DATE" jdbcType="TIMESTAMP" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="checkPigType" column="CHECK_PIG_TYPE" jdbcType="INTEGER" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="PorkCheckModel_Column_List">
+		ROW_ID,SORT_NBR,BILL_ID,LINE_NUMBER,HOUSE_ID,SWINERY_ID,CHECK_QTY,ACCOUNT_QTY,AVG_WEIGHT,TOTAL_WEIGHT,CHECK_ORGAN,ACCOUNT_USER,WORKER,CREATE_ID,CHECK_DATE,SWINERY_AGE,BILL_DATE,CREATE_DATE,NOTES,CHECK_PIG_TYPE
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true"   keyProperty="rowId" parameterType="PorkCheckModel">
+		INSERT INTO PP_L_BILL_PORK_CHECK
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR,
+			STATUS,
+			DELETED_FLAG,
+			ORIGIN_FLAG,
+			ORIGIN_APP,
+			BILL_ID,
+			LINE_NUMBER,
+			FARM_ID,
+			COMPANY_ID,
+			HOUSE_ID,
+			SWINERY_ID,
+			CHECK_QTY,
+			ACCOUNT_QTY,
+			AVG_WEIGHT,
+			TOTAL_WEIGHT,
+			CHECK_ORGAN,
+			ACCOUNT_USER,
+			WORKER,
+			CREATE_ID,
+			CHECK_DATE,
+			SWINERY_AGE,
+			BILL_DATE,
+			CREATE_DATE,
+			NOTES,
+			CHECK_PIG_TYPE
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ sortNbr,jdbcType=INTEGER},
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ originFlag,jdbcType=CHAR},
+			#{ originApp,jdbcType=VARCHAR},
+			#{ billId,jdbcType=INTEGER},
+			#{ lineNumber,jdbcType=INTEGER},
+			#{ farmId,jdbcType=INTEGER},
+			#{ companyId,jdbcType=INTEGER},
+			#{ houseId,jdbcType=INTEGER},
+			#{ swineryId,jdbcType=INTEGER},
+			#{ checkQty,jdbcType=INTEGER},
+			#{ accountQty,jdbcType=INTEGER},
+			#{ avgWeight,jdbcType=DECIMAL},
+			#{ totalWeight,jdbcType=INTEGER},
+			#{ checkOrgan,jdbcType=VARCHAR},
+			#{ accountUser,jdbcType=INTEGER},
+			#{ worker,jdbcType=INTEGER},
+			#{ createId,jdbcType=INTEGER},
+			#{ checkDate,jdbcType=DATE},
+			#{ swineryAge,jdbcType=INTEGER},
+			#{ billDate,jdbcType=DATE},
+			#{ createDate,jdbcType=TIMESTAMP},
+			#{ notes,jdbcType=VARCHAR},
+			#{ checkPigType,jdbcType=INTEGER}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO PP_L_BILL_PORK_CHECK
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR ,
+			STATUS ,
+			DELETED_FLAG ,
+			ORIGIN_FLAG ,
+			ORIGIN_APP ,
+			BILL_ID ,
+			LINE_NUMBER ,
+			FARM_ID ,
+			COMPANY_ID ,
+			HOUSE_ID ,
+			SWINERY_ID ,
+			CHECK_QTY ,
+			ACCOUNT_QTY ,
+			AVG_WEIGHT ,
+			TOTAL_WEIGHT ,
+			CHECK_ORGAN ,
+			ACCOUNT_USER ,
+			WORKER ,
+			CREATE_ID ,
+			CHECK_DATE ,
+			SWINERY_AGE ,
+			BILL_DATE ,
+			CREATE_DATE ,
+			NOTES ,
+			CHECK_PIG_TYPE 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.sortNbr,jdbcType=INTEGER},
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.originFlag,jdbcType=CHAR},
+				#{item.originApp,jdbcType=VARCHAR},
+				#{item.billId,jdbcType=INTEGER},
+				#{item.lineNumber,jdbcType=INTEGER},
+				#{item.farmId,jdbcType=INTEGER},
+				#{item.companyId,jdbcType=INTEGER},
+				#{item.houseId,jdbcType=INTEGER},
+				#{item.swineryId,jdbcType=INTEGER},
+				#{item.checkQty,jdbcType=INTEGER},
+				#{item.accountQty,jdbcType=INTEGER},
+				#{item.avgWeight,jdbcType=DECIMAL},
+				#{item.totalWeight,jdbcType=INTEGER},
+				#{item.checkOrgan,jdbcType=VARCHAR},
+				#{item.accountUser,jdbcType=INTEGER},
+				#{item.worker,jdbcType=INTEGER},
+				#{item.createId,jdbcType=INTEGER},
+				#{item.checkDate,jdbcType=DATE},
+				#{item.swineryAge,jdbcType=INTEGER},
+				#{item.billDate,jdbcType=DATE},
+				#{item.createDate,jdbcType=TIMESTAMP},
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.checkPigType,jdbcType=INTEGER}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="PorkCheckModel" >
+		UPDATE PP_L_BILL_PORK_CHECK 
+		<set>
+		<if test="sortNbr != null">SORT_NBR = #{ sortNbr,jdbcType=INTEGER},</if>
+		<if test="status != null">STATUS = #{ status,jdbcType=CHAR},</if>
+		<if test="originFlag != null">ORIGIN_FLAG = #{ originFlag,jdbcType=CHAR},</if>
+		<if test="originApp != null">ORIGIN_APP = #{ originApp,jdbcType=VARCHAR},</if>
+		<if test="billId != null">BILL_ID = #{ billId,jdbcType=INTEGER},</if>
+		<if test="lineNumber != null">LINE_NUMBER = #{ lineNumber,jdbcType=INTEGER},</if>
+		<if test="houseId != null">HOUSE_ID = #{ houseId,jdbcType=INTEGER},</if>
+		<if test="swineryId != null">SWINERY_ID = #{ swineryId,jdbcType=INTEGER},</if>
+		<if test="checkQty != null">CHECK_QTY = #{ checkQty,jdbcType=INTEGER},</if>
+		<if test="accountQty != null">ACCOUNT_QTY = #{ accountQty,jdbcType=INTEGER},</if>
+		<if test="avgWeight != null">AVG_WEIGHT = #{ avgWeight,jdbcType=DECIMAL},</if>
+		<if test="totalWeight != null">TOTAL_WEIGHT = #{ totalWeight,jdbcType=INTEGER},</if>
+		<if test="checkOrgan != null">CHECK_ORGAN = #{ checkOrgan,jdbcType=VARCHAR},</if>
+		<if test="accountUser != null">ACCOUNT_USER = #{ accountUser,jdbcType=INTEGER},</if>
+		<if test="worker != null">WORKER = #{ worker,jdbcType=INTEGER},</if>
+		<if test="createId != null">CREATE_ID = #{ createId,jdbcType=INTEGER},</if>
+		<if test="checkDate != null">CHECK_DATE = #{ checkDate,jdbcType=DATE},</if>
+		<if test="swineryAge != null">SWINERY_AGE = #{ swineryAge,jdbcType=INTEGER},</if>
+		<if test="billDate != null">BILL_DATE = #{ billDate,jdbcType=DATE},</if>
+		<if test="createDate != null">CREATE_DATE = #{ createDate,jdbcType=TIMESTAMP},</if>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="checkPigType != null">CHECK_PIG_TYPE = #{ checkPigType,jdbcType=INTEGER}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE PP_L_BILL_PORK_CHECK 
+			<set>
+			<if test="item.deletedFlag != null">DELETED_FLAG = #{item.deletedFlag,jdbcType=INTEGER},</if>
+			<if test="item.sortNbr != null">SORT_NBR = #{item.sortNbr,jdbcType=INTEGER},</if>
+			<if test="item.status != null">STATUS = #{item.status,jdbcType=CHAR},</if>
+			<if test="item.originFlag != null">ORIGIN_FLAG = #{item.originFlag,jdbcType=CHAR},</if>
+			<if test="item.originApp != null">ORIGIN_APP = #{item.originApp,jdbcType=VARCHAR},</if>
+			<if test="item.billId != null">BILL_ID = #{item.billId,jdbcType=INTEGER},</if>
+			<if test="item.lineNumber != null">LINE_NUMBER = #{item.lineNumber,jdbcType=INTEGER},</if>
+			<if test="item.houseId != null">HOUSE_ID = #{item.houseId,jdbcType=INTEGER},</if>
+			<if test="item.swineryId != null">SWINERY_ID = #{item.swineryId,jdbcType=INTEGER},</if>
+			<if test="item.checkQty != null">CHECK_QTY = #{item.checkQty,jdbcType=INTEGER},</if>
+			<if test="item.accountQty != null">ACCOUNT_QTY = #{item.accountQty,jdbcType=INTEGER},</if>
+			<if test="item.avgWeight != null">AVG_WEIGHT = #{item.avgWeight,jdbcType=DECIMAL},</if>
+			<if test="item.totalWeight != null">TOTAL_WEIGHT = #{item.totalWeight,jdbcType=INTEGER},</if>
+			<if test="item.checkOrgan != null">CHECK_ORGAN = #{item.checkOrgan,jdbcType=VARCHAR},</if>
+			<if test="item.accountUser != null">ACCOUNT_USER = #{item.accountUser,jdbcType=INTEGER},</if>
+			<if test="item.worker != null">WORKER = #{item.worker,jdbcType=INTEGER},</if>
+			<if test="item.createId != null">CREATE_ID = #{item.createId,jdbcType=INTEGER},</if>
+			<if test="item.checkDate != null">CHECK_DATE = #{item.checkDate,jdbcType=DATE},</if>
+			<if test="item.swineryAge != null">SWINERY_AGE = #{item.swineryAge,jdbcType=INTEGER},</if>
+			<if test="item.billDate != null">BILL_DATE = #{item.billDate,jdbcType=DATE},</if>
+			<if test="item.createDate != null">CREATE_DATE = #{item.createDate,jdbcType=TIMESTAMP},</if>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.checkPigType != null">CHECK_PIG_TYPE = #{item.checkPigType,jdbcType=INTEGER}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  PP_L_BILL_PORK_CHECK
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  PP_L_BILL_PORK_CHECK
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE 
+		 ROW_ID =#{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  PP_L_BILL_PORK_CHECK
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' 
+		 AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+		 AND ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCons" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  PP_L_BILL_PORK_CHECK
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' ${item}
+		</foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="PorkCheckResult">
+		SELECT 
+		<include refid="PorkCheckModel_Column_List" />
+		FROM PP_L_BILL_PORK_CHECK WHERE DELETED_FLAG='0' 
+		AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="PorkCheckResult" >
+		SELECT 
+		<include refid="PorkCheckModel_Column_List" />
+		FROM PP_L_BILL_PORK_CHECK WHERE DELETED_FLAG='0'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="PorkCheckResult" >
+		SELECT 
+		<include refid="PorkCheckModel_Column_List" />
+		FROM PP_L_BILL_PORK_CHECK
+		WHERE DELETED_FLAG='0'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="PorkCheckResult" >
+		SELECT 
+		<include refid="PorkCheckModel_Column_List" />
+		FROM PP_L_BILL_PORK_CHECK
+		WHERE ${condition}
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAll" resultMap="PorkCheckResult" >
+		SELECT *
+		FROM PP_L_BILL_PORK_CHECK
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="PorkCheckResult"> ${sql} </select>
+
+</mapper>
+

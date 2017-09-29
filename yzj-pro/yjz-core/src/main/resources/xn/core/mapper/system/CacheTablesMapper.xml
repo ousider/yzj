@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.core.mapper.system.CacheTablesMapper">
+
+	<resultMap id="CacheTablesResult"  type="CacheTablesModel" >
+		<result property="tableName" column="TABLE_NAME" jdbcType="VARCHAR" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="cacheCond" column="CACHE_COND" jdbcType="VARCHAR" />
+		<result property="cacheColumns" column="CACHE_COLUMNS" jdbcType="VARCHAR" />
+		<result property="primaryColumns" column="PRIMARY_COLUMNS" jdbcType="VARCHAR" />
+		<result property="indexes" column="INDEXES" jdbcType="VARCHAR" />
+		<result property="farmFlag" column="FARM_FLAG" jdbcType="CHAR" />
+		<result property="farmColumn" column="FARM_COLUMN" jdbcType="VARCHAR" />
+		<result property="orderColumn" column="ORDER_COLUMN" jdbcType="VARCHAR" />
+		<result property="createDate" column="CREATE_DATE" jdbcType="DATE" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="CacheTablesModel_Column_List">
+		TABLE_NAME,STATUS,DELETED_FLAG,CACHE_COND,CACHE_COLUMNS,PRIMARY_COLUMNS,INDEXES,FARM_FLAG,FARM_COLUMN,ORDER_COLUMN,CREATE_DATE
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="rowId" parameterType="CacheTablesModel">
+		INSERT INTO SYS_L_CACHE_TABLES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			STATUS,
+			DELETED_FLAG,
+			CACHE_COND,
+			CACHE_COLUMNS,
+			PRIMARY_COLUMNS,
+			INDEXES,
+			FARM_FLAG,
+			FARM_COLUMN,
+			ORDER_COLUMN,
+			CREATE_DATE
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ cacheCond,jdbcType=VARCHAR},
+			#{ cacheColumns,jdbcType=VARCHAR},
+			#{ primaryColumns,jdbcType=VARCHAR},
+			#{ indexes,jdbcType=VARCHAR},
+			#{ farmFlag,jdbcType=CHAR},
+			#{ farmColumn,jdbcType=VARCHAR},
+			#{ orderColumn,jdbcType=VARCHAR},
+			#{ createDate,jdbcType=DATE}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO SYS_L_CACHE_TABLES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			STATUS ,
+			DELETED_FLAG ,
+			CACHE_COND ,
+			CACHE_COLUMNS ,
+			PRIMARY_COLUMNS ,
+			INDEXES ,
+			FARM_FLAG ,
+			FARM_COLUMN ,
+			ORDER_COLUMN ,
+			CREATE_DATE 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.cacheCond,jdbcType=VARCHAR},
+				#{item.cacheColumns,jdbcType=VARCHAR},
+				#{item.primaryColumns,jdbcType=VARCHAR},
+				#{item.indexes,jdbcType=VARCHAR},
+				#{item.farmFlag,jdbcType=CHAR},
+				#{item.farmColumn,jdbcType=VARCHAR},
+				#{item.orderColumn,jdbcType=VARCHAR},
+				#{item.createDate,jdbcType=DATE}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="CacheTablesModel" >
+		UPDATE SYS_L_CACHE_TABLES 
+		<set>
+		<if test="cacheCond != null">CACHE_COND = #{ cacheCond,jdbcType=VARCHAR},</if>
+		<if test="cacheColumns != null">CACHE_COLUMNS = #{ cacheColumns,jdbcType=VARCHAR},</if>
+		<if test="primaryColumns != null">PRIMARY_COLUMNS = #{ primaryColumns,jdbcType=VARCHAR},</if>
+		<if test="indexes != null">INDEXES = #{ indexes,jdbcType=VARCHAR},</if>
+		<if test="farmFlag != null">FARM_FLAG = #{ farmFlag,jdbcType=CHAR},</if>
+		<if test="farmColumn != null">FARM_COLUMN = #{ farmColumn,jdbcType=VARCHAR},</if>
+		<if test="orderColumn != null">ORDER_COLUMN = #{ orderColumn,jdbcType=VARCHAR},</if>
+		<if test="createDate != null">CREATE_DATE = #{ createDate,jdbcType=DATE}</if>
+		</set>
+		WHERE
+		TABLE_NAME = #{ tableName,jdbcType=VARCHAR}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE SYS_L_CACHE_TABLES 
+			<set>
+			<if test="item.cacheCond != null">CACHE_COND = #{item.cacheCond,jdbcType=VARCHAR},</if>
+			<if test="item.cacheColumns != null">CACHE_COLUMNS = #{item.cacheColumns,jdbcType=VARCHAR},</if>
+			<if test="item.primaryColumns != null">PRIMARY_COLUMNS = #{item.primaryColumns,jdbcType=VARCHAR},</if>
+			<if test="item.indexes != null">INDEXES = #{item.indexes,jdbcType=VARCHAR},</if>
+			<if test="item.farmFlag != null">FARM_FLAG = #{item.farmFlag,jdbcType=CHAR},</if>
+			<if test="item.farmColumn != null">FARM_COLUMN = #{item.farmColumn,jdbcType=VARCHAR},</if>
+			<if test="item.orderColumn != null">ORDER_COLUMN = #{item.orderColumn,jdbcType=VARCHAR},</if>
+			<if test="item.createDate != null">CREATE_DATE = #{item.createDate,jdbcType=DATE}</if>
+			</set>
+			WHERE
+			TABLE_NAME = #{item.tableName,jdbcType=VARCHAR}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  SYS_L_CACHE_TABLES
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		TABLE_NAME = #{ tableName,jdbcType=VARCHAR}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  SYS_L_CACHE_TABLES
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE ROW_ID = #{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  SYS_L_CACHE_TABLES
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="CacheTablesResult">
+		SELECT *
+		FROM SYS_L_CACHE_TABLES WHERE DELETED_FLAG='0' AND STATUS = '1' 
+		
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="CacheTablesResult" >
+		SELECT *
+		FROM SYS_L_CACHE_TABLES WHERE DELETED_FLAG='0' AND STATUS = '1'  AND
+		TABLE_NAME = #{ tableName,jdbcType=VARCHAR}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="CacheTablesResult" >
+		SELECT *
+		FROM SYS_L_CACHE_TABLES
+		WHERE DELETED_FLAG='0' AND STATUS = '1'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="CacheTablesResult" >
+		SELECT *
+		FROM SYS_L_CACHE_TABLES
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="CacheTablesResult"> ${sql} </select>
+
+</mapper>
+

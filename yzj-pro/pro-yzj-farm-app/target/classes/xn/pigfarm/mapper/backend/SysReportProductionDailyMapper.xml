@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.backend.SysReportProductionDailyMapper">
+
+	<resultMap id="SysReportProductionDailyResult"  type="SysReportProductionDailyModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="sortNbr" column="SORT_NBR" jdbcType="INTEGER" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="originFlag" column="ORIGIN_FLAG" jdbcType="CHAR" />
+		<result property="originApp" column="ORIGIN_APP" jdbcType="VARCHAR" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="reportDate" column="REPORT_DATE" jdbcType="DATE" />
+		<result property="farmId" column="FARM_ID" jdbcType="INTEGER" />
+		<result property="breedPzSc" column="BREED_PZ_SC" jdbcType="INTEGER" />
+		<result property="breedPzHb" column="BREED_PZ_HB" jdbcType="INTEGER" />
+		<result property="breedFq" column="BREED_FQ" jdbcType="INTEGER" />
+		<result property="breedLc" column="BREED_LC" jdbcType="INTEGER" />
+		<result property="breedKh" column="BREED_KH" jdbcType="INTEGER" />
+		<result property="breedDn" column="BREED_DN" jdbcType="INTEGER" />
+		<result property="deliveryCws" column="DELIVERY_CWS" jdbcType="INTEGER" />
+		<result property="deliveryJz" column="DELIVERY_JZ" jdbcType="INTEGER" />
+		<result property="deliveryRz" column="DELIVERY_RZ" jdbcType="INTEGER" />
+		<result property="deliverySmj" column="DELIVERY_SMJ" jdbcType="INTEGER" />
+		<result property="deliveryWjjz" column="DELIVERY_WJJZ" jdbcType="DECIMAL" />
+		<result property="deliveryCf" column="DELIVERY_CF" jdbcType="INTEGER" />
+		<result property="deliveryBy" column="DELIVERY_BY" jdbcType="INTEGER" />
+		<result property="deliveryYf" column="DELIVERY_YF" jdbcType="INTEGER" />
+		<result property="deliveryZz" column="DELIVERY_ZZ" jdbcType="INTEGER" />
+		<result property="deliveryTotal" column="DELIVERY_TOTAL" jdbcType="INTEGER" />
+		<result property="outSaleZz" column="OUT_SALE_ZZ" jdbcType="INTEGER" />
+		<result property="outSaleMz" column="OUT_SALE_MZ" jdbcType="INTEGER" />
+		<result property="outSaleFz" column="OUT_SALE_FZ" jdbcType="INTEGER" />
+		<result property="outSaleCcz" column="OUT_SALE_CCZ" jdbcType="INTEGER" />
+		<result property="outSaleZzxs" column="OUT_SALE_ZZXS" jdbcType="INTEGER" />
+		<result property="zzgr" column="ZZGR" jdbcType="INTEGER" />
+		<result property="zztt" column="ZZTT" jdbcType="INTEGER" />
+		<result property="inSaleSpz" column="IN_SALE_SPZ" jdbcType="INTEGER" />
+		<result property="inSaleZz" column="IN_SALE_ZZ" jdbcType="INTEGER" />
+		<result property="allotSpz" column="ALLOT_SPZ" jdbcType="INTEGER" />
+		<result property="allotZz" column="ALLOT_ZZ" jdbcType="INTEGER" />
+		<result property="livesBrz" column="LIVES_BRZ" jdbcType="INTEGER" />
+		<result property="livesByz" column="LIVES_BYZ" jdbcType="INTEGER" />
+		<result property="livesYfz" column="LIVES_YFZ" jdbcType="INTEGER" />
+		<result property="livesScmz" column="LIVES_SCMZ" jdbcType="INTEGER" />
+		<result property="livesScgz" column="LIVES_SCGZ" jdbcType="INTEGER" />
+		<result property="livesHbmz" column="LIVES_HBMZ" jdbcType="INTEGER" />
+		<result property="livesHbgz" column="LIVES_HBGZ" jdbcType="INTEGER" />
+		<result property="livesTt" column="LIVES_TT" jdbcType="INTEGER" />
+		<result property="livesTotal" column="LIVES_TOTAL" jdbcType="INTEGER" />
+		<result property="createId" column="CREATE_ID" jdbcType="INTEGER" />
+		<result property="createDatetime" column="CREATE_DATETIME" jdbcType="TIMESTAMP" />
+		<result property="confirmDate" column="CONFIRM_DATE" jdbcType="TIMESTAMP" />
+		<result property="ftriggerFlag" column="FtriggerFlag" jdbcType="INTEGER" />
+		<result property="requestid" column="requestid" jdbcType="INTEGER" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="SysReportProductionDailyModel_Column_List">
+		ROW_ID,SORT_NBR,NOTES,REPORT_DATE,BREED_PZ_SC,BREED_PZ_HB,BREED_FQ,BREED_LC,BREED_KH,BREED_DN,DELIVERY_CWS,DELIVERY_JZ,DELIVERY_RZ,DELIVERY_SMJ,DELIVERY_WJJZ,DELIVERY_CF,DELIVERY_BY,DELIVERY_YF,DELIVERY_ZZ,DELIVERY_TOTAL,OUT_SALE_ZZ,OUT_SALE_MZ,OUT_SALE_FZ,OUT_SALE_CCZ,OUT_SALE_ZZXS,ZZGR,ZZTT,IN_SALE_SPZ,IN_SALE_ZZ,ALLOT_SPZ,ALLOT_ZZ,LIVES_BRZ,LIVES_BYZ,LIVES_YFZ,LIVES_SCMZ,LIVES_SCGZ,LIVES_HBMZ,LIVES_HBGZ,LIVES_TT,LIVES_TOTAL,CREATE_ID,CREATE_DATETIME,CONFIRM_DATE,FtriggerFlag,requestid
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true"   keyProperty="rowId" parameterType="SysReportProductionDailyModel">
+		INSERT INTO SYS_REPORT_PRODUCTION_DAILY
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR,
+			STATUS,
+			DELETED_FLAG,
+			ORIGIN_FLAG,
+			ORIGIN_APP,
+			NOTES,
+			REPORT_DATE,
+			FARM_ID,
+			BREED_PZ_SC,
+			BREED_PZ_HB,
+			BREED_FQ,
+			BREED_LC,
+			BREED_KH,
+			BREED_DN,
+			DELIVERY_CWS,
+			DELIVERY_JZ,
+			DELIVERY_RZ,
+			DELIVERY_SMJ,
+			DELIVERY_WJJZ,
+			DELIVERY_CF,
+			DELIVERY_BY,
+			DELIVERY_YF,
+			DELIVERY_ZZ,
+			DELIVERY_TOTAL,
+			OUT_SALE_ZZ,
+			OUT_SALE_MZ,
+			OUT_SALE_FZ,
+			OUT_SALE_CCZ,
+			OUT_SALE_ZZXS,
+			ZZGR,
+			ZZTT,
+			IN_SALE_SPZ,
+			IN_SALE_ZZ,
+			ALLOT_SPZ,
+			ALLOT_ZZ,
+			LIVES_BRZ,
+			LIVES_BYZ,
+			LIVES_YFZ,
+			LIVES_SCMZ,
+			LIVES_SCGZ,
+			LIVES_HBMZ,
+			LIVES_HBGZ,
+			LIVES_TT,
+			LIVES_TOTAL,
+			CREATE_ID,
+			CREATE_DATETIME,
+			CONFIRM_DATE,
+			FtriggerFlag,
+			requestid
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ sortNbr,jdbcType=INTEGER},
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ originFlag,jdbcType=CHAR},
+			#{ originApp,jdbcType=VARCHAR},
+			#{ notes,jdbcType=VARCHAR},
+			#{ reportDate,jdbcType=DATE},
+			#{ farmId,jdbcType=INTEGER},
+			#{ breedPzSc,jdbcType=INTEGER},
+			#{ breedPzHb,jdbcType=INTEGER},
+			#{ breedFq,jdbcType=INTEGER},
+			#{ breedLc,jdbcType=INTEGER},
+			#{ breedKh,jdbcType=INTEGER},
+			#{ breedDn,jdbcType=INTEGER},
+			#{ deliveryCws,jdbcType=INTEGER},
+			#{ deliveryJz,jdbcType=INTEGER},
+			#{ deliveryRz,jdbcType=INTEGER},
+			#{ deliverySmj,jdbcType=INTEGER},
+			#{ deliveryWjjz,jdbcType=DECIMAL},
+			#{ deliveryCf,jdbcType=INTEGER},
+			#{ deliveryBy,jdbcType=INTEGER},
+			#{ deliveryYf,jdbcType=INTEGER},
+			#{ deliveryZz,jdbcType=INTEGER},
+			#{ deliveryTotal,jdbcType=INTEGER},
+			#{ outSaleZz,jdbcType=INTEGER},
+			#{ outSaleMz,jdbcType=INTEGER},
+			#{ outSaleFz,jdbcType=INTEGER},
+			#{ outSaleCcz,jdbcType=INTEGER},
+			#{ outSaleZzxs,jdbcType=INTEGER},
+			#{ zzgr,jdbcType=INTEGER},
+			#{ zztt,jdbcType=INTEGER},
+			#{ inSaleSpz,jdbcType=INTEGER},
+			#{ inSaleZz,jdbcType=INTEGER},
+			#{ allotSpz,jdbcType=INTEGER},
+			#{ allotZz,jdbcType=INTEGER},
+			#{ livesBrz,jdbcType=INTEGER},
+			#{ livesByz,jdbcType=INTEGER},
+			#{ livesYfz,jdbcType=INTEGER},
+			#{ livesScmz,jdbcType=INTEGER},
+			#{ livesScgz,jdbcType=INTEGER},
+			#{ livesHbmz,jdbcType=INTEGER},
+			#{ livesHbgz,jdbcType=INTEGER},
+			#{ livesTt,jdbcType=INTEGER},
+			#{ livesTotal,jdbcType=INTEGER},
+			#{ createId,jdbcType=INTEGER},
+			#{ createDatetime,jdbcType=TIMESTAMP},
+			#{ confirmDate,jdbcType=TIMESTAMP},
+			#{ ftriggerFlag,jdbcType=INTEGER},
+			#{ requestid,jdbcType=INTEGER}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO SYS_REPORT_PRODUCTION_DAILY
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR ,
+			STATUS ,
+			DELETED_FLAG ,
+			ORIGIN_FLAG ,
+			ORIGIN_APP ,
+			NOTES ,
+			REPORT_DATE ,
+			FARM_ID ,
+			BREED_PZ_SC ,
+			BREED_PZ_HB ,
+			BREED_FQ ,
+			BREED_LC ,
+			BREED_KH ,
+			BREED_DN ,
+			DELIVERY_CWS ,
+			DELIVERY_JZ ,
+			DELIVERY_RZ ,
+			DELIVERY_SMJ ,
+			DELIVERY_WJJZ ,
+			DELIVERY_CF ,
+			DELIVERY_BY ,
+			DELIVERY_YF ,
+			DELIVERY_ZZ ,
+			DELIVERY_TOTAL ,
+			OUT_SALE_ZZ ,
+			OUT_SALE_MZ ,
+			OUT_SALE_FZ ,
+			OUT_SALE_CCZ ,
+			OUT_SALE_ZZXS ,
+			ZZGR ,
+			ZZTT ,
+			IN_SALE_SPZ ,
+			IN_SALE_ZZ ,
+			ALLOT_SPZ ,
+			ALLOT_ZZ ,
+			LIVES_BRZ ,
+			LIVES_BYZ ,
+			LIVES_YFZ ,
+			LIVES_SCMZ ,
+			LIVES_SCGZ ,
+			LIVES_HBMZ ,
+			LIVES_HBGZ ,
+			LIVES_TT ,
+			LIVES_TOTAL ,
+			CREATE_ID ,
+			CREATE_DATETIME ,
+			CONFIRM_DATE ,
+			FtriggerFlag ,
+			requestid 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.sortNbr,jdbcType=INTEGER},
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.originFlag,jdbcType=CHAR},
+				#{item.originApp,jdbcType=VARCHAR},
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.reportDate,jdbcType=DATE},
+				#{item.farmId,jdbcType=INTEGER},
+				#{item.breedPzSc,jdbcType=INTEGER},
+				#{item.breedPzHb,jdbcType=INTEGER},
+				#{item.breedFq,jdbcType=INTEGER},
+				#{item.breedLc,jdbcType=INTEGER},
+				#{item.breedKh,jdbcType=INTEGER},
+				#{item.breedDn,jdbcType=INTEGER},
+				#{item.deliveryCws,jdbcType=INTEGER},
+				#{item.deliveryJz,jdbcType=INTEGER},
+				#{item.deliveryRz,jdbcType=INTEGER},
+				#{item.deliverySmj,jdbcType=INTEGER},
+				#{item.deliveryWjjz,jdbcType=DECIMAL},
+				#{item.deliveryCf,jdbcType=INTEGER},
+				#{item.deliveryBy,jdbcType=INTEGER},
+				#{item.deliveryYf,jdbcType=INTEGER},
+				#{item.deliveryZz,jdbcType=INTEGER},
+				#{item.deliveryTotal,jdbcType=INTEGER},
+				#{item.outSaleZz,jdbcType=INTEGER},
+				#{item.outSaleMz,jdbcType=INTEGER},
+				#{item.outSaleFz,jdbcType=INTEGER},
+				#{item.outSaleCcz,jdbcType=INTEGER},
+				#{item.outSaleZzxs,jdbcType=INTEGER},
+				#{item.zzgr,jdbcType=INTEGER},
+				#{item.zztt,jdbcType=INTEGER},
+				#{item.inSaleSpz,jdbcType=INTEGER},
+				#{item.inSaleZz,jdbcType=INTEGER},
+				#{item.allotSpz,jdbcType=INTEGER},
+				#{item.allotZz,jdbcType=INTEGER},
+				#{item.livesBrz,jdbcType=INTEGER},
+				#{item.livesByz,jdbcType=INTEGER},
+				#{item.livesYfz,jdbcType=INTEGER},
+				#{item.livesScmz,jdbcType=INTEGER},
+				#{item.livesScgz,jdbcType=INTEGER},
+				#{item.livesHbmz,jdbcType=INTEGER},
+				#{item.livesHbgz,jdbcType=INTEGER},
+				#{item.livesTt,jdbcType=INTEGER},
+				#{item.livesTotal,jdbcType=INTEGER},
+				#{item.createId,jdbcType=INTEGER},
+				#{item.createDatetime,jdbcType=TIMESTAMP},
+				#{item.confirmDate,jdbcType=TIMESTAMP},
+				#{item.ftriggerFlag,jdbcType=INTEGER},
+				#{item.requestid,jdbcType=INTEGER}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="SysReportProductionDailyModel" >
+		UPDATE SYS_REPORT_PRODUCTION_DAILY 
+		<set>
+		<if test="sortNbr != null">SORT_NBR = #{ sortNbr,jdbcType=INTEGER},</if>
+		<if test="status != null">STATUS = #{ status,jdbcType=CHAR},</if>
+		<if test="originFlag != null">ORIGIN_FLAG = #{ originFlag,jdbcType=CHAR},</if>
+		<if test="originApp != null">ORIGIN_APP = #{ originApp,jdbcType=VARCHAR},</if>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="reportDate != null">REPORT_DATE = #{ reportDate,jdbcType=DATE},</if>
+		<if test="breedPzSc != null">BREED_PZ_SC = #{ breedPzSc,jdbcType=INTEGER},</if>
+		<if test="breedPzHb != null">BREED_PZ_HB = #{ breedPzHb,jdbcType=INTEGER},</if>
+		<if test="breedFq != null">BREED_FQ = #{ breedFq,jdbcType=INTEGER},</if>
+		<if test="breedLc != null">BREED_LC = #{ breedLc,jdbcType=INTEGER},</if>
+		<if test="breedKh != null">BREED_KH = #{ breedKh,jdbcType=INTEGER},</if>
+		<if test="breedDn != null">BREED_DN = #{ breedDn,jdbcType=INTEGER},</if>
+		<if test="deliveryCws != null">DELIVERY_CWS = #{ deliveryCws,jdbcType=INTEGER},</if>
+		<if test="deliveryJz != null">DELIVERY_JZ = #{ deliveryJz,jdbcType=INTEGER},</if>
+		<if test="deliveryRz != null">DELIVERY_RZ = #{ deliveryRz,jdbcType=INTEGER},</if>
+		<if test="deliverySmj != null">DELIVERY_SMJ = #{ deliverySmj,jdbcType=INTEGER},</if>
+		<if test="deliveryWjjz != null">DELIVERY_WJJZ = #{ deliveryWjjz,jdbcType=DECIMAL},</if>
+		<if test="deliveryCf != null">DELIVERY_CF = #{ deliveryCf,jdbcType=INTEGER},</if>
+		<if test="deliveryBy != null">DELIVERY_BY = #{ deliveryBy,jdbcType=INTEGER},</if>
+		<if test="deliveryYf != null">DELIVERY_YF = #{ deliveryYf,jdbcType=INTEGER},</if>
+		<if test="deliveryZz != null">DELIVERY_ZZ = #{ deliveryZz,jdbcType=INTEGER},</if>
+		<if test="deliveryTotal != null">DELIVERY_TOTAL = #{ deliveryTotal,jdbcType=INTEGER},</if>
+		<if test="outSaleZz != null">OUT_SALE_ZZ = #{ outSaleZz,jdbcType=INTEGER},</if>
+		<if test="outSaleMz != null">OUT_SALE_MZ = #{ outSaleMz,jdbcType=INTEGER},</if>
+		<if test="outSaleFz != null">OUT_SALE_FZ = #{ outSaleFz,jdbcType=INTEGER},</if>
+		<if test="outSaleCcz != null">OUT_SALE_CCZ = #{ outSaleCcz,jdbcType=INTEGER},</if>
+		<if test="outSaleZzxs != null">OUT_SALE_ZZXS = #{ outSaleZzxs,jdbcType=INTEGER},</if>
+		<if test="zzgr != null">ZZGR = #{ zzgr,jdbcType=INTEGER},</if>
+		<if test="zztt != null">ZZTT = #{ zztt,jdbcType=INTEGER},</if>
+		<if test="inSaleSpz != null">IN_SALE_SPZ = #{ inSaleSpz,jdbcType=INTEGER},</if>
+		<if test="inSaleZz != null">IN_SALE_ZZ = #{ inSaleZz,jdbcType=INTEGER},</if>
+		<if test="allotSpz != null">ALLOT_SPZ = #{ allotSpz,jdbcType=INTEGER},</if>
+		<if test="allotZz != null">ALLOT_ZZ = #{ allotZz,jdbcType=INTEGER},</if>
+		<if test="livesBrz != null">LIVES_BRZ = #{ livesBrz,jdbcType=INTEGER},</if>
+		<if test="livesByz != null">LIVES_BYZ = #{ livesByz,jdbcType=INTEGER},</if>
+		<if test="livesYfz != null">LIVES_YFZ = #{ livesYfz,jdbcType=INTEGER},</if>
+		<if test="livesScmz != null">LIVES_SCMZ = #{ livesScmz,jdbcType=INTEGER},</if>
+		<if test="livesScgz != null">LIVES_SCGZ = #{ livesScgz,jdbcType=INTEGER},</if>
+		<if test="livesHbmz != null">LIVES_HBMZ = #{ livesHbmz,jdbcType=INTEGER},</if>
+		<if test="livesHbgz != null">LIVES_HBGZ = #{ livesHbgz,jdbcType=INTEGER},</if>
+		<if test="livesTt != null">LIVES_TT = #{ livesTt,jdbcType=INTEGER},</if>
+		<if test="livesTotal != null">LIVES_TOTAL = #{ livesTotal,jdbcType=INTEGER},</if>
+		<if test="createId != null">CREATE_ID = #{ createId,jdbcType=INTEGER},</if>
+		<if test="createDatetime != null">CREATE_DATETIME = #{ createDatetime,jdbcType=TIMESTAMP},</if>
+		<if test="confirmDate != null">CONFIRM_DATE = #{ confirmDate,jdbcType=TIMESTAMP},</if>
+		<if test="ftriggerFlag != null">FtriggerFlag = #{ ftriggerFlag,jdbcType=INTEGER},</if>
+		<if test="requestid != null">requestid = #{ requestid,jdbcType=INTEGER}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE SYS_REPORT_PRODUCTION_DAILY 
+			<set>
+			<if test="item.sortNbr != null">SORT_NBR = #{item.sortNbr,jdbcType=INTEGER},</if>
+			<if test="item.status != null">STATUS = #{item.status,jdbcType=CHAR},</if>
+			<if test="item.originFlag != null">ORIGIN_FLAG = #{item.originFlag,jdbcType=CHAR},</if>
+			<if test="item.originApp != null">ORIGIN_APP = #{item.originApp,jdbcType=VARCHAR},</if>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.reportDate != null">REPORT_DATE = #{item.reportDate,jdbcType=DATE},</if>
+			<if test="item.breedPzSc != null">BREED_PZ_SC = #{item.breedPzSc,jdbcType=INTEGER},</if>
+			<if test="item.breedPzHb != null">BREED_PZ_HB = #{item.breedPzHb,jdbcType=INTEGER},</if>
+			<if test="item.breedFq != null">BREED_FQ = #{item.breedFq,jdbcType=INTEGER},</if>
+			<if test="item.breedLc != null">BREED_LC = #{item.breedLc,jdbcType=INTEGER},</if>
+			<if test="item.breedKh != null">BREED_KH = #{item.breedKh,jdbcType=INTEGER},</if>
+			<if test="item.breedDn != null">BREED_DN = #{item.breedDn,jdbcType=INTEGER},</if>
+			<if test="item.deliveryCws != null">DELIVERY_CWS = #{item.deliveryCws,jdbcType=INTEGER},</if>
+			<if test="item.deliveryJz != null">DELIVERY_JZ = #{item.deliveryJz,jdbcType=INTEGER},</if>
+			<if test="item.deliveryRz != null">DELIVERY_RZ = #{item.deliveryRz,jdbcType=INTEGER},</if>
+			<if test="item.deliverySmj != null">DELIVERY_SMJ = #{item.deliverySmj,jdbcType=INTEGER},</if>
+			<if test="item.deliveryWjjz != null">DELIVERY_WJJZ = #{item.deliveryWjjz,jdbcType=DECIMAL},</if>
+			<if test="item.deliveryCf != null">DELIVERY_CF = #{item.deliveryCf,jdbcType=INTEGER},</if>
+			<if test="item.deliveryBy != null">DELIVERY_BY = #{item.deliveryBy,jdbcType=INTEGER},</if>
+			<if test="item.deliveryYf != null">DELIVERY_YF = #{item.deliveryYf,jdbcType=INTEGER},</if>
+			<if test="item.deliveryZz != null">DELIVERY_ZZ = #{item.deliveryZz,jdbcType=INTEGER},</if>
+			<if test="item.deliveryTotal != null">DELIVERY_TOTAL = #{item.deliveryTotal,jdbcType=INTEGER},</if>
+			<if test="item.outSaleZz != null">OUT_SALE_ZZ = #{item.outSaleZz,jdbcType=INTEGER},</if>
+			<if test="item.outSaleMz != null">OUT_SALE_MZ = #{item.outSaleMz,jdbcType=INTEGER},</if>
+			<if test="item.outSaleFz != null">OUT_SALE_FZ = #{item.outSaleFz,jdbcType=INTEGER},</if>
+			<if test="item.outSaleCcz != null">OUT_SALE_CCZ = #{item.outSaleCcz,jdbcType=INTEGER},</if>
+			<if test="item.outSaleZzxs != null">OUT_SALE_ZZXS = #{item.outSaleZzxs,jdbcType=INTEGER},</if>
+			<if test="item.zzgr != null">ZZGR = #{item.zzgr,jdbcType=INTEGER},</if>
+			<if test="item.zztt != null">ZZTT = #{item.zztt,jdbcType=INTEGER},</if>
+			<if test="item.inSaleSpz != null">IN_SALE_SPZ = #{item.inSaleSpz,jdbcType=INTEGER},</if>
+			<if test="item.inSaleZz != null">IN_SALE_ZZ = #{item.inSaleZz,jdbcType=INTEGER},</if>
+			<if test="item.allotSpz != null">ALLOT_SPZ = #{item.allotSpz,jdbcType=INTEGER},</if>
+			<if test="item.allotZz != null">ALLOT_ZZ = #{item.allotZz,jdbcType=INTEGER},</if>
+			<if test="item.livesBrz != null">LIVES_BRZ = #{item.livesBrz,jdbcType=INTEGER},</if>
+			<if test="item.livesByz != null">LIVES_BYZ = #{item.livesByz,jdbcType=INTEGER},</if>
+			<if test="item.livesYfz != null">LIVES_YFZ = #{item.livesYfz,jdbcType=INTEGER},</if>
+			<if test="item.livesScmz != null">LIVES_SCMZ = #{item.livesScmz,jdbcType=INTEGER},</if>
+			<if test="item.livesScgz != null">LIVES_SCGZ = #{item.livesScgz,jdbcType=INTEGER},</if>
+			<if test="item.livesHbmz != null">LIVES_HBMZ = #{item.livesHbmz,jdbcType=INTEGER},</if>
+			<if test="item.livesHbgz != null">LIVES_HBGZ = #{item.livesHbgz,jdbcType=INTEGER},</if>
+			<if test="item.livesTt != null">LIVES_TT = #{item.livesTt,jdbcType=INTEGER},</if>
+			<if test="item.livesTotal != null">LIVES_TOTAL = #{item.livesTotal,jdbcType=INTEGER},</if>
+			<if test="item.createId != null">CREATE_ID = #{item.createId,jdbcType=INTEGER},</if>
+			<if test="item.createDatetime != null">CREATE_DATETIME = #{item.createDatetime,jdbcType=TIMESTAMP},</if>
+			<if test="item.confirmDate != null">CONFIRM_DATE = #{item.confirmDate,jdbcType=TIMESTAMP},</if>
+			<if test="item.ftriggerFlag != null">FtriggerFlag = #{item.ftriggerFlag,jdbcType=INTEGER},</if>
+			<if test="item.requestid != null">requestid = #{item.requestid,jdbcType=INTEGER}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  SYS_REPORT_PRODUCTION_DAILY
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  SYS_REPORT_PRODUCTION_DAILY
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE 
+		 ROW_ID =#{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  SYS_REPORT_PRODUCTION_DAILY
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' 
+		 AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+		 AND ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCons" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  SYS_REPORT_PRODUCTION_DAILY
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' ${item}
+		</foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="SysReportProductionDailyResult">
+		SELECT 
+		<include refid="SysReportProductionDailyModel_Column_List" />
+		FROM SYS_REPORT_PRODUCTION_DAILY WHERE DELETED_FLAG='0' 
+		AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="SysReportProductionDailyResult" >
+		SELECT 
+		<include refid="SysReportProductionDailyModel_Column_List" />
+		FROM SYS_REPORT_PRODUCTION_DAILY WHERE DELETED_FLAG='0'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="SysReportProductionDailyResult" >
+		SELECT 
+		<include refid="SysReportProductionDailyModel_Column_List" />
+		FROM SYS_REPORT_PRODUCTION_DAILY
+		WHERE DELETED_FLAG='0'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="SysReportProductionDailyResult" >
+		SELECT 
+		<include refid="SysReportProductionDailyModel_Column_List" />
+		FROM SYS_REPORT_PRODUCTION_DAILY
+		WHERE ${condition}
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAll" resultMap="SysReportProductionDailyResult" >
+		SELECT *
+		FROM SYS_REPORT_PRODUCTION_DAILY
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="SysReportProductionDailyResult"> ${sql} </select>
+
+</mapper>
+

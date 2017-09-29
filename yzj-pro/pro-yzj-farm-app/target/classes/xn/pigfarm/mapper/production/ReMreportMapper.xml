@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.production.ReMreportMapper">
+
+	<resultMap id="ReMreportResult"  type="ReMreportModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="sortNbr" column="SORT_NBR" jdbcType="INTEGER" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="reportType" column="REPORT_TYPE" jdbcType="CHAR" />
+		<result property="year" column="YEAR" jdbcType="INTEGER" />
+		<result property="month" column="MONTH" jdbcType="INTEGER" />
+		<result property="week" column="WEEK" jdbcType="INTEGER" />
+		<result property="quarter" column="QUARTER" jdbcType="INTEGER" />
+		<result property="startDate" column="START_DATE" jdbcType="TIMESTAMP" />
+		<result property="endDate" column="END_DATE" jdbcType="TIMESTAMP" />
+		<result property="dataAnalysis" column="DATA_ANALYSIS" jdbcType="LONGVARCHAR" />
+		<result property="version" column="VERSION" jdbcType="INTEGER" />
+		<result property="farmId" column="FARM_ID" jdbcType="INTEGER" />
+		<result property="createId" column="CREATE_ID" jdbcType="INTEGER" />
+		<result property="createDate" column="CREATE_DATE" jdbcType="TIMESTAMP" />
+		<result property="notesId" column="NOTES_ID" jdbcType="INTEGER" />
+		<result property="saleNotes" column="SALE_NOTES" jdbcType="LONGVARCHAR" />
+		<result property="productionNotes" column="PRODUCTION_NOTES" jdbcType="LONGVARCHAR" />
+		<result property="biologicalSafetyNotes" column="BIOLOGICAL_SAFETY_NOTES" jdbcType="LONGVARCHAR" />
+		<result property="populationPlanningNotes" column="POPULATION_PLANNING_NOTES" jdbcType="LONGVARCHAR" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="ReMreportModel_Column_List">
+		ROW_ID,SORT_NBR,NOTES,REPORT_TYPE,YEAR,MONTH,WEEK,QUARTER,START_DATE,END_DATE,DATA_ANALYSIS,VERSION,CREATE_ID,CREATE_DATE,NOTES_ID,SALE_NOTES,PRODUCTION_NOTES,BIOLOGICAL_SAFETY_NOTES,POPULATION_PLANNING_NOTES
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true"   keyProperty="rowId" parameterType="ReMreportModel">
+		INSERT INTO RE_M_REPORT
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR,
+			STATUS,
+			DELETED_FLAG,
+			NOTES,
+			REPORT_TYPE,
+			YEAR,
+			MONTH,
+			WEEK,
+			QUARTER,
+			START_DATE,
+			END_DATE,
+			DATA_ANALYSIS,
+			VERSION,
+			FARM_ID,
+			CREATE_ID,
+			CREATE_DATE,
+			NOTES_ID,
+			SALE_NOTES,
+			PRODUCTION_NOTES,
+			BIOLOGICAL_SAFETY_NOTES,
+			POPULATION_PLANNING_NOTES
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ sortNbr,jdbcType=INTEGER},
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ notes,jdbcType=VARCHAR},
+			#{ reportType,jdbcType=CHAR},
+			#{ year,jdbcType=INTEGER},
+			#{ month,jdbcType=INTEGER},
+			#{ week,jdbcType=INTEGER},
+			#{ quarter,jdbcType=INTEGER},
+			#{ startDate,jdbcType=TIMESTAMP},
+			#{ endDate,jdbcType=TIMESTAMP},
+			#{ dataAnalysis,jdbcType=LONGVARCHAR},
+			#{ version,jdbcType=INTEGER},
+			#{ farmId,jdbcType=INTEGER},
+			#{ createId,jdbcType=INTEGER},
+			#{ createDate,jdbcType=TIMESTAMP},
+			#{ notesId,jdbcType=INTEGER},
+			#{ saleNotes,jdbcType=LONGVARCHAR},
+			#{ productionNotes,jdbcType=LONGVARCHAR},
+			#{ biologicalSafetyNotes,jdbcType=LONGVARCHAR},
+			#{ populationPlanningNotes,jdbcType=LONGVARCHAR}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO RE_M_REPORT
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR ,
+			STATUS ,
+			DELETED_FLAG ,
+			NOTES ,
+			REPORT_TYPE ,
+			YEAR ,
+			MONTH ,
+			WEEK ,
+			QUARTER ,
+			START_DATE ,
+			END_DATE ,
+			DATA_ANALYSIS ,
+			VERSION ,
+			FARM_ID ,
+			CREATE_ID ,
+			CREATE_DATE ,
+			NOTES_ID ,
+			SALE_NOTES ,
+			PRODUCTION_NOTES ,
+			BIOLOGICAL_SAFETY_NOTES ,
+			POPULATION_PLANNING_NOTES 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.sortNbr,jdbcType=INTEGER},
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.reportType,jdbcType=CHAR},
+				#{item.year,jdbcType=INTEGER},
+				#{item.month,jdbcType=INTEGER},
+				#{item.week,jdbcType=INTEGER},
+				#{item.quarter,jdbcType=INTEGER},
+				#{item.startDate,jdbcType=TIMESTAMP},
+				#{item.endDate,jdbcType=TIMESTAMP},
+				#{item.dataAnalysis,jdbcType=LONGVARCHAR},
+				#{item.version,jdbcType=INTEGER},
+				#{item.farmId,jdbcType=INTEGER},
+				#{item.createId,jdbcType=INTEGER},
+				#{item.createDate,jdbcType=TIMESTAMP},
+				#{item.notesId,jdbcType=INTEGER},
+				#{item.saleNotes,jdbcType=LONGVARCHAR},
+				#{item.productionNotes,jdbcType=LONGVARCHAR},
+				#{item.biologicalSafetyNotes,jdbcType=LONGVARCHAR},
+				#{item.populationPlanningNotes,jdbcType=LONGVARCHAR}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="ReMreportModel" >
+		UPDATE RE_M_REPORT 
+		<set>
+		<if test="sortNbr != null">SORT_NBR = #{ sortNbr,jdbcType=INTEGER},</if>
+		<if test="status != null">STATUS = #{ status,jdbcType=CHAR},</if>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="reportType != null">REPORT_TYPE = #{ reportType,jdbcType=CHAR},</if>
+		<if test="year != null">YEAR = #{ year,jdbcType=INTEGER},</if>
+		<if test="month != null">MONTH = #{ month,jdbcType=INTEGER},</if>
+		<if test="week != null">WEEK = #{ week,jdbcType=INTEGER},</if>
+		<if test="quarter != null">QUARTER = #{ quarter,jdbcType=INTEGER},</if>
+		<if test="startDate != null">START_DATE = #{ startDate,jdbcType=TIMESTAMP},</if>
+		<if test="endDate != null">END_DATE = #{ endDate,jdbcType=TIMESTAMP},</if>
+		<if test="dataAnalysis != null">DATA_ANALYSIS = #{ dataAnalysis,jdbcType=LONGVARCHAR},</if>
+		<if test="version != null">VERSION = #{ version,jdbcType=INTEGER},</if>
+		<if test="createId != null">CREATE_ID = #{ createId,jdbcType=INTEGER},</if>
+		<if test="createDate != null">CREATE_DATE = #{ createDate,jdbcType=TIMESTAMP},</if>
+		<if test="notesId != null">NOTES_ID = #{ notesId,jdbcType=INTEGER},</if>
+		<if test="saleNotes != null">SALE_NOTES = #{ saleNotes,jdbcType=LONGVARCHAR},</if>
+		<if test="productionNotes != null">PRODUCTION_NOTES = #{ productionNotes,jdbcType=LONGVARCHAR},</if>
+		<if test="biologicalSafetyNotes != null">BIOLOGICAL_SAFETY_NOTES = #{ biologicalSafetyNotes,jdbcType=LONGVARCHAR},</if>
+		<if test="populationPlanningNotes != null">POPULATION_PLANNING_NOTES = #{ populationPlanningNotes,jdbcType=LONGVARCHAR}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE RE_M_REPORT 
+			<set>
+			<if test="item.sortNbr != null">SORT_NBR = #{item.sortNbr,jdbcType=INTEGER},</if>
+			<if test="item.status != null">STATUS = #{item.status,jdbcType=CHAR},</if>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.reportType != null">REPORT_TYPE = #{item.reportType,jdbcType=CHAR},</if>
+			<if test="item.year != null">YEAR = #{item.year,jdbcType=INTEGER},</if>
+			<if test="item.month != null">MONTH = #{item.month,jdbcType=INTEGER},</if>
+			<if test="item.week != null">WEEK = #{item.week,jdbcType=INTEGER},</if>
+			<if test="item.quarter != null">QUARTER = #{item.quarter,jdbcType=INTEGER},</if>
+			<if test="item.startDate != null">START_DATE = #{item.startDate,jdbcType=TIMESTAMP},</if>
+			<if test="item.endDate != null">END_DATE = #{item.endDate,jdbcType=TIMESTAMP},</if>
+			<if test="item.dataAnalysis != null">DATA_ANALYSIS = #{item.dataAnalysis,jdbcType=LONGVARCHAR},</if>
+			<if test="item.version != null">VERSION = #{item.version,jdbcType=INTEGER},</if>
+			<if test="item.createId != null">CREATE_ID = #{item.createId,jdbcType=INTEGER},</if>
+			<if test="item.createDate != null">CREATE_DATE = #{item.createDate,jdbcType=TIMESTAMP},</if>
+			<if test="item.notesId != null">NOTES_ID = #{item.notesId,jdbcType=INTEGER},</if>
+			<if test="item.saleNotes != null">SALE_NOTES = #{item.saleNotes,jdbcType=LONGVARCHAR},</if>
+			<if test="item.productionNotes != null">PRODUCTION_NOTES = #{item.productionNotes,jdbcType=LONGVARCHAR},</if>
+			<if test="item.biologicalSafetyNotes != null">BIOLOGICAL_SAFETY_NOTES = #{item.biologicalSafetyNotes,jdbcType=LONGVARCHAR},</if>
+			<if test="item.populationPlanningNotes != null">POPULATION_PLANNING_NOTES = #{item.populationPlanningNotes,jdbcType=LONGVARCHAR}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  RE_M_REPORT
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  RE_M_REPORT
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE 
+		 ROW_ID =#{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  RE_M_REPORT
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' 
+		 AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+		 AND ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCons" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  RE_M_REPORT
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' ${item}
+		</foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="ReMreportResult">
+		SELECT 
+		<include refid="ReMreportModel_Column_List" />
+		FROM RE_M_REPORT WHERE DELETED_FLAG='0' 
+		AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="ReMreportResult" >
+		SELECT 
+		<include refid="ReMreportModel_Column_List" />
+		FROM RE_M_REPORT WHERE DELETED_FLAG='0'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="ReMreportResult" >
+		SELECT 
+		<include refid="ReMreportModel_Column_List" />
+		FROM RE_M_REPORT
+		WHERE DELETED_FLAG='0'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="ReMreportResult" >
+		SELECT 
+		<include refid="ReMreportModel_Column_List" />
+		FROM RE_M_REPORT
+		WHERE ${condition}
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAll" resultMap="ReMreportResult" >
+		SELECT *
+		FROM RE_M_REPORT
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="ReMreportResult"> ${sql} </select>
+	
+	<select id="searchProductionCollectPage" parameterType="java.util.Map" resultType="java.util.Map"> 
+		SELECT ROW_ID rowId,FARM_ID farmId,DELETED_FLAG deletedFlag,NOTES notes,REPORT_TYPE reportType,YEAR year,MONTH month,WEEK week,DATE_FORMAT(START_DATE,'%Y-%m-%d') startDate,DATE_FORMAT(END_DATE,'%Y-%m-%d') endDate,CONCAT(DATE(CREATE_DATE),' ',TIME(CREATE_DATE)) createDate,VERSION version,CREATE_ID createId,NOTES_ID notesId
+		FROM RE_M_REPORT
+		WHERE STATUS='1'
+		<if test="searchReportType != null">
+  			AND REPORT_TYPE = #{searchReportType}
+  		</if>
+  		<if test="startDate != null">
+  			AND START_DATE = #{startDate}
+  		</if>
+  		<if test="endDate != null">
+  			AND END_DATE = #{endDate}
+  		</if>
+  		<if test="version != null">
+  			AND VERSION = #{version}
+  		</if>
+  		<if test="isHis == 1">
+  			AND DELETED_FLAG = 1
+  		</if>
+  		<if test="isHis != 1">
+  			AND DELETED_FLAG = 0
+  		</if>
+  		AND FARM_ID = #{farmId}
+  		ORDER BY CREATE_DATE DESC
+	</select>
+</mapper>
+

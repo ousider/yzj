@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.core.mapper.system.ActionTrackMapper">
+
+	<resultMap id="ActionTrackResult"  type="ActionTrackModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="sortNbr" column="SORT_NBR" jdbcType="INTEGER" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="originFlag" column="ORIGIN_FLAG" jdbcType="CHAR" />
+		<result property="originApp" column="ORIGIN_APP" jdbcType="VARCHAR" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="farmId" column="FARM_ID" jdbcType="INTEGER" />
+		<result property="actobjId" column="ACTOBJ_ID" jdbcType="BIGINT" />
+		<result property="startTime" column="START_TIME" jdbcType="TIMESTAMP" />
+		<result property="overTime" column="OVER_TIME" jdbcType="TIMESTAMP" />
+		<result property="ip" column="IP" jdbcType="VARCHAR" />
+		<result property="explorer" column="EXPLORER" jdbcType="VARCHAR" />
+		<result property="explorerVer" column="EXPLORER_VER" jdbcType="VARCHAR" />
+		<result property="client" column="CLIENT" jdbcType="VARCHAR" />
+		<result property="language" column="LANGUAGE" jdbcType="VARCHAR" />
+		<result property="country" column="COUNTRY" jdbcType="VARCHAR" />
+		<result property="province" column="PROVINCE" jdbcType="VARCHAR" />
+		<result property="city" column="CITY" jdbcType="VARCHAR" />
+		<result property="area" column="AREA" jdbcType="VARCHAR" />
+		<result property="screenWidth" column="SCREEN_WIDTH" jdbcType="VARCHAR" />
+		<result property="screenHeight" column="SCREEN_HEIGHT" jdbcType="VARCHAR" />
+		<result property="mac" column="MAC" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="ActionTrackModel_Column_List">
+		ROW_ID,SORT_NBR,NOTES,ACTOBJ_ID,START_TIME,OVER_TIME,IP,EXPLORER,EXPLORER_VER,CLIENT,LANGUAGE,COUNTRY,PROVINCE,CITY,AREA,SCREEN_WIDTH,SCREEN_HEIGHT,MAC
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true"   keyProperty="rowId" parameterType="ActionTrackModel">
+		INSERT INTO SYS_L_ACTION_TRACK
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR,
+			STATUS,
+			DELETED_FLAG,
+			ORIGIN_FLAG,
+			ORIGIN_APP,
+			NOTES,
+			FARM_ID,
+			ACTOBJ_ID,
+			START_TIME,
+			OVER_TIME,
+			IP,
+			EXPLORER,
+			EXPLORER_VER,
+			CLIENT,
+			LANGUAGE,
+			COUNTRY,
+			PROVINCE,
+			CITY,
+			AREA,
+			SCREEN_WIDTH,
+			SCREEN_HEIGHT,
+			MAC
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ sortNbr,jdbcType=INTEGER},
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ originFlag,jdbcType=CHAR},
+			#{ originApp,jdbcType=VARCHAR},
+			#{ notes,jdbcType=VARCHAR},
+			#{ farmId,jdbcType=INTEGER},
+			#{ actobjId,jdbcType=BIGINT},
+			#{ startTime,jdbcType=TIMESTAMP},
+			#{ overTime,jdbcType=TIMESTAMP},
+			#{ ip,jdbcType=VARCHAR},
+			#{ explorer,jdbcType=VARCHAR},
+			#{ explorerVer,jdbcType=VARCHAR},
+			#{ client,jdbcType=VARCHAR},
+			#{ language,jdbcType=VARCHAR},
+			#{ country,jdbcType=VARCHAR},
+			#{ province,jdbcType=VARCHAR},
+			#{ city,jdbcType=VARCHAR},
+			#{ area,jdbcType=VARCHAR},
+			#{ screenWidth,jdbcType=VARCHAR},
+			#{ screenHeight,jdbcType=VARCHAR},
+			#{ mac,jdbcType=VARCHAR}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO SYS_L_ACTION_TRACK
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			SORT_NBR ,
+			STATUS ,
+			DELETED_FLAG ,
+			ORIGIN_FLAG ,
+			ORIGIN_APP ,
+			NOTES ,
+			FARM_ID ,
+			ACTOBJ_ID ,
+			START_TIME ,
+			OVER_TIME ,
+			IP ,
+			EXPLORER ,
+			EXPLORER_VER ,
+			CLIENT ,
+			LANGUAGE ,
+			COUNTRY ,
+			PROVINCE ,
+			CITY ,
+			AREA ,
+			SCREEN_WIDTH ,
+			SCREEN_HEIGHT ,
+			MAC 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.sortNbr,jdbcType=INTEGER},
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.originFlag,jdbcType=CHAR},
+				#{item.originApp,jdbcType=VARCHAR},
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.farmId,jdbcType=INTEGER},
+				#{item.actobjId,jdbcType=BIGINT},
+				#{item.startTime,jdbcType=TIMESTAMP},
+				#{item.overTime,jdbcType=TIMESTAMP},
+				#{item.ip,jdbcType=VARCHAR},
+				#{item.explorer,jdbcType=VARCHAR},
+				#{item.explorerVer,jdbcType=VARCHAR},
+				#{item.client,jdbcType=VARCHAR},
+				#{item.language,jdbcType=VARCHAR},
+				#{item.country,jdbcType=VARCHAR},
+				#{item.province,jdbcType=VARCHAR},
+				#{item.city,jdbcType=VARCHAR},
+				#{item.area,jdbcType=VARCHAR},
+				#{item.screenWidth,jdbcType=VARCHAR},
+				#{item.screenHeight,jdbcType=VARCHAR},
+				#{item.mac,jdbcType=VARCHAR}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="ActionTrackModel" >
+		UPDATE SYS_L_ACTION_TRACK 
+		<set>
+		<if test="sortNbr != null">SORT_NBR = #{ sortNbr,jdbcType=INTEGER},</if>
+		<if test="status != null">STATUS = #{ status,jdbcType=CHAR},</if>
+		<if test="originFlag != null">ORIGIN_FLAG = #{ originFlag,jdbcType=CHAR},</if>
+		<if test="originApp != null">ORIGIN_APP = #{ originApp,jdbcType=VARCHAR},</if>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="actobjId != null">ACTOBJ_ID = #{ actobjId,jdbcType=BIGINT},</if>
+		<if test="startTime != null">START_TIME = #{ startTime,jdbcType=TIMESTAMP},</if>
+		<if test="overTime != null">OVER_TIME = #{ overTime,jdbcType=TIMESTAMP},</if>
+		<if test="ip != null">IP = #{ ip,jdbcType=VARCHAR},</if>
+		<if test="explorer != null">EXPLORER = #{ explorer,jdbcType=VARCHAR},</if>
+		<if test="explorerVer != null">EXPLORER_VER = #{ explorerVer,jdbcType=VARCHAR},</if>
+		<if test="client != null">CLIENT = #{ client,jdbcType=VARCHAR},</if>
+		<if test="language != null">LANGUAGE = #{ language,jdbcType=VARCHAR},</if>
+		<if test="country != null">COUNTRY = #{ country,jdbcType=VARCHAR},</if>
+		<if test="province != null">PROVINCE = #{ province,jdbcType=VARCHAR},</if>
+		<if test="city != null">CITY = #{ city,jdbcType=VARCHAR},</if>
+		<if test="area != null">AREA = #{ area,jdbcType=VARCHAR},</if>
+		<if test="screenWidth != null">SCREEN_WIDTH = #{ screenWidth,jdbcType=VARCHAR},</if>
+		<if test="screenHeight != null">SCREEN_HEIGHT = #{ screenHeight,jdbcType=VARCHAR},</if>
+		<if test="mac != null">MAC = #{ mac,jdbcType=VARCHAR}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE SYS_L_ACTION_TRACK 
+			<set>
+			<if test="item.sortNbr != null">SORT_NBR = #{item.sortNbr,jdbcType=INTEGER},</if>
+			<if test="item.status != null">STATUS = #{item.status,jdbcType=CHAR},</if>
+			<if test="item.originFlag != null">ORIGIN_FLAG = #{item.originFlag,jdbcType=CHAR},</if>
+			<if test="item.originApp != null">ORIGIN_APP = #{item.originApp,jdbcType=VARCHAR},</if>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.actobjId != null">ACTOBJ_ID = #{item.actobjId,jdbcType=BIGINT},</if>
+			<if test="item.startTime != null">START_TIME = #{item.startTime,jdbcType=TIMESTAMP},</if>
+			<if test="item.overTime != null">OVER_TIME = #{item.overTime,jdbcType=TIMESTAMP},</if>
+			<if test="item.ip != null">IP = #{item.ip,jdbcType=VARCHAR},</if>
+			<if test="item.explorer != null">EXPLORER = #{item.explorer,jdbcType=VARCHAR},</if>
+			<if test="item.explorerVer != null">EXPLORER_VER = #{item.explorerVer,jdbcType=VARCHAR},</if>
+			<if test="item.client != null">CLIENT = #{item.client,jdbcType=VARCHAR},</if>
+			<if test="item.language != null">LANGUAGE = #{item.language,jdbcType=VARCHAR},</if>
+			<if test="item.country != null">COUNTRY = #{item.country,jdbcType=VARCHAR},</if>
+			<if test="item.province != null">PROVINCE = #{item.province,jdbcType=VARCHAR},</if>
+			<if test="item.city != null">CITY = #{item.city,jdbcType=VARCHAR},</if>
+			<if test="item.area != null">AREA = #{item.area,jdbcType=VARCHAR},</if>
+			<if test="item.screenWidth != null">SCREEN_WIDTH = #{item.screenWidth,jdbcType=VARCHAR},</if>
+			<if test="item.screenHeight != null">SCREEN_HEIGHT = #{item.screenHeight,jdbcType=VARCHAR},</if>
+			<if test="item.mac != null">MAC = #{item.mac,jdbcType=VARCHAR}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  SYS_L_ACTION_TRACK
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  SYS_L_ACTION_TRACK
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE 
+		 ROW_ID =#{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  SYS_L_ACTION_TRACK
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' 
+		 AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+		 AND ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCons" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  SYS_L_ACTION_TRACK
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' ${item}
+		</foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="ActionTrackResult">
+		SELECT 
+		<include refid="ActionTrackModel_Column_List" />
+		FROM SYS_L_ACTION_TRACK WHERE DELETED_FLAG='0' 
+		AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="ActionTrackResult" >
+		SELECT 
+		<include refid="ActionTrackModel_Column_List" />
+		FROM SYS_L_ACTION_TRACK WHERE DELETED_FLAG='0'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="ActionTrackResult" >
+		SELECT 
+		<include refid="ActionTrackModel_Column_List" />
+		FROM SYS_L_ACTION_TRACK
+		WHERE DELETED_FLAG='0'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="ActionTrackResult" >
+		SELECT 
+		<include refid="ActionTrackModel_Column_List" />
+		FROM SYS_L_ACTION_TRACK
+		WHERE ${condition}
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAll" resultMap="ActionTrackResult" >
+		SELECT *
+		FROM SYS_L_ACTION_TRACK
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="ActionTrackResult"> ${sql} </select>
+
+</mapper>
+

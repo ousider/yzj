@@ -1,0 +1,32 @@
+$(document).ready(function(){
+	$('#vaccineType').textbox({
+		prompt:'请输入疫苗种类'
+	});
+	$('#mainContent').textbox({
+		prompt:'请输入主要成分与含量'
+	});
+	$('#apperance').textbox({
+		prompt:'请输入性状',
+		multiline:true
+	});
+	$('#effect').textbox({
+		prompt:'请输入作用与用途',
+		multiline:true
+	});
+	$('#usageDosage').textbox({
+		prompt:'请输入用法与用量',
+		multiline:true
+	});
+	$('#adverseReactions').textbox({
+		prompt:'请输入不良反应',
+		multiline:true
+	});
+	$('#notice').textbox({
+		prompt:'请输入注意事项',
+		multiline:true
+	});
+	/*$('#notes').textbox({
+		prompt:'请输入备注',
+		multiline:true
+	});*/
+});

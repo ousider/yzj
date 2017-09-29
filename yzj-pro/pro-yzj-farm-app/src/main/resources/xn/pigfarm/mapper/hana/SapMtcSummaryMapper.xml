@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.hana.SapMtcSummaryMapper">
+
+	<resultMap id="SapMtcSummaryResult"  type="SapMtcSummaryModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="sortNbr" column="SORT_NBR" jdbcType="INTEGER" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="originFlag" column="ORIGIN_FLAG" jdbcType="CHAR" />
+		<result property="originApp" column="ORIGIN_APP" jdbcType="VARCHAR" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="companyId" column="COMPANY_ID" jdbcType="INTEGER" />
+		<result property="farmId" column="FARM_ID" jdbcType="INTEGER" />
+		<result property="hanaLogId" column="HANA_LOG_ID" jdbcType="INTEGER" />
+		<result property="createTime" column="CREATE_TIME" jdbcType="TIMESTAMP" />
+		<result property="lineNumber" column="LINE_NUMBER" jdbcType="INTEGER" />
+		<result property="type" column="TYPE" jdbcType="VARCHAR" />
+		<result property="begQty" column="BEG_QTY" jdbcType="INTEGER" />
+		<result property="begMoney" column="BEG_MONEY" jdbcType="INTEGER" />
+		<result property="addQty" column="ADD_QTY" jdbcType="INTEGER" />
+		<result property="addMoney" column="ADD_MONEY" jdbcType="INTEGER" />
+		<result property="reduceQty" column="REDUCE_QTY" jdbcType="INTEGER" />
+		<result property="reduceMoney" column="REDUCE_MONEY" jdbcType="INTEGER" />
+		<result property="endQty" column="END_QTY" jdbcType="INTEGER" />
+		<result property="endMoney" column="END_MONEY" jdbcType="INTEGER" />
+		<result property="other" column="OTHER" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="SapMtcSummaryModel_Column_List">
+		ROW_ID,SORT_NBR,NOTES,HANA_LOG_ID,CREATE_TIME,LINE_NUMBER,TYPE,BEG_QTY,BEG_MONEY,ADD_QTY,ADD_MONEY,REDUCE_QTY,REDUCE_MONEY,END_QTY,END_MONEY,OTHER
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true"   parameterType="SapMtcSummaryModel">
+		INSERT INTO SAP_MTC_SUMMARY
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ROW_ID,
+			SORT_NBR,
+			STATUS,
+			DELETED_FLAG,
+			ORIGIN_FLAG,
+			ORIGIN_APP,
+			NOTES,
+			COMPANY_ID,
+			FARM_ID,
+			HANA_LOG_ID,
+			CREATE_TIME,
+			LINE_NUMBER,
+			TYPE,
+			BEG_QTY,
+			BEG_MONEY,
+			ADD_QTY,
+			ADD_MONEY,
+			REDUCE_QTY,
+			REDUCE_MONEY,
+			END_QTY,
+			END_MONEY,
+			OTHER
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ rowId,jdbcType=INTEGER},
+			#{ sortNbr,jdbcType=INTEGER},
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ originFlag,jdbcType=CHAR},
+			#{ originApp,jdbcType=VARCHAR},
+			#{ notes,jdbcType=VARCHAR},
+			#{ companyId,jdbcType=INTEGER},
+			#{ farmId,jdbcType=INTEGER},
+			#{ hanaLogId,jdbcType=INTEGER},
+			#{ createTime,jdbcType=TIMESTAMP},
+			#{ lineNumber,jdbcType=INTEGER},
+			#{ type,jdbcType=VARCHAR},
+			#{ begQty,jdbcType=INTEGER},
+			#{ begMoney,jdbcType=INTEGER},
+			#{ addQty,jdbcType=INTEGER},
+			#{ addMoney,jdbcType=INTEGER},
+			#{ reduceQty,jdbcType=INTEGER},
+			#{ reduceMoney,jdbcType=INTEGER},
+			#{ endQty,jdbcType=INTEGER},
+			#{ endMoney,jdbcType=INTEGER},
+			#{ other,jdbcType=VARCHAR}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO SAP_MTC_SUMMARY
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ROW_ID ,
+			SORT_NBR ,
+			STATUS ,
+			DELETED_FLAG ,
+			ORIGIN_FLAG ,
+			ORIGIN_APP ,
+			NOTES ,
+			COMPANY_ID ,
+			FARM_ID ,
+			HANA_LOG_ID ,
+			CREATE_TIME ,
+			LINE_NUMBER ,
+			TYPE ,
+			BEG_QTY ,
+			BEG_MONEY ,
+			ADD_QTY ,
+			ADD_MONEY ,
+			REDUCE_QTY ,
+			REDUCE_MONEY ,
+			END_QTY ,
+			END_MONEY ,
+			OTHER 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.rowId,jdbcType=INTEGER},
+				#{item.sortNbr,jdbcType=INTEGER},
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.originFlag,jdbcType=CHAR},
+				#{item.originApp,jdbcType=VARCHAR},
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.companyId,jdbcType=INTEGER},
+				#{item.farmId,jdbcType=INTEGER},
+				#{item.hanaLogId,jdbcType=INTEGER},
+				#{item.createTime,jdbcType=TIMESTAMP},
+				#{item.lineNumber,jdbcType=INTEGER},
+				#{item.type,jdbcType=VARCHAR},
+				#{item.begQty,jdbcType=INTEGER},
+				#{item.begMoney,jdbcType=INTEGER},
+				#{item.addQty,jdbcType=INTEGER},
+				#{item.addMoney,jdbcType=INTEGER},
+				#{item.reduceQty,jdbcType=INTEGER},
+				#{item.reduceMoney,jdbcType=INTEGER},
+				#{item.endQty,jdbcType=INTEGER},
+				#{item.endMoney,jdbcType=INTEGER},
+				#{item.other,jdbcType=VARCHAR}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="SapMtcSummaryModel" >
+		UPDATE SAP_MTC_SUMMARY 
+		<set>
+		<if test="sortNbr != null">SORT_NBR = #{ sortNbr,jdbcType=INTEGER},</if>
+		<if test="status != null">STATUS = #{ status,jdbcType=CHAR},</if>
+		<if test="originFlag != null">ORIGIN_FLAG = #{ originFlag,jdbcType=CHAR},</if>
+		<if test="originApp != null">ORIGIN_APP = #{ originApp,jdbcType=VARCHAR},</if>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="hanaLogId != null">HANA_LOG_ID = #{ hanaLogId,jdbcType=INTEGER},</if>
+		<if test="createTime != null">CREATE_TIME = #{ createTime,jdbcType=TIMESTAMP},</if>
+		<if test="lineNumber != null">LINE_NUMBER = #{ lineNumber,jdbcType=INTEGER},</if>
+		<if test="type != null">TYPE = #{ type,jdbcType=VARCHAR},</if>
+		<if test="begQty != null">BEG_QTY = #{ begQty,jdbcType=INTEGER},</if>
+		<if test="begMoney != null">BEG_MONEY = #{ begMoney,jdbcType=INTEGER},</if>
+		<if test="addQty != null">ADD_QTY = #{ addQty,jdbcType=INTEGER},</if>
+		<if test="addMoney != null">ADD_MONEY = #{ addMoney,jdbcType=INTEGER},</if>
+		<if test="reduceQty != null">REDUCE_QTY = #{ reduceQty,jdbcType=INTEGER},</if>
+		<if test="reduceMoney != null">REDUCE_MONEY = #{ reduceMoney,jdbcType=INTEGER},</if>
+		<if test="endQty != null">END_QTY = #{ endQty,jdbcType=INTEGER},</if>
+		<if test="endMoney != null">END_MONEY = #{ endMoney,jdbcType=INTEGER},</if>
+		<if test="other != null">OTHER = #{ other,jdbcType=VARCHAR}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE SAP_MTC_SUMMARY 
+			<set>
+			<if test="item.sortNbr != null">SORT_NBR = #{item.sortNbr,jdbcType=INTEGER},</if>
+			<if test="item.status != null">STATUS = #{item.status,jdbcType=CHAR},</if>
+			<if test="item.originFlag != null">ORIGIN_FLAG = #{item.originFlag,jdbcType=CHAR},</if>
+			<if test="item.originApp != null">ORIGIN_APP = #{item.originApp,jdbcType=VARCHAR},</if>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.hanaLogId != null">HANA_LOG_ID = #{item.hanaLogId,jdbcType=INTEGER},</if>
+			<if test="item.createTime != null">CREATE_TIME = #{item.createTime,jdbcType=TIMESTAMP},</if>
+			<if test="item.lineNumber != null">LINE_NUMBER = #{item.lineNumber,jdbcType=INTEGER},</if>
+			<if test="item.type != null">TYPE = #{item.type,jdbcType=VARCHAR},</if>
+			<if test="item.begQty != null">BEG_QTY = #{item.begQty,jdbcType=INTEGER},</if>
+			<if test="item.begMoney != null">BEG_MONEY = #{item.begMoney,jdbcType=INTEGER},</if>
+			<if test="item.addQty != null">ADD_QTY = #{item.addQty,jdbcType=INTEGER},</if>
+			<if test="item.addMoney != null">ADD_MONEY = #{item.addMoney,jdbcType=INTEGER},</if>
+			<if test="item.reduceQty != null">REDUCE_QTY = #{item.reduceQty,jdbcType=INTEGER},</if>
+			<if test="item.reduceMoney != null">REDUCE_MONEY = #{item.reduceMoney,jdbcType=INTEGER},</if>
+			<if test="item.endQty != null">END_QTY = #{item.endQty,jdbcType=INTEGER},</if>
+			<if test="item.endMoney != null">END_MONEY = #{item.endMoney,jdbcType=INTEGER},</if>
+			<if test="item.other != null">OTHER = #{item.other,jdbcType=VARCHAR}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  SAP_MTC_SUMMARY
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  SAP_MTC_SUMMARY
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE 
+		 ROW_ID =#{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  SAP_MTC_SUMMARY
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' 
+		 AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+		 AND ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCons" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  SAP_MTC_SUMMARY
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' ${item}
+		</foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="SapMtcSummaryResult">
+		SELECT 
+		<include refid="SapMtcSummaryModel_Column_List" />
+		FROM SAP_MTC_SUMMARY WHERE DELETED_FLAG='0' 
+		AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="SapMtcSummaryResult" >
+		SELECT 
+		<include refid="SapMtcSummaryModel_Column_List" />
+		FROM SAP_MTC_SUMMARY WHERE DELETED_FLAG='0'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="SapMtcSummaryResult" >
+		SELECT 
+		<include refid="SapMtcSummaryModel_Column_List" />
+		FROM SAP_MTC_SUMMARY
+		WHERE DELETED_FLAG='0'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="SapMtcSummaryResult" >
+		SELECT 
+		<include refid="SapMtcSummaryModel_Column_List" />
+		FROM SAP_MTC_SUMMARY
+		WHERE ${condition}
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAll" resultMap="SapMtcSummaryResult" >
+		SELECT *
+		FROM SAP_MTC_SUMMARY
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="SapMtcSummaryResult"> ${sql} </select>
+
+</mapper>
+

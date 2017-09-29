@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.backend.MonthPerformanceModuleMapper">
+
+	<resultMap id="MonthPerformanceModuleResult"  type="MonthPerformanceModuleModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="sortNbr" column="SORT_NBR" jdbcType="INTEGER" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="farmId" column="FARM_ID" jdbcType="INTEGER" />
+		<result property="companyId" column="COMPANY_ID" jdbcType="INTEGER" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="businessCode" column="BUSINESS_CODE" jdbcType="VARCHAR" />
+		<result property="createId" column="CREATE_ID" jdbcType="INTEGER" />
+		<result property="createDate" column="CREATE_DATE" jdbcType="TIMESTAMP" />
+		<result property="startDate" column="START_DATE" jdbcType="DATE" />
+		<result property="endDate" column="END_DATE" jdbcType="DATE" />
+		<result property="assessRegion" column="ASSESS_REGION" jdbcType="VARCHAR" />
+		<result property="assessContent" column="ASSESS_CONTENT" jdbcType="VARCHAR" />
+		<result property="minAssessIndex" column="MIN_ASSESS_INDEX" jdbcType="DECIMAL" />
+		<result property="maxAssessIndex" column="MAX_ASSESS_INDEX" jdbcType="DECIMAL" />
+		<result property="assessIndex" column="ASSESS_INDEX" jdbcType="DECIMAL" />
+		<result property="reward" column="REWARD" jdbcType="DECIMAL" />
+		<result property="offset" column="OFFSET" jdbcType="DECIMAL" />
+		<result property="increasedAmount" column="INCREASED_AMOUNT" jdbcType="DECIMAL" />
+		<result property="performanceDateArea" column="PERFORMANCE_DATE_AREA" jdbcType="INTEGER" />
+		<result property="designFormulas" column="DESIGN_FORMULAS" jdbcType="VARCHAR" />
+		<result property="isStart" column="IS_START" jdbcType="INTEGER" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="MonthPerformanceModuleModel_Column_List">
+		ROW_ID,SORT_NBR,NOTES,BUSINESS_CODE,CREATE_ID,CREATE_DATE,START_DATE,END_DATE,ASSESS_REGION,ASSESS_CONTENT,MIN_ASSESS_INDEX,MAX_ASSESS_INDEX,ASSESS_INDEX,REWARD,OFFSET,INCREASED_AMOUNT,PERFORMANCE_DATE_AREA,DESIGN_FORMULAS,IS_START
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true"   parameterType="MonthPerformanceModuleModel">
+		INSERT INTO CD_M_MONTH_PERFORMANCE_MODULE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ROW_ID,
+			SORT_NBR,
+			STATUS,
+			DELETED_FLAG,
+			FARM_ID,
+			COMPANY_ID,
+			NOTES,
+			BUSINESS_CODE,
+			CREATE_ID,
+			CREATE_DATE,
+			START_DATE,
+			END_DATE,
+			ASSESS_REGION,
+			ASSESS_CONTENT,
+			MIN_ASSESS_INDEX,
+			MAX_ASSESS_INDEX,
+			ASSESS_INDEX,
+			REWARD,
+			OFFSET,
+			INCREASED_AMOUNT,
+			PERFORMANCE_DATE_AREA,
+			DESIGN_FORMULAS,
+			IS_START
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ rowId,jdbcType=INTEGER},
+			#{ sortNbr,jdbcType=INTEGER},
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ farmId,jdbcType=INTEGER},
+			#{ companyId,jdbcType=INTEGER},
+			#{ notes,jdbcType=VARCHAR},
+			#{ businessCode,jdbcType=VARCHAR},
+			#{ createId,jdbcType=INTEGER},
+			#{ createDate,jdbcType=TIMESTAMP},
+			#{ startDate,jdbcType=DATE},
+			#{ endDate,jdbcType=DATE},
+			#{ assessRegion,jdbcType=VARCHAR},
+			#{ assessContent,jdbcType=VARCHAR},
+			#{ minAssessIndex,jdbcType=DECIMAL},
+			#{ maxAssessIndex,jdbcType=DECIMAL},
+			#{ assessIndex,jdbcType=DECIMAL},
+			#{ reward,jdbcType=DECIMAL},
+			#{ offset,jdbcType=DECIMAL},
+			#{ increasedAmount,jdbcType=DECIMAL},
+			#{ performanceDateArea,jdbcType=INTEGER},
+			#{ designFormulas,jdbcType=VARCHAR},
+			#{ isStart,jdbcType=INTEGER}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO CD_M_MONTH_PERFORMANCE_MODULE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ROW_ID ,
+			SORT_NBR ,
+			STATUS ,
+			DELETED_FLAG ,
+			FARM_ID ,
+			COMPANY_ID ,
+			NOTES ,
+			BUSINESS_CODE ,
+			CREATE_ID ,
+			CREATE_DATE ,
+			START_DATE ,
+			END_DATE ,
+			ASSESS_REGION ,
+			ASSESS_CONTENT ,
+			MIN_ASSESS_INDEX ,
+			MAX_ASSESS_INDEX ,
+			ASSESS_INDEX ,
+			REWARD ,
+			OFFSET ,
+			INCREASED_AMOUNT ,
+			PERFORMANCE_DATE_AREA ,
+			DESIGN_FORMULAS ,
+			IS_START 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.rowId,jdbcType=INTEGER},
+				#{item.sortNbr,jdbcType=INTEGER},
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.farmId,jdbcType=INTEGER},
+				#{item.companyId,jdbcType=INTEGER},
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.businessCode,jdbcType=VARCHAR},
+				#{item.createId,jdbcType=INTEGER},
+				#{item.createDate,jdbcType=TIMESTAMP},
+				#{item.startDate,jdbcType=DATE},
+				#{item.endDate,jdbcType=DATE},
+				#{item.assessRegion,jdbcType=VARCHAR},
+				#{item.assessContent,jdbcType=VARCHAR},
+				#{item.minAssessIndex,jdbcType=DECIMAL},
+				#{item.maxAssessIndex,jdbcType=DECIMAL},
+				#{item.assessIndex,jdbcType=DECIMAL},
+				#{item.reward,jdbcType=DECIMAL},
+				#{item.offset,jdbcType=DECIMAL},
+				#{item.increasedAmount,jdbcType=DECIMAL},
+				#{item.performanceDateArea,jdbcType=INTEGER},
+				#{item.designFormulas,jdbcType=VARCHAR},
+				#{item.isStart,jdbcType=INTEGER}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="MonthPerformanceModuleModel" >
+		UPDATE CD_M_MONTH_PERFORMANCE_MODULE 
+		<set>
+		<if test="sortNbr != null">SORT_NBR = #{ sortNbr,jdbcType=INTEGER},</if>
+		<if test="status != null">STATUS = #{ status,jdbcType=CHAR},</if>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="businessCode != null">BUSINESS_CODE = #{ businessCode,jdbcType=VARCHAR},</if>
+		<if test="createId != null">CREATE_ID = #{ createId,jdbcType=INTEGER},</if>
+		<if test="createDate != null">CREATE_DATE = #{ createDate,jdbcType=TIMESTAMP},</if>
+		<if test="startDate != null">START_DATE = #{ startDate,jdbcType=DATE},</if>
+		<if test="endDate != null">END_DATE = #{ endDate,jdbcType=DATE},</if>
+		<if test="assessRegion != null">ASSESS_REGION = #{ assessRegion,jdbcType=VARCHAR},</if>
+		<if test="assessContent != null">ASSESS_CONTENT = #{ assessContent,jdbcType=VARCHAR},</if>
+		<if test="minAssessIndex != null">MIN_ASSESS_INDEX = #{ minAssessIndex,jdbcType=DECIMAL},</if>
+		<if test="maxAssessIndex != null">MAX_ASSESS_INDEX = #{ maxAssessIndex,jdbcType=DECIMAL},</if>
+		<if test="assessIndex != null">ASSESS_INDEX = #{ assessIndex,jdbcType=DECIMAL},</if>
+		<if test="reward != null">REWARD = #{ reward,jdbcType=DECIMAL},</if>
+		<if test="offset != null">OFFSET = #{ offset,jdbcType=DECIMAL},</if>
+		<if test="increasedAmount != null">INCREASED_AMOUNT = #{ increasedAmount,jdbcType=DECIMAL},</if>
+		<if test="performanceDateArea != null">PERFORMANCE_DATE_AREA = #{ performanceDateArea,jdbcType=INTEGER},</if>
+		<if test="designFormulas != null">DESIGN_FORMULAS = #{ designFormulas,jdbcType=VARCHAR},</if>
+		<if test="isStart != null">IS_START = #{ isStart,jdbcType=INTEGER}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE CD_M_MONTH_PERFORMANCE_MODULE 
+			<set>
+			<if test="item.sortNbr != null">SORT_NBR = #{item.sortNbr,jdbcType=INTEGER},</if>
+			<if test="item.status != null">STATUS = #{item.status,jdbcType=CHAR},</if>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.businessCode != null">BUSINESS_CODE = #{item.businessCode,jdbcType=VARCHAR},</if>
+			<if test="item.createId != null">CREATE_ID = #{item.createId,jdbcType=INTEGER},</if>
+			<if test="item.createDate != null">CREATE_DATE = #{item.createDate,jdbcType=TIMESTAMP},</if>
+			<if test="item.startDate != null">START_DATE = #{item.startDate,jdbcType=DATE},</if>
+			<if test="item.endDate != null">END_DATE = #{item.endDate,jdbcType=DATE},</if>
+			<if test="item.assessRegion != null">ASSESS_REGION = #{item.assessRegion,jdbcType=VARCHAR},</if>
+			<if test="item.assessContent != null">ASSESS_CONTENT = #{item.assessContent,jdbcType=VARCHAR},</if>
+			<if test="item.minAssessIndex != null">MIN_ASSESS_INDEX = #{item.minAssessIndex,jdbcType=DECIMAL},</if>
+			<if test="item.maxAssessIndex != null">MAX_ASSESS_INDEX = #{item.maxAssessIndex,jdbcType=DECIMAL},</if>
+			<if test="item.assessIndex != null">ASSESS_INDEX = #{item.assessIndex,jdbcType=DECIMAL},</if>
+			<if test="item.reward != null">REWARD = #{item.reward,jdbcType=DECIMAL},</if>
+			<if test="item.offset != null">OFFSET = #{item.offset,jdbcType=DECIMAL},</if>
+			<if test="item.increasedAmount != null">INCREASED_AMOUNT = #{item.increasedAmount,jdbcType=DECIMAL},</if>
+			<if test="item.performanceDateArea != null">PERFORMANCE_DATE_AREA = #{item.performanceDateArea,jdbcType=INTEGER},</if>
+			<if test="item.designFormulas != null">DESIGN_FORMULAS = #{item.designFormulas,jdbcType=VARCHAR},</if>
+			<if test="item.isStart != null">IS_START = #{item.isStart,jdbcType=INTEGER}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  CD_M_MONTH_PERFORMANCE_MODULE
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  CD_M_MONTH_PERFORMANCE_MODULE
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE 
+		 ROW_ID =#{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  CD_M_MONTH_PERFORMANCE_MODULE
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' 
+		 AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+		 AND ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCons" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  CD_M_MONTH_PERFORMANCE_MODULE
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' ${item}
+		</foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="MonthPerformanceModuleResult">
+		SELECT 
+		<include refid="MonthPerformanceModuleModel_Column_List" />
+		FROM CD_M_MONTH_PERFORMANCE_MODULE WHERE DELETED_FLAG='0' 
+		AND FARM_ID=#{ farmId,jdbcType=INTEGER}
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="MonthPerformanceModuleResult" >
+		SELECT 
+		<include refid="MonthPerformanceModuleModel_Column_List" />
+		FROM CD_M_MONTH_PERFORMANCE_MODULE WHERE DELETED_FLAG='0'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="MonthPerformanceModuleResult" >
+		SELECT 
+		<include refid="MonthPerformanceModuleModel_Column_List" />
+		FROM CD_M_MONTH_PERFORMANCE_MODULE
+		WHERE DELETED_FLAG='0'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="MonthPerformanceModuleResult" >
+		SELECT 
+		<include refid="MonthPerformanceModuleModel_Column_List" />
+		FROM CD_M_MONTH_PERFORMANCE_MODULE
+		WHERE ${condition}
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAll" resultMap="MonthPerformanceModuleResult" >
+		SELECT *
+		FROM CD_M_MONTH_PERFORMANCE_MODULE
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="MonthPerformanceModuleResult"> ${sql} </select>
+
+</mapper>
+

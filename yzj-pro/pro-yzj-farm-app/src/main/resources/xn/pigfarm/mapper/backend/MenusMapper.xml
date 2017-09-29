@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.backend.MenusMapper">
+
+	<resultMap id="MenusResult"  type="MenusModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="sortNbr" column="SORT_NBR" jdbcType="INTEGER" />
+		<result property="status" column="STATUS" jdbcType="CHAR" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="originFlag" column="ORIGIN_FLAG" jdbcType="CHAR" />
+		<result property="originApp" column="ORIGIN_APP" jdbcType="VARCHAR" />
+		<result property="correlationId" column="CORRELATION_ID" jdbcType="INTEGER" />
+		<result property="subsystemId" column="SUBSYSTEM_ID" jdbcType="INTEGER" />
+		<result property="levelNum" column="LEVEL_NUM" jdbcType="INTEGER" />
+		<result property="parentId" column="PARENT_ID" jdbcType="INTEGER" />
+		<result property="moduleId" column="MODULE_ID" jdbcType="INTEGER" />
+		<result property="templateId" column="TEMPLATE_ID" jdbcType="INTEGER" />
+	</resultMap>
+	
+	<resultMap type="MenusView" id="MenusViewResult" extends="BaseMapper.BaseModelMap">
+		<result property="correlationId" column="CORRELATION_ID" jdbcType="INTEGER" />
+		<result property="subsystemId" column="SUBSYSTEM_ID" jdbcType="INTEGER" />
+		<result property="levelNum" column="LEVEL_NUM" jdbcType="INTEGER" />
+		<result property="parentId" column="PARENT_ID" jdbcType="INTEGER" />
+		<result property="moduleId" column="MODULE_ID" jdbcType="INTEGER" />
+		<result property="templateId" column="TEMPLATE_ID" jdbcType="INTEGER" />
+	</resultMap>
+	
+	<resultMap type="ButtonView" id="ButtonViewResult" extends="BaseMapper.BaseModelMap">
+		<result property="moduleId" column="MODULE_ID" jdbcType="INTEGER" />
+		<result property="pageId" column="PAGE_ID" jdbcType="INTEGER" />
+		<result property="btnType" column="BTN_TYPE" jdbcType="VARCHAR" />
+		<result property="btnCode" column="BTN_CODE" jdbcType="VARCHAR" />
+		<result property="btnName" column="BTN_NAME" jdbcType="VARCHAR" />
+		<result property="iconCls" column="ICON_CLS" jdbcType="VARCHAR" />
+		<result property="funName" column="FUN_NAME" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<resultMap type="MenusView" id="MenusViewJoint" extends="MenusViewResult">
+		<collection  property="btns"  column="{ modelId = MODULE_ID }"  select="searchBtnByModeId" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="MenusModel_Column_List">
+		ROW_ID,NOTES,SORT_NBR,STATUS,DELETED_FLAG,ORIGIN_FLAG,ORIGIN_APP,CORRELATION_ID,SUBSYSTEM_ID,LEVEL_NUM,PARENT_ID,MODULE_ID,TEMPLATE_ID
+	</sql>
+
+	<sql id="MenusView_Column_List" >
+		mu.ROW_ID,mu.NOTES,mu.SORT_NBR,mu.STATUS,mu.DELETED_FLAG,mu.ORIGIN_FLAG,mu.ORIGIN_APP,mu.CORRELATION_ID,mu.SUBSYSTEM_ID,mu.LEVEL_NUM,mu.PARENT_ID,mu.MODULE_ID,mu.TEMPLATE_ID
+	</sql>
+	
+	<sql id="ButtonView_Column_List" >
+		b.ROW_ID,b.NOTES,b.SORT_NBR,b.STATUS,b.DELETED_FLAG,b.ORIGIN_FLAG,b.ORIGIN_APP,b.MODULE_ID,b.PAGE_ID,b.BTN_TYPE,b.BTN_CODE,b.BTN_NAME,b.ICON_CLS,b.FUN_NAME
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="rowId" parameterType="MenusModel">
+		INSERT INTO CD_R_MENUS
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			NOTES,
+			SORT_NBR,
+			STATUS,
+			DELETED_FLAG,
+			ORIGIN_FLAG,
+			ORIGIN_APP,
+			CORRELATION_ID,
+			SUBSYSTEM_ID,
+			LEVEL_NUM,
+			PARENT_ID,
+			MODULE_ID,
+			TEMPLATE_ID
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ notes,jdbcType=VARCHAR},
+			#{ sortNbr,jdbcType=INTEGER},
+			#{ status,jdbcType=CHAR},
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ originFlag,jdbcType=CHAR},
+			#{ originApp,jdbcType=VARCHAR},
+			#{ correlationId,jdbcType=INTEGER},
+			#{ subsystemId,jdbcType=INTEGER},
+			#{ levelNum,jdbcType=INTEGER},
+			#{ parentId,jdbcType=INTEGER},
+			#{ moduleId,jdbcType=INTEGER},
+			#{ templateId,jdbcType=INTEGER}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO CD_R_MENUS
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			NOTES ,
+			SORT_NBR ,
+			STATUS ,
+			DELETED_FLAG ,
+			ORIGIN_FLAG ,
+			ORIGIN_APP ,
+			CORRELATION_ID ,
+			SUBSYSTEM_ID ,
+			LEVEL_NUM ,
+			PARENT_ID ,
+			MODULE_ID ,
+			TEMPLATE_ID 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.sortNbr,jdbcType=INTEGER},
+				#{item.status,jdbcType=CHAR},
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.originFlag,jdbcType=CHAR},
+				#{item.originApp,jdbcType=VARCHAR},
+				#{item.correlationId,jdbcType=INTEGER},
+				#{item.subsystemId,jdbcType=INTEGER},
+				#{item.levelNum,jdbcType=INTEGER},
+				#{item.parentId,jdbcType=INTEGER},
+				#{item.moduleId,jdbcType=INTEGER},
+				#{item.templateId,jdbcType=INTEGER}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="MenusModel" >
+		UPDATE CD_R_MENUS 
+		<set>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="sortNbr != null">SORT_NBR = #{ sortNbr,jdbcType=INTEGER},</if>
+		<if test="originFlag != null">ORIGIN_FLAG = #{ originFlag,jdbcType=CHAR},</if>
+		<if test="originApp != null">ORIGIN_APP = #{ originApp,jdbcType=VARCHAR},</if>
+		<if test="correlationId != null">CORRELATION_ID = #{ correlationId,jdbcType=INTEGER},</if>
+		<if test="subsystemId != null">SUBSYSTEM_ID = #{ subsystemId,jdbcType=INTEGER},</if>
+		<if test="levelNum != null">LEVEL_NUM = #{ levelNum,jdbcType=INTEGER},</if>
+		<if test="parentId != null">PARENT_ID = #{ parentId,jdbcType=INTEGER},</if>
+		<if test="moduleId != null">MODULE_ID = #{ moduleId,jdbcType=INTEGER},</if>
+		<if test="templateId != null">TEMPLATE_ID = #{ templateId,jdbcType=INTEGER}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE CD_R_MENUS 
+			<set>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.sortNbr != null">SORT_NBR = #{item.sortNbr,jdbcType=INTEGER},</if>
+			<if test="item.originFlag != null">ORIGIN_FLAG = #{item.originFlag,jdbcType=CHAR},</if>
+			<if test="item.originApp != null">ORIGIN_APP = #{item.originApp,jdbcType=VARCHAR},</if>
+			<if test="item.correlationId != null">CORRELATION_ID = #{item.correlationId,jdbcType=INTEGER},</if>
+			<if test="item.subsystemId != null">SUBSYSTEM_ID = #{item.subsystemId,jdbcType=INTEGER},</if>
+			<if test="item.levelNum != null">LEVEL_NUM = #{item.levelNum,jdbcType=INTEGER},</if>
+			<if test="item.parentId != null">PARENT_ID = #{item.parentId,jdbcType=INTEGER},</if>
+			<if test="item.moduleId != null">MODULE_ID = #{item.moduleId,jdbcType=INTEGER},</if>
+			<if test="item.templateId != null">TEMPLATE_ID = #{item.templateId,jdbcType=INTEGER}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  CD_R_MENUS
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  CD_R_MENUS
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE ROW_ID = #{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  CD_R_MENUS
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="MenusResult">
+		SELECT *
+		FROM CD_R_MENUS WHERE DELETED_FLAG='0' AND STATUS = '1' 
+		
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="MenusResult" >
+		SELECT *
+		FROM CD_R_MENUS WHERE DELETED_FLAG='0' AND STATUS = '1'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="MenusResult" >
+		SELECT *
+		FROM CD_R_MENUS
+		WHERE DELETED_FLAG='0' AND STATUS = '1'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="MenusResult" >
+		SELECT *
+		FROM CD_R_MENUS
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="MenusResult"> ${sql} </select>
+
+
+<!-- 	<select id="searchMenuView" resultMap="MenusViewJoint">  -->
+<!-- 		 SELECT  -->
+<!-- 		 <include refid="MenusView_Column_List" />, -->
+<!-- 		 T4.MODULE_NAME AS moduleName -->
+<!-- 		 FROM cd_o_role T0  -->
+<!-- 		 INNER JOIN cd_r_limit T2 ON T0.ROW_ID = T2.ROLE_ID AND T2.DELETED_FLAG = '0' AND T2.STATUS = '1'  -->
+<!-- 		 INNER JOIN cd_r_menus mu ON mu.TEMPLATE_ID = T0.TEMPLATE_ID AND mu.DELETED_FLAG = '0' AND mu.STATUS = '1' AND T2.OBJ_ID = mu.MODULE_ID AND T2.OBJ_TYPE = 'URL'  -->
+<!-- 		 INNER JOIN cd_o_module T4 ON mu.MODULE_ID = T4.ROW_ID AND T4.DELETED_FLAG = '0' AND T4.STATUS = '1' -->
+<!-- 		  WHERE  T0.DELETED_FLAG = '0' AND T0.STATUS = '1' AND T0.COMPANY_ID = #{ farmId,jdbcType=INTEGER} -->
+<!-- 		  <if test="roleId != null"> -->
+<!-- 		  	AND T0.ROW_ID = #{ roleId,jdbcType=INTEGER} -->
+<!-- 		  </if> -->
+<!-- 	</select> -->
+	
+	<select id="searchMenuView" resultMap="MenusViewResult"> 
+		 SELECT  
+    		<include refid="MenusView_Column_List" />,
+    		l.ROW_ID AS  limitId,
+			l.OBJ_TYPE AS objType,
+    		mo.MODULE_NAME AS moduleName 
+		 FROM cd_o_role AS r  
+		 INNER JOIN  cd_r_limit  AS  l ON r.ROW_ID= l.ROLE_ID AND r.ROW_ID = #{ roleId,jdbcType=INTEGER} AND  r.COMPANY_ID = #{ farmId,jdbcType=INTEGER}  AND l.STATUS='1' AND  l.DELETED_FLAG='0'
+		 INNER JOIN cd_r_menus  AS  mu ON l.OBJ_ID = mu.MODULE_ID AND l.OBJ_TYPE = 'URL'
+		 INNER JOIN cd_o_module AS mo ON mo.ROW_ID =mu.MODULE_ID 
+	</select>
+	
+	
+	<select id="searchMenuByBtn" resultMap="ButtonViewResult"> 
+		 SELECT  
+    		 <include refid="ButtonView_Column_List" />,
+    		 l.ROW_ID AS  limitId,
+			 l.OBJ_TYPE AS objType
+		 FROM `cd_o_role` AS r  
+		 INNER JOIN `cd_r_limit`  AS  l ON r.`ROW_ID`= l.`ROLE_ID` AND r.ROW_ID = #{ roleId,jdbcType=INTEGER} AND  r.COMPANY_ID = #{ farmId,jdbcType=INTEGER} AND l.STATUS='1' AND  l.DELETED_FLAG='0'
+		 INNER JOIN `cd_r_menus`  AS  mu ON l.OBJ_ID = mu.MODULE_ID AND l.OBJ_TYPE = 'BTN'
+		 INNER JOIN `cd_o_module` AS mo ON mo.ROW_ID =mu.MODULE_ID 
+		 INNER JOIN `cd_o_button` AS b ON b.ROW_ID = l.OBJ_ID 
+	</select>
+	
+	<select id="searchBtnByModeId" resultMap="ButtonViewResult">
+		  SELECT  
+		   <include refid="ButtonView_Column_List" />
+		  FROM  `cd_o_button` AS b WHERE 
+		  b.MODULE_ID=#{ modelId,jdbcType=INTEGER}
+	</select>
+	
+	<!-- Commented by zhangjs
+	<select id="searchMenuByTempId" resultMap="MenusViewJoint" >
+		SELECT  
+			<include refid="MenusView_Column_List" />,
+			mo.MODULE_NAME AS moduleName 
+		FROM  cd_o_template AS t INNER JOIN cd_r_menus AS mu  ON t.ROW_ID= mu.TEMPLATE_ID
+		INNER JOIN  cd_o_module AS mo ON  mu.MODULE_ID=mo.ROW_ID  AND  t.ROW_ID=#{ templateId,jdbcType=INTEGER}
+	</select>
+	 -->
+	 
+	 <!-- Begin added by zhangjs-->
+	<select id="searchMenuByTempId" resultMap="MenusViewJoint" >
+		SELECT  
+			<include refid="MenusView_Column_List" />,
+			mo.MODULE_NAME AS moduleName 
+		FROM  cd_o_template AS t 
+		INNER JOIN cd_r_menus AS mu  ON t.ROW_ID= mu.TEMPLATE_ID and mu.DELETED_FLAG='0'
+		INNER JOIN  cd_o_module AS mo ON  mu.MODULE_ID=mo.ROW_ID  and mo.DELETED_FLAG='0'
+		WHERE t.DELETED_FLAG='0' AND  t.ROW_ID=#{ templateId,jdbcType=INTEGER}
+	</select>
+	 <!-- End added by zhangjs-->
+	 
+</mapper>
+

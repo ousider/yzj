@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="xn.pigfarm.mapper.supplychian.WarehouseMaterialTypeMapper">
+
+	<resultMap id="WarehouseMaterialTypeResult"  type="WarehouseMaterialTypeModel" >
+		<result property="rowId" column="ROW_ID" jdbcType="INTEGER" />
+		<result property="deletedFlag" column="DELETED_FLAG" jdbcType="CHAR" />
+		<result property="notes" column="NOTES" jdbcType="VARCHAR" />
+		<result property="warehouseId" column="WAREHOUSE_ID" jdbcType="INTEGER" />
+		<result property="materialType" column="MATERIAL_TYPE" jdbcType="VARCHAR" />
+		<result property="createId" column="CREATE_ID" jdbcType="INTEGER" />
+		<result property="createDate" column="CREATE_DATE" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="WarehouseMaterialTypeModel_Column_List">
+		ROW_ID,NOTES,WAREHOUSE_ID,MATERIAL_TYPE,CREATE_ID,CREATE_DATE
+	</sql>
+
+	<!-- 单条新增 -->
+	<insert id="insert" useGeneratedKeys="true"   keyProperty="rowId" parameterType="WarehouseMaterialTypeModel">
+		INSERT INTO SC_R_WAREHOUSE_MATERIAL_TYPE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			DELETED_FLAG,
+			NOTES,
+			WAREHOUSE_ID,
+			MATERIAL_TYPE,
+			CREATE_ID,
+			CREATE_DATE
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			#{ deletedFlag,jdbcType=CHAR},
+			#{ notes,jdbcType=VARCHAR},
+			#{ warehouseId,jdbcType=INTEGER},
+			#{ materialType,jdbcType=VARCHAR},
+			#{ createId,jdbcType=INTEGER},
+			#{ createDate,jdbcType=TIMESTAMP}
+		</trim>
+	</insert>
+	
+	<!-- 批量新增 -->
+	<insert id="inserts" parameterType="java.util.List">
+		INSERT INTO SC_R_WAREHOUSE_MATERIAL_TYPE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			DELETED_FLAG ,
+			NOTES ,
+			WAREHOUSE_ID ,
+			MATERIAL_TYPE ,
+			CREATE_ID ,
+			CREATE_DATE 
+		</trim>
+		VALUES
+		<foreach collection="records" item="item" index="index"  separator="," >	
+			<trim prefix="(" suffix=")" suffixOverrides=",">		
+				#{item.deletedFlag,jdbcType=CHAR},
+				#{item.notes,jdbcType=VARCHAR},
+				#{item.warehouseId,jdbcType=INTEGER},
+				#{item.materialType,jdbcType=VARCHAR},
+				#{item.createId,jdbcType=INTEGER},
+				#{item.createDate,jdbcType=TIMESTAMP}
+			</trim>
+		</foreach>			
+	</insert>
+	
+	<!--单条更新 -->
+	<update id="update" parameterType="WarehouseMaterialTypeModel" >
+		UPDATE SC_R_WAREHOUSE_MATERIAL_TYPE 
+		<set>
+		<if test="notes != null">NOTES = #{ notes,jdbcType=VARCHAR},</if>
+		<if test="warehouseId != null">WAREHOUSE_ID = #{ warehouseId,jdbcType=INTEGER},</if>
+		<if test="materialType != null">MATERIAL_TYPE = #{ materialType,jdbcType=VARCHAR},</if>
+		<if test="createId != null">CREATE_ID = #{ createId,jdbcType=INTEGER},</if>
+		<if test="createDate != null">CREATE_DATE = #{ createDate,jdbcType=TIMESTAMP}</if>
+		</set>
+		WHERE
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量更新 -->
+	<update id="updates" parameterType="java.util.List">
+		<foreach collection="records" item="item" index="index" open="" close="" separator=";">	
+			UPDATE SC_R_WAREHOUSE_MATERIAL_TYPE 
+			<set>
+			<if test="item.notes != null">NOTES = #{item.notes,jdbcType=VARCHAR},</if>
+			<if test="item.warehouseId != null">WAREHOUSE_ID = #{item.warehouseId,jdbcType=INTEGER},</if>
+			<if test="item.materialType != null">MATERIAL_TYPE = #{item.materialType,jdbcType=VARCHAR},</if>
+			<if test="item.createId != null">CREATE_ID = #{item.createId,jdbcType=INTEGER},</if>
+			<if test="item.createDate != null">CREATE_DATE = #{item.createDate,jdbcType=TIMESTAMP}</if>
+			</set>
+			WHERE
+			ROW_ID = #{item.rowId,jdbcType=INTEGER}	
+		</foreach>
+	</update>
+	
+	<!--单条删除 -->
+	<update id="delete" >
+		UPDATE  SC_R_WAREHOUSE_MATERIAL_TYPE
+		SET
+		DELETED_FLAG =  '1'
+		WHERE 
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</update>
+	
+	<!--批量删除 -->
+	<update id="deletes" >
+		<foreach item="item" index="index" collection="ids" open=""  close="" separator=";">
+		 UPDATE  SC_R_WAREHOUSE_MATERIAL_TYPE
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE 
+		 ROW_ID =#{item}
+        </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCon" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  SC_R_WAREHOUSE_MATERIAL_TYPE
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' 
+		 
+		 AND ${item.RECORD_CON} = #{item.RECORD_VALUES}
+		 </foreach>	
+	</update>
+	
+	<!--根据条件批量删除 -->
+	<update id="deletesByCons" parameterType="java.util.List" >
+		<foreach item="item" index="index" collection="records" open=""  close="" separator=";">
+		 UPDATE  SC_R_WAREHOUSE_MATERIAL_TYPE
+		 SET
+		 DELETED_FLAG  =  '1'  WHERE DELETED_FLAG  =  '0' ${item}
+		</foreach>	
+	</update>
+	
+	<!--查询List记录 -->
+	<select id="searchToList" resultMap="WarehouseMaterialTypeResult">
+		SELECT 
+		<include refid="WarehouseMaterialTypeModel_Column_List" />
+		FROM SC_R_WAREHOUSE_MATERIAL_TYPE WHERE DELETED_FLAG='0' 
+		
+	</select>
+	
+	<!--查询根据主键查单条记录 -->
+	<select id="searchById" resultMap="WarehouseMaterialTypeResult" >
+		SELECT 
+		<include refid="WarehouseMaterialTypeModel_Column_List" />
+		FROM SC_R_WAREHOUSE_MATERIAL_TYPE WHERE DELETED_FLAG='0'  AND
+		ROW_ID = #{ rowId,jdbcType=INTEGER}
+	</select>
+	
+	<!--根据条件查询有效数据 --><!-- {condition} -->
+	<select id="searchListByCon" resultMap="WarehouseMaterialTypeResult" >
+		SELECT 
+		<include refid="WarehouseMaterialTypeModel_Column_List" />
+		FROM SC_R_WAREHOUSE_MATERIAL_TYPE
+		WHERE DELETED_FLAG='0'  ${condition} 
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAllListByCon" resultMap="WarehouseMaterialTypeResult" >
+		SELECT 
+		<include refid="WarehouseMaterialTypeModel_Column_List" />
+		FROM SC_R_WAREHOUSE_MATERIAL_TYPE
+		WHERE ${condition}
+	</select>
+	
+	<!--根据条件查询全部数据 --><!-- {condition} -->
+	<select id="searchAll" resultMap="WarehouseMaterialTypeResult" >
+		SELECT *
+		FROM SC_R_WAREHOUSE_MATERIAL_TYPE
+		WHERE ${condition}
+	</select>
+	
+	<!-- 直接sql操作 -->
+	<select id="operSql" resultMap="WarehouseMaterialTypeResult"> ${sql} </select>
+
+</mapper>
+
